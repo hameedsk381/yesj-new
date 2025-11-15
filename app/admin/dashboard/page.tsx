@@ -7,12 +7,9 @@ import Footer from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
 import { 
   Users, 
-  Calendar, 
   Mail, 
-  TrendingUp, 
   LogOut,
-  FileText,
-  Settings
+  FileText
 } from "lucide-react"
 import Link from "next/link"
 
@@ -20,6 +17,14 @@ export default function AdminDashboard() {
   const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [stats, setStats] = useState({
+    registrations: 0,
+    nominations: 0,
+    contacts: 0,
+    newsletters: 0
+  })
+  const [recentRegistrations, setRecentRegistrations] = useState<any[]>([])
+  const [recentContacts, setRecentContacts] = useState<any[]>([])
 
   useEffect(() => {
     const token = localStorage.getItem("admin-token")
@@ -27,9 +32,43 @@ export default function AdminDashboard() {
       router.push("/admin/login")
     } else {
       setIsAuthenticated(true)
+      fetchDashboardData(token)
     }
     setIsLoading(false)
   }, [router])
+
+  const fetchDashboardData = async (token: string) => {
+    try {
+      const [registrationsRes, nominationsRes, contactsRes, newslettersRes] = await Promise.all([
+        fetch("/api/admin/registrations", { headers: { Authorization: `Bearer ${token}` } }),
+        fetch("/api/admin/nominations", { headers: { Authorization: `Bearer ${token}` } }),
+        fetch("/api/admin/contacts", { headers: { Authorization: `Bearer ${token}` } }),
+        fetch("/api/admin/newsletters", { headers: { Authorization: `Bearer ${token}` } })
+      ])
+
+      const [registrationsData, nominationsData, contactsData, newslettersData] = await Promise.all([
+        registrationsRes.json(),
+        nominationsRes.json(),
+        contactsRes.json(),
+        newslettersRes.json()
+      ])
+
+      setStats({
+        registrations: registrationsData.count || 0,
+        nominations: nominationsData.count || 0,
+        contacts: contactsData.count || 0,
+        newsletters: newslettersData.count || 0
+      })
+
+      // Get recent 5 registrations
+      setRecentRegistrations(registrationsData.data?.slice(0, 5) || [])
+      
+      // Get recent 5 contacts
+      setRecentContacts(contactsData.data?.slice(0, 5) || [])
+    } catch (error) {
+      console.error("Failed to fetch dashboard data:", error)
+    }
+  }
 
   const handleLogout = () => {
     localStorage.removeItem("admin-token")
@@ -48,20 +87,18 @@ export default function AdminDashboard() {
     return null
   }
 
-  const stats = [
-    { label: "Total Registrations", value: "247", icon: Users, color: "text-blue-600" },
-    { label: "Upcoming Events", value: "5", icon: Calendar, color: "text-green-600" },
-    { label: "Newsletter Subscribers", value: "1,234", icon: Mail, color: "text-purple-600" },
-    { label: "Monthly Growth", value: "+23%", icon: TrendingUp, color: "text-orange-600" },
+  const statsData = [
+    { label: "Total Registrations", value: stats.registrations.toString(), icon: Users, color: "text-blue-600" },
+    { label: "Total Nominations", value: stats.nominations.toString(), icon: FileText, color: "text-green-600" },
+    { label: "Contact Messages", value: stats.contacts.toString(), icon: Mail, color: "text-purple-600" },
+    { label: "Newsletter Subscribers", value: stats.newsletters.toString(), icon: Mail, color: "text-orange-600" },
   ]
 
   const quickActions = [
     { label: "View Registrations", href: "/admin/registrations", icon: Users },
     { label: "View Nominations", href: "/admin/nominations", icon: FileText },
     { label: "View Contacts", href: "/admin/contacts", icon: Mail },
-    { label: "Manage Events", href: "/admin/events", icon: Calendar },
     { label: "Newsletter List", href: "/admin/newsletter", icon: Mail },
-    { label: "Settings", href: "/admin/settings", icon: Settings },
   ]
 
   return (
@@ -90,7 +127,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {stats.map((stat, index) => {
+            {statsData.map((stat, index) => {
               const Icon = stat.icon
               return (
                 <div
@@ -130,15 +167,21 @@ export default function AdminDashboard() {
             <div className="bg-white border border-primary/10 rounded-lg p-6">
               <h3 className="text-lg font-light text-maroon mb-4">Recent Registrations</h3>
               <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                    <div>
-                      <p className="font-light">Student Name {i}</p>
-                      <p className="text-sm text-muted-foreground font-extralight">Membership Application</p>
+                {recentRegistrations.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">No registrations yet</p>
+                ) : (
+                  recentRegistrations.map((reg) => (
+                    <div key={reg.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                      <div>
+                        <p className="font-light">{reg.name}</p>
+                        <p className="text-sm text-muted-foreground font-extralight capitalize">{reg.applicationType}</p>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(reg.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">2 hours ago</span>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
               <Link href="/admin/registrations" className="text-sm text-primary hover:underline mt-4 inline-block">
                 View all registrations →
@@ -146,20 +189,26 @@ export default function AdminDashboard() {
             </div>
 
             <div className="bg-white border border-primary/10 rounded-lg p-6">
-              <h3 className="text-lg font-light text-maroon mb-4">Upcoming Events</h3>
+              <h3 className="text-lg font-light text-maroon mb-4">Recent Contact Messages</h3>
               <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
-                    <div>
-                      <p className="font-light">Event Name {i}</p>
-                      <p className="text-sm text-muted-foreground font-extralight">Location • Date</p>
+                {recentContacts.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">No messages yet</p>
+                ) : (
+                  recentContacts.map((contact) => (
+                    <div key={contact.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                      <div>
+                        <p className="font-light">{contact.name}</p>
+                        <p className="text-sm text-muted-foreground font-extralight truncate max-w-[200px]">{contact.subject}</p>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded ${contact.status === 'unread' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700'}`}>
+                        {contact.status}
+                      </span>
                     </div>
-                    <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
-              <Link href="/admin/events" className="text-sm text-primary hover:underline mt-4 inline-block">
-                Manage all events →
+              <Link href="/admin/contacts" className="text-sm text-primary hover:underline mt-4 inline-block">
+                View all messages →
               </Link>
             </div>
           </div>
