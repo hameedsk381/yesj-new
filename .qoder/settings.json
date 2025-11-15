@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "ask": [
+      "Read(!C:\\Users\\cogni\\Downloads\\aicuf-website/**)",
+      "Edit(!C:\\Users\\cogni\\Downloads\\aicuf-website/**)"
+    ],
+    "allow": [
+      "Read(C:\\Users\\cogni\\Downloads\\aicuf-website/**)",
+      "Edit(C:\\Users\\cogni\\Downloads\\aicuf-website/**)"
+    ]
+  },
+  "memoryImport": {},
+  "monitoring": {}
+}

@@ -1,0 +1,172 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import Header from "@/components/layout/header"
+import Footer from "@/components/layout/footer"
+import { Button } from "@/components/ui/button"
+import { 
+  Users, 
+  Calendar, 
+  Mail, 
+  TrendingUp, 
+  LogOut,
+  FileText,
+  Settings
+} from "lucide-react"
+import Link from "next/link"
+
+export default function AdminDashboard() {
+  const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const token = localStorage.getItem("admin-token")
+    if (!token) {
+      router.push("/admin/login")
+    } else {
+      setIsAuthenticated(true)
+    }
+    setIsLoading(false)
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin-token")
+    router.push("/admin/login")
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return null
+  }
+
+  const stats = [
+    { label: "Total Registrations", value: "247", icon: Users, color: "text-blue-600" },
+    { label: "Upcoming Events", value: "5", icon: Calendar, color: "text-green-600" },
+    { label: "Newsletter Subscribers", value: "1,234", icon: Mail, color: "text-purple-600" },
+    { label: "Monthly Growth", value: "+23%", icon: TrendingUp, color: "text-orange-600" },
+  ]
+
+  const quickActions = [
+    { label: "View Registrations", href: "/admin/registrations", icon: Users },
+    { label: "View Nominations", href: "/admin/nominations", icon: FileText },
+    { label: "View Contacts", href: "/admin/contacts", icon: Mail },
+    { label: "Manage Events", href: "/admin/events", icon: Calendar },
+    { label: "Newsletter List", href: "/admin/newsletter", icon: Mail },
+    { label: "Settings", href: "/admin/settings", icon: Settings },
+  ]
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
+          <h1 className="text-xl font-light text-maroon">APTSAICUF Admin Dashboard</h1>
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            className="rounded-none border-maroon text-maroon hover:bg-maroon/10"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
+        </div>
+      </header>
+
+      <main className="flex-1 py-12">
+        <div className="container px-4 md:px-6">
+          <div className="mb-8">
+            <h2 className="text-2xl font-light text-maroon mb-2">Dashboard Overview</h2>
+            <p className="text-muted-foreground font-extralight">
+              Welcome back! Here's what's happening with APTSAICUF.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon
+              return (
+                <div
+                  key={index}
+                  className="bg-white border border-primary/10 rounded-lg p-6 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <Icon className={`h-8 w-8 ${stat.color}`} />
+                  </div>
+                  <p className="text-3xl font-light text-maroon mb-1">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground font-extralight">{stat.label}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="bg-white border border-primary/10 rounded-lg p-6 mb-8">
+            <h3 className="text-lg font-light text-maroon mb-6">Quick Actions</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {quickActions.map((action, index) => {
+                const Icon = action.icon
+                return (
+                  <Link
+                    key={index}
+                    href={action.href}
+                    className="flex items-center gap-3 p-4 border border-primary/10 rounded hover:bg-blue-50 hover:border-primary/30 transition-all"
+                  >
+                    <Icon className="h-5 w-5 text-primary" />
+                    <span className="font-light">{action.label}</span>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white border border-primary/10 rounded-lg p-6">
+              <h3 className="text-lg font-light text-maroon mb-4">Recent Registrations</h3>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                    <div>
+                      <p className="font-light">Student Name {i}</p>
+                      <p className="text-sm text-muted-foreground font-extralight">Membership Application</p>
+                    </div>
+                    <span className="text-xs text-muted-foreground">2 hours ago</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/admin/registrations" className="text-sm text-primary hover:underline mt-4 inline-block">
+                View all registrations →
+              </Link>
+            </div>
+
+            <div className="bg-white border border-primary/10 rounded-lg p-6">
+              <h3 className="text-lg font-light text-maroon mb-4">Upcoming Events</h3>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+                    <div>
+                      <p className="font-light">Event Name {i}</p>
+                      <p className="text-sm text-muted-foreground font-extralight">Location • Date</p>
+                    </div>
+                    <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/admin/events" className="text-sm text-primary hover:underline mt-4 inline-block">
+                Manage all events →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  )
+}
