@@ -1,10 +1,8 @@
-import Database from "better-sqlite3"
-import { drizzle } from "drizzle-orm/better-sqlite3"
+import { Database } from "bun:sqlite"
+import { drizzle } from "drizzle-orm/bun-sqlite"
 import * as schema from "./schema"
 import { join } from "path"
 import { mkdirSync, existsSync } from "fs"
-
-type DatabaseInstance = Database.Database
 
 const dataDir = join(process.cwd(), "data")
 if (!existsSync(dataDir)) {
@@ -14,11 +12,12 @@ if (!existsSync(dataDir)) {
 const dbPath = process.env.DATABASE_PATH || join(process.cwd(), "data", "aicuf.db")
 
 // Singleton pattern for database connection
-let sqliteInstance: DatabaseInstance | null = null
+let sqliteInstance: Database | null = null
 
 function getDatabase() {
   if (!sqliteInstance) {
-    sqliteInstance = new Database(dbPath)
+    // Create database with appropriate options based on runtime
+    sqliteInstance = new Database(dbPath, { create: true })
     
     // Enable WAL mode for better concurrency
     sqliteInstance.exec("PRAGMA journal_mode = WAL")
