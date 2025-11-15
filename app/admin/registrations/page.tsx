@@ -76,7 +76,6 @@ export default function RegistrationsPage() {
       "Reg No",
       "Religion",
       "Address",
-      "Status",
       "Date",
     ]
 
@@ -93,7 +92,6 @@ export default function RegistrationsPage() {
       reg.registrationNo,
       reg.religion,
       reg.address,
-      reg.status,
       new Date(reg.createdAt).toLocaleDateString(),
     ])
 
@@ -166,9 +164,6 @@ export default function RegistrationsPage() {
                     Type
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Status
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Date
                   </th>
                 </tr>
@@ -176,7 +171,7 @@ export default function RegistrationsPage() {
               <tbody className="divide-y">
                 {registrations.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                    <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
                       No registrations found
                     </td>
                   </tr>
@@ -188,19 +183,6 @@ export default function RegistrationsPage() {
                       <td className="px-4 py-3 text-sm">{reg.emailId}</td>
                       <td className="px-4 py-3 text-sm">{reg.mobileNo}</td>
                       <td className="px-4 py-3 text-sm capitalize">{reg.applicationType}</td>
-                      <td className="px-4 py-3 text-sm">
-                        <span
-                          className={`px-2 py-1 text-xs rounded ${
-                            reg.status === "approved"
-                              ? "bg-green-100 text-green-700"
-                              : reg.status === "rejected"
-                                ? "bg-red-100 text-red-700"
-                                : "bg-yellow-100 text-yellow-700"
-                          }`}
-                        >
-                          {reg.status}
-                        </span>
-                      </td>
                       <td className="px-4 py-3 text-sm">
                         {new Date(reg.createdAt).toLocaleDateString()}
                       </td>

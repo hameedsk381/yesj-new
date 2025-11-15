@@ -1,8 +1,10 @@
-import { Database } from "bun:sqlite"
-import { drizzle } from "drizzle-orm/bun-sqlite"
+import Database from "better-sqlite3"
+import { drizzle } from "drizzle-orm/better-sqlite3"
 import * as schema from "./schema"
 import { join } from "path"
 import { mkdirSync, existsSync } from "fs"
+
+type DatabaseInstance = Database.Database
 
 const dataDir = join(process.cwd(), "data")
 if (!existsSync(dataDir)) {
@@ -12,11 +14,11 @@ if (!existsSync(dataDir)) {
 const dbPath = process.env.DATABASE_PATH || join(process.cwd(), "data", "aicuf.db")
 
 // Singleton pattern for database connection
-let sqliteInstance: Database | null = null
+let sqliteInstance: DatabaseInstance | null = null
 
 function getDatabase() {
   if (!sqliteInstance) {
-    sqliteInstance = new Database(dbPath, { create: true })
+    sqliteInstance = new Database(dbPath)
     
     // Enable WAL mode for better concurrency
     sqliteInstance.exec("PRAGMA journal_mode = WAL")
@@ -81,6 +83,17 @@ function getDatabase() {
   return sqliteInstance
 }
 
-const sqlite = getDatabase()
-export const db = drizzle(sqlite, { schema })
+// Lazy database initialization - only create when first accessed
+let _db: ReturnType<typeof drizzle> | null = null
+
+export const db = new Proxy({} as ReturnType<typeof drizzle>, {
+  get(target, prop) {
+    if (!_db) {
+      const sqlite = getDatabase()
+      _db = drizzle(sqlite, { schema })
+    }
+    return (_db as any)[prop]
+  }
+})
+
 export { schema }
