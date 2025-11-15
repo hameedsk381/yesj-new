@@ -16,6 +16,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Build arguments for environment variables needed during build
+ARG MONGODB_URI
+ENV MONGODB_URI=${MONGODB_URI}
+
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED=1
 
