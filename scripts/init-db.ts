@@ -1,4 +1,4 @@
-import { Database } from "bun:sqlite"
+import Database from "better-sqlite3"
 import { join } from "path"
 import { mkdirSync, existsSync } from "fs"
 
@@ -8,7 +8,7 @@ if (!existsSync(dataDir)) {
 }
 
 const dbPath = join(dataDir, "aicuf.db")
-const sqlite = new Database(dbPath, { create: true })
+const sqlite = new Database(dbPath)
 
 // Create tables manually since we don't have migrations yet
 sqlite.exec(`
