@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
-import { writeFile, mkdir } from "fs/promises"
-import { join } from "path"
-import { existsSync } from "fs"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { RATE_LIMIT } from "@/lib/constants"
 import { logger } from "@/lib/logger"
 import { db, schema } from "@/lib/db"
+import { minioClient, BUCKET_NAME } from "@/lib/minio"
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 
@@ -57,21 +55,24 @@ export async function POST(request: NextRequest) {
     const bytes = await nocFile.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
-    const uploadDir = join(process.cwd(), "public", "uploads", "noc")
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true })
-    }
-
     const timestamp = Date.now()
     const fileExtension = nocFile.name.split(".").pop()
-    const fileName = `noc-${timestamp}.${fileExtension}`
-    const filePath = join(uploadDir, fileName)
+    const fileName = `noc/${timestamp}.${fileExtension}`
 
-    await writeFile(filePath, buffer)
+    // Upload to MinIO
+    await minioClient.putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
+      "Content-Type": nocFile.type,
+    })
 
-    logger.info("NOC file uploaded", {
+    const minioEndpoint = process.env.MINIO_ENDPOINT || "localhost"
+    const minioPort = process.env.MINIO_PORT || "9000"
+    const protocol = process.env.MINIO_USE_SSL === "true" ? "https" : "http"
+    const fileUrl = `${protocol}://${minioEndpoint}:${minioPort}/${BUCKET_NAME}/${fileName}`
+
+    logger.info("NOC file uploaded to MinIO", {
       fileName,
       size: nocFile.size,
+      url: fileUrl,
     })
 
     const [nomination] = await db.insert(schema.nominations).values({
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
       unitName,
       contestingFor,
       educationQualification,
-      nocFilePath: `/api/files/noc/${fileName}`,
+      nocFilePath: fileUrl,
       nocFileName: nocFile.name,
       status: "pending",
     }).returning()
