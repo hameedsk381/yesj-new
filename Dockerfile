@@ -31,9 +31,6 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Install netcat for healthchecks
-RUN apk add --no-cache netcat-openbsd
-
 # Copy public assets (excluding uploads which will be volume mounted)
 COPY --from=builder /app/public ./public
 

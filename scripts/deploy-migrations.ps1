@@ -19,8 +19,9 @@ if (-not $latestMigration) {
 
 Write-Host "Applying migration: $($latestMigration.Name)" -ForegroundColor Yellow
 
-# Step 3: Apply migration to production database
-Get-Content "drizzle/$($latestMigration.Name)" | docker exec -i aicuf-postgres psql -U aicuf -d aicuf
+# Step 3: Execute migration inside the web container
+Write-Host "Running migration in container..." -ForegroundColor Cyan
+docker exec aicuf-website-web-1 bun run /app/scripts/migrate.ts
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "✅ Migrations completed successfully!" -ForegroundColor Green

@@ -1,21 +1,5 @@
 
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: aicuf-postgres
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-aicuf}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aicuf_password}
-      POSTGRES_DB: ${POSTGRES_DB:-aicuf}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aicuf}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
   minio:
     image: minio/minio:latest
     container_name: aicuf-minio
@@ -51,10 +35,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://aicuf:aicuf_password@postgres:5432/aicuf
+      - DATABASE_URL=${DATABASE_URL}
       - MINIO_ENDPOINT=minio
       - MINIO_PORT=9000
       - MINIO_USE_SSL=false
@@ -75,16 +58,12 @@ services:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - ADMIN_TOKEN=${ADMIN_TOKEN}
     depends_on:
-      postgres:
-        condition: service_healthy
       minio:
         condition: service_healthy
     restart: unless-stopped
 
 
 volumes:
-  postgres_data:
-    driver: local
   minio_data:
     driver: local
 

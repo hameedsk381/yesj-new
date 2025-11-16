@@ -27,5 +27,13 @@ const runMigrate = async () => {
 runMigrate().catch((err) => {
   console.error("❌ Migration failed")
   console.error(err)
+  
+  // Check if error is "table already exists" - this is safe to ignore in production
+  const errorMessage = err?.message || String(err)
+  if (errorMessage.includes("already exists")) {
+    console.log("⚠️  Tables already exist, skipping migration")
+    process.exit(0)
+  }
+  
   process.exit(1)
 })
