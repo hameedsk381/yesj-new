@@ -2,14 +2,14 @@ import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
 import * as schema from "./schema"
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is required in .env file")
-}
-
 // Singleton pattern for database connection
 let pgInstance: ReturnType<typeof postgres> | null = null
 
 function getDatabase() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is required in .env file")
+  }
+  
   if (!pgInstance) {
     pgInstance = postgres(process.env.DATABASE_URL!, {
       max: 10,

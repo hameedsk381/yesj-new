@@ -1,33 +1,48 @@
 import { Client } from "minio"
 
-if (!process.env.MINIO_ENDPOINT) {
-  throw new Error("MINIO_ENDPOINT is required in .env file")
-}
-
-if (!process.env.MINIO_ACCESS_KEY) {
-  throw new Error("MINIO_ACCESS_KEY is required in .env file")
-}
-
-if (!process.env.MINIO_SECRET_KEY) {
-  throw new Error("MINIO_SECRET_KEY is required in .env file")
-}
-
-const minioClient = new Client({
-  endPoint: process.env.MINIO_ENDPOINT!,
-  port: parseInt(process.env.MINIO_PORT || "9000"),
-  useSSL: process.env.MINIO_USE_SSL === "true",
-  accessKey: process.env.MINIO_ACCESS_KEY!,
-  secretKey: process.env.MINIO_SECRET_KEY!,
-})
-
 const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || "aicuf-uploads"
+
+// Singleton pattern for MinIO client
+let minioInstance: Client | null = null
+
+function getMinioClient() {
+  if (!process.env.MINIO_ENDPOINT) {
+    throw new Error("MINIO_ENDPOINT is required in .env file")
+  }
+
+  if (!process.env.MINIO_ACCESS_KEY) {
+    throw new Error("MINIO_ACCESS_KEY is required in .env file")
+  }
+
+  if (!process.env.MINIO_SECRET_KEY) {
+    throw new Error("MINIO_SECRET_KEY is required in .env file")
+  }
+
+  if (!minioInstance) {
+    minioInstance = new Client({
+      endPoint: process.env.MINIO_ENDPOINT!,
+      port: parseInt(process.env.MINIO_PORT || "9000"),
+      useSSL: process.env.MINIO_USE_SSL === "true",
+      accessKey: process.env.MINIO_ACCESS_KEY!,
+      secretKey: process.env.MINIO_SECRET_KEY!,
+    })
+
+    // Initialize bucket if it doesn't exist
+    ensureBucket().catch((error) => {
+      console.error("Error ensuring bucket exists:", error)
+    })
+  }
+
+  return minioInstance
+}
 
 // Initialize bucket if it doesn't exist
 async function ensureBucket() {
+  const client = getMinioClient()
   try {
-    const exists = await minioClient.bucketExists(BUCKET_NAME)
+    const exists = await client.bucketExists(BUCKET_NAME)
     if (!exists) {
-      await minioClient.makeBucket(BUCKET_NAME, "us-east-1")
+      await client.makeBucket(BUCKET_NAME, "us-east-1")
       
       // Set public read policy for the bucket
       const policy = {
@@ -41,14 +56,19 @@ async function ensureBucket() {
           },
         ],
       }
-      await minioClient.setBucketPolicy(BUCKET_NAME, JSON.stringify(policy))
+      await client.setBucketPolicy(BUCKET_NAME, JSON.stringify(policy))
     }
   } catch (error) {
     console.error("Error ensuring bucket exists:", error)
   }
 }
 
-// Initialize on module load
-ensureBucket()
+// Export lazy getter
+export const minioClient = new Proxy({} as Client, {
+  get(target, prop) {
+    const client = getMinioClient()
+    return (client as any)[prop]
+  }
+})
 
-export { minioClient, BUCKET_NAME }
+export { BUCKET_NAME }
