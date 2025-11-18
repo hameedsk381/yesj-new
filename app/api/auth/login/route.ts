@@ -9,7 +9,7 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-s
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json()
+    const { email, password, requireAdmin } = await req.json()
 
     if (!email || !password) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 })
@@ -22,6 +22,11 @@ export async function POST(req: Request) {
 
     if (!user) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+    }
+
+    // Check if admin role is required (for admin login)
+    if (requireAdmin && user.role !== 'admin') {
+      return NextResponse.json({ error: "Access denied. Admin privileges required." }, { status: 403 })
     }
 
     // Check if user has a password set
@@ -50,7 +55,7 @@ export async function POST(req: Request) {
       .sign(JWT_SECRET)
 
     // Create response with cookie
-    const response = NextResponse.json({ success: true })
+    const response = NextResponse.json({ success: true, role: user.role })
 
     response.cookies.set("token", token, {
       httpOnly: true,

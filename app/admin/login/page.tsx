@@ -10,7 +10,7 @@ import { Lock, Loader2 } from "lucide-react"
 export default function AdminLoginPage() {
   const router = useRouter()
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -27,17 +27,18 @@ export default function AdminLoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({ ...credentials, requireAdmin: true }),
       })
 
       const data = await response.json()
 
-      if (!data.success) {
-        throw new Error(data.message || "Login failed")
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed")
       }
 
-      localStorage.setItem("admin-token", data.token)
+      // Token is set in httpOnly cookie by the API
       router.push("/admin/dashboard")
+      router.refresh()
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed")
     } finally {
@@ -61,13 +62,13 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                id="username"
-                type="text"
-                placeholder="Enter your username"
-                value={credentials.username}
-                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={credentials.email}
+                onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                 disabled={isLoading}
                 required
               />

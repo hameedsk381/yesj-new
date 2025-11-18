@@ -47,11 +47,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/drizzle ./drizzle
 COPY --from=builder --chown=nextjs:nodejs /app/drizzle.config.ts ./drizzle.config.ts
 COPY --from=builder --chown=nextjs:nodejs /app/lib/db ./lib/db
 COPY --from=builder --chown=nextjs:nodejs /app/scripts/migrate.ts ./scripts/migrate.ts
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/create-admin.ts ./scripts/create-admin.ts
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
 # Copy required node_modules for migrations
 COPY --from=deps /app/node_modules/drizzle-orm ./node_modules/drizzle-orm
 COPY --from=deps /app/node_modules/postgres ./node_modules/postgres
+COPY --from=deps /app/node_modules/bcryptjs ./node_modules/bcryptjs
 
 # Copy entrypoint script
 COPY --chown=nextjs:nodejs scripts/docker-entrypoint.sh /app/docker-entrypoint.sh

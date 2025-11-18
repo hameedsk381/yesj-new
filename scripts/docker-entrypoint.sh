@@ -20,6 +20,19 @@ else
   else
     echo "⚠️  No migration script found, skipping..."
   fi
+
+  # Create admin user automatically
+  echo "👤 Creating/updating admin user..."
+  if [ -f "/app/scripts/create-admin.ts" ]; then
+    bun run /app/scripts/create-admin.ts
+    if [ $? -eq 0 ]; then
+      echo "✅ Admin user setup completed"
+    else
+      echo "⚠️  Admin user creation failed, but continuing..."
+    fi
+  else
+    echo "⚠️  No admin creation script found, skipping..."
+  fi
 fi
 
 # Start the Next.js application
