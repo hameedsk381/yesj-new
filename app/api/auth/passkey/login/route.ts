@@ -28,89 +28,102 @@ function getExpectedOrigin(): string {
 }
 
 export async function POST(req: Request) {
-    const { email, step, assertionResponse } = await req.json();
+    try {
+        const { email, step, assertionResponse } = await req.json();
 
-    // Step 1: generate authentication options
-    if (step === 'options') {
-        const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        // Step 1: generate authentication options
+        if (step === 'options') {
+            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            if (!user) {
+                return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            }
+            const credentials = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.userId, user.id));
+            
+            if (credentials.length === 0) {
+                return NextResponse.json({ error: 'No passkeys registered for this user' }, { status: 404 });
+            }
+            
+            const allowCredentials = credentials.map(cred => ({
+                id: cred.credentialId,
+                type: 'public-key' as const,
+            }));
+            const options = await generateAuthenticationOptions({
+                rpID: getRpID(),
+                userVerification: 'preferred',
+                timeout: 60000,
+                allowCredentials,
+            });
+            loginChallengeStore[email] = options.challenge;
+            return NextResponse.json(options);
         }
-        const credentials = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.userId, user.id));
-        const allowCredentials = credentials.map(cred => ({
-            id: cred.credentialId,
-            type: 'public-key' as const,
-        }));
-        const options = await generateAuthenticationOptions({
-            rpID: getRpID(),
-            userVerification: 'preferred',
-            timeout: 60000,
-            allowCredentials,
-        });
-        loginChallengeStore[email] = options.challenge;
-        return NextResponse.json(options);
+
+        // Step 2: verify assertion response
+        if (step === 'verify' && assertionResponse) {
+            const expectedChallenge = loginChallengeStore[email];
+            if (!expectedChallenge) {
+                return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
+            }
+
+            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            if (!user) {
+                return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            }
+
+            // Convert base64url credential ID from browser to base64 for DB lookup
+            const credentialIdBase64 = base64urlToBase64(assertionResponse.id);
+            const storedCred = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.credentialId, credentialIdBase64));
+
+            if (storedCred.length === 0) {
+                return NextResponse.json({ error: 'Credential not registered' }, { status: 404 });
+            }
+
+            const verification = await verifyAuthenticationResponse({
+                response: assertionResponse,
+                expectedChallenge,
+                expectedOrigin: getExpectedOrigin(),
+                expectedRPID: getRpID(),
+                credential: {
+                    id: storedCred[0].credentialId,
+                    publicKey: new Uint8Array(Buffer.from(storedCred[0].publicKey, 'base64')),
+                    counter: storedCred[0].counter,
+                },
+            });
+
+            if (!verification.verified) {
+                return NextResponse.json({ error: 'Authentication failed' }, { status: 400 });
+            }
+
+            const { newCounter } = verification.authenticationInfo;
+            await db.update(passkeyCredentials).set({ counter: newCounter }).where(eq(passkeyCredentials.id, storedCred[0].id));
+
+            // Issue JWT (reuse same secret as password login)
+            const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'default-secret-key');
+            const { SignJWT } = await import('jose');
+            const token = await new SignJWT({
+                id: storedCred[0].userId,
+                email,
+            })
+                .setProtectedHeader({ alg: 'HS256' })
+                .setExpirationTime('24h')
+                .sign(JWT_SECRET);
+            const response = NextResponse.json({ success: true });
+            response.cookies.set('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'lax',
+                maxAge: 60 * 60 * 24,
+                path: '/',
+            });
+            delete loginChallengeStore[email];
+            return response;
+        }
+
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    } catch (error) {
+        console.error('Passkey login error:', error);
+        return NextResponse.json({
+            error: 'Login failed',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        }, { status: 500 });
     }
-
-    // Step 2: verify assertion response
-    if (step === 'verify' && assertionResponse) {
-        const expectedChallenge = loginChallengeStore[email];
-        if (!expectedChallenge) {
-            return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
-        }
-
-        const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
-        }
-
-        // Convert base64url credential ID from browser to base64 for DB lookup
-        const credentialIdBase64 = base64urlToBase64(assertionResponse.id);
-        const storedCred = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.credentialId, credentialIdBase64));
-
-        if (storedCred.length === 0) {
-            return NextResponse.json({ error: 'Credential not registered' }, { status: 404 });
-        }
-
-        const verification = await verifyAuthenticationResponse({
-            response: assertionResponse,
-            expectedChallenge,
-            expectedOrigin: getExpectedOrigin(),
-            expectedRPID: getRpID(),
-            credential: {
-                id: storedCred[0].credentialId,
-                publicKey: Buffer.from(storedCred[0].publicKey, 'base64'),
-                counter: storedCred[0].counter,
-            },
-        });
-
-        if (!verification.verified) {
-            return NextResponse.json({ error: 'Authentication failed' }, { status: 400 });
-        }
-
-        const { newCounter } = verification.authenticationInfo;
-        await db.update(passkeyCredentials).set({ counter: newCounter }).where(eq(passkeyCredentials.id, storedCred[0].id));
-
-        // Issue JWT (reuse same secret as password login)
-        const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'default-secret-key');
-        const { SignJWT } = await import('jose');
-        const token = await new SignJWT({
-            id: storedCred[0].userId,
-            email,
-        })
-            .setProtectedHeader({ alg: 'HS256' })
-            .setExpirationTime('24h')
-            .sign(JWT_SECRET);
-        const response = NextResponse.json({ success: true });
-        response.cookies.set('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 24,
-            path: '/',
-        });
-        delete loginChallengeStore[email];
-        return response;
-    }
-
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
 }

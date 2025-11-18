@@ -19,60 +19,73 @@ function getExpectedOrigin(): string {
 }
 
 export async function POST(req: Request) {
-    const { email, step, attestationResponse } = await req.json();
+    try {
+        const { email, step, attestationResponse } = await req.json();
 
-    // Step 1: generate registration options
-    if (step === 'options') {
-        const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        // Step 1: generate registration options
+        if (step === 'options') {
+            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            if (!user) {
+                return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            }
+            const options = await generateRegistrationOptions({
+                rpName: 'AICUF',
+                rpID: getRpID(),
+                userID: new Uint8Array(Buffer.from(user.id.toString())),
+                userName: user.emailId,
+                timeout: 60000,
+                attestationType: 'none',
+                authenticatorSelection: {
+                    residentKey: 'discouraged',
+                    userVerification: 'preferred',
+                },
+            });
+            challengeStore[email] = options.challenge;
+            return NextResponse.json(options);
         }
-        const options = await generateRegistrationOptions({
-            rpName: 'AICUF',
-            rpID: getRpID(),
-            userID: new Uint8Array(Buffer.from(user.id.toString())),
-            userName: user.emailId,
-            timeout: 60000,
-            attestationType: 'none',
-            authenticatorSelection: {
-                residentKey: 'discouraged',
-                userVerification: 'preferred',
-            },
-        });
-        challengeStore[email] = options.challenge;
-        return NextResponse.json(options);
+
+        // Step 2: verify registration response and store credential
+        if (step === 'verify' && attestationResponse) {
+            const expectedChallenge = challengeStore[email];
+            if (!expectedChallenge) {
+                return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
+            }
+
+            const verification = await verifyRegistrationResponse({
+                response: attestationResponse,
+                expectedChallenge,
+                expectedOrigin: getExpectedOrigin(),
+                expectedRPID: getRpID(),
+            });
+
+            if (!verification.verified) {
+                return NextResponse.json({ error: 'Registration verification failed' }, { status: 400 });
+            }
+
+            const { credential } = verification.registrationInfo;
+            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            if (!user) {
+                return NextResponse.json({ error: 'User not found' }, { status: 404 });
+            }
+
+            await db.insert(passkeyCredentials).values({
+                userId: user.id,
+                credentialId: Buffer.from(credential.id).toString('base64'),
+                publicKey: Buffer.from(credential.publicKey).toString('base64'),
+                counter: credential.counter,
+            });
+
+            delete challengeStore[email];
+            return NextResponse.json({ success: true });
+        }
+
+        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    } catch (error) {
+        console.error('Passkey registration error:', error);
+        return NextResponse.json({
+            error: 'Registration failed',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        }, { status: 500 });
     }
-
-    // Step 2: verify registration response and store credential
-    if (step === 'verify' && attestationResponse) {
-        const expectedChallenge = challengeStore[email];
-        if (!expectedChallenge) {
-            return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
-        }
-        const verification = await verifyRegistrationResponse({
-            response: attestationResponse,
-            expectedChallenge,
-            expectedOrigin: getExpectedOrigin(),
-            expectedRPID: getRpID(),
-        });
-        if (!verification.verified) {
-            return NextResponse.json({ error: 'Registration verification failed' }, { status: 400 });
-        }
-        const { credential } = verification.registrationInfo;
-        const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
-        if (!user) {
-            return NextResponse.json({ error: 'User not found' }, { status: 404 });
-        }
-        await db.insert(passkeyCredentials).values({
-            userId: user.id,
-            credentialId: Buffer.from(credential.id).toString('base64'),
-            publicKey: Buffer.from(credential.publicKey).toString('base64'),
-            counter: credential.counter,
-        });
-        delete challengeStore[email];
-        return NextResponse.json({ success: true });
-    }
-
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
 }
 
