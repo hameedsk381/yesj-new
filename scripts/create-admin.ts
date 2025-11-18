@@ -6,8 +6,9 @@ const sql = postgres(DATABASE_URL);
 
 async function createAdmin() {
   try {
-    const adminEmail = "admin@aptsaicuf.com"; // Change this to your preferred admin email
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@aptsaicuf.com";
     const adminPassword = process.env.ADMIN_PASSWORD || "aicufadmin";
+    const isProduction = process.env.NODE_ENV === "production";
     
     console.log("Creating admin user...\n");
     
@@ -76,7 +77,14 @@ async function createAdmin() {
     console.log("\nAdmin Login Credentials:");
     console.log("========================");
     console.log("Email:", adminEmail);
-    console.log("Password:", adminPassword);
+    
+    // Only show password in development or if explicitly requested
+    if (!isProduction || process.env.SHOW_ADMIN_PASSWORD === "true") {
+      console.log("Password:", adminPassword);
+    } else {
+      console.log("Password: [Set via ADMIN_PASSWORD env variable]");
+    }
+    
     console.log("Login URL: /admin/login");
     
     await sql.end();
