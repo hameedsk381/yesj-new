@@ -48,12 +48,25 @@ git push origin main
    - Add all variables from `.env` to Dokploy
    - **CRITICAL**: Set `NEXT_PUBLIC_SITE_URL` to your actual domain with HTTPS
 
-4. **Database Setup**
-   - If using Dokploy's PostgreSQL: Link database
-   - If external: Add `DATABASE_URL` to env vars
-   - Database migrations run automatically on startup via `npm run db:push`
+### 4. Database Setup
 
-5. **Deploy**
+**Option 1: Run Migrations After First Deployment (Recommended)**
+
+After your app is deployed in Dokploy:
+
+1. Go to your app's terminal/console in Dokploy
+2. Run: `bun run db:push`
+3. This applies your schema to the production database
+
+**Option 2: Use Dokploy's PostgreSQL Service**
+
+If using Dokploy's built-in PostgreSQL:
+1. Create PostgreSQL service in Dokploy
+2. Link it to your application
+3. Database will be auto-created
+4. Run `bun run db:push` in app terminal to apply schema
+
+### 5. Deploy
    - Click "Deploy" button
    - Monitor build logs for errors
    - Check deployment status
@@ -81,12 +94,18 @@ Visit your domain and test:
 
 ## Database Migrations
 
-Migrations happen automatically via the `postinstall` script in `package.json`:
-```json
-"postinstall": "bun run db:push"
-```
+**After deployment, run migrations manually:**
 
-This runs `drizzle-kit push` which applies schema changes to the database.
+1. In Dokploy, go to your app
+2. Open the Terminal/Console
+3. Run: `bun run db:push`
+
+This applies your database schema (tables, columns, etc.) to production.
+
+**What gets created:**
+- `registrations` table (with password, role, etc.)
+- `passkey_credentials` table
+- All indexes and relationships
 
 ## Troubleshooting
 
