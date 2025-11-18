@@ -68,12 +68,20 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'User not found' }, { status: 404 });
             }
 
-            await db.insert(passkeyCredentials).values({
+            const credentialData = {
                 userId: user.id,
                 credentialId: Buffer.from(credential.id).toString('base64'),
                 publicKey: Buffer.from(credential.publicKey).toString('base64'),
                 counter: credential.counter,
+            };
+
+            console.log('Storing passkey credential:', {
+                userId: user.id,
+                credentialIdLength: credentialData.credentialId.length,
+                email: user.emailId
             });
+
+            await db.insert(passkeyCredentials).values(credentialData);
 
             delete challengeStore[email];
             return NextResponse.json({ success: true });

@@ -7,6 +7,11 @@ import { generateAuthenticationOptions, verifyAuthenticationResponse } from '@si
 // In-memory store for login challenges (demo only)
 const loginChallengeStore: Record<string, string> = {};
 
+// Helper to convert base64 to base64url
+function base64ToBase64url(base64: string): string {
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
 // Helper to convert base64url to base64
 function base64urlToBase64(base64url: string): string {
     let base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
@@ -39,14 +44,27 @@ export async function POST(req: Request) {
             }
             const credentials = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.userId, user.id));
             
+            console.log('Found credentials for user:', {
+                email,
+                userId: user.id,
+                credentialCount: credentials.length,
+                credentialIds: credentials.map(c => c.credentialId.substring(0, 20) + '...')
+            });
+            
             if (credentials.length === 0) {
                 return NextResponse.json({ error: 'No passkeys registered for this user' }, { status: 404 });
             }
             
-            const allowCredentials = credentials.map(cred => ({
-                id: cred.credentialId,
-                type: 'public-key' as const,
-            }));
+            // Convert base64 credential IDs from DB to base64url format for the browser
+            const allowCredentials = credentials.map(cred => {
+                // SimpleWebAuthn expects base64url string format
+                const credentialIdBase64url = base64ToBase64url(cred.credentialId);
+                return {
+                    id: credentialIdBase64url,
+                    type: 'public-key' as const,
+                };
+            });
+            
             const options = await generateAuthenticationOptions({
                 rpID: getRpID(),
                 userVerification: 'preferred',
