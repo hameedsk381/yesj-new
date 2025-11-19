@@ -1,20 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
-import { headers } from "next/headers"
 import { db, schema } from "@/lib/db"
 import { desc, eq } from "drizzle-orm"
 
+// Note: Authentication is handled by middleware for /admin/* routes
 export async function GET(request: NextRequest) {
   try {
-    const headersList = headers()
-    const token = headersList.get("authorization")?.replace("Bearer ", "")
-
-    if (!token || token !== process.env.ADMIN_TOKEN) {
-      return NextResponse.json(
-        { success: false, message: "Unauthorized" },
-        { status: 401 }
-      )
-    }
-
     const contacts = await db.select().from(schema.contacts)
       .orderBy(desc(schema.contacts.createdAt))
 
@@ -37,16 +27,6 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const headersList = headers()
-    const token = headersList.get("authorization")?.replace("Bearer ", "")
-
-    if (!token || token !== process.env.ADMIN_TOKEN) {
-      return NextResponse.json(
-        { success: false, message: "Unauthorized" },
-        { status: 401 }
-      )
-    }
-
     const { id, status } = await request.json()
 
     if (!id) {
@@ -85,16 +65,6 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const headersList = headers()
-    const token = headersList.get("authorization")?.replace("Bearer ", "")
-
-    if (!token || token !== process.env.ADMIN_TOKEN) {
-      return NextResponse.json(
-        { success: false, message: "Unauthorized" },
-        { status: 401 }
-      )
-    }
-
     const { searchParams } = new URL(request.url)
     const id = searchParams.get("id")
 

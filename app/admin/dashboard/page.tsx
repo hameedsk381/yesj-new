@@ -15,7 +15,6 @@ import Link from "next/link"
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [stats, setStats] = useState({
     registrations: 0,
@@ -27,23 +26,20 @@ export default function AdminDashboard() {
   const [recentContacts, setRecentContacts] = useState<any[]>([])
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) {
-      router.push("/admin/login")
-    } else {
-      setIsAuthenticated(true)
-      fetchDashboardData(token)
-    }
+    // No need to check localStorage - middleware handles authentication
+    // Just fetch dashboard data
+    fetchDashboardData()
     setIsLoading(false)
-  }, [router])
+  }, [])
 
-  const fetchDashboardData = async (token: string) => {
+  const fetchDashboardData = async () => {
     try {
+      // No token needed - cookie is sent automatically
       const [registrationsRes, nominationsRes, contactsRes, newslettersRes] = await Promise.all([
-        fetch("/api/admin/registrations", { headers: { Authorization: `Bearer ${token}` } }),
-        fetch("/api/admin/nominations", { headers: { Authorization: `Bearer ${token}` } }),
-        fetch("/api/admin/contacts", { headers: { Authorization: `Bearer ${token}` } }),
-        fetch("/api/admin/newsletters", { headers: { Authorization: `Bearer ${token}` } })
+        fetch("/api/admin/registrations"),
+        fetch("/api/admin/nominations"),
+        fetch("/api/admin/contacts"),
+        fetch("/api/admin/newsletters")
       ])
 
       const [registrationsData, nominationsData, contactsData, newslettersData] = await Promise.all([
@@ -70,9 +66,10 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin-token")
-    router.push("/admin/login")
+  const handleLogout = async () => {
+    // Call logout API to clear cookie
+    await fetch("/api/auth/logout", { method: "POST" })
+    window.location.href = "/admin/login"
   }
 
   if (isLoading) {
@@ -81,10 +78,6 @@ export default function AdminDashboard() {
         <p>Loading...</p>
       </div>
     )
-  }
-
-  if (!isAuthenticated) {
-    return null
   }
 
   const statsData = [

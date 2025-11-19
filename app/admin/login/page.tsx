@@ -41,7 +41,6 @@ export default function AdminLoginPage() {
       window.location.href = "/admin/dashboard"
     } catch (error) {
       setError(error instanceof Error ? error.message : "Login failed")
-    } finally {
       setIsLoading(false)
     }
   }

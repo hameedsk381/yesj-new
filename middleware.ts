@@ -10,8 +10,18 @@ export async function middleware(request: NextRequest) {
 
     // Protect admin routes
     if (path.startsWith("/admin")) {
-        // Allow access to login page
+        // If on login page and has valid token, redirect to dashboard
         if (path === "/admin/login") {
+            if (token) {
+                try {
+                    const { payload } = await jwtVerify(token, JWT_SECRET)
+                    if (payload.role === 'admin') {
+                        return NextResponse.redirect(new URL("/admin/dashboard", request.url))
+                    }
+                } catch (error) {
+                    // Invalid token, allow access to login page
+                }
+            }
             return NextResponse.next()
         }
 

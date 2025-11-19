@@ -31,22 +31,14 @@ export default function RegistrationsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) {
-      router.push("/admin/login")
-      return
-    }
+    // No need to check localStorage - middleware handles authentication
+    fetchRegistrations()
+  }, [])
 
-    fetchRegistrations(token)
-  }, [router])
-
-  const fetchRegistrations = async (token: string) => {
+  const fetchRegistrations = async () => {
     try {
-      const response = await fetch("/api/admin/registrations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      // No token needed - cookie is sent automatically
+      const response = await fetch("/api/admin/registrations")
 
       const result = await response.json()
 
@@ -65,15 +57,9 @@ export default function RegistrationsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this registration?")) return
 
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
       const response = await fetch(`/api/admin/registrations?id=${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       })
 
       if (!response.ok) {
@@ -81,7 +67,7 @@ export default function RegistrationsPage() {
       }
 
       // Refresh the list
-      fetchRegistrations(token)
+      fetchRegistrations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete registration")
     }

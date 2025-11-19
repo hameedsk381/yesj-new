@@ -25,22 +25,14 @@ export default function NominationsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) {
-      router.push("/admin/login")
-      return
-    }
+    // No need to check localStorage - middleware handles authentication
+    fetchNominations()
+  }, [])
 
-    fetchNominations(token)
-  }, [router])
-
-  const fetchNominations = async (token: string) => {
+  const fetchNominations = async () => {
     try {
-      const response = await fetch("/api/admin/nominations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      // No token needed - cookie is sent automatically
+      const response = await fetch("/api/admin/nominations")
 
       const result = await response.json()
 
@@ -57,14 +49,10 @@ export default function NominationsPage() {
   }
 
   const handleStatusChange = async (id: number, status: string) => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
       const response = await fetch("/api/admin/nominations", {
         method: "PATCH",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id, status }),
@@ -75,7 +63,7 @@ export default function NominationsPage() {
       }
 
       // Refresh the list
-      fetchNominations(token)
+      fetchNominations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to update status")
     }
@@ -84,15 +72,9 @@ export default function NominationsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this nomination?")) return
 
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
       const response = await fetch(`/api/admin/nominations?id=${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       })
 
       if (!response.ok) {
@@ -100,7 +82,7 @@ export default function NominationsPage() {
       }
 
       // Refresh the list
-      fetchNominations(token)
+      fetchNominations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete nomination")
     }
