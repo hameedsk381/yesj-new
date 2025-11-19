@@ -64,15 +64,9 @@ export async function POST(request: NextRequest) {
       "Content-Type": nocFile.type,
     })
 
-    const minioEndpoint = process.env.MINIO_ENDPOINT || "localhost"
-    const minioPort = process.env.MINIO_PORT || "9000"
-    const protocol = process.env.MINIO_USE_SSL === "true" ? "https" : "http"
-    const fileUrl = `${protocol}://${minioEndpoint}:${minioPort}/${BUCKET_NAME}/${fileName}`
-
     logger.info("NOC file uploaded to MinIO", {
       fileName,
       size: nocFile.size,
-      url: fileUrl,
     })
 
     const [nomination] = await db.insert(schema.nominations).values({
@@ -80,7 +74,7 @@ export async function POST(request: NextRequest) {
       unitName,
       contestingFor,
       educationQualification,
-      nocFilePath: fileUrl,
+      nocFilePath: fileName, // Store just the file path, not the full URL
       nocFileName: nocFile.name,
       status: "pending",
     }).returning()

@@ -207,7 +207,7 @@ export default function NominationsPage() {
                       <td className="px-4 py-3 text-sm">
                         <div className="flex flex-col gap-1">
                           <a
-                            href={nom.nocFilePath}
+                            href={`/api/files/${nom.nocFilePath}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-primary hover:underline flex items-center gap-1 text-xs"
@@ -216,7 +216,7 @@ export default function NominationsPage() {
                             View
                           </a>
                           <a
-                            href={nom.nocFilePath}
+                            href={`/api/files/${nom.nocFilePath}?download=true`}
                             download={nom.nocFileName}
                             className="text-blue-600 hover:underline flex items-center gap-1 text-xs"
                           >
