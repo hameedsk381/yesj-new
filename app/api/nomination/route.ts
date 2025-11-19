@@ -59,10 +59,19 @@ export async function POST(request: NextRequest) {
     const fileExtension = nocFile.name.split(".").pop()
     const fileName = `noc/${timestamp}.${fileExtension}`
 
+    console.log("[File Upload] Uploading to MinIO:", {
+      fileName,
+      bucket: BUCKET_NAME,
+      size: nocFile.size,
+      type: nocFile.type,
+    })
+
     // Upload to MinIO
     await minioClient.putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
       "Content-Type": nocFile.type,
     })
+
+    console.log("[File Upload] Successfully uploaded:", fileName)
 
     logger.info("NOC file uploaded to MinIO", {
       fileName,

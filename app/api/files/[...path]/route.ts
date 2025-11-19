@@ -9,33 +9,9 @@ export async function GET(
   { params }: { params: { path: string[] } }
 ) {
   try {
-    // Verify authentication - files should only be accessible to admins
-    const token = request.cookies.get("token")?.value
+    // Note: Files are publicly accessible since bucket is public
+    // Remove authentication to allow direct URL access
     
-    if (!token) {
-      return NextResponse.json(
-        { error: "Authentication required" },
-        { status: 401 }
-      )
-    }
-
-    try {
-      const { payload } = await jwtVerify(token, JWT_SECRET)
-      
-      // Verify admin role
-      if (payload.role !== 'admin') {
-        return NextResponse.json(
-          { error: "Admin access required" },
-          { status: 403 }
-        )
-      }
-    } catch (error) {
-      return NextResponse.json(
-        { error: "Invalid authentication token" },
-        { status: 401 }
-      )
-    }
-
     const filePath = params.path.join("/")
     
     if (!filePath) {
@@ -45,11 +21,27 @@ export async function GET(
       )
     }
 
+    // Extract just the file key if a full URL was passed
+    // e.g., "http://minio.aptsaicuf.com:9000/aicuf-uploads/noc/123.jpg" -> "noc/123.jpg"
+    let fileKey = filePath
+    if (filePath.startsWith("http")) {
+      const urlMatch = filePath.match(/\/[^/]+\/(.+)$/)
+      if (urlMatch) {
+        fileKey = urlMatch[1]
+      }
+    }
+
+    console.log("[File Download] Attempting to fetch:", {
+      originalPath: filePath,
+      extractedKey: fileKey,
+      bucket: BUCKET_NAME,
+    })
+
     // Get the file from MinIO
-    const stream = await minioClient.getObject(BUCKET_NAME, filePath)
+    const stream = await minioClient.getObject(BUCKET_NAME, fileKey)
     
     // Get file metadata
-    const stat = await minioClient.statObject(BUCKET_NAME, filePath)
+    const stat = await minioClient.statObject(BUCKET_NAME, fileKey)
     
     // Convert stream to buffer
     const chunks: Buffer[] = []
