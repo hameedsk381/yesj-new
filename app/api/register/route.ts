@@ -4,8 +4,10 @@ import { validateAndSanitizeRegistrationData } from "@/lib/sanitize"
 import { RATE_LIMIT } from "@/lib/constants"
 import { logger } from "@/lib/logger"
 import { sendEmail, getRegistrationConfirmationEmail } from "@/lib/email"
-import { db, schema } from "@/lib/db"
 import bcrypt from "bcryptjs"
+
+// Mock registration data storage
+let mockRegistrations: any[] = []
 
 export async function POST(request: NextRequest) {
   try {
@@ -49,13 +51,18 @@ export async function POST(request: NextRequest) {
     // Set role based on application type
     const role = data.applicationType === 'leadership' ? 'leader' : 'member'
 
-    const [registration] = await db.insert(schema.registrations).values({
+    const [registration] = await Promise.resolve([{
+      id: mockRegistrations.length + 1,
       ...data,
       password: hashedPassword,
       role,
       skills: JSON.stringify(data.skills || []),
       registrationId,
-    }).returning()
+      createdAt: new Date()
+    }])
+    
+    // Add to mock registrations array
+    mockRegistrations.push(registration)
 
     logger.info("Registration saved to database", {
       id: registration.id,

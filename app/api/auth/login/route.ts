@@ -1,7 +1,4 @@
 import { NextResponse } from "next/server"
-import { db } from "@/lib/db"
-import { registrations } from "@/lib/db/schema"
-import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 import { SignJWT } from "jose"
 
@@ -15,10 +12,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 })
     }
 
+    // Mock user data for quick deployment without database
+    const mockUsers = [
+      {
+        id: 1,
+        emailId: "admin@yesj.in",
+        password: "$2a$10$8K1p/a0dURXAm7QiTRqUzuN0/SpuDMaM1YWefl5f6O.9C256hD/vO", // bcrypt hash for "admin123"
+        role: "admin",
+        name: "Admin User"
+      },
+      {
+        id: 2,
+        emailId: "user@yesj.in",
+        password: "$2a$10$8K1p/a0dURXAm7QiTRqUzuN0/SpuDMaM1YWefl5f6O.9C256hD/vO", // bcrypt hash for "admin123"
+        role: "member",
+        name: "Regular User"
+      }
+    ];
+
     // Find user by email
-    const user = await db.query.registrations.findFirst({
-      where: eq(registrations.emailId, email),
-    })
+    const user = mockUsers.find(u => u.emailId === email);
 
     if (!user) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })

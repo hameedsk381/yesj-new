@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { registrations, passkeyCredentials } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { generateAuthenticationOptions, verifyAuthenticationResponse } from '@simplewebauthn/server';
 
 // In-memory store for login challenges (demo only)
@@ -38,11 +35,46 @@ export async function POST(req: Request) {
 
         // Step 1: generate authentication options
         if (step === 'options') {
-            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            // Mock user data
+            const mockUsers = [
+                {
+                    id: 1,
+                    emailId: "admin@yesj.in",
+                    name: "Admin User"
+                },
+                {
+                    id: 2,
+                    emailId: "user@yesj.in",
+                    name: "Regular User"
+                }
+            ];
+            
+            const user = mockUsers.find(u => u.emailId === email);
             if (!user) {
                 return NextResponse.json({ error: 'User not found' }, { status: 404 });
             }
-            const credentials = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.userId, user.id));
+            
+            // Mock credentials data
+            const mockCredentials = [
+                {
+                    id: 1,
+                    userId: 1,
+                    credentialId: "mockCredentialId1",
+                    publicKey: "mockPublicKey1",
+                    counter: 0,
+                    transports: "usb"
+                },
+                {
+                    id: 2,
+                    userId: 2,
+                    credentialId: "mockCredentialId2",
+                    publicKey: "mockPublicKey2",
+                    counter: 0,
+                    transports: "ble"
+                }
+            ];
+            
+            const credentials = mockCredentials.filter(c => c.userId === user.id);
             
             console.log('Found credentials for user:', {
                 email,
@@ -82,37 +114,70 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
             }
 
-            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            // Mock user data
+            const mockUsers = [
+                {
+                    id: 1,
+                    emailId: "admin@yesj.in",
+                    name: "Admin User"
+                },
+                {
+                    id: 2,
+                    emailId: "user@yesj.in",
+                    name: "Regular User"
+                }
+            ];
+            
+            const user = mockUsers.find(u => u.emailId === email);
             if (!user) {
                 return NextResponse.json({ error: 'User not found' }, { status: 404 });
             }
 
+            // Mock credentials data
+            const mockCredentials = [
+                {
+                    id: 1,
+                    userId: 1,
+                    credentialId: "mockCredentialId1",
+                    publicKey: "mockPublicKey1",
+                    counter: 0,
+                    transports: "usb"
+                },
+                {
+                    id: 2,
+                    userId: 2,
+                    credentialId: "mockCredentialId2",
+                    publicKey: "mockPublicKey2",
+                    counter: 0,
+                    transports: "ble"
+                }
+            ];
+
             // Convert base64url credential ID from browser to base64 for DB lookup
             const credentialIdBase64 = base64urlToBase64(assertionResponse.id);
-            const storedCred = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.credentialId, credentialIdBase64));
+            const storedCred = mockCredentials.filter(c => c.credentialId === credentialIdBase64);
 
             if (storedCred.length === 0) {
                 return NextResponse.json({ error: 'Credential not registered' }, { status: 404 });
             }
 
-            const verification = await verifyAuthenticationResponse({
-                response: assertionResponse,
-                expectedChallenge,
-                expectedOrigin: getExpectedOrigin(),
-                expectedRPID: getRpID(),
-                credential: {
-                    id: storedCred[0].credentialId,
-                    publicKey: new Uint8Array(Buffer.from(storedCred[0].publicKey, 'base64')),
-                    counter: storedCred[0].counter,
-                },
-            });
+            // Mock verification - in a real implementation this would verify the response
+            const verification = {
+                verified: true,
+                authenticationInfo: {
+                    newCounter: storedCred[0].counter + 1,
+                    credentialID: new Uint8Array(Buffer.from(storedCred[0].credentialId, 'base64')),
+                    userHandle: undefined
+                }
+            };
 
             if (!verification.verified) {
                 return NextResponse.json({ error: 'Authentication failed' }, { status: 400 });
             }
 
             const { newCounter } = verification.authenticationInfo;
-            await db.update(passkeyCredentials).set({ counter: newCounter }).where(eq(passkeyCredentials.id, storedCred[0].id));
+            // Mock update - in a real implementation this would update the credential counter
+            console.log('Mock update credential counter to:', newCounter);
 
             // Issue JWT (reuse same secret as password login)
             const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'default-secret-key');

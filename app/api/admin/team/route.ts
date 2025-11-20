@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { db, schema } from "@/lib/db"
-import { desc, eq } from "drizzle-orm"
+
 
 // Note: Authentication is handled by middleware for /admin/* routes
 export async function GET(request: NextRequest) {

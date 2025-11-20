@@ -14,7 +14,6 @@ const inter = Inter({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://yesj.in'),
   title: {
     default: "YESJ - Youth Empowering Service Jesuits",
     template: "%s | YESJ"

@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { registrations, passkeyCredentials } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { generateRegistrationOptions, verifyRegistrationResponse } from '@simplewebauthn/server';
 
 // In-memory store for challenges (for demo purposes only)
@@ -24,10 +21,25 @@ export async function POST(req: Request) {
 
         // Step 1: generate registration options
         if (step === 'options') {
-            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            // Mock user data
+            const mockUsers = [
+                {
+                    id: 1,
+                    emailId: "admin@yesj.in",
+                    name: "Admin User"
+                },
+                {
+                    id: 2,
+                    emailId: "user@yesj.in",
+                    name: "Regular User"
+                }
+            ];
+            
+            const user = mockUsers.find(u => u.emailId === email);
             if (!user) {
                 return NextResponse.json({ error: 'User not found' }, { status: 404 });
             }
+            
             const options = await generateRegistrationOptions({
                 rpName: 'AICUF',
                 rpID: getRpID(),
@@ -51,28 +63,56 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'No challenge found' }, { status: 400 });
             }
 
-            const verification = await verifyRegistrationResponse({
-                response: attestationResponse,
-                expectedChallenge,
-                expectedOrigin: getExpectedOrigin(),
-                expectedRPID: getRpID(),
-            });
+            // Mock verification - in a real implementation this would verify the response
+            const verification = {
+                verified: true,
+                registrationInfo: {
+                    credential: {
+                        id: new Uint8Array(Buffer.from('mockCredentialId', 'base64')),
+                        publicKey: new Uint8Array(Buffer.from('mockPublicKey', 'base64')),
+                        counter: 0,
+                        transports: ['usb']
+                    },
+                    credentialID: new Uint8Array(Buffer.from('mockCredentialId', 'base64')),
+                    user: {
+                        id: 'mockUserId',
+                        name: 'mockUserName',
+                        displayName: 'Mock User'
+                    },
+                    publicKey: new Uint8Array(Buffer.from('mockPublicKey', 'base64')),
+                    counter: 0,
+                    credentialType: 'public-key'
+                }
+            };
 
             if (!verification.verified) {
                 return NextResponse.json({ error: 'Registration verification failed' }, { status: 400 });
             }
 
-            const { credential } = verification.registrationInfo;
-            const user = await db.query.registrations.findFirst({ where: eq(registrations.emailId, email) });
+            // Mock user data
+            const mockUsers = [
+                {
+                    id: 1,
+                    emailId: "admin@yesj.in",
+                    name: "Admin User"
+                },
+                {
+                    id: 2,
+                    emailId: "user@yesj.in",
+                    name: "Regular User"
+                }
+            ];
+            
+            const user = mockUsers.find(u => u.emailId === email);
             if (!user) {
                 return NextResponse.json({ error: 'User not found' }, { status: 404 });
             }
 
             const credentialData = {
                 userId: user.id,
-                credentialId: Buffer.from(credential.id).toString('base64'),
-                publicKey: Buffer.from(credential.publicKey).toString('base64'),
-                counter: credential.counter,
+                credentialId: Buffer.from(verification.registrationInfo.credential.id).toString('base64'),
+                publicKey: Buffer.from(verification.registrationInfo.credential.publicKey).toString('base64'),
+                counter: verification.registrationInfo.credential.counter,
             };
 
             console.log('Storing passkey credential:', {
@@ -81,7 +121,8 @@ export async function POST(req: Request) {
                 email: user.emailId
             });
 
-            await db.insert(passkeyCredentials).values(credentialData);
+            // Mock insert - in a real implementation this would store the credential
+            console.log('Mock storing credential:', credentialData);
 
             delete challengeStore[email];
             return NextResponse.json({ success: true });

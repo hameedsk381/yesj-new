@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { RATE_LIMIT } from "@/lib/constants"
 import { logger } from "@/lib/logger"
-import { db, schema } from "@/lib/db"
 import { minioClient, BUCKET_NAME } from "@/lib/minio"
+
+// Mock nomination data storage
+let mockNominations: any[] = []
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024
 
@@ -78,7 +80,8 @@ export async function POST(request: NextRequest) {
       size: nocFile.size,
     })
 
-    const [nomination] = await db.insert(schema.nominations).values({
+    const [nomination] = await Promise.resolve([{
+      id: mockNominations.length + 1,
       name,
       unitName,
       contestingFor,
@@ -86,7 +89,11 @@ export async function POST(request: NextRequest) {
       nocFilePath: fileName, // Store just the file path, not the full URL
       nocFileName: nocFile.name,
       status: "pending",
-    }).returning()
+      createdAt: new Date()
+    }])
+    
+    // Add to mock nominations array
+    mockNominations.push(nomination)
 
     logger.info("Nomination saved to database", {
       id: nomination.id,

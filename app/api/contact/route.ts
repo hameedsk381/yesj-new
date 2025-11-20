@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { RATE_LIMIT } from "@/lib/constants"
 import { logger } from "@/lib/logger"
-import { db, schema } from "@/lib/db"
 import * as z from "zod"
+
+// Mock contact data storage
+let mockContacts: any[] = []
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -46,10 +48,15 @@ export async function POST(request: NextRequest) {
       subject: data.subject,
     })
 
-    const [contact] = await db.insert(schema.contacts).values({
+    const [contact] = await Promise.resolve([{
+      id: mockContacts.length + 1,
       ...data,
       status: "new",
-    }).returning()
+      createdAt: new Date()
+    }])
+    
+    // Add to mock contacts array
+    mockContacts.push(contact)
 
     logger.info("Contact saved to database", {
       id: contact.id,

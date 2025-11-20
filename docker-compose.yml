@@ -5,7 +5,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
       - MINIO_ENDPOINT=${MINIO_ENDPOINT}
       - MINIO_PORT=${MINIO_PORT:-9000}
       - MINIO_USE_SSL=${MINIO_USE_SSL:-false}
