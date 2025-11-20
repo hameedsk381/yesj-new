@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { desc, eq } from "drizzle-orm"
 
 // Mock data for contacts
 const mockContacts = [
