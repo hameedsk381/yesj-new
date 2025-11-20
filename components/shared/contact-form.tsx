@@ -70,7 +70,7 @@ export default function ContactForm() {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="rounded-none border border-primary/10 bg-white p-8 shadow-sm"
     >
-      <h3 className="text-xl font-light mb-6 text-maroon">Send us a message</h3>
+      <h3 className="text-xl font-light mb-6 text-primary">Send us a message</h3>
 
       {submitSuccess && (
         <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded text-sm">
@@ -149,7 +149,7 @@ export default function ContactForm() {
         <Button 
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-none bg-maroon hover:bg-maroon/90 text-white"
+          className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>

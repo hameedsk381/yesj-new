@@ -3,8 +3,8 @@ import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
 
 export const metadata = {
-  title: "Cookie Policy - APTSAICUF",
-  description: "How APTSAICUF uses cookies and similar technologies",
+  title: "Cookie Policy - YESJ",
+  description: "How YESJ uses cookies and similar technologies",
 }
 
 export default function CookiesPage() {
@@ -21,7 +21,7 @@ export default function CookiesPage() {
           <div className="container px-4 md:px-6 max-w-4xl">
             <div className="space-y-8 text-muted-foreground font-extralight">
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">What Are Cookies?</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">What Are Cookies?</h2>
                 <p className="mb-4">
                   Cookies are small text files that are placed on your device when you visit our website. They help us 
                   provide you with a better experience by remembering your preferences and understanding how you use our site.
@@ -29,7 +29,7 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Types of Cookies We Use</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Types of Cookies We Use</h2>
                 
                 <div className="space-y-4">
                   <div>
@@ -85,7 +85,7 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Third-Party Cookies</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Third-Party Cookies</h2>
                 <p className="mb-4">
                   We may use third-party services that set their own cookies, including:
                 </p>
@@ -98,7 +98,7 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Managing Cookies</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Managing Cookies</h2>
                 <p className="mb-4">
                   You can control and manage cookies in several ways:
                 </p>
@@ -119,7 +119,7 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Browser-Specific Instructions</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Browser-Specific Instructions</h2>
                 <p className="mb-4">
                   To manage cookies in your browser:
                 </p>
@@ -132,7 +132,7 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Updates to This Policy</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Updates to This Policy</h2>
                 <p className="mb-4">
                   We may update this Cookie Policy from time to time to reflect changes in technology or legal requirements. 
                   Please check this page periodically for updates.
@@ -140,11 +140,11 @@ export default function CookiesPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Contact Us</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Contact Us</h2>
                 <p className="mb-4">
                   If you have questions about our use of cookies, please contact:
                 </p>
-                <p className="mb-2">Email: privacy@aptsaicuf.org</p>
+                <p className="mb-2">Email: privacy@yesj.org</p>
                 <p className="mb-2">Phone: +91 XXX XXX XXXX</p>
               </div>
 

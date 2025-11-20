@@ -71,7 +71,7 @@ export default function EventsPage() {
     {
       date: "2026-01-29",
       title: "VASUDHAIVA Cultural Festival",
-      description: "A celebration of cultural diversity and talent showcasing performances by APTSAICUF members.",
+      description: "A celebration of cultural diversity and talent showcasing performances by YESJ members.",
       location: "Hyderabad",
       type: "cultural",
     },
@@ -96,13 +96,13 @@ export default function EventsPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'APTSAICUF Events',
-    description: 'Upcoming events and activities organized by APTSAICUF',
+    name: 'YESJ Events',
+    description: 'Upcoming events and activities organized by YESJ',
     itemListElement: [
       {
         '@type': 'Event',
         name: 'VASUDHAIVA Cultural Festival',
-        description: 'A celebration of cultural diversity and talent showcasing performances by APTSAICUF members.',
+        description: 'A celebration of cultural diversity and talent showcasing performances by YESJ members.',
         startDate: '2026-01-29',
         endDate: '2026-01-29',
         location: {
@@ -117,8 +117,8 @@ export default function EventsPage() {
         },
         organizer: {
           '@type': 'Organization',
-          name: 'APTSAICUF',
-          url: 'https://aptsaicuf.org',
+          name: 'YESJ',
+          url: 'https://yesj.com',
         },
       },
       {
@@ -139,8 +139,8 @@ export default function EventsPage() {
         },
         organizer: {
           '@type': 'Organization',
-          name: 'APTSAICUF',
-          url: 'https://aptsaicuf.org',
+          name: 'YESJ',
+          url: 'https://yesj.com',
         },
         offers: {
           '@type': 'Offer',
@@ -159,7 +159,7 @@ export default function EventsPage() {
       <main className="flex-1">
         <PageHeader
           title="Events & Activities"
-          description="Join us for these upcoming events and activities to get involved with APTSAICUF."
+          description="Join us for these upcoming events and activities to get involved with YESJ."
         />
 
         <section className="w-full py-12 md:py-20 bg-white">
@@ -170,7 +170,7 @@ export default function EventsPage() {
                 <Button
                   onClick={() => setViewMode('list')}
                   variant={viewMode === 'list' ? 'default' : 'outline'}
-                  className={`rounded-none ${viewMode === 'list' ? 'bg-maroon hover:bg-maroon/90 text-white' : 'border-primary text-primary'}`}
+                  className={`rounded-none ${viewMode === 'list' ? 'bg-primary hover:bg-primary/90 text-white' : 'border-primary text-primary'}`}
                 >
                   <List className="h-4 w-4 mr-2" />
                   List View
@@ -178,7 +178,7 @@ export default function EventsPage() {
                 <Button
                   onClick={() => setViewMode('calendar')}
                   variant={viewMode === 'calendar' ? 'default' : 'outline'}
-                  className={`rounded-none ${viewMode === 'calendar' ? 'bg-maroon hover:bg-maroon/90 text-white' : 'border-primary text-primary'}`}
+                  className={`rounded-none ${viewMode === 'calendar' ? 'bg-primary hover:bg-primary/90 text-white' : 'border-primary text-primary'}`}
                 >
                   <CalendarDays className="h-4 w-4 mr-2" />
                   Calendar View
@@ -209,16 +209,14 @@ export default function EventsPage() {
               <div>
                 <SectionHeader
                   title="Featured Event"
-                  description="Join us for our flagship cultural celebration"
+                  description="Join us for our flagship youth empowerment event"
                   align="left"
                   subtitle="Upcoming Highlight"
                 />
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-light text-maroon">VASUDHAIVA Cultural Festival</h3>
+                  <h3 className="text-2xl font-light text-primary">YESJ Youth Leadership Summit</h3>
                   <p className="text-muted-foreground font-extralight">
-                    A celebration of cultural diversity and talent showcasing performances by APTSAICUF members from
-                    across the region. Join us for music, dance, drama, and more as we explore the theme of "One Earth,
-                    One Family."
+                    A transformative leadership summit bringing together young leaders from across Telugu states to develop skills, network, and plan community action initiatives. Join us for workshops, mentoring sessions, and collaborative projects.
                   </p>
                   <div className="flex items-center gap-4 mt-4">
                     <Calendar className="h-5 w-5 text-primary" />
@@ -228,11 +226,6 @@ export default function EventsPage() {
                     <MapPin className="h-5 w-5 text-primary" />
                     <span className="text-sm text-muted-foreground font-extralight">Hyderabad, Telangana</span>
                   </div>
-                  <Link href="/register">
-                    <Button className="mt-4 rounded-none bg-maroon hover:bg-maroon/90 text-white">
-                      Register Now
-                    </Button>
-                  </Link>
                 </div>
               </div>
               <div className="relative">
@@ -266,7 +259,7 @@ export default function EventsPage() {
                       <Calendar className="h-5 w-5 text-primary" />
                       <span className="text-sm text-muted-foreground font-extralight">{formattedDate}</span>
                     </div>
-                    <h3 className="text-xl font-light mb-2 text-maroon">{event.title}</h3>
+                    <h3 className="text-xl font-light mb-2 text-primary">{event.title}</h3>
                     <p className="text-muted-foreground font-extralight">{event.description}</p>
                     <div className="flex items-center gap-4 mt-4">
                       <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -288,11 +281,6 @@ export default function EventsPage() {
                         )}
                       </div>
                     )}
-                    <Link href="/register">
-                      <Button className="mt-4 w-full rounded-none bg-maroon hover:bg-maroon/90 text-white">
-                        Register Now
-                      </Button>
-                    </Link>
                   </div>
                 )
               })}
@@ -305,9 +293,9 @@ export default function EventsPage() {
         <section className="w-full py-12 md:py-20 bg-blue-50">
           <div className="container px-4 md:px-6">
             <SectionHeader
-              title="Centennial Celebration Events"
-              description="Special events to celebrate 100 years of AICUF"
-              subtitle="1924-2024"
+              title="Leadership Development Events"
+              description="Special events to empower youth across Telugu states"
+              subtitle="2024-2025"
             />
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               <div className="group relative overflow-hidden border border-primary/10 p-6 transition-all hover:border-primary/30 hover:shadow-sm rounded-lg bg-white">
@@ -315,48 +303,45 @@ export default function EventsPage() {
                   <Calendar className="h-5 w-5 text-primary" />
                   <span className="text-sm text-muted-foreground font-extralight">October 10, 2024</span>
                 </div>
-                <h3 className="text-xl font-light mb-2 text-maroon">Centennial Inauguration</h3>
+                <h3 className="text-xl font-light mb-2 text-primary">Youth Empowerment Workshop</h3>
                 <p className="text-muted-foreground font-extralight">
-                  The official inauguration of the centennial year celebrations with special guests and cultural
-                  programs.
+                  An intensive workshop focused on skill development, career guidance, and personal growth for young people from underserved communities.
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground font-extralight">Chennai, Tamil Nadu</span>
                 </div>
-                <Button className="mt-6 w-full rounded-none bg-maroon hover:bg-maroon/90 text-white">Learn More</Button>
+                <Button className="mt-6 w-full rounded-none bg-primary hover:bg-primary/90 text-white">Learn More</Button>
               </div>
               <div className="group relative overflow-hidden border border-primary/10 p-6 transition-all hover:border-primary/30 hover:shadow-sm rounded-lg bg-white">
                 <div className="flex items-center gap-4 mb-4">
                   <Calendar className="h-5 w-5 text-primary" />
                   <span className="text-sm text-muted-foreground font-extralight">November 15-20, 2024</span>
                 </div>
-                <h3 className="text-xl font-light mb-2 text-maroon">National Symposium</h3>
+                <h3 className="text-xl font-light mb-2 text-primary">Community Action Planning</h3>
                 <p className="text-muted-foreground font-extralight">
-                  A national symposium on "100 Years of Student Activism: Challenges and Opportunities" with keynote
-                  speakers and panel discussions.
+                  A hands-on session where youth leaders develop action plans to address local challenges in their communities through service projects.
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground font-extralight">Delhi, India</span>
                 </div>
-                <Button className="mt-6 w-full rounded-none bg-maroon hover:bg-maroon/90 text-white">Learn More</Button>
+                <Button className="mt-6 w-full rounded-none bg-primary hover:bg-primary/90 text-white">Learn More</Button>
               </div>
               <div className="group relative overflow-hidden border border-primary/10 p-6 transition-all hover:border-primary/30 hover:shadow-sm rounded-lg bg-white">
                 <div className="flex items-center gap-4 mb-4">
                   <Calendar className="h-5 w-5 text-primary" />
                   <span className="text-sm text-muted-foreground font-extralight">December 8, 2024</span>
                 </div>
-                <h3 className="text-xl font-light mb-2 text-maroon">Centennial Mass</h3>
+                <h3 className="text-xl font-light mb-2 text-primary">Digital Skills Bootcamp</h3>
                 <p className="text-muted-foreground font-extralight">
-                  A special Mass to commemorate 100 years of AICUF, followed by a cultural program and fellowship
-                  dinner.
+                  A comprehensive training program to equip youth with essential digital skills for employment and entrepreneurship in the modern economy.
                 </p>
                 <div className="flex items-center gap-4 mt-4">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground font-extralight">Bangalore, Karnataka</span>
                 </div>
-                <Button className="mt-6 w-full rounded-none bg-maroon hover:bg-maroon/90 text-white">Learn More</Button>
+                <Button className="mt-6 w-full rounded-none bg-primary hover:bg-primary/90 text-white">Learn More</Button>
               </div>
             </div>
           </div>

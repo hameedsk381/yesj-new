@@ -19,6 +19,6 @@ echo "Applying migration: $(basename $LATEST_MIGRATION)"
 
 # Step 3: Execute migration inside the web container
 echo "Running migration in container..."
-docker exec aicuf-website-web-1 bun run /app/scripts/migrate.ts
+docker exec yesj-website-web-1 bun run /app/scripts/migrate.ts
 
 echo "✅ Migrations completed successfully!"

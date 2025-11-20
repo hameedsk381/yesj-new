@@ -124,7 +124,7 @@ export default function NominationForm() {
         <div className="flex justify-center mb-6">
           <CheckCircle className="h-16 w-16 text-green-500" />
         </div>
-        <h2 className="text-2xl font-light text-maroon mb-4">
+        <h2 className="text-2xl font-light text-primary mb-4">
           Nomination Submitted Successfully!
         </h2>
         <p className="text-muted-foreground max-w-md mx-auto mb-8">
@@ -133,7 +133,7 @@ export default function NominationForm() {
         </p>
         <Button
           onClick={() => window.location.reload()}
-          className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+          className="rounded-none bg-primary hover:bg-primary/90 text-white"
         >
           Submit Another Nomination
         </Button>
@@ -294,7 +294,7 @@ export default function NominationForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-none bg-maroon hover:bg-maroon/90 text-white"
+          className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
         >
           {isSubmitting ? "Submitting..." : "Submit Nomination"}
         </Button>

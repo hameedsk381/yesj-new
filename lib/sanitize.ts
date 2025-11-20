@@ -50,7 +50,7 @@ export function validateAndSanitizeRegistrationData(data: any) {
     eventExperience: data.eventExperience ? sanitizeInput(data.eventExperience) : undefined,
     justSocietyDefinition: data.justSocietyDefinition ? sanitizeInput(data.justSocietyDefinition) : undefined,
     communicationExample: data.communicationExample ? sanitizeInput(data.communicationExample) : undefined,
-    aicufVision: data.aicufVision ? sanitizeInput(data.aicufVision) : undefined,
+    yesjVision: data.yesjVision ? sanitizeInput(data.yesjVision) : undefined,
     leadershipPosition: data.leadershipPosition ? sanitizeInput(data.leadershipPosition) : undefined,
     declaration: Boolean(data.declaration),
     additionalMessage: data.additionalMessage ? sanitizeInput(data.additionalMessage) : undefined,

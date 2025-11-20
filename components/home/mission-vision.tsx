@@ -18,45 +18,15 @@ export default function MissionVision() {
             className="flex flex-col justify-center space-y-4"
           >
             <div className="inline-block text-sm text-primary mb-2">Our Mission</div>
-            <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-maroon">
-              To form students into agents of social change
+            <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-primary">
+              Building a Just World
             </h2>
             <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-              APTSAICUF seeks to form students who are sensitive to social realities and committed to building a more
-              just, humane, and equitable society based on Gospel values.
+              Our purpose is to assist in building a just world by transforming the lives of young people. We educate and encourage them to understand and analyze the socio-economic, cultural, and political aspects of society, stimulating their conscience to bring social commitment to build the Kingdom of God in India and the globalized world.
             </p>
-            <ul className="grid gap-2 mt-4">
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Promote leadership among university students</span>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Engage in social analysis and action</span>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Foster interfaith dialogue and harmony</span>
-              </motion.li>
-            </ul>
+            <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+              We aspire to light the aspirational torch for young people who do not have the resources and guidance to a better life, helping them find purpose and meaning in their lives.
+            </p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -66,45 +36,21 @@ export default function MissionVision() {
             className="flex flex-col justify-center space-y-4"
           >
             <div className="inline-block text-sm text-primary mb-2">Our Vision</div>
-            <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-maroon">
-              A just and humane society
+            <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-primary">
+              More Than a Program - A Sacred Calling
             </h2>
             <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-              We envision a society where human dignity is respected, rights are protected, and all people have the
-              opportunity to develop their full potential.
+              We see poverty not as personal failure but as structural sin demanding prophetic response.
             </p>
-            <ul className="grid gap-2 mt-4">
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Uphold the dignity and rights of all people</span>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Work for peace and reconciliation</span>
-              </motion.li>
-              <motion.li
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-                className="flex items-center gap-2"
-              >
-                <ChevronRight className="h-4 w-4 text-maroon" />
-                <span className="font-extralight">Care for our common home, the Earth</span>
-              </motion.li>
-            </ul>
+            <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+              We approach youth not as beneficiaries but as protagonists of their own liberation.
+            </p>
+            <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+              We don't offer charity; we accompany transformation through long-term relationships.
+            </p>
+            <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+              We believe empowerment is kingdom-building—establishing justice and peace on earth.
+            </p>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -112,9 +58,9 @@ export default function MissionVision() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="pt-4"
             >
-              <Link href="/mission">
+              <Link href="/about">
                 <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
-                  Learn More About Our Mission
+                  Explore Programs
                 </Button>
               </Link>
             </motion.div>

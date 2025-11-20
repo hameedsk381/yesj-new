@@ -7,6 +7,8 @@ import SkipLink from "@/components/skip-link"
 import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
 
+export const metadataBase = new URL('https://yesj.in')
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -15,36 +17,36 @@ const inter = Inter({
 
 export const metadata = {
   title: {
-    default: "APTSAICUF - Andhra-Telangana All India Catholic University Federation",
-    template: "%s | APTSAICUF"
+    default: "YESJ - Youth Empowering Service Jesuits",
+    template: "%s | YESJ"
   },
   description:
-    "Empowering Catholic students in Andhra Pradesh and Telangana to be agents of social change through faith, justice, and leadership since 1924.",
-  keywords: ["AICUF", "APTSAICUF", "Catholic Students", "Youth Leadership", "Social Justice", "Andhra Pradesh", "Telangana", "Student Organization"],
-  authors: [{ name: "APTSAICUF" }],
-  creator: "APTSAICUF",
-  publisher: "APTSAICUF",
+    "Empowering 50,000+ youth across Telugu states to break barriers and build futures. Join YESJ to make a difference in your community.",
+  keywords: ["YESJ", "Youth Empowering Service Jesuits", "Youth", "Service", "Jesuits", "Leadership", "Social Justice", "Volunteering", "Telugu States", "Transformation"],
+  authors: [{ name: "YESJ Team" }],
+  creator: "YESJ",
+  publisher: "YESJ",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://aptsaicuf.com",
-    siteName: "APTSAICUF",
-    title: "APTSAICUF - Empowering Catholic Students Since 1924",
-    description: "Join the Andhra-Telangana All India Catholic University Federation. Empowering students through faith, justice, and leadership.",
+    url: "https://yesj.in",
+    siteName: "YESJ",
+    title: "YESJ - Youth Empowering Service Jesuits",
+    description: "Empowering 50,000+ youth across Telugu states to break barriers and build futures. Join YESJ to make a difference.",
     images: [
       {
-        url: "/aicuf-centennial-logo.png",
+        url: "https://yesj.in/YESJ_Logo_Black-eaf43d27.png",
         width: 1200,
         height: 630,
-        alt: "APTSAICUF Logo"
+        alt: "YESJ Logo"
       }
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "APTSAICUF - Empowering Catholic Students Since 1924",
-    description: "Join the Andhra-Telangana All India Catholic University Federation. Empowering students through faith, justice, and leadership.",
-    images: ["/aicuf-centennial-logo.png"],
+    title: "YESJ - Youth Empowering Service Jesuits",
+    description: "Empowering 50,000+ youth across Telugu states to break barriers and build futures. Join YESJ to make a difference.",
+    images: ["https://yesj.in/YESJ_Logo_Black-eaf43d27.png"],
   },
   robots: {
     index: true,
@@ -61,7 +63,7 @@ export const metadata = {
     google: siteConfig.verification.google,
   },
   alternates: {
-    canonical: "https://aptsaicuf.com",
+    canonical: "https://yesj.in",
   },
 }
 

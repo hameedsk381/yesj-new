@@ -44,7 +44,7 @@ export default function EventFilters({ onFilterChange }: EventFiltersProps) {
     <div className="bg-blue-50 border border-primary/10 rounded-lg p-6 mb-8">
       <div className="flex items-center gap-2 mb-4">
         <Filter className="h-5 w-5 text-primary" />
-        <h3 className="text-lg font-light text-maroon">Filter Events</h3>
+        <h3 className="text-lg font-light text-primary">Filter Events</h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

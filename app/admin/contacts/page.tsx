@@ -147,11 +147,11 @@ export default function ContactsPage() {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
-            <h1 className="text-xl font-light text-maroon">Contact Messages</h1>
+            <h1 className="text-xl font-light text-primary">Contact Messages</h1>
           </div>
           <Button
             onClick={exportToCSV}
-            className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+            className="rounded-none bg-primary hover:bg-primary/90 text-white"
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV
@@ -169,7 +169,7 @@ export default function ContactsPage() {
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
             <div className="p-4 border-b bg-gray-50">
-              <h2 className="font-medium text-maroon">Messages</h2>
+              <h2 className="font-medium text-primary">Messages</h2>
             </div>
             <div className="divide-y max-h-[calc(100vh-12rem)] overflow-y-auto">
               {contacts.length === 0 ? (
@@ -216,7 +216,7 @@ export default function ContactsPage() {
 
           <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
             <div className="p-4 border-b bg-gray-50">
-              <h2 className="font-medium text-maroon">Message Details</h2>
+              <h2 className="font-medium text-primary">Message Details</h2>
             </div>
             <div className="p-6">
               {selectedContact ? (

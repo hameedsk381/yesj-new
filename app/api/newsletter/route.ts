@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     
     await sendEmail({
       to: email,
-      subject: 'Welcome to APTSAICUF Newsletter',
+      subject: 'Welcome to YESJ Newsletter',
       html: emailHtml,
     })
 

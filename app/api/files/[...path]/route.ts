@@ -22,7 +22,7 @@ export async function GET(
     }
 
     // Extract just the file key if a full URL was passed
-    // e.g., "http://minio.aptsaicuf.com:9000/aicuf-uploads/noc/123.jpg" -> "noc/123.jpg"
+    // e.g., "http://minio.yesj.com:9000/yesj-uploads/noc/123.jpg" -> "noc/123.jpg"
     let fileKey = filePath
     if (filePath.startsWith("http")) {
       const urlMatch = filePath.match(/\/[^/]+\/(.+)$/)

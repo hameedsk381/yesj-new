@@ -21,7 +21,7 @@ export default function TermsPage() {
           <div className="container px-4 md:px-6 max-w-4xl">
             <div className="space-y-8 text-muted-foreground font-extralight">
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">1. Acceptance of Terms</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">1. Acceptance of Terms</h2>
                 <p className="mb-4">
                   By accessing and using the APTSAICUF website and services, you agree to be bound by these Terms of Service. 
                   If you do not agree with any part of these terms, please do not use our services.
@@ -29,7 +29,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">2. Membership</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">2. Membership</h2>
                 <p className="mb-4">
                   Membership in APTSAICUF is subject to the following conditions:
                 </p>
@@ -43,7 +43,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">3. Events and Programs</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">3. Events and Programs</h2>
                 <p className="mb-4">
                   Participation in APTSAICUF events and programs is governed by:
                 </p>
@@ -57,7 +57,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">4. Code of Conduct</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">4. Code of Conduct</h2>
                 <p className="mb-4">
                   All members and participants are expected to:
                 </p>
@@ -71,7 +71,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">5. Intellectual Property</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">5. Intellectual Property</h2>
                 <p className="mb-4">
                   All content on this website, including text, images, logos, and materials, is the property of APTSAICUF 
                   and protected by copyright laws. Unauthorized use or reproduction is prohibited.
@@ -79,7 +79,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">6. Limitation of Liability</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">6. Limitation of Liability</h2>
                 <p className="mb-4">
                   APTSAICUF is not liable for:
                 </p>
@@ -92,7 +92,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">7. Privacy</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">7. Privacy</h2>
                 <p className="mb-4">
                   Your use of our services is also governed by our Privacy Policy. Please review it to understand how we 
                   collect and use your information.
@@ -100,7 +100,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">8. Modifications</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">8. Modifications</h2>
                 <p className="mb-4">
                   APTSAICUF reserves the right to modify these Terms of Service at any time. Changes will be effective 
                   immediately upon posting to the website. Continued use of our services constitutes acceptance of modified terms.
@@ -108,7 +108,7 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">9. Governing Law</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">9. Governing Law</h2>
                 <p className="mb-4">
                   These Terms of Service are governed by the laws of India. Any disputes will be subject to the jurisdiction 
                   of courts in Hyderabad, Telangana.
@@ -116,11 +116,11 @@ export default function TermsPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">10. Contact Information</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">10. Contact Information</h2>
                 <p className="mb-4">
                   For questions about these Terms of Service, please contact:
                 </p>
-                <p className="mb-2">Email: info@aptsaicuf.org</p>
+                <p className="mb-2">Email: info@yesj.org</p>
                 <p className="mb-2">Phone: +91 XXX XXX XXXX</p>
               </div>
 

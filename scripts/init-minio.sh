@@ -10,9 +10,9 @@ until mc alias set local http://minio:9000 ${MINIO_ACCESS_KEY:-minioadmin} ${MIN
 done
 
 # Create bucket if it doesn't exist
-mc mb local/${MINIO_BUCKET_NAME:-aicuf-uploads} --ignore-existing
+mc mb local/${MINIO_BUCKET_NAME:-yesj-uploads} --ignore-existing
 
 # Set public download policy
-mc anonymous set download local/${MINIO_BUCKET_NAME:-aicuf-uploads}
+mc anonymous set download local/${MINIO_BUCKET_NAME:-yesj-uploads}
 
 echo "✅ MinIO bucket initialized successfully!"

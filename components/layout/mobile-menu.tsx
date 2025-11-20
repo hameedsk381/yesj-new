@@ -90,20 +90,19 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
             aria-label="Mobile navigation menu"
           >
             <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center">
                 <Image
-                  src="/aicuf-centennial-logo.png"
-                  alt="AICUF Centennial Logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full"
+                  src="/YESJ_Logo_Black-eaf43d27.png"
+                  alt="YESJ Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14"
                 />
-                <span className="text-xl font-light tracking-tight text-maroon">APTSAICUF</span>
               </div>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="text-maroon" 
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-primary"
                 onClick={onClose}
                 ref={closeButtonRef}
               >
@@ -129,18 +128,6 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                 </motion.div>
               ))}
             </nav>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navItems.length * 0.05 + 0.1, duration: 0.3 }}
-              className="mt-8"
-            >
-              <Link href="/register" onClick={onClose}>
-                <Button className="w-full bg-maroon hover:bg-maroon/90 text-white rounded-none">
-                  Join APTSAICUF
-                </Button>
-              </Link>
-            </motion.div>
           </motion.div>
         </>
       )}

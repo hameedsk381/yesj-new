@@ -21,7 +21,7 @@ export const registrations = pgTable("registrations", {
   eventExperience: text("event_experience"),
   justSocietyDefinition: text("just_society_definition"),
   communicationExample: text("communication_example"),
-  aicufVision: text("aicuf_vision"),
+  yesjVision: text("yesj_vision"),
   leadershipPosition: text("leadership_position"),
   additionalMessage: text("additional_message"),
   password: varchar("password", { length: 255 }),

@@ -56,16 +56,16 @@ export default function StepThree() {
 
         <FormField
           control={control}
-          name="aicufVision"
+          name="yesjVision"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Where do you see the AICUF a year from now? What role do you envision yourself playing in achieving that
+                Where do you see the YESJ a year from now? What role do you envision yourself playing in achieving that
                 vision?
               </FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Share your vision for AICUF and your role in it"
+                  placeholder="Share your vision for YESJ and your role in it"
                   className="resize-none min-h-[120px]"
                   {...field}
                 />

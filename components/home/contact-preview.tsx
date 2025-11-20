@@ -19,12 +19,21 @@ export default function ContactPreview() {
           >
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="h-1 w-12 bg-maroon"></div>
-                <span className="text-sm font-light text-maroon">Get in Touch</span>
+                <div className="h-1 w-12 bg-primary"></div>
+                <span className="text-sm font-light text-primary">Get in Touch</span>
               </div>
-              <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-maroon">Contact Us</h2>
+              <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-primary">Contact Us</h2>
               <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-                Get in touch with us for more information about APTSAICUF and how you can get involved.
+                The harvest is plentiful. Will you answer the call?
+              </p>
+              <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+                Every 8 minutes, a youth in our region drops out of school.
+              </p>
+              <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+                Every hour, dozens lose hope in their dreams.
+              </p>
+              <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight mt-4">
+                But every day, YESJ says: Your story doesn't end here.
               </p>
             </div>
             <div className="grid gap-6">
@@ -37,9 +46,9 @@ export default function ContactPreview() {
               >
                 <MapPin className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <p className="font-light">National Office</p>
+                  <p className="font-light">YESJ Centre for Excellence</p>
                   <p className="text-sm text-muted-foreground font-extralight">
-                    YESJ-Centre for Excellence, Andhra Loyola College, Vijayawada, Andhra Pradesh, India
+                    Andhra Loyola College Campus, Vijayawada, Andhra Pradesh, India - 522 008
                   </p>
                 </div>
               </motion.div>
@@ -53,7 +62,7 @@ export default function ContactPreview() {
                 <Phone className="h-5 w-5 text-primary mt-1" />
                 <div>
                   <p className="font-light">Phone</p>
-                  <p className="text-sm text-muted-foreground font-extralight">+91 8309160482</p>
+                  <p className="text-sm text-muted-foreground font-extralight">+91-886-672-7202</p>
                 </div>
               </motion.div>
               <motion.div
@@ -66,22 +75,34 @@ export default function ContactPreview() {
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
                   <p className="font-light">Email</p>
-                  <p className="text-sm text-muted-foreground font-extralight">contact@aptsaicuf.com</p>
+                  <p className="text-sm text-muted-foreground font-extralight">info@yesj.org</p>
                 </div>
               </motion.div>
             </div>
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="pt-4"
             >
-              <Link href="/contact">
-                <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
-                  Contact Us
-                </Button>
-              </Link>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/volunteer">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                    Volunteer
+                  </Button>
+                </Link>
+                <Link href="/donate">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                    Donate
+                  </Button>
+                </Link>
+                <Link href="/partners">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                    Partner With Us
+                  </Button>
+                </Link>
+              </div>
             </motion.div>
           </motion.div>
           <motion.div
@@ -92,7 +113,7 @@ export default function ContactPreview() {
             className="flex flex-col justify-center space-y-6"
           >
             <div className="space-y-2">
-              <h3 className="text-xl font-light mb-2 text-maroon">Connect With Us</h3>
+              <h3 className="text-xl font-light mb-2 text-primary">Connect With Us</h3>
               <p className="text-muted-foreground font-extralight">
                 Follow us on social media to stay updated with our latest activities and events.
               </p>

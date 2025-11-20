@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Programs - YESJ | 10+ Pathways to Transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #0ea5e9;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --background: #ffffff;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--secondary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            margin-top: 80px;
+            position: relative;
+            height: 60vh;
+            background: linear-gradient(rgba(30, 58, 138, 0.8), rgba(14, 165, 233, 0.8)), 
+                        url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero-content {
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+        }
+
+        /* Program Finder */
+        .program-finder {
+            padding: 3rem 5%;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 20px;
+        }
+
+        .finder-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--secondary-color);
+            background: white;
+            color: var(--secondary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Program Detail Section */
+        .program-detail {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .program-detail:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .program-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .program-icon-large {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .program-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .program-tagline {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .program-description {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+            margin-bottom: 3rem;
+            text-align: justify;
+        }
+
+        .program-highlights {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 3rem;
+        }
+
+        .highlights-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .highlights-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlights-list li {
+            padding: 1rem 1rem 1rem 3rem;
+            position: relative;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(14, 165, 233, 0.05));
+            border-radius: 10px;
+        }
+
+        .highlights-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: var(--success);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .must-programs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .must-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .must-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .must-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .must-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .must-description {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .impact-stats {
+            background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+            padding: 2.5rem;
+            border-radius: 20px;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        .impact-stats h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .program-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .action-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: #d97706;
+            transform: translateY(-3px);
+        }
+
+        .action-btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .action-btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Gallery */
+        .program-gallery {
+            margin: 3rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Alumni Network */
+        .alumni-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+            color: white;
+            text-align: center;
+        }
+
+        .alumni-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .alumni-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .alumni-feature {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .alumni-feature i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transition: left 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .program-title {
+                font-size: 2rem;
+            }
+
+            .program-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="yesj-website.html" class="logo">
+                <i class="fas fa-hands-helping"></i>
+                YES<span>J</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="yesj-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html" class="active">Programs</a></li>
+                <li><a href="impact.html">Impact</a></li>
+                <li><a href="get-involved.html">Get Involved</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="get-involved.html#donate" class="cta-btn">Donate Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>10+ Pathways to Transformation</h1>
+            <p class="subtitle">Comprehensive programs addressing every barrier youth face</p>
+        </div>
+    </section>
+
+    <!-- Program Finder -->
+    <section class="program-finder">
+        <h2 class="finder-title">Quick Program Finder - I'm looking for:</h2>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Programs</button>
+            <button class="filter-btn" data-filter="skill">Skill Training</button>
+            <button class="filter-btn" data-filter="english">English Learning</button>
+            <button class="filter-btn" data-filter="scholarship">Scholarships</button>
+            <button class="filter-btn" data-filter="leadership">Leadership</button>
+            <button class="filter-btn" data-filter="volunteer">Volunteering</button>
+            <button class="filter-btn" data-filter="placement">Placement Support</button>
+        </div>
+    </section>
+
+    <!-- Program 1: Summer Shapes -->
+    <section class="program-detail" id="summer-shapes">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-comments"></i></div>
+            <h2 class="program-title">SUMMER SHAPES (SS)</h2>
+            <p class="program-tagline">"Break the English Barrier. Unlock Your Future."</p>
+        </div>
+
+        <div class="program-description">
+            <p>English is no longer just a language in India - it opens a world of opportunities. Especially for marginalized communities, English language is proved to be a weapon to break their chains and be the leaders of tomorrow. In this cyber age where English is the deciding factor to get employed, sadly many young people have no access to quality English education. Even when taught, the methodology followed has been highly ineffective, leaving youth unable to form sentences. In addition, poor soft skills bar their socialization, adaptability, and problem-solving capacities.</p>
+            
+            <p>Through this initiative, rural and disadvantaged youth gain access to free 30-day residential training in English Communicative Skills along with soft and life skills, which increases their self-confidence and self-esteem for greater life.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Program Highlights</h3>
+            <ul class="highlights-list">
+                <li>Residential immersion in English-only environment</li>
+                <li>Communicative focus, not just grammar</li>
+                <li>Personality development and grooming</li>
+                <li>Public speaking and interview skills</li>
+                <li>Zero cost with food and lodging provided</li>
+            </ul>
+        </div>
+
+        <div class="impact-stats">
+            <h3>Impact at a Glance</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Batches Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1,200+</div>
+                    <div class="stat-label">Graduates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Confidence Boost</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">75%</div>
+                    <div class="stat-label">Improved Employment Prospects</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="program-gallery">
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400');"></div>
+            </div>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Apply Now <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                Download Brochure <i class="fas fa-download"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 2: MuST -->
+    <section class="program-detail" id="must">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-tools"></i></div>
+            <h2 class="program-title">MULTI-SKILL TRAINING (MuST)</h2>
+            <p class="program-tagline">"From Dropout to Dignified Employment"</p>
+        </div>
+
+        <div class="program-description">
+            <p>Through MuST we work to enable, equip, and enhance the capacity of dropouts and unorganized youth to undertake self-employment as well as access employment with stable salary through skill training programs. We actively collaborate with governmental, non-governmental, and corporate institutions to provide vocational skill training to help youth stand on their legs for a decent salary enough to raise a family.</p>
+            
+            <p>YESJ conducts residential training at regular intervals, bringing youth from rural and suburban areas, and strives hard to get them jobs and a big YES in their lives.</p>
+        </div>
+
+        <h3 style="text-align: center; font-size: 2rem; color: var(--primary-color); margin: 3rem 0 2rem;">Four Tailored Programs</h3>
+
+        <div class="must-programs">
+            <div class="must-card">
+                <div class="must-icon">👗</div>
+                <h4 class="must-title">TAILORING</h4>
+                <p class="must-description">3-month residential course in professional tailoring, pattern making, garment construction, and small business management. <strong>Outcome:</strong> Boutique employment or self-employment (₹12,000-20,000/month)</p>
+            </div>
+
+            <div class="must-card">
+                <div class="must-icon">💻</div>
+                <h4 class="must-title">ICT (Information & Communication Technology)</h4>
+                <p class="must-description">2-month residential course in computer fundamentals, MS Office, internet skills, and digital literacy. <strong>Outcome:</strong> Office assistant, data entry, computer operator roles (₹10,000-15,000/month)</p>
+            </div>
+
+            <div class="must-card">
+                <div class="must-icon">🚗</div>
+                <h4 class="must-title">DRIVING & MECHANIC</h4>
+                <p class="must-description">4-month split program covering commercial driving license and vehicle maintenance/repair. <strong>Outcome:</strong> Commercial driver or mechanic positions (₹15,000-25,000/month)</p>
+            </div>
+
+            <div class="must-card">
+                <div class="must-icon">🔥</div>
+                <h4 class="must-title">INDUSTRIAL WELDING</h4>
+                <p class="must-description">3-month residential intensive in MIG, TIG, arc welding with industry certifications. <strong>Outcome:</strong> Industrial welder in factories, fabrication shops (₹18,000-30,000/month)</p>
+            </div>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Common Features</h3>
+            <ul class="highlights-list">
+                <li>Free training, food & lodging</li>
+                <li>Small batch sizes (15 per batch)</li>
+                <li>Placement support through JoY Desk</li>
+                <li>Industry certifications</li>
+            </ul>
+        </div>
+
+        <div class="impact-stats">
+            <h3>Impact at a Glance</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Employment within 6 Months</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">400%</div>
+                    <div class="stat-label">Average Income Increase</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Breaking Intergenerational Poverty</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Apply Now <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 3: SSP -->
+    <section class="program-detail" id="ssp">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-graduation-cap"></i></div>
+            <h2 class="program-title">SCHOLAR SUPPORT PROGRAMME (SSP)</h2>
+            <p class="program-tagline">"Where Brilliance Meets Opportunity"</p>
+        </div>
+
+        <div class="program-description">
+            <p>SSP is aimed to accompany and financially support college-going students who are academically bright and financially poor, enabling them to pursue their desired tertiary education and fulfill their professional dreams.</p>
+            
+            <p>Beyond tuition fees, we provide comprehensive support including books, examination fees, living expenses, academic mentoring, career counseling, psychological support, and leadership development. Our holistic approach ensures not just degree completion but complete personal and professional readiness.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">What We Provide</h3>
+            <ul class="highlights-list">
+                <li>Full tuition fees coverage</li>
+                <li>Books and examination fees</li>
+                <li>Living expenses support</li>
+                <li>Academic mentoring</li>
+                <li>Career counseling</li>
+                <li>Psychological support</li>
+                <li>Leadership development</li>
+                <li>Lifelong mentorship and career guidance</li>
+            </ul>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Selection Process</h3>
+            <ul class="highlights-list">
+                <li>Rigorous merit-based assessment</li>
+                <li>Written tests</li>
+                <li>Oral interviews</li>
+                <li>Comprehensive evaluation ensuring we support the most deserving students</li>
+            </ul>
+        </div>
+
+        <div class="impact-stats">
+            <h3>Impact at a Glance</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">College Completion Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Years of Full Scholarship Support</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Lifelong Mentorship</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Apply for Scholarship <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="get-involved.html" class="action-btn action-btn-secondary">
+                Support a Scholar <i class="fas fa-heart"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 4: PEP -->
+    <section class="program-detail" id="pep">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-user-graduate"></i></div>
+            <h2 class="program-title">PERSONALITY ENHANCEMENT PROGRAMMES (PEP)</h2>
+            <p class="program-tagline">"Say YES to Leadership"</p>
+        </div>
+
+        <div class="program-description">
+            <p>Through PEP, tailor-made orientations, courses, seminars, and workshops are conducted in the areas of soft skills, life skills, personality development, etc., to help youth gain confidence to face the complexities of life and live a life of joy, meaning, and purpose. Thousands of students are trained so far to say YES to lead.</p>
+            
+            <p>YESJ further equips them with an integrated approach to personal development, self-help, awareness, organization, program design and implementation, monitoring, and evaluation of parish/rural development programs. This comprehensive training enables them to become more effective in their roles and better equipped to bring about positive change in their communities.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Program Features</h3>
+            <ul class="highlights-list">
+                <li>Customizable one-day or multi-day workshops</li>
+                <li>Conducted at schools, colleges, and parishes</li>
+                <li>Food provided during programs</li>
+                <li>Free of cost for institutions</li>
+                <li>Comprehensive soft skills training</li>
+                <li>Life skills development</li>
+                <li>Personality development sessions</li>
+            </ul>
+        </div>
+
+        <div class="impact-stats">
+            <h3>Annual Reach</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Programs Conducted</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Participants</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Immediate Confidence Boost</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Request PEP for Your Institution <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                View Schedule <i class="fas fa-calendar"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 5: MAGIC Youth -->
+    <section class="program-detail" id="magic">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-magic"></i></div>
+            <h2 class="program-title">MAGIC YOUTH</h2>
+            <p class="program-tagline">"Men & Women Aiming at Greater Initiatives for Change"</p>
+        </div>
+
+        <div class="program-description">
+            <p>The Student Youth Wing of YESJ is a formal organization established in educational institutions to provide young people with the opportunity to become individuals of conscience, competence, compassion, and commitment, and to become agents of change for themselves and their communities.</p>
+            
+            <p>The leadership team and group are managed by student volunteers, with support from staff and management. All programs, activities, and initiatives are designed to educate, empower, and raise awareness among the youth.</p>
+            
+            <p>They transform campus communities and neighborhoods through implementable praxis of 'Experience – Reflection – Involvement – Transformation' to aim at long-term sustainable approaches, wholistic development, and consistent follow-up to design programmes that instill life skills, social skills, personality skills, faith formation, leadership, and address social anomalies.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">What MAGIC Youth Offers</h3>
+            <ul class="highlights-list">
+                <li>Student-led leadership development</li>
+                <li>Campus community transformation</li>
+                <li>Social awareness programs</li>
+                <li>Faith formation activities</li>
+                <li>Life skills and social skills training</li>
+                <li>Addressing social anomalies</li>
+                <li>Experience-based learning</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Start MAGIC in Your Institution <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                Join a Chapter <i class="fas fa-users"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 6: EOTT -->
+    <section class="program-detail" id="eott">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h2 class="program-title">EACH ONE – TEACH TEN (EOTT)</h2>
+            <p class="program-tagline">"Pay Back to Society"</p>
+        </div>
+
+        <div class="program-description">
+            <p>YESJ's Social Enterprise aims at improving literacy and numeracy skills. We set up centres of learning and tutoring in slums, rural and suburban areas with the help of local parishes, schools, colleges, and governmental bodies. With a motif to 'pay back to society', our Ignitors create a loving atmosphere for learning, making them read, lead, and thereby succeed in life. We also help the educated young support themselves for their stationery costs.</p>
+            
+            <p>The potential of youth is high, but resources are meager. In this competitive world, one with resources comes out with flying colors. YESJ doesn't want the young to stop themselves dreaming high just because of their financial or social circumstances.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Dual Impact Model</h3>
+            <ul class="highlights-list">
+                <li>Children receive free tutoring in literacy and numeracy</li>
+                <li>Educated youth gain teaching experience</li>
+                <li>Ignitors receive stipend for their service</li>
+                <li>Community-based learning centers</li>
+                <li>Loving atmosphere for learning</li>
+                <li>Support for educational materials</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Become an Ignitor <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                Start a Learning Center <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 7: JoY Desk -->
+    <section class="program-detail" id="joy">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-briefcase"></i></div>
+            <h2 class="program-title">JoY (JOBS FOR YOUTH) DESK</h2>
+            <p class="program-tagline">"Connecting Talent with Opportunity"</p>
+        </div>
+
+        <div class="program-description">
+            <p>Having potential is not enough; reaching out to the best possible opportunities is important. Especially in the case of jobs, the opportunities are wide, but the huge population makes it difficult to get on a common channel. Thus, individuals are not well-informed about resources and available jobs. They end up settling for less-paid jobs where their skills are not utilized to their best.</p>
+            
+            <p>This program aims to identify struggling unemployed youth, trains and guides them to secure employment through referrals, recommendations, and JoY Melas (job fairs).</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Services Offered</h3>
+            <ul class="highlights-list">
+                <li>Job matching based on skills and interests</li>
+                <li>Resume building and optimization</li>
+                <li>Interview preparation and mock interviews</li>
+                <li>Career counseling and guidance</li>
+                <li>Quarterly job fairs (JoY Melas)</li>
+                <li>Direct referrals to employers</li>
+                <li>Follow-up support after placement</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Register with JoY Desk <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                View Job Openings <i class="fas fa-search"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 8: O GOD -->
+    <section class="program-detail" id="ogod">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-praying-hands"></i></div>
+            <h2 class="program-title">ORGANIZING GOD ORIENTED DAYS (O GOD)</h2>
+            <p class="program-tagline">"Strengthening Faith, Building Relationship"</p>
+        </div>
+
+        <div class="program-description">
+            <p>The days are designed to help participants build a personal relationship with God and strengthen their faith so they can become true Children of God. A variety of methods such as studying Scripture, praying and meditating, inter-religious dialogues, messages, and visits are used to enrich their faith.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Program Elements</h3>
+            <ul class="highlights-list">
+                <li>Scripture study and reflection</li>
+                <li>Prayer and meditation sessions</li>
+                <li>Inter-religious dialogues</li>
+                <li>Spiritual messages and teachings</li>
+                <li>Faith enrichment activities</li>
+                <li>Building personal relationship with God</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Attend Next O GOD Program <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 9: Yuvotsavaalu -->
+    <section class="program-detail" id="yuvotsavaalu">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-star"></i></div>
+            <h2 class="program-title">YESJ YUVOTSAVAALU (YY)</h2>
+            <p class="program-tagline">"YESJ YOUTH CAN!"</p>
+        </div>
+
+        <div class="program-description">
+            <p>This is an annual/biannual event of Youth Festival Celebration. Youth take active part in great numbers. They aim at strengthening the Andhra Province Youth Congress. They offer youth a comprehensive platform and foreground to gain distinctive identity to collectively 'Express, Experience, and Enrich to Construct an ever-widening collective vision' to fight against and build a vibrant and just world which says 'YESJ YOUTH CAN'.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Festival Features</h3>
+            <ul class="highlights-list">
+                <li>Annual/biannual celebration</li>
+                <li>Large-scale youth participation</li>
+                <li>Cultural performances and competitions</li>
+                <li>Leadership development activities</li>
+                <li>Networking opportunities</li>
+                <li>Collective vision building</li>
+                <li>Celebration of youth achievements</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Register for Yuvotsavaalu <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="impact.html" class="action-btn action-btn-secondary">
+                View Past Celebrations <i class="fas fa-images"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Program 10: VIP -->
+    <section class="program-detail" id="vip">
+        <div class="program-header">
+            <div class="program-icon-large"><i class="fas fa-globe"></i></div>
+            <h2 class="program-title">VOLUNTARY IMMERSION PROGRAMME (VIP)</h2>
+            <p class="program-tagline">"Challenge Yourself. Experience Culture. Cultivate Gratitude."</p>
+        </div>
+
+        <div class="program-description">
+            <p>Volunteer placements are available to individuals from both local and international communities of all sizes, from rural villages to bustling metropolises. This opportunity provides a unique challenge to test yourself, experience a different culture, and cultivate an attitude of gratitude.</p>
+        </div>
+
+        <div class="program-highlights">
+            <h3 class="highlights-title">Program Details</h3>
+            <ul class="highlights-list">
+                <li>Duration: 2 weeks to 6 months</li>
+                <li>Placements: Teaching, community development, program support</li>
+                <li>Accommodation and meals provided</li>
+                <li>Orientation and cultural training</li>
+                <li>Both local and international volunteers welcome</li>
+                <li>Immersive cultural experience</li>
+                <li>Certificate of service provided</li>
+            </ul>
+        </div>
+
+        <div class="program-actions">
+            <a href="contact.html" class="action-btn action-btn-primary">
+                Apply for VIP <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="contact.html" class="action-btn action-btn-secondary">
+                International Volunteers Welcome <i class="fas fa-plane"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Alumni Network -->
+    <section class="alumni-section">
+        <div class="alumni-content">
+            <h2 class="section-title" style="color: white;">Program Alumni Network</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">"Once YESJ, Always YESJ"</p>
+            <p style="font-size: 1.2rem; margin-bottom: 3rem;">Join 50,000+ alumni staying connected</p>
+
+            <div class="alumni-features">
+                <div class="alumni-feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Alumni Association Events</h3>
+                    <p>Regular meetups and reunions</p>
+                </div>
+
+                <div class="alumni-feature">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Mentorship Opportunities</h3>
+                    <p>Guide the next generation</p>
+                </div>
+
+                <div class="alumni-feature">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Career Networking</h3>
+                    <p>Professional connections</p>
+                </div>
+
+                <div class="alumni-feature">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Continuing Education</h3>
+                    <p>Lifelong learning support</p>
+                </div>
+            </div>
+
+            <a href="contact.html" class="cta-btn" style="margin-top: 2rem; display: inline-block;">Join Alumni Network</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YESJ</h3>
+                <p>Youth Empowering Service - Jesuits. A movement of hope and transformation since 2015.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="yesj-website.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="programs.html">Programs</a></li>
+                    <li><a href="impact.html">Impact</a></li>
+                    <li><a href="get-involved.html">Get Involved</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>All Programs</h3>
+                <ul class="footer-links">
+                    <li><a href="#summer-shapes">Summer Shapes</a></li>
+                    <li><a href="#must">Multi-Skill Training</a></li>
+                    <li><a href="#ssp">Scholar Support</a></li>
+                    <li><a href="#pep">Personality Enhancement</a></li>
+                    <li><a href="#magic">MAGIC Youth</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Vijayawada, AP - 522 008</p>
+                <p><i class="fas fa-phone"></i> +91-886-672-7202</p>
+                <p><i class="fas fa-envelope"></i> info@yesj.org</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 YESJ - Youth Empowering Service Jesuits. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Filter buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

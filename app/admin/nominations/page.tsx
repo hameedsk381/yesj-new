@@ -138,11 +138,11 @@ export default function NominationsPage() {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
-            <h1 className="text-xl font-light text-maroon">Leadership Nominations</h1>
+            <h1 className="text-xl font-light text-primary">Leadership Nominations</h1>
           </div>
           <Button
             onClick={exportToCSV}
-            className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+            className="rounded-none bg-primary hover:bg-primary/90 text-white"
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV
@@ -207,7 +207,7 @@ export default function NominationsPage() {
                       <td className="px-4 py-3 text-sm">
                         <div className="flex flex-col gap-1">
                           <a
-                            href={`https://minio.aptsaicuf.com/aicuf-uploads/${nom.nocFilePath}`}
+                            href={`https://minio.yesj.com/yesj-uploads/${nom.nocFilePath}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-primary hover:underline flex items-center gap-1 text-xs"
@@ -216,7 +216,7 @@ export default function NominationsPage() {
                             View
                           </a>
                           <a
-                            href={`https://minio.aptsaicuf.com/aicuf-uploads/${nom.nocFilePath}`}
+                            href={`https://minio.yesj.com/yesj-uploads/${nom.nocFilePath}`}
                             download={nom.nocFileName}
                             className="text-blue-600 hover:underline flex items-center gap-1 text-xs"
                           >

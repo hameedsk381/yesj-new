@@ -8,13 +8,21 @@ import { CAROUSEL } from "@/lib/constants"
 export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   autoPlay?: boolean
   autoPlayInterval?: number
+  onSlideChange?: (index: number) => void
 }
 
 const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
-  ({ className, children, autoPlay = true, autoPlayInterval = CAROUSEL.AUTO_PLAY_INTERVAL, ...props }, ref) => {
+  ({ className, children, autoPlay = true, autoPlayInterval = CAROUSEL.AUTO_PLAY_INTERVAL, onSlideChange, ...props }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState(0)
     const childrenArray = React.Children.toArray(children)
     const totalSlides = childrenArray.length
+
+    // Call onSlideChange callback when currentIndex changes
+    React.useEffect(() => {
+      if (onSlideChange) {
+        onSlideChange(currentIndex)
+      }
+    }, [currentIndex, onSlideChange])
 
     React.useEffect(() => {
       if (!autoPlay || totalSlides <= 1) return
@@ -27,11 +35,13 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
     }, [autoPlay, autoPlayInterval, totalSlides])
 
     const goToPrevious = () => {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + totalSlides) % totalSlides)
+      const newIndex = (currentIndex - 1 + totalSlides) % totalSlides
+      setCurrentIndex(newIndex)
     }
 
     const goToNext = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides)
+      const newIndex = (currentIndex + 1) % totalSlides
+      setCurrentIndex(newIndex)
     }
 
     return (
@@ -50,15 +60,21 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
         {totalSlides > 1 && (
           <>
             <button
-              onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-maroon p-2 rounded-full shadow-lg transition-all"
+              onClick={() => {
+                const newIndex = (currentIndex - 1 + totalSlides) % totalSlides
+                setCurrentIndex(newIndex)
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-lg transition-all"
               aria-label="Previous slide"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
             <button
-              onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-maroon p-2 rounded-full shadow-lg transition-all"
+              onClick={() => {
+                const newIndex = (currentIndex + 1) % totalSlides
+                setCurrentIndex(newIndex)
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-lg transition-all"
               aria-label="Next slide"
             >
               <ChevronRight className="h-6 w-6" />

@@ -36,15 +36,9 @@ export default function AboutPreview() {
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
         >
           <div className="space-y-2">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-12 bg-primary"></div>
-              <span className="text-sm font-light text-primary">Our Story</span>
-              <div className="h-1 w-12 bg-primary"></div>
-            </div>
-            <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-maroon">About APTSAICUF</h2>
+            <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-primary">Where Every Youth Shouts YES to Their Dreams</h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-              The Andhra-Telangana All India Catholic University Federation (APTSAICUF) is a movement of university
-              students committed to creating a more just society.
+              A Movement of Hope, A Ministry of Transformation
             </p>
           </div>
         </motion.div>
@@ -57,10 +51,10 @@ export default function AboutPreview() {
             className="flex items-center justify-center"
           >
             <Image
-              src="/aicuf-centennial-logo.png"
+              src="/YESJ_Logo_Black-eaf43d27.png"
               width={300}
               height={300}
-              alt="AICUF Centennial Logo"
+              alt="YESJ Logo"
               className="mx-auto rounded-full shadow-lg"
             />
           </motion.div>
@@ -72,19 +66,21 @@ export default function AboutPreview() {
             className="flex flex-col justify-center space-y-4"
           >
             <motion.p variants={fadeInUp} className="text-muted-foreground font-extralight">
-              Founded in 1924, APTSAICUF has grown into a regional movement with thousands of members across Andhra
-              Pradesh and Telangana. Our members are committed to the principles of truth, justice, and love as taught
-              by Jesus Christ.
+              In the heart of India's Telugu states, where 85 million people call home, countless young dreamers face walls too high to climb alone. Poverty. Discrimination. Limited English. Broken education systems. These aren't just statistics. They're stolen futures.
             </motion.p>
             <motion.p variants={fadeInUp} className="text-muted-foreground font-extralight">
-              We believe in the power of young people to transform society. Through our programs, we provide
-              opportunities for students to develop leadership skills, engage in social analysis, and take action on
-              issues affecting their communities.
+              But here's what we believe: Every young person, regardless of caste, religion, economic background, or past circumstances, carries infinite potential. They don't need charity. They need a launchpad.
+            </motion.p>
+            <motion.p variants={fadeInUp} className="text-muted-foreground font-extralight">
+              That's YESJ.
+            </motion.p>
+            <motion.p variants={fadeInUp} className="text-muted-foreground font-extralight">
+              Since 2015, we've been more than a program. We've been a revolution. A Jesuit-rooted movement that walks alongside youth from rural villages to urban slums, transforming "I can't" into "I CAN" and "I WILL."
             </motion.p>
             <motion.div variants={fadeInUp} className="pt-4">
               <Link href="/about">
                 <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
-                  Read Our Full History
+                  Discover Our Story
                 </Button>
               </Link>
             </motion.div>

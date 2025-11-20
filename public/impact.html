@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact & Stories - YESJ | This Is What YES Looks Like</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #0ea5e9;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--secondary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+        }
+
+        .page-hero {
+            margin-top: 80px;
+            height: 60vh;
+            background: linear-gradient(rgba(30, 58, 138, 0.8), rgba(14, 165, 233, 0.8)), 
+                        url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .impact-dashboard {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(14, 165, 233, 0.05));
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .story-section {
+            padding: 6rem 5%;
+            background: #f9fafb;
+        }
+
+        .story-detail {
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .story-image {
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .story-content {
+            padding: 3rem;
+        }
+
+        .story-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .story-meta {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .story-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+        }
+
+        .metric-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                transition: left 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="yesj-website.html" class="logo">
+                <i class="fas fa-hands-helping"></i>
+                YES<span>J</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="yesj-website.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="impact.html" class="active">Impact</a></li>
+                <li><a href="get-involved.html">Get Involved</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="get-involved.html#donate" class="cta-btn">Donate Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="page-hero">
+        <div>
+            <h1>This Is What YES Looks Like</h1>
+            <p style="font-size: 1.5rem;">50,000 lives transformed. 50,000 stories of hope.</p>
+        </div>
+    </section>
+
+    <section class="impact-dashboard">
+        <h2 class="section-title">Impact Dashboard</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-number">50,000+</div>
+                <div class="stat-label">Youth Directly Impacted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="stat-number">15</div>
+                <div class="stat-label">Districts Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Programs Running</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                <div class="stat-number">3,000+</div>
+                <div class="stat-label">Youth Leaders Trained</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-hands-helping"></i></div>
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Annual Volunteers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Employment Success Rate</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <h2 class="section-title">Transformation Stories</h2>
+
+        <!-- Story 1: Lakshmi -->
+        <div class="story-detail">
+            <div class="story-grid">
+                <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600');"></div>
+                <div class="story-content">
+                    <h3 class="story-name">Lakshmi, 22</h3>
+                    <p class="story-meta">Summer Shapes Graduate | Customer Care Executive</p>
+                    <p class="story-quote">"In my village, English was not a language—it was a wall. A wall that kept people like me out of opportunities, out of cities, out of dreams."</p>
+                    <p class="story-text">Lakshmi grew up in a family of agricultural laborers in Guntur district. She completed B.Com from a Telugu-medium college but couldn't find work beyond local shops paying ₹5,000/month due to her limited English.</p>
+                    <p class="story-text">After joining Summer Shapes, Lakshmi transformed in just 30 days. The immersive English-only environment, supportive peer community, and personality development sessions gave her the confidence she needed.</p>
+                    <p class="story-text">Today, she's a customer care executive at a tech company in Hyderabad earning ₹18,000/month, supporting her family and funding her younger sister's education.</p>
+                    
+                    <div class="impact-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">260%</div>
+                            <div class="metric-label">Income Increase</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">9/10</div>
+                            <div class="metric-label">Confidence Score</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">6</div>
+                            <div class="metric-label">Family Members Supported</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story 2: Ravi Kumar -->
+        <div class="story-detail">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h3 class="story-name">Ravi Kumar, 35</h3>
+                    <p class="story-meta">MuST - Driving Program | Professional Driver</p>
+                    <p class="story-quote">"I watched my classmates go to college while I mixed cement. Society wrote me off as another dropout. I started believing them."</p>
+                    <p class="story-text">Ravi dropped out after Class 10 when his father fell ill. He worked construction sites for ₹300/day with no prospects for the future. At 18, a YESJ volunteer told him about the MuST Driving program.</p>
+                    <p class="story-text">The 4-month program changed everything. He learned commercial driving and basic mechanics, receiving hands-on training and certification.</p>
+                    <p class="story-text">Now he works at a company earning ₹25,000/month—more than his father ever earned. He's building his family's first pucca house and ensuring his younger brother finishes school.</p>
+                    
+                    <div class="impact-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">533%</div>
+                            <div class="metric-label">Income Increase</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">Building</div>
+                            <div class="metric-label">First Family Home</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">2</div>
+                            <div class="metric-label">Siblings Supported</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600');"></div>
+            </div>
+        </div>
+
+        <!-- Story 3: Srinivas -->
+        <div class="story-detail">
+            <div class="story-grid">
+                <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600');"></div>
+                <div class="story-content">
+                    <h3 class="story-name">Srinivas, 20</h3>
+                    <p class="story-meta">Scholar Support Program | Engineering Student</p>
+                    <p class="story-quote">"I watched my admission deadline pass. The day I should've been starting college, I was working in the fields. That was my reality."</p>
+                    <p class="story-text">Srinivas scored 95% in Class 12 and ranked in the top 1% of state engineering entrance exams. But his parents—daily wage agricultural workers—couldn't afford ₹2 lakhs/year for B.Tech.</p>
+                    <p class="story-text">Through SSP's rigorous selection process, Srinivas received full scholarship support. Beyond tuition, he got mentorship, career counseling, and emotional support.</p>
+                    <p class="story-text">Now in 3rd year of B.Tech (Computer Science) with 8.5 CGPA, he's secured a summer internship at a major tech company. After graduation, he plans to join civil services to reform rural education.</p>
+                    
+                    <div class="impact-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">8.5</div>
+                            <div class="metric-label">CGPA</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">Secured</div>
+                            <div class="metric-label">Summer Internship</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">Civil Services</div>
+                            <div class="metric-label">Future Goal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story 4: Priya -->
+        <div class="story-detail">
+            <div class="story-grid">
+                <div class="story-content">
+                    <h3 class="story-name">Priya, 24</h3>
+                    <p class="story-meta">MuST - Tailoring | Entrepreneur</p>
+                    <p class="story-quote">"I loved my family, but I felt invisible. I had no income, no voice in financial decisions, no identity beyond 'mother' and 'wife.'"</p>
+                    <p class="story-text">Priya was married at 17 and dropped out of school at Class 8. For six years, she was economically dependent on her husband with two young children.</p>
+                    <p class="story-text">Despite initial resistance, her mother-in-law supported her joining YESJ's tailoring program. The 3-month training covered not just sewing but business management and pricing strategies.</p>
+                    <p class="story-text">Today, Priya runs her own tailoring business from home earning ₹15,000-20,000/month. She's employed two other women from her neighborhood, creating a ripple effect of empowerment.</p>
+                    
+                    <div class="impact-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">₹15-20k</div>
+                            <div class="metric-label">Monthly Income</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">2</div>
+                            <div class="metric-label">Women Employed</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">Major</div>
+                            <div class="metric-label">Household Contributor</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600');"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YESJ</h3>
+                <p>Transforming lives since 2015.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="yesj-website.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="programs.html">Programs</a></li>
+                    <li><a href="impact.html">Impact</a></li>
+                    <li><a href="get-involved.html">Get Involved</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Programs</h3>
+                <ul class="footer-links">
+                    <li><a href="programs.html#summer-shapes">Summer Shapes</a></li>
+                    <li><a href="programs.html#must">MuST</a></li>
+                    <li><a href="programs.html#ssp">SSP</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Vijayawada, AP</p>
+                <p><i class="fas fa-phone"></i> +91-886-672-7202</p>
+                <p><i class="fas fa-envelope"></i> info@yesj.org</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 YESJ. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

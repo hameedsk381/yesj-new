@@ -100,11 +100,11 @@ export function getRazorpayConfig() {
   return {
     keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
     currency: 'INR',
-    name: 'APTSAICUF',
+    name: 'YESJ',
     description: 'Event Registration Payment',
-    image: '/aicuf-centennial-logo.png',
+    image: '/YESJ_Logo_Black-eaf43d27.png',
     theme: {
-      color: '#7f1d1d', // maroon
+      color: '#007BFF', // blue
     },
   }
 }

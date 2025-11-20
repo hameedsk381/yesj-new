@@ -7,7 +7,7 @@ if (!existsSync(dataDir)) {
   mkdirSync(dataDir, { recursive: true })
 }
 
-const dbPath = join(dataDir, "aicuf.db")
+const dbPath = join(dataDir, "yesj.db")
 const sqlite = new Database(dbPath, { create: true })
 
 // Create tables manually since we don't have migrations yet
@@ -32,7 +32,7 @@ sqlite.exec(`
     event_experience TEXT,
     just_society_definition TEXT,
     communication_example TEXT,
-    aicuf_vision TEXT,
+    yesj_vision TEXT,
     leadership_position TEXT,
     additional_message TEXT,
     created_at INTEGER NOT NULL DEFAULT (unixepoch())

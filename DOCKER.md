@@ -1,4 +1,4 @@
-# AICUF Website - Docker Guide
+# YESJ Website - Docker Guide
 
 ## Build and Run with Docker
 
@@ -6,33 +6,34 @@
 
 1. **Build the image:**
 ```bash
-docker build -t aicuf-website .
+docker build -t yesj-website .
+
 ```
 
 2. **Run the container:**
 ```bash
 docker run -d \
-  --name aicuf-web \
+  --name yesj-web \
   -p 3000:3000 \
   --env-file .env \
-  -v aicuf-uploads:/app/public/uploads \
+  -v yesj-uploads:/app/public/uploads \
   --restart unless-stopped \
-  aicuf-website
+  yesj-website
 ```
 
 3. **View logs:**
 ```bash
-docker logs -f aicuf-web
+docker logs -f yesj-web
 ```
 
 4. **Stop container:**
 ```bash
-docker stop aicuf-web
+docker stop yesj-web
 ```
 
 5. **Remove container:**
 ```bash
-docker rm aicuf-web
+docker rm yesj-web
 ```
 
 ## Environment Variables
@@ -48,14 +49,14 @@ Or pass environment variables directly:
 
 ```bash
 docker run -d \
-  --name aicuf-web \
+  --name yesj-web \
   -p 3000:3000 \
   -e MONGODB_URI="your-mongodb-uri" \
   -e ADMIN_TOKEN="your-token" \
   -e ADMIN_USERNAME="admin" \
   -e ADMIN_PASSWORD="password" \
-  -v aicuf-uploads:/app/public/uploads \
-  aicuf-website
+  -v yesj-uploads:/app/public/uploads \
+  yesj-website
 ```
 
 ## Access
@@ -69,60 +70,60 @@ docker run -d \
 
 ```bash
 # Tag image
-docker tag aicuf-website:latest your-registry/aicuf-website:latest
+docker tag yesj-website:latest your-registry/yesj-website:latest
 
 # Push to registry
-docker push your-registry/aicuf-website:latest
+docker push your-registry/yesj-website:latest
 ```
 
 ### Deploy on Production Server
 
 ```bash
 # Pull image
-docker pull your-registry/aicuf-website:latest
+docker pull your-registry/yesj-website:latest
 
 # Run container
 docker run -d \
-  --name aicuf-web \
+  --name yesj-web \
   -p 80:3000 \
   --env-file .env.production \
-  -v /var/aicuf/uploads:/app/public/uploads \
+  -v /var/yesj/uploads:/app/public/uploads \
   --restart unless-stopped \
-  your-registry/aicuf-website:latest
+  your-registry/yesj-website:latest
 ```
 
 ## Common Commands
 
 **Rebuild image:**
 ```bash
-docker build --no-cache -t aicuf-website .
+docker build --no-cache -t yesj-website .
 ```
 
 **Restart container:**
 ```bash
-docker restart aicuf-web
+docker restart yesj-web
 ```
 
 **View container stats:**
 ```bash
-docker stats aicuf-web
+docker stats yesj-web
 ```
 
 **Execute commands inside container:**
 ```bash
-docker exec -it aicuf-web sh
+docker exec -it yesj-web sh
 ```
 
 **Check uploaded files:**
 ```bash
-docker exec -it aicuf-web ls -la /app/public/uploads/noc
+docker exec -it yesj-web ls -la /app/public/uploads/noc
 ```
 
 ## Troubleshooting
 
 **Container fails to start:**
 ```bash
-docker logs aicuf-web
+docker logs yesj-web
 ```
 
 **Check if container is running:**
@@ -132,11 +133,11 @@ docker ps -a
 
 **Remove old containers and images:**
 ```bash
-docker rm aicuf-web
-docker rmi aicuf-website
+docker rm yesj-web
+docker rmi yesj-website
 ```
 
 **Permission issues with uploads:**
 ```bash
-docker exec -it aicuf-web ls -la /app/public/uploads
+docker exec -it yesj-web ls -la /app/public/uploads
 ```

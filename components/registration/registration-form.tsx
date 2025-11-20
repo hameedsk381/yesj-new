@@ -66,7 +66,7 @@ const formSchema = z.object({
   // Leadership questions (conditional)
   justSocietyDefinition: z.string().optional(),
   communicationExample: z.string().optional(),
-  aicufVision: z.string().optional(),
+  yesjVision: z.string().optional(),
 
   // Leadership position (conditional)
   leadershipPosition: z.string().optional(),
@@ -162,7 +162,7 @@ export default function RegistrationForm() {
         break
       case 3:
         if (applicationType === "leadership") {
-          fieldsToValidate = ["justSocietyDefinition", "communicationExample", "aicufVision"]
+          fieldsToValidate = ["justSocietyDefinition", "communicationExample", "yesjVision"]
         } else {
           fieldsToValidate = ["declaration"]
         }
@@ -276,14 +276,14 @@ export default function RegistrationForm() {
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-light text-maroon">
+          <h2 className="text-2xl font-light text-primary">
             Application for {applicationType === "membership" ? "Membership" : "Leadership"}
           </h2>
           <div className="flex items-center gap-2">
             {Array.from({ length: totalSteps }).map((_, index) => (
               <div
                 key={index}
-                className={`h-2 w-8 rounded-full ${currentStep >= index + 1 ? "bg-maroon" : "bg-gray-200"}`}
+                className={`h-2 w-8 rounded-full ${currentStep >= index + 1 ? "bg-primary" : "bg-gray-200"}`}
               />
             ))}
           </div>
@@ -329,7 +329,7 @@ export default function RegistrationForm() {
               type="button"
               onClick={goToNextStep}
               disabled={isSubmitting}
-              className="ml-auto rounded-none bg-maroon hover:bg-maroon/90 text-white"
+              className="ml-auto rounded-none bg-primary hover:bg-primary/90 text-white"
             >
               Next
             </Button>
@@ -337,7 +337,7 @@ export default function RegistrationForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="ml-auto rounded-none bg-maroon hover:bg-maroon/90 text-white"
+              className="ml-auto rounded-none bg-primary hover:bg-primary/90 text-white"
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
             </Button>

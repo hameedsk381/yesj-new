@@ -50,9 +50,9 @@ export default function NewsletterSection() {
           transition={{ duration: 0.6 }}
           className="space-y-3"
         >
-          <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-maroon">Stay Updated</h2>
+          <h2 className="text-3xl font-light tracking-tighter md:text-4xl/tight text-primary">Stay Connected</h2>
           <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-            Subscribe to our newsletter to receive updates on our activities and events.
+            Monthly YESJ Newsletter: Transformation stories, Program updates, Volunteer opportunities, Ways to get involved
           </p>
         </motion.div>
         <motion.div
@@ -75,7 +75,7 @@ export default function NewsletterSection() {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+              className="rounded-none bg-primary hover:bg-primary/90 text-white"
             >
               {isSubmitting ? "..." : "Subscribe"}
             </Button>
@@ -90,7 +90,7 @@ export default function NewsletterSection() {
             </p>
           )}
           <p className="text-xs text-muted-foreground font-extralight">
-            We respect your privacy. Unsubscribe at any time.
+            Never miss a story. Subscribe for monthly inspiration delivered to your inbox.
           </p>
         </motion.div>
       </div>

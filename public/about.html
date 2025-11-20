@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - YESJ | A Jesuit Mission Born from Radical Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #0ea5e9;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --background: #ffffff;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--secondary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            margin-top: 80px;
+            position: relative;
+            height: 60vh;
+            background: linear-gradient(rgba(30, 58, 138, 0.8), rgba(14, 165, 233, 0.8)), 
+                        url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero-content {
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .page-hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .story-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .story-content {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content strong {
+            color: var(--primary-color);
+        }
+
+        .yes-philosophy {
+            background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            color: white;
+        }
+
+        .yes-philosophy h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .yes-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .yes-list li {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .yes-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Theological Foundation */
+        .theological-section {
+            padding: 6rem 5%;
+            background: #f9fafb;
+        }
+
+        .theological-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        .theological-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .theological-column h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .pillar-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .pillar-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-description {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* UAP Section */
+        .uap-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .uap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .uap-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(14, 165, 233, 0.05));
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .uap-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+        }
+
+        .uap-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .uap-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .uap-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* 5 Ps Framework */
+        .five-ps-section {
+            padding: 6rem 5%;
+            background: linear-gradient(to bottom, #f9fafb, white);
+        }
+
+        .five-ps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 3rem auto 0;
+        }
+
+        .p-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .p-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .p-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+
+        .p-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .p-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .p-headline {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .p-description {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Who We Serve */
+        .serve-section {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
+            color: white;
+        }
+
+        .serve-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .serve-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .serve-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .serve-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .serve-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .serve-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .serve-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        /* CTA Section */
+        .join-mission {
+            padding: 6rem 5%;
+            text-align: center;
+            background: white;
+        }
+
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+
+        .join-card {
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(14, 165, 233, 0.05));
+            transition: all 0.3s;
+        }
+
+        .join-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .join-icon {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .join-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                transition: left 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .theological-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="yesj-website.html" class="logo">
+                <i class="fas fa-hands-helping"></i>
+                YES<span>J</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="yesj-website.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="impact.html">Impact</a></li>
+                <li><a href="get-involved.html">Get Involved</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="get-involved.html#donate" class="cta-btn">Donate Now</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>A Jesuit Mission Born from Radical Love</h1>
+            <p class="subtitle">Reimagining youth empowerment in the Telugu heartland since 2015</p>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="story-section">
+        <h2>Our Story</h2>
+        <div class="story-content">
+            <p>In the Telugu-speaking states of Andhra Pradesh and Telangana, home to nearly 85 million people, countless young lives encounter harsh realities daily—poverty, lack of education, unemployment, casteism, gender discrimination, and social inequality. In rural, semi-urban, and urban slum areas, millions of youths watch their dreams, hopes, and creative energies destroyed by circumstances beyond their control.</p>
+
+            <p>The poverty is not self-incurred. These sections of society have been pushed to the margins. Youth dropping out of school at tender ages to work as child labor, teenagers abandoning high school to toil as cheap labor where their blood and sweat are exploited, girl children married young instead of educated—these are the intersectional injustices we confront daily.</p>
+
+            <p><strong>But YESJ is convinced to spread a YES in the lives of youth by giving a helping hand to dream and realize their dreams.</strong></p>
+
+            <p>Since 2015, we've been a beacon of light and a ray of hope for those who are last, lost, and least, those who lack resources and guidance for a better life. We walk alongside young people, regardless of their educational, social, religious, and economic backgrounds, unleashing their potential to lead meaningful and fulfilling lives.</p>
+
+            <div class="yes-philosophy">
+                <h3>The YES Philosophy</h3>
+                <p>We believe that instilling hope and courage in young people and creating a support system will empower them to shout to the world:</p>
+                <ul class="yes-list">
+                    <li><strong>YES</strong> – I have Dreams.</li>
+                    <li><strong>YES</strong> – I am capable of fulfilling my Dreams.</li>
+                    <li><strong>YES</strong> – I Can and I Will be the Dream I want to be if only I am given an opportunity.</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="programs.html" class="cta-btn" style="display: inline-block;">Explore Our Programs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theological Foundation -->
+    <section class="theological-section">
+        <div class="theological-content">
+            <h2 class="section-title">Our Theological Foundation</h2>
+            <p class="section-subtitle">More Than a Program - A Sacred Calling</p>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem; color: var(--text-light);">Ignatian spirituality meets radical social transformation</p>
+
+            <div class="theological-grid">
+                <!-- Left Column - Ignatian Pillars -->
+                <div class="theological-column">
+                    <h3>Ignatian Pillars</h3>
+                    
+                    <div class="pillar-item">
+                        <div class="pillar-title">Contemplatio Ad Amorem (Contemplation in Action)</div>
+                        <p class="pillar-description">Finding God in the broken dreams of marginalized youth and responding with radical solidarity.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-title">Imago Dei (Image of God)</div>
+                        <p class="pillar-description">Every young person is created in God's image, carrying infinite dignity and worth.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-title">Cura Personalis (Care for the Whole Person)</div>
+                        <p class="pillar-description">Holistic formation: intellectual, emotional, social, spiritual, physical.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-title">Magis (The More)</div>
+                        <p class="pillar-description">Always seeking greater justice, deeper transformation, not just incremental change.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-title">Men and Women for Others</div>
+                        <p class="pillar-description">Forming leaders who serve, not just succeed.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column - Our Commitment -->
+                <div class="theological-column">
+                    <h3>Our Commitment</h3>
+                    
+                    <div class="pillar-item">
+                        <p class="pillar-description">We see poverty not as personal failure but as structural sin demanding prophetic response.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <p class="pillar-description">We approach youth not as beneficiaries but as protagonists of their own liberation.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <p class="pillar-description">We don't offer charity; we accompany transformation through long-term relationships.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <p class="pillar-description">We believe empowerment is kingdom-building—establishing justice and peace on earth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Universal Apostolic Preferences -->
+    <section class="uap-section">
+        <h2 class="section-title">Universal Apostolic Preferences</h2>
+        <p class="section-subtitle">Aligned with Global Jesuit Mission</p>
+
+        <div class="uap-grid">
+            <div class="uap-card">
+                <div class="uap-number">01</div>
+                <h3 class="uap-title">Showing the Way to God</h3>
+                <p class="uap-description">Our O GOD programs and faith-justice integration help youth build personal relationships with God.</p>
+            </div>
+
+            <div class="uap-card">
+                <div class="uap-number">02</div>
+                <h3 class="uap-title">Walking with the Excluded</h3>
+                <p class="uap-description">Preferential option for English-excluded rural youth and marginalized communities.</p>
+            </div>
+
+            <div class="uap-card">
+                <div class="uap-number">03</div>
+                <h3 class="uap-title">Journeying with Youth</h3>
+                <p class="uap-description">Youth as protagonists through PEP & MAGIC Youth programs.</p>
+            </div>
+
+            <div class="uap-card">
+                <div class="uap-number">04</div>
+                <h3 class="uap-title">Caring for Our Common Home</h3>
+                <p class="uap-description">Each One-Teach Ten model fostering community ownership and sustainable development.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 Ps Framework -->
+    <section class="five-ps-section">
+        <h2 class="section-title">The YESJ Way: Our 5 Ps Framework</h2>
+        <p class="section-subtitle">How we transform lives and build futures</p>
+
+        <div class="five-ps-grid">
+            <!-- Purpose -->
+            <div class="p-card">
+                <div class="p-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="p-title">PURPOSE</div>
+                <h4 class="p-headline">Building a Just World</h4>
+                <p class="p-description">Our purpose is to assist in building a just world by transforming the lives of young people. We educate and encourage them to understand and analyze the socio-economic, cultural, and political aspects of society, stimulating their conscience to bring social commitment to build the Kingdom of God in India and the globalized world. We aspire to light the aspirational torch for young people who do not have the resources and guidance to a better life.</p>
+            </div>
+
+            <!-- Process -->
+            <div class="p-card">
+                <div class="p-icon"><i class="fas fa-sync-alt"></i></div>
+                <div class="p-title">PROCESS</div>
+                <h4 class="p-headline">Transformation Through Integration</h4>
+                <p class="p-description">With the right resources, support, and training, people can be enabled to solve their own problems. Rather than random and impulsive approaches, we follow a long-term systematic approach with spiritual, social, psychological, contextual, intellectual, and creative integration. We follow the praxis of: Experience → Reflection → Involvement → Transformation. We firmly believe in collaborating with other individuals and organizations who share our values.</p>
+            </div>
+
+            <!-- Programmes -->
+            <div class="p-card">
+                <div class="p-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="p-title">PROGRAMMES</div>
+                <h4 class="p-headline">Comprehensive Empowerment</h4>
+                <p class="p-description">Through our 10+ comprehensive programmes, we empower young people attending schools and colleges, as well as those who have dropped out. From English communication training to vocational skills, from personality development to spiritual formation, from job placement to leadership development—we provide holistic support at every stage. 50,000+ youth have already benefited from our programs across 15 districts in the Telugu states.</p>
+            </div>
+
+            <!-- Partnerships -->
+            <div class="p-card">
+                <div class="p-icon"><i class="fas fa-handshake"></i></div>
+                <div class="p-title">PARTNERSHIPS</div>
+                <h4 class="p-headline">Together We Do More</h4>
+                <p class="p-description">"Alone we can do so little; together we can do so much" – Helen Keller. True to this belief, we sincerely welcome opportunities to foster a culture of collaboration, cooperation, and partnership with all like-minded individuals, organizations, business houses, and governments—across the state and beyond—who would like to join us to encourage, employ, and empower young people to say 'YES' to their dreams.</p>
+            </div>
+
+            <!-- Perseverance -->
+            <div class="p-card">
+                <div class="p-icon"><i class="fas fa-mountain"></i></div>
+                <div class="p-title">PERSEVERANCE</div>
+                <h4 class="p-headline">Never-Ending Commitment</h4>
+                <p class="p-description">Empowering youth is a never-ending job. There is always another young person to begin our journey with. We are deeply convinced that this mission of empowering youth is tough and challenging. We are aware that persevering this effort well, through the strain of youth ministry, is a serious responsibility. We resolve to PERSEVERE with faith, hope, and love.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Serve -->
+    <section class="serve-section">
+        <div class="serve-content">
+            <h2 class="section-title" style="color: white;">Who We Serve</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Our Preferential Option for Youth</p>
+
+            <div class="serve-grid">
+                <div class="serve-card">
+                    <h4>Target Demographics</h4>
+                    <ul>
+                        <li>Geography: Telugu-speaking states (AP & Telangana)</li>
+                        <li>Age Group: 15-45 years</li>
+                        <li>Focus: Rural (60%), Semi-urban (25%), Urban slums (15%)</li>
+                        <li>Economic: Below poverty line, marginalized communities</li>
+                        <li>Inclusivity: All castes, religions, backgrounds</li>
+                    </ul>
+                </div>
+
+                <div class="serve-card">
+                    <h4>Special Focus</h4>
+                    <ul>
+                        <li>SC/ST communities (40% of participants)</li>
+                        <li>First-generation learners</li>
+                        <li>Female youth (45% participation)</li>
+                        <li>School dropouts seeking second chances</li>
+                        <li>Academically brilliant but financially poor students</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Our Mission -->
+    <section class="join-mission">
+        <h2 class="section-title">The Harvest Is Plentiful. Will You Labor With Us?</h2>
+        
+        <div class="join-grid">
+            <div class="join-card">
+                <div class="join-icon"><i class="fas fa-user-graduate"></i></div>
+                <h3>For Youth</h3>
+                <p>Start your transformation journey</p>
+                <a href="programs.html" class="cta-btn" style="margin-top: 1rem;">Explore Programs</a>
+            </div>
+
+            <div class="join-card">
+                <div class="join-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3>For Volunteers</h3>
+                <p>Give your time and talent</p>
+                <a href="get-involved.html" class="cta-btn" style="margin-top: 1rem;">Join Us</a>
+            </div>
+
+            <div class="join-card">
+                <div class="join-icon"><i class="fas fa-heart"></i></div>
+                <h3>For Donors</h3>
+                <p>Invest in futures</p>
+                <a href="get-involved.html#donate" class="cta-btn" style="margin-top: 1rem;">Donate Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YESJ</h3>
+                <p>Youth Empowering Service - Jesuits. A movement of hope and transformation since 2015, empowering 50,000+ youth across Telugu states.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="yesj-website.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="programs.html">Programs</a></li>
+                    <li><a href="impact.html">Impact & Stories</a></li>
+                    <li><a href="get-involved.html">Get Involved</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Programs</h3>
+                <ul class="footer-links">
+                    <li><a href="programs.html#summer-shapes">Summer Shapes</a></li>
+                    <li><a href="programs.html#must">Multi-Skill Training</a></li>
+                    <li><a href="programs.html#ssp">Scholar Support</a></li>
+                    <li><a href="programs.html#pep">Personality Enhancement</a></li>
+                    <li><a href="programs.html#magic">MAGIC Youth</a></li>
+                    <li><a href="programs.html#joy">JoY Desk</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> YESJ Centre for Excellence<br>
+                Andhra Loyola College Campus<br>
+                Vijayawada, AP - 522 008</p>
+                <p><i class="fas fa-phone"></i> +91-886-672-7202</p>
+                <p><i class="fas fa-envelope"></i> info@yesj.org</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 YESJ - Youth Empowering Service Jesuits. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

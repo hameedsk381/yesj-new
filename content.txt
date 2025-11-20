@@ -1,0 +1,1628 @@
+YESJ
+ WEBSITE CONTENT
+1. HOMEPAGE
+Hero Section - Image Slider
+Slide 1:
+Image:
+ Dynamic photo of diverse youth jumping/celebrating with arms raised, golden hour lighting, rural-urban mix background
+Overlay Text:
+ "YOUR DREAMS DESERVE A YES"
+Subtext:
+ "Empowering 50,000+ youth across Telugu states to break barriers and build futures"
+CTA Button:
+ "Start Your Journey" | "Explore Programs"
+Slide 2:
+Image:
+ Youth engaged in hands-on skill training (welding/computer/tailoring), intense focus, bright workshop setting
+Overlay Text:
+ "FROM MARGINS TO MAINSTREAM"
+Subtext:
+ "Free residential training programs transforming lives since 2015"
+CTA Button:
+ "View Programs" | "Apply Now"
+Slide 3:
+Image:
+ Group of students in Summer Shapes program, laughing during English class, vibrant classroom
+Overlay Text:
+ "SPEAK YOUR SUCCESS"
+Subtext:
+ "Break the English barrier. Unlock unlimited opportunities."
+CTA Button:
+ "Join Summer Shapes" | "Learn More"
+Slide 4:
+Image:
+ Scholar Support Program students in graduation caps, proud moment, institutional background
+Overlay Text:
+ "BRILLIANCE KNOWS NO POVERTY"
+Subtext:
+ "Supporting academically gifted students to achieve their tertiary education dreams"
+CTA Button:
+ "Apply for Scholarship" | "Support a Scholar"
+Slide 5:
+Image:
+ Volunteers working with rural children, warm interaction, community setting
+Overlay Text:
+ "BE THE CHANGE. VOLUNTEER WITH US"
+Subtext:
+ "Join a movement rooted in Ignatian spirituality for systemic transformation"
+CTA Button:
+ "Become a Volunteer" | "Learn About VIP"
+Urgent Notifications Bar
+[Sticky bar below header, dismissible]
+Design:
+ Gradient banner (blue to teal) with scrolling/alternating announcements
+Sample Notifications:
+🔥
+ 
+URGENT:
+ Summer Shapes 2025 Applications Open! Limited seats. Apply by Dec 31st →
+📢
+ 
+NEW:
+ Scholar Support Program now accepting applications for academic year 2025-26 →
+🎉
+ 
+CELEBRATING:
+ 10 years of empowering youth | 50,000+ lives transformed →
+💼
+ 
+JOY DESK:
+ Latest job openings for trained youth. Check opportunities →
+Section 1: Welcome Message
+Headline:
+ "Where Every Youth Shouts YES to Their Dreams"
+Subheadline
+:
+ 
+A Movement of Hope, A Ministry of Transformation
+Body Copy:
+ In the heart of India's Telugu states, where 85 million people call home, countless young dreamers face walls too high to climb alone. Poverty. Discrimination. Limited English. Broken education systems. These aren't just statistics
+. T
+hey're stolen futures.
+But here's what we believe:
+ Every young person, regardless of caste, religion, economic background, or past circumstances, carries infinite potential. They don't need charity. They need a launchpad.
+That's 
+YESJ
+.
+Since 2015, we've been more than a program
+. W
+e've been a revolution. A Jesuit-rooted movement that walks alongside youth from rural villages to urban slums, transforming "I can't" into "I CAN" and "I WILL."
+CTA:
+ "Discover Our Story" 
+Section 2: Impact Counter
+[Animated numbers 
+counting up
+ on scroll]
+Design:
+ Grid layout with icons, bold numbers, clean typography
+📊
+ 
+50,000+
+ Youth Directly Impacted
+🎓
+ 
+10+ Comprehensive
+ Programs Running
+🌍
+ 
+15 Districts
+ Across Telugu States
+💪
+ 
+3,000+
+ Youth Leaders Trained
+👨
+‍
+🏫
+ 
+500+
+ Volunteers Mobilized Annually
+🏆
+ 
+85%
+ Employment/Education Success Rate
+Tagline:
+ 
+"These aren't just numbers. They're transformed lives, rebuilt families, and reimagined futures."
+Section 
+3
+: Transformation Stories
+[Carousel testimonials with photos]
+Story 1:
+ 
+Image:
+ Confident young woman in professional attire 
+Name:
+ 
+Lakshmi
+, 22 
+Story
+:
+ 
+"I couldn't speak a single English sentence. My village laughed when I said I'd 
+study
+ in 
+a
+ 
+English Medium College
+. Summer Shapes didn't just teach me English
+. I
+t taught me to believe I deserve success. Today, I'm a
+ proud
+ 
+graduate
+, supporting my entire family."
+Story 2:
+ 
+Image:
+ Young man in welding gear, proud smile 
+Name:
+ Ravi Kumar, 
+35
+ 
+Story
+:
+ 
+"I dropped out after Class 10. Everyone said I'd be a daily wage 
+labourer
+ forever. 
+YESJ
+'s 
+Driving
+ program changed everything. Now I earn ₹25,000/month at 
+the Maruti Toyota
+ company. I'm building my family's first pucca house."
+Story 3:
+ 
+Image:
+ Student with university ID, holding books 
+Name:
+ 
+Sweatha
+, 2
+2
+ 
+Story
+:
+ 
+"
+I’m from a broken family
+. 
+Graduation
+ was an impossible dream
+ 
+until SSP said YES. I'm now 
+working in a media Company
+. 
+YESJ
+ didn't just fund my 
+education,
+ they believed in me when no one else did."
+CTA:
+ "Read More Success Stories →"
+Section 
+4
+: Get Involved
+[3-column CTA section with bold contrasting colors]
+Column 1: I'm a Youth Seeking Support
+ 
+Image Background:
+ Hopeful young face, looking up 
+Text:
+ "Ready to transform your life? Explore our programs and take the first step toward your dreams." 
+CTA Button:
+ "Explore Programs →"
+Column 2: 
+I Want to Volunteer
+ 
+Image Background:
+ Hands joining together, diverse group 
+Text:
+ "Be part of something bigger. Give your time, talent, and treasure to empower the next generation." 
+CTA Button:
+ "Join the Movement →"
+Column 3: 
+I Want to Donate
+ 
+Image Background:
+ Close-up of helping hands, warm lighting 
+Text:
+ "Transform a life today. Every donation breaks the cycle of poverty and builds futures." 
+CTA Button:
+ "Donate Now →"
+Section 
+5
+: Latest from 
+YESJ
+[Blog/news feed section]
+Headline:
+ "
+Resonating Hope
+"
+Subheadline
+:
+ 
+Stay connected with our latest programs, stories, and impact
+[3 most recent blog posts in card format with featured images]
+CTA:
+ "Visit Our Blog →"
+Section 
+6
+: Our Collaborators
+Headline:
+ "Partnering for Greater Impact"
+Subheadline
+:
+ 
+"Alone we can do so little; together we can do so much" – Helen Keller
+[Scrolling logo strip of all partner organizations mentioned in documents]
+CTA:
+ "Become a Partner →"
+Footer CTA Section (Before main footer)
+Full-width banner with powerful imagery
+Background Image:
+ Silhouette of youth with raised arms against sunset, empowering stance
+Overlay Text:
+"The harvest is plentiful. Will you answer the call?"
+Every 8 minutes, a youth in our region drops out of school.
+Every hour, dozens lose hope in their dreams.
+But every day, 
+YESJ
+ says: Your story doesn't end here.
+CTA Buttons:
+ "Apply to Program" | "Volunteer" | "Donate" | "Partner 
+With
+ Us"
+2. ABOUT US PAGE
+Hero Section
+Background Image:
+ Panoramic view of both Andhra Pradesh and Telangana landscapes (split composition), with overlaid youth faces in circular frames
+Headline:
+ "A Jesuit Mission Born from Radical Love"
+Subheadline
+:
+ 
+Reimagining youth empowerment in the Telugu heartland since 2015
+Our Story Section
+In the Telugu-speaking states of Andhra Pradesh and Telangana, home to nearly 
+85 million people
+, countless young lives encounter harsh realities daily—poverty, lack of education, unemployment, casteism, gender discrimination, and social inequality. In rural, semi-urban, and urban slum areas, millions of youths watch their dreams, hopes, and creative energies destroyed by circumstances beyond their control.
+The poverty is not self-incurred. These sections of society have been pushed to the margins.
+ Youth dropping out of school at tender ages to work as child labor, teenagers abandoning high school to toil as cheap labor where their blood and sweat are exploited, girl children married young instead of educated—these are the intersectional injustices we confront daily.
+But 
+YESJ
+ is convinced to spread a YES in the lives of youth by giving a helping hand to dream and realize their dreams.
+Since 2015, we've been a beacon of light and a ray of hope for those who are last, lost, and least
+, 
+those who lack resources and guidance for a better life. We walk alongside young people, regardless of their educational, social, religious, and economic backgrounds, unlashing their potential to lead meaningful and fulfilling lives.
+The YES Philosophy:
+We believe that instilling hope and courage in young people and creating a support system will empower them to shout to the world:
+YES
+ – I have Dreams.
+YES
+ – I am capable of fulfilling my Dreams.
+YES
+ – I 
+Can
+ and I Will be the Dream I want to be if only I am given an opportunity.
+[Background: Warm gradient with youth silhouettes, hopeful imagery]
+CTA:
+ "Explore Programs"
+Our Theological Foundation
+Headline:
+ "More Than a Program
+ - 
+A Sacred Calling"
+Subheadline
+:
+ 
+Ignatian spirituality meets radical social transformation
+Section Design:
+ Split layout with imagery
+Left Column - Ignatian Pillars:
+Contemplatio
+ Ad 
+Amorem
+ 
+(Contemplation in Action)
+Finding God in the broken dreams of marginalized youth and responding with radical solidarity.
+Imago Dei
+ 
+(Image of God)
+Every young person is created in God's image, carrying infinite dignity and worth.
+Cura 
+Personalis
+ 
+(Care for the Whole Person)
+Holistic formation: intellectual, emotional, social, spiritual, physical.
+Magis
+ 
+(The More)
+Always seeking greater justice, deeper transformation, not just incremental change.
+Men and Women for Others
+Forming leaders who serve, not just succeed.
+Right Column - Our Commitment:
+We see poverty not as personal failure but as structural sin
+ demanding prophetic response.
+We approach youth not as beneficiaries but as protagonists
+ of their own liberation.
+We don't offer charity; we accompany transformation
+ through long-term relationships.
+We believe empowerment is kingdom-building
+—establishing justice and peace on earth.
+[Background: Subtle religious imagery, IHS symbol, St. Ignatius quote]
+Universal Apostolic Preferences Integration
+Headline:
+ "Aligned with Global Jesuit Mission"
+[4-quadrant layout with icons]
+UAP 1: Showing the Way to God
+Our O GOD programs and faith-justice integration
+UAP 2: Walking with the Excluded
+Preferential option for English-excluded rural youth
+UAP 3: Journeying with Youth
+Youth
+ as protagonists through PEP & MAGIC Youth
+UAP 4: Caring for Our Common Home
+Each One-Teach Ten model fostering community ownership
+The 5 Ps - Our Framework
+Headline:
+ "The 
+YESJ
+ Way: Our 5 Ps Framework"
+Subheadline
+:
+ 
+How we transform lives and build futures
+[Five-column interactive cards with icons]
+CTA - [Read More]
+1. PURPOSE 
+Headline:
+ Building a Just World
+Our purpose is to assist in building a just world by transforming the lives of young people. We educate and encourage them to understand and analyze the socio-economic, cultural, and political aspects of society, stimulating their conscience to bring social commitment to build the Kingdom of God in India and the globalized world.
+We aspire to light the aspirational torch for young people who do not have the resources and guidance to a better life, helping them find purpose and meaning in their lives.
+[Icon: Torch/Light]
+2. PROCESS 
+Headline:
+ Transformation Through Integration
+With the right resources, support, and training, people can be enabled to solve their own problems. Rather than random and impulsive approaches, we follow a long-term systematic approach with spiritual, social, psychological, contextual, intellectual, and creative integration.
+We follow the praxis of:
+Experience → Reflection → Involvement → Transformation
+We firmly believe in collaborating with other individuals and organizations who share our values, building networks that multiply impact.
+[Icon: Connected circles showing transformation cycle]
+3. PROGRAMMES 
+Headline:
+ Comprehensive Empowerment
+Through our 
+10+ comprehensive 
+programmes
+, we empower young people attending schools and colleges, as well as those who have dropped out. From English communication training to vocational skills, from personality development to spiritual formation, from job placement to leadership development—we provide holistic support at every stage.
+50,000+ youth have already benefited from our programs
+ across 15 districts in the Telugu states.
+[Icon: Multiple pathways/programs illustration]
+4. PARTNERSHIPS 
+Headline:
+ Together We Do More
+"Alone we can do so little; together we can do so much"
+ – Helen Keller
+True to this belief, we sincerely welcome opportunities to foster a culture of collaboration, cooperation, and partnership with all like-minded individuals, organizations, business 
+houses, and governments—across the state and beyond—who would like to join us to encourage, employ, and empower young people to say 'YES' to their dreams.
+[Icon: Handshake/Network]
+5. PERSEVERANCE 
+Headline:
+ Never-Ending Commitment
+Empowering youth is a never-ending job. There is always another young person to begin our journey with. We are deeply convinced that this mission of empowering youth is tough and challenging.
+We are aware that persevering this effort well, through the strain of youth ministry, is a serious responsibility. 
+We resolve to PERSEVERE with faith, hope, and love.
+[Icon: Mountain/Journey]
+Who We Serve
+Headline:
+ "Our Preferential Option for Youth"
+Target Demographics:
+Geography:
+ Telugu-speaking states (Andhra Pradesh & Telangana)
+Age Group:
+ 15-
+4
+5 years
+Focus Areas:
+ Rural (60%), Semi-urban (25%), Urban slums (15%)
+Economic Background:
+ Below poverty line, marginalized communities
+Inclusivity:
+ All castes, religions, and social backgrounds welcome
+Special Focus:
+SC/ST communities (40% of participants)
+First-generation learners
+Female youth (45% participation)
+School dropouts seeking second chances
+Academically brilliant but financially poor students
+Our Management Team
+Design:
+ Professional photo cards with bios
+Fr. Bala 
+Bollineni
+, SJ
+ | 
+Founder & Director
+[Professional photo]
+Visionary Behind the Movement
+Fr. Bala brings over [X] years of Jesuit ministry experience, with deep expertise in youth empowerment and social transformation. His conviction that "every youth deserves a YES" sparked this movement.
+[Other team members with photos, titles, and brief bios]
+Join Our Mission
+Headline:
+ "The Harvest Is Plentiful. Will You Labor 
+With
+ Us?"
+[Three pathways with visual icons]
+For Youth:
+ Start your transformation journey
+For Volunteers:
+ Give your time and talent
+For Donors:
+ Invest in futures
+3. PROGRAMS PAGE
+Hero Section
+Background:
+ Collage of all program activities in mosaic style
+Headline:
+ "10+ Pathways to Transformation"
+Subheadline
+:
+ 
+Comprehensive programs addressing every barrier youth face
+Quick Program Finder:
+ 
+[Dropdown filter]
+"I'm looking for: [Skill Training / English Learning / Scholarships / Leadership / Volunteering / Placement Support]"
+Programs Overview Matrix
+[Visual grid with filterable categories]
+Categories:
+🎯
+ 
+Core Transformation Programs
+ (SS, 
+MuST
+, SSP, PEP)
+🌱
+ 
+Leadership & Community
+ (MAGIC Youth, Each One-Teach Ten)
+💼
+ 
+Career Support
+ (
+JoY
+ Desk)
+✝
+️ 
+Spiritual Formation
+ (O GOD)
+🎉
+ 
+Annual Events
+ (
+Yuvotsavaalu
+)
+🤝
+ 
+Immersion & Volunteering
+ (VIP)
+Program Sections
+1. SUMMER SHAPES (SS) 
+Tagline:
+ "Break the English Barrier. Unlock Your Future."
+English is no longer just a language in India
+ - 
+it opens a world of opportunities. Especially for marginalized communities, 
+English language is proved to be a weapon to break their chains and be the leaders of tomorrow
+. In this cyber age where English is the deciding factor to get employed, sadly many young people have no access to quality English education. Even when taught, the methodology followed has been highly ineffective, leaving youth unable to form sentences. In addition, 
+poor soft skills bar their socialization, adaptability, and problem-solving capacities
+.
+Through this initiative, rural and disadvantaged youth gain access to 
+free 30-day residential training in English Communicative Skills
+ along with soft and life skills, which increases their self-confidence and self-esteem for greater life.
+Program Highlights:
+Residential immersion in English-only environment
+Communicative focus, not just grammar
+Personality development and grooming
+Public speaking and interview skills
+Zero cost with food and lodging provided
+Impact:
+ 40+ batches completed | 1,200+ graduates | 90% confidence boost | 75% improved employment prospects
+[GALLERY SLIDE FOR IMAGES]
+CTA:
+ "Apply Now" | "Download Brochure" | "Watch Testimonials"
+2. MULTI-SKILL TRAINING (
+MuST
+) 
+Tagline:
+ "From Dropout to Dignified Employment"
+Through 
+MuST
+ we work 
+to enable, equip, and enhance the capacity of dropouts and unorganized youth to undertake self-employment
+ as well as access employment with stable salary through skill training programs. We actively collaborate with governmental, non-governmental, and corporate institutions to provide vocational skill training to help youth 
+stand on their legs for a decent salary enough to raise a family
+.
+YESJ
+ conducts residential training at regular intervals, bringing youth from rural and suburban areas, and strives hard to get them jobs and a big YES in their lives.
+[GALLERY SLIDE FOR IMAGES]
+Four T
+ailored Programs
+:
+TAILORING
+ 
+👗
+3-month residential course in professional tailoring, pattern making, garment construction, and small business management. 
+Outcome:
+ Boutique employment or self-employment (₹12,000-20,000/month)
+INFORMATION & COMMUNICATION TECHNOLOGY (ICT)
+ 
+💻
+2-month residential course in computer fundamentals, MS Office, internet skills, and digital literacy. 
+Outcome:
+ Office assistant, data entry, computer operator roles (₹10,000-15,000/month)
+DRIVING & MECHANIC
+ 
+🚗
+4-month split program covering commercial driving license and vehicle maintenance/repair. 
+Outcome:
+ Commercial driver or mechanic positions (₹15,000-25,000/month)
+INDUSTRIAL WELDING
+ 
+🔥
+3-month residential intensive in MIG, TIG, arc welding with industry certifications. 
+Outcome:
+ Industrial welder in factories, fabrication shops (₹18,000-30,000/month)
+Common Features:
+ Free training, food & lodging | Small batch sizes (15 per batch) | Placement support through 
+JoY
+ Desk | Industry certifications
+Impact:
+ 85% employment within 6 months | Average income 
+increase
+ 400% | Breaking intergenerational poverty
+CTA:
+ "Apply Now"
+3. SCHOLAR SUPPORT PROGRAMME (SSP) 
+Tagline:
+ "Where Brilliance Meets Opportunity"
+SSP is aimed to accompany and 
+financially support college-going students
+ who are academically bright and financially poor, enabling them to pursue their 
+desired tertiary education
+ and fulfill their professional dreams.
+Beyond tuition fees, we provide comprehensive support including books, examination fees, living expenses, academic mentoring, career counseling, psychological support, and leadership development. Our holistic approach ensures not just degree completion but complete personal and professional readiness.
+Selection Process:
+ Rigorous merit-based assessment through written tests, oral interviews, and comprehensive evaluation ensuring we support the most deserving students.
+Impact:
+ 100% college completion rate | Full scholarship support for 4+ years | Lifelong mentorship and career guidance
+CTA:
+ "Apply for Scholarship" | "Support a Scholar"
+4. PERSONALITY ENHANCEMENT PROGRAMMES (PEP) 
+Tagline:
+ "Say YES to Leadership"
+Through PEP, 
+tailor-made orientations, courses, seminars, and workshops are conducted in the areas of soft skills, life skills, personality development
+, etc., to help youth gain confidence to face the complexities of life and live a life of joy, meaning, and purpose. Thousands of students are trained so far to 
+say YES to lead
+.
+YESJ
+ further equips them with an integrated approach to personal development, self-help, awareness, organization, program design and implementation, monitoring, and evaluation of parish/rural development programs. This comprehensive training enables them to become more effective in their roles and better equipped to bring about positive change in their communities.
+Delivery:
+ Customizable one-day or multi-day workshops conducted at schools, colleges, and parishes with food provided. Free of cost for institutions.
+Annual Reach:
+ 25+ programs | 5,000+ participants | Immediate confidence boost in 85% participants
+CTA:
+ "Request PEP for Your Institution" | "View Schedule"
+5. MAGIC YOUTH 
+Tagline:
+ "Men & Women Aiming at Greater Initiatives for Change"
+The Student Youth Wing of 
+YESJ
+ is a formal organization established in educational institutions to provide young people with the 
+opportunity to become individuals of conscience, competence, compassion, and commitment, and to become agents of change
+ for themselves and their communities.
+The leadership team and group are managed by student volunteers, with support from staff and management. All programs, activities, and initiatives are designed to 
+educate, empower, and raise awareness among the youth
+.
+They transform campus communities and neighborhoods through implementable praxis of 
+'Experience – Reflection – Involvement – Transformation'
+ to aim at long-term sustainable approaches, wholistic development, and consistent follow-up to design 
+programmes
+ that instill life skills, social skills, personality skills, faith formation, leadership, and address social anomalies.
+CTA:
+ "Start MAGIC in Your Institution" | "Join a Chapter"
+6. EACH ONE – TEACH TEN (EOTT) 
+Tagline:
+ "Pay Back to Society"
+YESJ
+'s Social Enterprise aims at 
+improving literacy and numeracy skills
+. We set up 
+centres
+ of learning and tutoring in slums, rural and suburban areas with the help of local parishes, schools, colleges, and governmental bodies. With 
+a motif to 'pay back to 
+society'
+, our 
+Ignitors
+ create a loving atmosphere for learning, making them read, lead, and thereby succeed in life. We also help the educated young support themselves for their stationery costs.
+The potential of youth is high, but resources are meager. In this competitive world, one with resources comes out with flying colors. 
+YESJ
+ doesn't want the young to stop themselves dreaming high just because of their financial or social circumstances.
+Dual Impact:
+ Children receive free tutoring | Educated youth gain teaching experience and stipend
+CTA:
+ "Become an Ignitor" | "Start a Learning Center"
+7. 
+JoY
+ (JOBS FOR YOUTH) DESK 
+Tagline:
+ "Connecting Talent with Opportunity"
+Having potential is not enough; reaching out to the best possible opportunities is important. Especially in the case of jobs, 
+the opportunities are wide, but the huge population makes it difficult to get on a common channel
+. Thus, individuals are not well-informed about resources and available jobs. They end up settling for less-paid jobs where their skills are not utilized to their best.
+This program aims to identify struggling unemployed youth, 
+trains and guides them to secure employment through referrals, recommendations, and 
+JoY
+ Melas
+ (job fairs).
+Services:
+ Job matching | Resume building | Interview preparation | Career counseling | Quarterly job fairs
+CTA:
+ "Register with 
+JoY
+ Desk" | "View Job Openings"
+8. ORGANIZING GOD ORIENTED DAYS (O GOD) 
+✝
+️
+Tagline:
+ "Strengthening Faith, Building Relationship"
+The days are designed to help participants build a 
+personal relationship with God and strengthen their faith so they can become true Children of God
+. A variety of methods such as studying Scripture, praying and meditating, inter-religious dialogues, messages, and visits are used to enrich their faith.
+CTA:
+ "Attend Next O GOD Program"
+9. 
+YESJ
+ YUVOTSAVAALU (YY) 
+Tagline:
+ "
+YESJ
+ YOUTH CAN!"
+This is an annual/biannual event of Youth Festival Celebration. Youth take active part in great numbers. They aim at strengthening the Andhra Province Youth Congress. They offer youth a comprehensive platform and foreground to gain distinctive identity to collectively 
+'Express, Experience, and Enrich to Construct an ever-widening collective vision'
+ to fight against and build a vibrant and just world which says 
+'
+YESJ
+ YOUTH CAN'
+.
+CTA:
+ "Register for 
+Yuvotsavaalu
+" | "View Past Celebrations"
+10. VOLUNTARY IMMERSION PROGRAMME (VIP) 
+🌍
+Tagline:
+ "Challenge Yourself. Experience Culture. Cultivate Gratitude."
+Volunteer placements are available to individuals from both local and international communities of all sizes, from rural villages to bustling metropolises. This opportunity provides 
+a unique challenge to test yourself, experience a different culture, and cultivate an attitude of gratitude
+.
+Duration:
+ 2 weeks to 6 months | 
+Placement:
+ Teaching, community development, program support | 
+Support:
+ Accommodation, meals, orientation, cultural training
+CTA:
+ "Apply for VIP" | "International Volunteers Welcome"
+Program Alumni Network
+Headline:
+ "Once 
+YESJ
+, Always 
+YESJ
+"
+Join 50,000+ alumni staying connected through:
+Alumni association events
+Mentorship opportunities
+Career networking
+Continuing education support
+CTA:
+ "Join Alumni Network"
+4. GET INVOLVED PAGE
+Hero Section
+Background Video:
+ Montage of volunteering, donation impact, youth transformations
+Headline:
+ "Your YES Can Change Everything"
+Subheadline
+:
+ 
+Three powerful ways to join the movement
+Pathways to Get Involved
+[Three-column detailed breakdown]
+PATHWAY 1: BECOME A VOLUNTEER 
+🤝
+Hero Image:
+ Diverse group of volunteers, different ages and backgrounds, unified in service
+Headline:
+ "Give Your TIME, TALENT, TREASURE, TESTIMONY"
+The 4T Framework:
+TIME 
+Commitment Levels:
+Micro-Volunteering
+ (1-5 hours)
+Guest speaker at PEP programs
+Career counseling sessions
+Mock interview conductor
+One-time workshop facilitation
+Short-Term
+ (1 day - 1 month)
+Summer Shapes assistant teacher
+JoY
+ Mela volunteer
+Yuvotsavaalu
+ organizing team
+Event support
+Long-Term
+ (3-12 months)
+Voluntary Immersion 
+Programme
+EOTT Ignitor (teaching centers)
+Program coordination support
+Residential program mentorship
+TALENT
+Skills We Need:
+Professional Skills:
+Teaching & Training
+Counseling & Psychology
+HR & Career Development
+Marketing & Communications
+Fundraising & Grant Writing
+Graphic Design & Media
+IT & Technology
+Legal & Financial
+Life Skills:
+Mentorship abilities
+Language proficiency
+Technical/vocational expertise
+Arts & Culture
+Sports coaching
+TREASURE 
+Financial Contributions:
+Monthly Giving:
+₹500/month: Support one ignitor
+₹1,000/month: Provide learning materials
+₹5,000/month: Partially support one scholar
+One-Time Donations:
+₹10,000: Summer Shapes participant scholarship
+₹50,000: 
+MuST
+ training batch support
+₹2,00,000: Full year scholarship for one SSP scholar
+In-Kind Donations:
+Sewing machines for tailoring program
+Computers and equipment
+Learning materials and books
+Vehicles for transportation
+Infrastructure support
+TESTIMONY
+Be an 
+Ambassador
+:
+Share our story on social media
+Host awareness events
+Connect us with potential donors
+Advocate for youth empowerment
+Bring professional networks to 
+YESJ
+Volunteer Application Process:
+Fill online volunteer interest form
+Attend orientation session
+Background verification (for long-term)
+Skill-matching and placement
+Training and onboarding
+Begin service!
+Volunteer Benefits:
+Certificate of service
+Skill development opportunities
+Networking with like-minded individuals
+Personal transformation
+Meals and accommodation (residential programs)
+Lifelong connection with 
+YESJ
+ family
+CTA:
+ "Register as Volunteer" | "View Current Opportunities"
+PATHWAY 2: DONATE / SPONSOR 
+Hero Image:
+ Donor interacting with scholarship recipient, warm handshake, gratitude expressed
+Headline:
+ "Invest in Futures, Not Just Programs"
+Donation Options:
+SPECIFIC PROGRAMS:
+Sponsor a Summer Shapes Participant:
+ ₹25,000
+Full 30-day residential program
+Updates and progress reports
+Meet your sponsored participant (optional)
+Sponsor a Skill Training Student:
+ ₹50,000
+Complete 
+MuST
+ program for one student
+Job placement support included
+Transformation documented
+Sponsor a Scholar (SSP):
+ ₹2,00,000/year
+Full academic year support
+Mentorship and holistic development
+Annual scholar updates and reports
+Optional personal interaction
+Sponsor an EOTT Learning Center:
+ ₹1,00,000/year
+Support 50+ children's literacy
+Employ one ignitor
+Community-level impact
+Named center recognition
+GENERAL FUND:
+Unrestricted Donations:
+ Support where need is greatest. Trust 
+YESJ
+ leadership to allocate resources for maximum impact.
+Amounts:
+ Any amount welcome, from ₹100 to ₹10,00,000+
+DONOR BENEFITS & RECOGNITION:
+All Donors:
+Tax exemption certificate (80G)
+Email updates on impact
+Annual report mailed
+Invitation to 
+YESJ
+ events
+Major Donors (₹1,00,000+):
+Personalized impact reports
+Site visit and program observation
+Recognition on website and annual report
+Naming opportunities for programs/facilities
+Founding Circle (₹10,00,000+):
+Board interaction opportunities
+Strategic input on programs
+Permanent naming recognition
+Legacy partnership benefits
+CORPORATE PARTNERSHIPS:
+CSR Collaborations:
+Skill training program funding
+Employee volunteering opportunities
+Scholarship endowments
+Infrastructure development
+Marketing and technology support
+Benefits:
+CSR reporting support
+Brand visibility
+Employee engagement
+Social impact credentials
+Featured Partners:
+ 
+[Logos and testimonials from existing partners]
+PATHWAY 3: PARTNER WITH US 
+Hero Image:
+ Partnership signing, organizational collaboration, professional setting
+Headline:
+ "Multiply Impact Through Strategic Partnerships"
+Partnership Opportunities:
+FOR EDUCATIONAL INSTITUTIONS:
+Establish MAGIC Youth chapters
+Host PEP programs
+Student volunteer placements
+Internship collaborations
+Research partnerships
+FOR CORPORATIONS:
+CSR program funding
+Skill training collaborations
+Employee volunteering
+Placement partnerships
+Technology/infrastructure support
+FOR NGOS & ORGANIZATIONS:
+Joint program implementation
+Resource sharing
+Network expansion
+Best practice exchange
+Advocacy collaborations
+FOR GOVERNMENT:
+Skill India alignment
+Rural development schemes
+Youth empowerment initiatives
+Policy input and feedback
+FOR PARISHES & CHURCHES:
+Community mobilization
+EOTT center establishment
+Faith formation programs
+Social outreach collaboration
+Partnership Process:
+Initial inquiry and interest expression
+Needs and capabilities assessment
+Partnership proposal development
+MOU signing and formalization
+Joint program implementation
+Regular monitoring and evaluation
+CTA:
+ "Propose Partnership" | "Download Partnership Brochure"
+Join the Movement Section
+Headline:
+ "Together, We Say YES to 85 
+Million
+ Dreams"
+Visual Counter:
+ Real-time stats
+Current volunteers: [Number]
+Active donors: [Number]
+Partner organizations: [Number]
+Lives impacted: [Number]
+CTA:
+ "Find Your Place in the Movement"
+5. IMPACT & STORIES PAGE
+Hero Section
+Background:
+ Powerful before/after transformation images in split screen
+Headline:
+ "This Is What YES Looks Like"
+Subheadline
+:
+ 
+50,000 lives transformed. 50,000 stories of hope. Here are just a few.
+Impact Dashboard
+[Interactive, animated statistics]
+BY THE NUMBERS:
+Overall Reach:
+📊
+ 
+50,000+
+ Youth Directly Impacted
+📍
+ 
+15
+ Districts Covered
+🎓
+ 
+10+
+ Programs Running
+💪
+ 
+3,000+
+ Youth Leaders Trained
+🤝
+ 
+500+
+ Annual Volunteers
+Geographic Distribution:
+🏘
+️ 
+60%
+ Rural Participants
+🏙
+️ 
+25%
+ Semi-Urban
+🌆
+ 
+15%
+ Urban Slums
+Demographic Inclusion:
+👧
+ 
+45%
+ Female Participation
+🕉
+️ 
+40%
+ SC/ST Communities
+🌍
+ 
+All Religions
+ Welcome
+Program-Specific Impact:
+✅
+ 
+85%
+ Employment/Education Success Rate
+📈
+ 
+90%
+ Report Confidence Boost
+🎯
+ 
+75%
+ Secure Better Opportunities
+💯
+ 
+100%
+ SSP College Completion Rate
+Transformation Stories
+[Filter: Program / Year / Outcome / Challenge Overcome]
+STORY 1: LAKSHMI'S VOICE
+Featured Image:
+ Professional photo of Lakshmi in office attire, confident smile
+Program:
+ Summer Shapes, 2023
+Age:
+ 22
+Hometown:
+ Small village in Guntur district, AP
+Challenge:
+ Could not speak English, limited job prospects
+Her Story:
+[Opening quote in large typography]
+"In my village, English was not a language—it was a wall. A wall that kept people like me out of opportunities, out of cities, out of dreams."
+Lakshmi grew up in a family of agricultural laborers. The eldest of four siblings, she completed her 
+B.Com
+ from a Telugu-medium college but couldn't find work beyond local shops paying ₹5,000/month.
+"I applied to 30 companies in Hyderabad. Every interview ended the same: 'Your English is not sufficient.' I felt ashamed. Defeated. Like I was born with less value."
+A friend told her about Summer Shapes. Lakshmi was skeptical—30 days could change a life?
+The 
+YESJ
+ Experience:
+"The first week was terrifying. I couldn't even introduce myself without my voice shaking. But the teachers didn't judge. They celebrated every word I spoke, no matter how broken."
+Daily immersion in English-only environment, supportive peer community, and personality grooming sessions slowly cracked the wall.
+"By week three, I presented a five-minute speech in English. I cried afterward—not from fear, but pride."
+The Transformation:
+Today, Lakshmi is a customer care executive at a tech company in Hyderabad, earning ₹18,000/month.
+"I'm not just supporting my family—I'm funding my younger sister's 
+education
+ so she never faces what I did. Summer Shapes didn't just teach English; it taught me I deserve to dream big."
+Impact Metrics:
+Income increase: 260%
+Confidence score: 9/10 (from 3/10)
+Family impact: Supporting 6 members
+[Video testimonial embedded]
+CTA:
+ "More Summer Shapes Stories"
+STORY 2: RAVI KUMAR'S FIRE
+Featured Image:
+ Ravi in welding gear, sparks flying, intense focus
+Program:
+ 
+MuST
+ - Industrial Welding, 2022
+Age:
+ 19
+Hometown:
+ Suburb of Visakhapatnam, AP
+Challenge:
+ School dropout, daily wage labor trap
+His Story:
+Ravi dropped out after Class 10. His father's illness meant Ravi needed to earn immediately. He worked construction sites for ₹300/day—backbreaking labor with no future.
+"I watched my classmates go to college while I mixed cement. Society wrote me off as another dropout. I started believing them."
+At 18, a 
+YESJ
+ volunteer visited his parish. Ravi learned about 
+MuST
+ welding training—completely free, residential, with job placement support.
+The 
+YESJ
+ Experience:
+"I'd never held a welding torch. The first time I struck an 
+arc,
+ I was terrified and exhilarated. For the first time, I was learning something skilled, something respected."
+Three months of intensive training, safety protocols, blueprint reading, and hands-on practice. Ravi thrived.
+"The trainers believed in me more than I believed in myself. They saw potential where I saw only poverty."
+The Transformation:
+Ravi now works at a fabrication company earning ₹25,000/month—more than his father earned in his healthiest years.
+"I'm building my family's first pucca house. My younger brother will finish school because I can afford it now. 
+YESJ
+ didn't give me charity; they gave me dignity through skill."
+Impact Metrics:
+Income increase: 533%
+Family home: Under construction
+Siblings supported: 2
+[Photo gallery of Ravi's journey embedded]
+CTA:
+ "More 
+MuST
+ Success Stories"
+STORY 3: SRINIVAS' SCHOLARLY DREAM
+Featured Image:
+ Srinivas in engineering college, holding books, university campus background
+Program:
+ Scholar Support Program (SSP), 2021-Present
+Age:
+ 20
+Hometown:
+ Rural Telangana
+Challenge:
+ Brilliant student, zero resources for college
+His Story:
+Srinivas scored 95% in his Class 12 board exams. He ranked in top 1% of state engineering entrance exam. But his parents—daily wage agricultural workers—couldn't afford ₹2 lakhs/year for B.Tech.
+"I watched my admission deadline pass. The day I should've been starting college, I was working in the fields. That was my reality."
+A teacher who believed in him connected Srinivas to 
+YESJ
+. The SSP selection process was rigorous—written test, interview, assessment. Srinivas excelled.
+The 
+YESJ
+ Experience:
+"SSP didn't just pay my fees. They assigned me a mentor, checked in monthly, provided books, even emotional support when I struggled with imposter syndrome."
+Regular academic mentoring, professional skill workshops, summer internship facilitation, and career counseling accompanied the financial support.
+"They treated education as holistic formation, not just degree completion."
+The Transformation:
+Srinivas is now in his 3rd year of 
+B.Tech
+ (Computer Science), maintaining 8.5 CGPA, top 5% of his class. He secured a summer internship at a major tech company.
+"My parents cried when I got placed for summer internship at ₹25,000/month stipend. They couldn't believe their son—a field laborer's son—was working at a tech company."
+Post-graduation, Srinivas plans to join civil services to reform rural education.
+"SSP proved that talent is evenly distributed but opportunity is not. I want to be part of changing that."
+Impact Metrics:
+Academic CGPA: 8.5/10
+Summer internship: Secured
+Future goal: Civil services
+[Video interview embedded]
+CTA:
+ "Support More Scholars Like Srinivas"
+STORY 4: PRIYA'S EMPOWERMENT
+Featured Image:
+ Priya working at her tailoring shop, smiling, surrounded by fabrics
+Program:
+ 
+MuST
+ - Tailoring, 2021
+Age:
+ 24
+Hometown:
+ Semi-urban Andhra Pradesh
+Challenge:
+ Early marriage, no education, economic dependence
+Her Story:
+Priya was married at 17. Dropped out of school at Class 8. For six years, she was economically dependent on her husband, with two young children.
+"I loved my family, but I felt invisible. I had no income, no voice in financial decisions, no identity beyond 'mother' and 'wife.'"
+A neighbor told her about 
+YESJ
+ tailoring training. Her husband initially resisted—"Who will manage home for 3 months?"
+"My mother-in-law supported me. She said, 'Let her learn something for herself.'"
+The 
+YESJ
+ Experience:
+"I'd never touched a sewing machine. Learning was hard—I was older than other students, hadn't been in classroom for years. But the teachers were patient."
+Three months of intensive training: machine sewing, pattern making, garment construction, small business management.
+"They didn't just teach stitching. They taught us how to price our work, handle customers, manage finances."
+The Transformation:
+Priya now runs her own tailoring business from home, earning ₹15,000-20,000/month.
+"I bought my own sewing machine with my first earnings. My children saw me succeed through hard work. My husband respects my contribution to family income now."
+She employs two other women from her neighborhood, mentoring them.
+"
+YESJ
+ transformed me from dependent to entrepreneur. I'm not just earning—I'm empowering."
+Impact Metrics:
+Monthly income: ₹15,000-20,000
+Women employed: 2
+Household impact: Major contributor
+[Photo series of Priya's work embedded]
+CTA:
+ "More Women Empowerment Stories"
+STORY 5: DAVID'S GLOBAL PERSPECTIVE
+Featured Image:
+ David (international volunteer) with rural children, teaching session
+Program:
+ Voluntary Immersion 
+Programme
+ (VIP), 2023
+Age:
+ 25
+Hometown:
+ London, UK
+Experience:
+ 3-month immersion
+His Story:
+David, a postgraduate student from UK, wanted to experience "real India" beyond tourist circuits.
+"I Googled 'meaningful volunteering India' and found 
+YESJ
+. Their philosophy attracted me—not 'save poor people' but 'journey with youth.'"
+The 
+YESJ
+ Experience:
+Placed as English teacher at EOTT learning center in rural AP village.
+"First week was culturally overwhelming. Language barrier, food adjustment, different pace of life. But the children's enthusiasm was infectious."
+Taught basic English to 40 children aged 6-14, supported Summer Shapes program, participated in community development.
+"I went thinking I'd teach. Instead, the community taught me—about resilience, joy with less, strong family bonds, hospitality."
+The Transformation:
+"I arrived with Western savior complex. I left humbled and grateful. These children didn't need 'saving'—they needed opportunities. 
+YESJ
+ creates those opportunities without destroying dignity."
+David now fundraises for 
+YESJ
+ in UK, connected his university for partnership.
+"VIP changed my career path. I'm pursuing international development with focus on education equity. My 3 months in that village showed me my life's work."
+Impact Metrics:
+Children taught: 40
+Funds raised post-return: £5,000
+Career redirected: Yes
+[Video blog entries embedded]
+CTA:
+ "Volunteer Through VIP"
+Community Impact Stories
+[Beyond individual—how 
+YESJ
+ transformed entire communities]
+CASE STUDY: VILLAGE TRANSFORMATION
+Location:
+ 
+RR Pet
+, Krishna District, AP
+Baseline (2017):
+Child labor: 20% of children
+School dropout rate: 45% after Class 10
+Youth unemployment: 60%
+English speakers: <5%
+YESJ
+ Interventions (2017-2024):
+EOTT learning center established
+5 batches of Summer Shapes participants
+8 
+MuST
+ trained youth
+Regular PEP programs in local school
+MAGIC Youth chapter formed
+Outcomes (2024):
+Child labor: 5% (75% reduction)
+School dropout rate: 18% (60% improvement)
+Youth unemployment: 25% (58% improvement)
+English speakers: 30% (500% increase)
+YESJ
+ alumni in village: 45
+Community Leader Testimonial:
+"
+YESJ
+ didn't just train individuals—they transformed our village's mindset. Parents now prioritize education. Youth have hope. Our village is changed forever."
+— Village Sarpanch
+Impact Measurement
+Our Commitment to Accountability:
+How We Track Impact:
+✓ 
+Pre-Post Assessments:
+ Every participant evaluated before and after
+✓ 
+Follow-up Surveys:
+ 6 months, 1 year, 3 years post-program
+✓ 
+Employment Tracking:
+ Job placement and retention rates
+✓ 
+Income Analysis:
+ Earnings increase measurements
+✓ 
+Qualitative Interviews:
+ In-depth story documentation
+✓ 
+Third-Party Evaluation:
+ Annual independent impact assessments
+Download Our Reports:
+Annual Impact Report 2023
+8-Year Cumulative Impact Study
+Program-Specific Outcome Reports
+Financial Statements & Audits
+CTA:
+ "View All Reports"
+Add Your Story
+For 
+YESJ
+ Alumni:
+Your story matters. Share how 
+YESJ
+ transformed your life to inspire others.
+CTA Button:
+ "Share My Transformation Story"
+[Submission form with optional video upload]
+Wall of Gratitude
+Visual Gallery:
+ 100+ photos of participants holding signs with "
+YESJ
+ Said YES When…" completing the sentence
+Examples:
+"
+YESJ
+ said YES when my family said I should stop dreaming"
+"
+YESJ
+ said YES when poverty said NO to my education"
+"
+YESJ
+ said YES when society wrote me off as a dropout"
+"
+YESJ
+ said YES when I couldn't afford hope"
+6. BLOG / 
+YESJ
+ ECHOES PAGE
+Hero Section
+Headline:
+ "
+YESJ
+ Echoes: Stories, Insights, and Inspiration"
+Subheadline
+:
+ 
+Stay connected with the pulse of our movement
+Subscribe Banner:
+ "Never miss a story. Subscribe for monthly inspiration delivered to your inbox."
+Blog Categories
+Sidebar Navigation:
+📖
+ 
+Transformation Stories
+💡
+ 
+Youth Leadership Insights
+🎓
+ 
+Education & Skills
+🙏
+ 
+Spirituality & Service
+🌍
+ 
+Social Justice
+📊
+ 
+Program Updates
+🤝
+ 
+Volunteer Experiences
+💬
+ 
+Donor Spotlights
+📸
+ 
+Photo Essays
+🎥
+ 
+Video Features
+Featured Blog Posts 
+(Examples)
+POST 1:
+Title:
+ "Why English Is Not Just a Language for Rural India—It's Liberation"
+Excerpt:
+ Exploring the socio-economic barriers created by English illiteracy and how Summer Shapes is dismantling linguistic apartheid, one conversation at a time...
+Read Time:
+ 8 min
+Published:
+ November 2024
+POST 2:
+Title:
+ "From Dropout to Skilled Professional: The Unseen Potential in India's 'Lost' Youth"
+Excerpt:
+ 40% of students drop out after Class 10. Society calls them failures. We call them waiting talents. Here's why 
+MuST
+ is rewriting dropout narratives...
+Read Time:
+ 6 min
+Published:
+ October 2024
+POST 3:
+Title:
+ "What I Learned Living in a Telugu Village for 3 Months: A Volunteer's Honest Reflection"
+Excerpt:
+ David from London shares his uncensored VIP experience—the culture shock, the lessons, and why he'll never view 'development' the same way...
+Read Time:
+ 10 min
+Published:
+ September 2024
+POST 4:
+Title:
+ "Ignatian Spirituality in Action: Finding God in Youth Empowerment Work"
+Excerpt:
+ How 500 years of Jesuit educational tradition informs 
+YESJ
+'s approach to transformation. Exploring 
+Contemplatio
+ Ad 
+Amorem
+ in marginalized communities...
+Read Time:
+ 7 min
+Published:
+ August 2024
+POST 5:
+Title:
+ "The Scholarship That Changed Everything: Srinivas' Journey from Fields to Engineering"
+Excerpt:
+ Full narrative of SSP scholar Srinivas—from Class 12 topper with no college prospects to 
+B.Tech
+ 3rd year with internship. This is what opportunity looks like...
+Read Time:
+ 12 min
+Published:
+ July 2024
+7. 
+Latest News & Updates
+Recent Announcements:
+🎉
+ November 2024:
+ 
+YESJ
+ completes 8 years! 50,000 youth milestone reached.
+📢
+ October 2024:
+ New partnership with [Corporate Partner] for 
+MuST
+ expansion.
+🎓
+ September 2024:
+ Summer Shapes batch 42 graduates with 100% placement rate.
+💼
+ August 2024:
+ 
+JoY
+ Desk facilitates largest job fair—150 youth hired on-spot.
+8. YESJ ECHOES
+Monthly Newsletter Archive
+Download Past Issues:
+November 2024: "The Scholarship Edition"
+October 2024: "Celebrating Volunteers"
+September 2024: "Skills for Success"
+Guest Contributor Section
+Open Call:
+ "Have a story, insight, or reflection related to youth empowerment? Contribute to 
+YESJ
+ Echoes."
+CTA:
+ "Submit Guest Post"
+9
+. CONTACT US PAGE
+Hero Section
+Headline:
+ "Let's Start a Conversation"
+Subheadline
+:
+ 
+Whether you're a youth seeking support, a volunteer with questions, or a partner exploring collaboration—we're here.
+Contact Form Section
+Primary Contact Form:
+Fields:
+I am:
+ [Dropdown: Youth/Student | Volunteer | Donor | Partner Organization | Media | Other]
+Name:
+ [Text]
+Email:
+ [Email]
+Phone:
+ [Phone with country code]
+Subject:
+ [Text]
+Message:
+ [
+Textarea
+]
+How did you hear about 
+us?:
+ [Dropdown]
+Submit Button:
+ "Send Message"
+Response Promise:
+ "We respond within 24 hours on business days."
+Direct Contact Information
+YESJ
+ Centre for Excellence
+Andhra Loyola College Campus
+Vijayawada, Andhra Pradesh
+India - 522 008
+📧
+ 
+General Inquiries:
+ info@yesj.org
+📧
+ 
+Program Applications:
+ programs@yesj.org
+📧
+ 
+Volunteer Opportunities:
+ volunteer@yesj.org
+📧
+ 
+Donations & Partnerships:
+ donate@yesj.org
+📧
+ 
+Media Inquiries:
+ media@yesj.org
+📞
+ 
+Phone:
+ +91-886-672-7202
+⏰
+ 
+Office Hours:
+Monday - Saturday: 9:00 AM - 6:00 PM IST
+Sunday & Public Holidays: Closed
+Leadership Contact
+Fr. Bala 
+Bollineni
+, SJ
+Founder & Director
+📧
+ director@yesj.org
+[Other key staff contact information]
+Program-Specific Inquiries
+📧
+ 
+programs
+@yesj.org
+📞
+ +91-[Number]
+Visit Us
+Embedded Google Map:
+ Interactive map showing 
+YESJ
+ Centre location
+Directions:
+From Vijayawada Railway Station: 15 minutes by auto/cab
+From 
+Gannavaram
+ Airport: 45 minutes
+Nearest Landmark: Andhra Loyola College
+Visiting Hours:
+ By appointment (please schedule in advance)
+CTA:
+ "Schedule a Visit"
+Connect on Social Media
+Follow the Movement:
+📘
+ 
+Facebook:
+ /
+yesj.official
+📷
+ 
+Instagram:
+ @
+yesj.official
+🐦
+ 
+Twitter:
+ @
+yesj.official
+📺
+ 
+YouTube:
+ 
+yesj.official
+💼
+ 
+LinkedIn:
+ 
+yesj.official
+Report Issues / Feedback
+We Value Your Input:
+Report technical website issues
+Share feedback on programs
+Suggest improvements
+Whistleblower/grievance reporting (confidential)
+CTA:
+ "Submit Feedback"
+Newsletter Subscription
+Stay Connected:
+Monthly 
+YESJ
+ Newsletter:
+Transformation stories
+Program updates
+Volunteer opportunities
+Ways to get involved
+Email:
+ [Subscription form]
+CTA:
+ "Subscribe Now"
+8. 
+YESJ 
+CAREERS
+Work With Us:
+Current openings at 
+YESJ
+:
+Program coordinators
+Training faculty
+Administrative staff
+Social media manager
+Grant writer
+CTA:
+ "View Openings & Apply"

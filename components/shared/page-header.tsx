@@ -19,7 +19,7 @@ export default function PageHeader({ title, description, bgClass = "bg-blue-50" 
           className="flex flex-col items-center justify-center space-y-4 text-center"
         >
           <div className="space-y-2">
-            <h1 className="text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl text-maroon">{title}</h1>
+            <h1 className="text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl text-primary">{title}</h1>
             {description && (
               <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
                 {description}

@@ -80,7 +80,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                 <div className="flex justify-center mb-6">
                     <CheckCircle className="h-16 w-16 text-green-500" />
                 </div>
-                <h2 className="text-2xl font-light text-maroon mb-4">Biometric Login Enabled!</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">Biometric Login Enabled!</h2>
                 <p className="text-muted-foreground max-w-md mx-auto">
                     You can now use your fingerprint or face to login quickly and securely.
                 </p>
@@ -101,7 +101,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                         <Fingerprint className="h-12 w-12 text-primary" />
                     </div>
                 </div>
-                <h2 className="text-2xl font-light text-maroon mb-4">
+                <h2 className="text-2xl font-light text-primary mb-4">
                     Your Account is Ready!
                 </h2>
                 <p className="text-muted-foreground max-w-md mx-auto mb-2">
@@ -124,7 +124,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                 <Button
                     onClick={handleRegisterPasskey}
                     disabled={isRegistering}
-                    className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+                    className="rounded-none bg-primary hover:bg-primary/90 text-white"
                 >
                     {isRegistering && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {isRegistering ? "Setting up..." : "Set up Biometric Login"}

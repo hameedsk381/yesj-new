@@ -1,6 +1,6 @@
 import { Client } from "minio"
 
-const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || "aicuf-uploads"
+const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || "yesj-uploads"
 
 // Singleton pattern for MinIO client
 let minioInstance: Client | null = null

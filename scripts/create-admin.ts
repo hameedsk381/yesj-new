@@ -6,8 +6,8 @@ const sql = postgres(DATABASE_URL);
 
 async function createAdmin() {
   try {
-    const adminEmail = process.env.ADMIN_EMAIL || "admin@aptsaicuf.com";
-    const adminPassword = process.env.ADMIN_PASSWORD || "aicufadmin";
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@yesj.com";
+    const adminPassword = process.env.ADMIN_PASSWORD || "yesjadmin";
     const isProduction = process.env.NODE_ENV === "production";
     
     console.log("Creating admin user...\n");

@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     sendEmail({
       to: data.emailId,
-      subject: 'APTSAICUF Registration Confirmation',
+      subject: 'YESJ Registration Confirmation',
       html: emailHtml,
     }).catch((error) => {
       logger.warn("Failed to send confirmation email", { error })

@@ -71,7 +71,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
         >
           <ChevronLeft className="h-5 w-5 text-primary" />
         </Button>
-        <h3 className="text-lg font-light text-maroon">
+        <h3 className="text-lg font-light text-primary">
           {monthNames[month]} {year}
         </h3>
         <Button
@@ -114,7 +114,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
               <div
                 className={`text-sm font-light mb-1 ${
                   isTodayDate
-                    ? 'inline-flex items-center justify-center w-6 h-6 rounded-full bg-maroon text-white'
+                    ? 'inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white'
                     : 'text-muted-foreground'
                 }`}
               >
@@ -144,7 +144,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
             <span>Event Day</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-maroon"></div>
+            <div className="w-4 h-4 rounded-full bg-primary"></div>
             <span>Today</span>
           </div>
         </div>

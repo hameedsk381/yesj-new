@@ -5,7 +5,7 @@
 
 import { Client } from "minio"
 
-const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || "aicuf-uploads"
+const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || "yesj-uploads"
 
 async function testMinIO() {
   console.log("\n=== Testing MinIO Connection ===\n")

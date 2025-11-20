@@ -61,14 +61,9 @@ export default function GalleryPreview() {
           className="flex flex-col items-center justify-center space-y-4 text-center mb-16"
         >
           <div className="space-y-2">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-12 bg-primary"></div>
-              <span className="text-sm font-light text-primary">Our Activities</span>
-              <div className="h-1 w-12 bg-primary"></div>
-            </div>
-            <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-maroon">Gallery</h2>
+            <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-primary">Transformation Stories</h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-extralight">
-              Glimpses of our activities and events.
+              This Is What YES Looks Like. 50,000 lives transformed. 50,000 stories of hope. Here are just a few.
             </p>
           </div>
         </motion.div>
@@ -100,9 +95,9 @@ export default function GalleryPreview() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex justify-center mt-12"
         >
-          <Link href="/gallery">
+          <Link href="/stories">
             <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
-              View More Photos
+              Read More Success Stories
             </Button>
           </Link>
         </motion.div>

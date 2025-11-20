@@ -288,8 +288,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "aicuf_vision": {
-          "name": "aicuf_vision",
+        "yesj_vision": {
+          "name": "yesj_vision",
           "type": "text",
           "primaryKey": false,
           "notNull": false

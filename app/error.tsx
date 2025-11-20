@@ -11,7 +11,7 @@ export default function Error({
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="max-w-md w-full text-center">
         <div className="mb-8">
-          <h1 className="text-4xl font-light text-maroon mb-4">Oops!</h1>
+          <h1 className="text-4xl font-light text-primary mb-4">Oops!</h1>
           <p className="text-muted-foreground font-extralight">
             Something went wrong on this page. Please try again.
           </p>
@@ -19,13 +19,13 @@ export default function Error({
         <div className="space-y-4">
           <button
             onClick={() => reset()}
-            className="inline-flex h-10 items-center justify-center rounded-none px-8 bg-maroon hover:bg-maroon/90 text-white transition-colors"
+            className="inline-flex h-10 items-center justify-center rounded-none px-8 bg-primary hover:bg-primary/90 text-white transition-colors"
           >
             Try Again
           </button>
           <button
             onClick={() => (window.location.href = "/")}
-            className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-primary hover:bg-blue-50 text-primary transition-colors ml-4"
+            className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-pink-50 text-secondary transition-colors ml-4"
           >
             Go Home
           </button>

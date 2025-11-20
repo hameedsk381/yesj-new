@@ -38,23 +38,23 @@ export default function MissionPage() {
                   </p>
                   <ul className="grid gap-2 mt-4">
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
-                      <span className="font-extralight">Promote leadership among university students</span>
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                      <span className="font-extralight">Promote leadership among youth</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
-                      <span className="font-extralight">Engage in social analysis and action</span>
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                      <span className="font-extralight">Engage in skill development and education</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
-                      <span className="font-extralight">Foster interfaith dialogue and harmony</span>
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                      <span className="font-extralight">Foster community service and volunteerism</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Advocate for the rights of marginalized communities</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Develop critical thinking and social consciousness</span>
                     </li>
                   </ul>
@@ -63,7 +63,7 @@ export default function MissionPage() {
               <div className="relative">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58.1-laM6KEOcXevAzwId6tbkOQDE3y0KMn.jpeg"
-                  alt="AICUF Anti-Drug Campaign"
+                  alt="YESJ Youth Leadership Program"
                   width={600}
                   height={400}
                   className="rounded-lg object-cover shadow-lg"
@@ -79,7 +79,7 @@ export default function MissionPage() {
               <div className="order-2 lg:order-1 relative">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58.08%20PM-jEtMoapURWvv8VFzvHmhIQkMrXDzcH.jpeg"
-                  alt="AICUF Cultural Performance"
+                  alt="YESJ Community Service"
                   width={600}
                   height={400}
                   className="rounded-lg object-cover shadow-lg"
@@ -99,23 +99,23 @@ export default function MissionPage() {
                   </p>
                   <ul className="grid gap-2 mt-4">
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Uphold the dignity and rights of all people</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Work for peace and reconciliation</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Care for our common home, the Earth</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
-                      <span className="font-extralight">Eliminate caste discrimination and promote equality</span>
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                      <span className="font-extralight">Eliminate discrimination and promote equality</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <ChevronRight className="h-4 w-4 text-maroon" />
+                      <ChevronRight className="h-4 w-4 text-primary" />
                       <span className="font-extralight">Build communities of solidarity and mutual support</span>
                     </li>
                   </ul>
@@ -134,21 +134,21 @@ export default function MissionPage() {
             />
             <div className="grid gap-8 md:grid-cols-3">
               <div className="p-6 border-t border-primary/20">
-                <h3 className="text-xl font-light mb-3 text-maroon">See</h3>
+                <h3 className="text-xl font-light mb-3 text-primary">See</h3>
                 <p className="text-muted-foreground font-extralight">
-                  We encourage students to observe and analyze social realities, especially the situations of injustice
-                  and oppression.
+                  We encourage youth to observe and analyze social realities, especially the situations of injustice
+                  and marginalization.
                 </p>
               </div>
               <div className="p-6 border-t border-primary/20">
-                <h3 className="text-xl font-light mb-3 text-maroon">Judge</h3>
+                <h3 className="text-xl font-light mb-3 text-primary">Judge</h3>
                 <p className="text-muted-foreground font-extralight">
-                  We reflect on these realities in light of Gospel values and Catholic social teaching to form critical
+                  We reflect on these realities in light of values and ethical principles to form critical
                   judgments.
                 </p>
               </div>
               <div className="p-6 border-t border-primary/20">
-                <h3 className="text-xl font-light mb-3 text-maroon">Act</h3>
+                <h3 className="text-xl font-light mb-3 text-primary">Act</h3>
                 <p className="text-muted-foreground font-extralight">
                   We take concrete actions to transform unjust structures and promote human dignity and social justice.
                 </p>

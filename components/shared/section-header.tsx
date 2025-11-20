@@ -2,16 +2,16 @@ interface SectionHeaderProps {
   title: string
   description?: string
   align?: "left" | "center" | "right"
-  titleColor?: "primary" | "maroon"
+  titleColor?: "primary"
   subtitle?: string
-  subtitleColor?: "primary" | "maroon"
+  subtitleColor?: "primary"
 }
 
 export default function SectionHeader({
   title,
   description,
   align = "center",
-  titleColor = "maroon",
+  titleColor = "primary",
   subtitle,
   subtitleColor = "primary",
 }: SectionHeaderProps) {
@@ -23,12 +23,10 @@ export default function SectionHeader({
 
   const titleColorClass = {
     primary: "text-primary",
-    maroon: "text-maroon",
   }
 
   const subtitleColorClass = {
     primary: "text-primary",
-    maroon: "text-maroon",
   }
 
   return (

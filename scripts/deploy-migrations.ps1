@@ -21,7 +21,7 @@ Write-Host "Applying migration: $($latestMigration.Name)" -ForegroundColor Yello
 
 # Step 3: Execute migration inside the web container
 Write-Host "Running migration in container..." -ForegroundColor Cyan
-docker exec aicuf-website-web-1 bun run /app/scripts/migrate.ts
+docker exec yesj-website-web-1 bun run /app/scripts/migrate.ts
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "✅ Migrations completed successfully!" -ForegroundColor Green

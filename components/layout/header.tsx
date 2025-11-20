@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
 import { motion } from "framer-motion"
 import MobileMenu from "./mobile-menu"
+import dynamic from "next/dynamic"
+
+const UrgentNotifications = dynamic(() => import("@/components/home/urgent-notifications"))
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -45,53 +48,50 @@ export default function Header() {
     { href: "/mission", label: "Mission" },
     { href: "/programs", label: "Programs" },
     { href: "/events", label: "Events" },
-    { href: "/news", label: "News" },
+    { href: "/echoes", label: "Echoes" },
     { href: "/gallery", label: "Gallery" },
     { href: "/contact", label: "Contact" },
-    { href: "/nomination", label: "Nomination" },
-    { href: "/register", label: "Join APTSAICUF" },
   ]
 
   return (
     <>
+      <UrgentNotifications />
       <header
-        className={`sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${
-          scrollY > 50 ? "bg-white/90 shadow-sm" : "bg-transparent"
-        }`}
+        className={`sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${scrollY > 50 ? "bg-white/90 shadow-sm" : "bg-transparent"
+          }`}
         role="banner"
       >
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex h-20 items-center justify-between py-2">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center gap-2"
+            className="flex items-center"
           >
-            <Link href="/" aria-label="Go to APTSAICUF homepage">
-              <div className="flex items-center gap-2">
+            <Link href="/" aria-label="Go to YESJ homepage">
+              <div className="flex items-center">
                 <Image
-                  src="/aicuf-centennial-logo.png"
-                  alt="AICUF Centennial Logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full"
+                  src="/YESJ_Logo_Black-eaf43d27.png"
+                  alt="YESJ Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14"
                 />
-                <span className="text-xl font-light tracking-tight text-maroon">APTSAICUF</span>
               </div>
             </Link>
           </motion.div>
-          <motion.nav 
-            variants={navVariants} 
-            initial="hidden" 
-            animate="visible" 
+          <motion.nav
+            variants={navVariants}
+            initial="hidden"
+            animate="visible"
             className="hidden md:flex gap-8"
             role="navigation"
             aria-label="Main navigation"
           >
             {navItems.map((item) => (
               <motion.div key={item.label} variants={itemVariants}>
-                <Link 
-                  href={item.href} 
+                <Link
+                  href={item.href}
                   className="text-sm font-light hover:text-primary transition-colors"
                   aria-label={`Navigate to ${item.label}`}
                 >
@@ -101,10 +101,10 @@ export default function Header() {
             ))}
           </motion.nav>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="md:hidden text-maroon" 
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-primary"
               onClick={() => setIsMenuOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={isMenuOpen}

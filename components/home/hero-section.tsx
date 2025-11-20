@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Carousel } from "@/components/ui/carousel"
+import { useState, useEffect } from "react"
 
 export default function HeroSection() {
   const fadeInUp = {
@@ -16,25 +17,57 @@ export default function HeroSection() {
     },
   }
 
+  const [currentSlide, setCurrentSlide] = useState(0)
+
   const carouselImages = [
     {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250518-WA0053.jpg-e2MTkZg1HsdxBzPxQBbliv3vs2U2r1.jpeg",
-      alt: "APTSAICUF members participating in the #EmpowerHerPeriod awareness campaign",
+      src: "/website/IMG_5899.JPG",
+      alt: "Youth empowerment program in action",
+      tagline: "YOUR DREAMS DESERVE A YES",
+      description: "Empowering 50,000+ youth across Telugu states to break barriers and build futures"
     },
     {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250518-WA0052.jpg-p3oCH80RViVhUZWJIOMzFQYeMr5cJf.jpeg",
-      alt: "Young students raising awareness about menstruation taboos with AICUF",
+      src: "/website/IMG_5986.JPG",
+      alt: "Students engaged in educational activities",
+      tagline: "EDUCATION TRANSFORMS LIVES",
+      description: "Unlocking potential through quality learning experiences and skill development"
     },
     {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250518-WA0054.jpg-wW05yWzg2y5waswZ9KLRaWaC2hwta0.jpeg",
-      alt: "AICUF members at YESJ Centre giving thumbs up during a gathering",
+      src: "/website/IMG_6787.JPG",
+      alt: "Community service and volunteer work",
+      tagline: "SERVICE CREATES CHANGE",
+      description: "Building stronger communities through dedicated service and volunteerism"
+    },
+    {
+      src: "/website/IMG_7254.JPG",
+      alt: "Leadership training session",
+      tagline: "LEADERSHIP EMPOWERS",
+      description: "Developing tomorrow's leaders with confidence and vision"
+    },
+    {
+      src: "/website/IMG_8159.JPG",
+      alt: "Cultural celebration and unity",
+      tagline: "UNITY STRENGTHENS",
+      description: "Celebrating diversity while building bridges across communities"
     },
   ]
 
+  // Update current slide when carousel changes
+  useEffect(() => {
+    const handleSlideChange = () => {
+      // This would be triggered by the carousel component
+      // For now, we'll simulate it with a simple interval
+    }
+    
+    return () => {
+      // Cleanup if needed
+    }
+  }, [])
+
   return (
-    <section className="w-full py-20 md:py-32 lg:py-40 overflow-hidden bg-gradient-to-b from-blue-50 to-white">
+    <section className="w-full py-8 md:py-16 lg:py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-secondary/10">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+        <div className="grid gap-6 lg:grid-cols-1 lg:gap-8 xl:grid-cols-2 xl:gap-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -43,35 +76,32 @@ export default function HeroSection() {
             className="flex flex-col justify-center space-y-4"
           >
             <div className="space-y-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="h-1 w-12 bg-maroon"></div>
-                <span className="text-sm font-light text-maroon">Celebrating 100 Years</span>
-              </div>
-              <h1 className="text-3xl font-light tracking-tighter sm:text-5xl xl:text-6xl/none text-maroon">
-                Andhra-Telangana All India Catholic University Federation
+              <h1 className="text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                {carouselImages[currentSlide]?.tagline || "YOUR DREAMS DESERVE A YES"}
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl font-extralight">
-                Empowering Catholic students to be agents of social change through faith, justice, and leadership since
-                1924.
+                {carouselImages[currentSlide]?.description || "Empowering 50,000+ youth across Telugu states to break barriers and build futures"}
               </p>
             </div>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="flex flex-col gap-2 min-[400px]:flex-row pt-4"
+              className="flex flex-col gap-3 min-[400px]:flex-row pt-2"
             >
-              <Link href="/register">
-                <Button className="inline-flex h-10 items-center justify-center rounded-none px-8 bg-maroon hover:bg-maroon/90 text-white">
-                  Join APTSAICUF
+              <Link href="/programs">
+                <Button className="inline-flex h-12 items-center justify-center rounded-none px-6 md:px-8 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white text-base">
+                  Explore Programs
                 </Button>
               </Link>
-              <Button
-                variant="outline"
-                className="inline-flex h-10 items-center justify-center rounded-none border-primary hover:bg-blue-50 text-primary"
-              >
-                Learn More
-              </Button>
+              <Link href="/echoes">
+                <Button
+                  variant="outline"
+                  className="inline-flex h-12 items-center justify-center rounded-none border-accent hover:bg-gradient-to-r hover:from-accent/10 hover:to-accent/5 text-accent text-base"
+                >
+                  Read Our Echoes
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
           <motion.div
@@ -81,7 +111,10 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex justify-center items-center"
           >
-            <Carousel className="w-full h-[350px] rounded-lg shadow-lg overflow-hidden">
+            <Carousel 
+              className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg shadow-lg overflow-hidden"
+              onSlideChange={(index) => setCurrentSlide(index)}
+            >
               {carouselImages.map((image, index) => (
                 <div key={index} className="relative w-full h-full">
                   <Image

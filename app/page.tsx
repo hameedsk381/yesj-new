@@ -12,6 +12,9 @@ const CentennialCelebration = dynamic(() => import("@/components/home/centennial
 const GalleryPreview = dynamic(() => import("@/components/home/gallery-preview"))
 const ContactPreview = dynamic(() => import("@/components/home/contact-preview"))
 const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section"))
+const ImpactCounter = dynamic(() => import("@/components/home/impact-counter"))
+const GetInvolved = dynamic(() => import("@/components/home/get-involved"))
+const TransformationStories = dynamic(() => import("@/components/home/transformation-stories"))
 
 export default function Home() {
   return (
@@ -19,12 +22,23 @@ export default function Home() {
       <Header />
       <main className="flex-1" id="main-content" role="main">
         <HeroSection />
+        <div className="w-100 h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
+          <img 
+            src="quoates.jpg" 
+            alt="Event Poster"
+            className="w-full h-full object-contain"
+            width={1200}
+            height={600}
+          />
+        </div>
         <AboutPreview />
         <MissionVision />
+        <ImpactCounter />
         <ProgramsPreview />
         <EventsPreview />
+        <TransformationStories />
+        <GetInvolved />
         <CentennialCelebration />
-        <GalleryPreview />
         <ContactPreview />
         <NewsletterSection />
       </main>

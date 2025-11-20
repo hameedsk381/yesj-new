@@ -112,11 +112,11 @@ export default function NewsletterPage() {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
-            <h1 className="text-xl font-light text-maroon">Newsletter Subscribers</h1>
+            <h1 className="text-xl font-light text-primary">Newsletter Subscribers</h1>
           </div>
           <Button
             onClick={exportToCSV}
-            className="rounded-none bg-maroon hover:bg-maroon/90 text-white"
+            className="rounded-none bg-primary hover:bg-primary/90 text-white"
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV

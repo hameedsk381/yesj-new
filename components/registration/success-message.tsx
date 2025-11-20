@@ -20,9 +20,9 @@ export default function SuccessMessage({ passkeyRegistered = false }: SuccessMes
       <div className="flex justify-center mb-6">
         <CheckCircle className="h-16 w-16 text-green-500" />
       </div>
-      <h2 className="text-2xl font-light text-maroon mb-4">Application Submitted Successfully!</h2>
+      <h2 className="text-2xl font-light text-primary mb-4">Application Submitted Successfully!</h2>
       <p className="text-muted-foreground max-w-md mx-auto mb-4">
-        Thank you for applying to APTSAICUF. Your application has been received and is being processed.
+        Thank you for applying to YESJ. Your application has been received and is being processed.
       </p>
       {passkeyRegistered ? (
         <div className="flex items-center justify-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded px-4 py-2 max-w-md mx-auto mb-8">
@@ -36,7 +36,7 @@ export default function SuccessMessage({ passkeyRegistered = false }: SuccessMes
       )}
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <Link href="/member/login">
-          <Button className="rounded-none bg-maroon hover:bg-maroon/90 text-white">
+          <Button className="rounded-none bg-primary hover:bg-primary/90 text-white">
             Login Now
           </Button>
         </Link>

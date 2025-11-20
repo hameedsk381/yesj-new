@@ -47,7 +47,7 @@ CREATE TABLE "registrations" (
 	"event_experience" text,
 	"just_society_definition" text,
 	"communication_example" text,
-	"aicuf_vision" text,
+	"yesj_vision" text,
 	"leadership_position" text,
 	"additional_message" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,

@@ -149,7 +149,7 @@ export default function PaymentButton({
     return (
       <Button
         onClick={() => setShowForm(true)}
-        className="w-full rounded-none bg-maroon hover:bg-maroon/90 text-white"
+        className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
       >
         <CreditCard className="h-4 w-4 mr-2" />
         Pay ₹{amount}
@@ -159,7 +159,7 @@ export default function PaymentButton({
 
   return (
     <div className="space-y-4 p-6 border border-primary/10 rounded-lg bg-blue-50">
-      <h3 className="text-lg font-light text-maroon mb-4">Payment Details</h3>
+      <h3 className="text-lg font-light text-primary mb-4">Payment Details</h3>
       
       <div className="space-y-4">
         <div>
@@ -200,14 +200,14 @@ export default function PaymentButton({
 
         <div className="flex items-center justify-between p-4 bg-white rounded border border-primary/10">
           <span className="text-sm font-light">Total Amount:</span>
-          <span className="text-xl font-semibold text-maroon">₹{amount}</span>
+          <span className="text-xl font-semibold text-primary">₹{amount}</span>
         </div>
 
         <div className="flex gap-2">
           <Button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="flex-1 rounded-none bg-maroon hover:bg-maroon/90 text-white"
+            className="flex-1 rounded-none bg-primary hover:bg-primary/90 text-white"
           >
             {isProcessing ? (
               <>

@@ -13,7 +13,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     // Example with Resend:
     // const resend = new Resend(process.env.RESEND_API_KEY)
     // await resend.emails.send({
-    //   from: options.from || 'APTSAICUF <noreply@aptsaicuf.org>',
+    //   from: options.from || 'YESJ <noreply@yesj.org>',
     //   to: options.to,
     //   subject: options.subject,
     //   html: options.html,
@@ -58,11 +58,11 @@ export function getRegistrationConfirmationEmail(data: {
       <body>
         <div class="container">
           <div class="header">
-            <h1>APTSAICUF Registration Confirmation</h1>
+            <h1>YESJ Registration Confirmation</h1>
           </div>
           <div class="content">
             <h2>Dear ${data.name},</h2>
-            <p>Thank you for registering with APTSAICUF! We're excited to have you join our community.</p>
+            <p>Thank you for registering with YESJ! We're excited to have you join our movement.</p>
             
             <p><strong>Registration Details:</strong></p>
             <ul>
@@ -75,18 +75,18 @@ export function getRegistrationConfirmationEmail(data: {
 
             <p>In the meantime, feel free to:</p>
             <ul>
-              <li>Explore our upcoming events</li>
-              <li>Learn more about our programs and initiatives</li>
+              <li>Explore our programs</li>
+              <li>Learn more about our initiatives</li>
               <li>Connect with us on social media</li>
             </ul>
 
-            <a href="https://aptsaicuf.org/events" class="button">View Upcoming Events</a>
+            <a href="https://yesj.in/programs" class="button">Explore Programs</a>
 
-            <p>If you have any questions, please don't hesitate to contact us at info@aptsaicuf.org</p>
+            <p>If you have any questions, please don't hesitate to contact us at info@yesj.org</p>
           </div>
           <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} APTSAICUF. All rights reserved.</p>
-            <p>Empowering students through faith, justice, and leadership since 1924.</p>
+            <p>&copy; ${new Date().getFullYear()} YESJ. All rights reserved.</p>
+            <p>Empowering youth through service and leadership.</p>
           </div>
         </div>
       </body>
@@ -103,7 +103,7 @@ export function getNewsletterWelcomeEmail(email: string): string {
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background-color: #3b82f6; color: white; padding: 20px; text-align: center; }
+          .header { background-color: #7f1d1d; color: white; padding: 20px; text-align: center; }
           .content { padding: 20px; background-color: #f9fafb; }
           .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
         </style>
@@ -111,25 +111,25 @@ export function getNewsletterWelcomeEmail(email: string): string {
       <body>
         <div class="container">
           <div class="header">
-            <h1>Welcome to APTSAICUF Newsletter!</h1>
+            <h1>Welcome to YESJ Newsletter!</h1>
           </div>
           <div class="content">
             <h2>Thank you for subscribing!</h2>
-            <p>You've successfully subscribed to the APTSAICUF newsletter.</p>
+            <p>You've successfully subscribed to the YESJ newsletter.</p>
             
             <p>You'll now receive:</p>
             <ul>
-              <li>Updates on upcoming events and activities</li>
-              <li>Leadership training opportunities</li>
-              <li>Success stories from our community</li>
-              <li>Important announcements</li>
+              <li>Transformation stories</li>
+              <li>Program updates</li>
+              <li>Volunteer opportunities</li>
+              <li>Ways to get involved</li>
             </ul>
 
-            <p>Stay connected with us and be part of our mission to empower students across Andhra Pradesh and Telangana!</p>
+            <p>Stay connected with us and be part of our mission to empower 50,000+ youth across Telugu states!</p>
           </div>
           <div class="footer">
-            <p>You can unsubscribe at any time by clicking <a href="https://aptsaicuf.org/unsubscribe?email=${email}">here</a>.</p>
-            <p>&copy; ${new Date().getFullYear()} APTSAICUF. All rights reserved.</p>
+            <p>You can unsubscribe at any time by clicking <a href="https://yesj.in/unsubscribe?email=${email}">here</a>.</p>
+            <p>&copy; ${new Date().getFullYear()} YESJ. All rights reserved.</p>
           </div>
         </div>
       </body>

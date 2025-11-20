@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
           <div className="container px-4 md:px-6 max-w-4xl">
             <div className="space-y-8 text-muted-foreground font-extralight">
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">1. Information We Collect</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">1. Information We Collect</h2>
                 <p className="mb-4">
                   When you register for APTSAICUF membership or events, we collect personal information including:
                 </p>
@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">2. How We Use Your Information</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">2. How We Use Your Information</h2>
                 <p className="mb-4">
                   We use the collected information for the following purposes:
                 </p>
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">3. Data Protection</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">3. Data Protection</h2>
                 <p className="mb-4">
                   We implement appropriate security measures to protect your personal information:
                 </p>
@@ -64,7 +64,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">4. Information Sharing</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">4. Information Sharing</h2>
                 <p className="mb-4">
                   We do not sell or rent your personal information to third parties. We may share information with:
                 </p>
@@ -77,7 +77,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">5. Your Rights</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">5. Your Rights</h2>
                 <p className="mb-4">
                   You have the right to:
                 </p>
@@ -91,18 +91,18 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">6. Cookies and Tracking</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">6. Cookies and Tracking</h2>
                 <p className="mb-4">
                   Our website uses cookies and similar technologies to enhance user experience. See our Cookie Policy for more details.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-2xl font-light text-maroon mb-4">7. Contact Us</h2>
+                <h2 className="text-2xl font-light text-primary mb-4">7. Contact Us</h2>
                 <p className="mb-4">
                   If you have questions about this Privacy Policy or wish to exercise your rights, please contact us at:
                 </p>
-                <p className="mb-2">Email: privacy@aptsaicuf.org</p>
+                <p className="mb-2">Email: privacy@yesj.org</p>
                 <p className="mb-2">Phone: +91 XXX XXX XXXX</p>
               </div>
 
