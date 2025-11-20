@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Download, Check, Trash2 } from "lucide-react"
 import Link from "next/link"
@@ -138,7 +139,7 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <AdminLayout>
       <header className="bg-white border-b sticky top-0 z-10">
         <div className="container flex items-center justify-between h-16 px-4 md:px-6">
           <div className="flex items-center gap-4">
@@ -288,6 +289,6 @@ export default function ContactsPage() {
           Total: {contacts.length} message{contacts.length !== 1 ? "s" : ""}
         </div>
       </main>
-    </div>
+    </AdminLayout>
   )
 }
