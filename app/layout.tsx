@@ -7,8 +7,6 @@ import SkipLink from "@/components/skip-link"
 import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
 
-export const metadataBase = new URL('https://yesj.in')
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -16,6 +14,7 @@ const inter = Inter({
 })
 
 export const metadata = {
+  metadataBase: new URL('https://yesj.in'),
   title: {
     default: "YESJ - Youth Empowering Service Jesuits",
     template: "%s | YESJ"
