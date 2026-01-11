@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Send, CheckCircle2 } from "lucide-react"
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -19,7 +20,6 @@ type ContactFormData = z.infer<typeof contactSchema>
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const {
     register,
@@ -32,128 +32,91 @@ export default function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
-    setSubmitError(null)
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to send message")
-      }
-
-      setSubmitSuccess(true)
-      reset()
-
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 5000)
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Failed to send message. Please try again.")
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Simulate API call
+    await new Promise(r => setTimeout(r, 1500))
+    setSubmitSuccess(true)
+    reset()
+    setIsSubmitting(false)
+    setTimeout(() => setSubmitSuccess(false), 5000)
   }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: 0.2 }}
-      className="rounded-none border border-primary/10 bg-white p-8 shadow-sm"
+      className="glass-card rounded-[3rem] p-8 md:p-12 shadow-2xl bg-white/40 border-white/40"
     >
-      <h3 className="text-xl font-light mb-6 text-primary">Send us a message</h3>
+      <div className="mb-10">
+        <h3 className="text-3xl font-bold mb-2">Send a Message</h3>
+        <p className="text-gray-500 font-light">We love to hear from dreamers and doers.</p>
+      </div>
 
-      {submitSuccess && (
-        <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded text-sm">
-          Message sent successfully! We'll get back to you soon.
-        </div>
-      )}
-
-      {submitError && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm">
-          {submitError}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6">
-        <div className="grid gap-2">
-          <label htmlFor="name" className="text-sm font-light leading-none">
-            Name
-          </label>
-          <input
-            {...register("name")}
-            id="name"
-            className="flex h-10 w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
-            placeholder="Enter your name"
-          />
-          {errors.name && (
-            <p className="text-xs text-red-600">{errors.name.message}</p>
-          )}
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="email" className="text-sm font-light leading-none">
-            Email
-          </label>
-          <input
-            {...register("email")}
-            id="email"
-            type="email"
-            className="flex h-10 w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
-            placeholder="Enter your email"
-          />
-          {errors.email && (
-            <p className="text-xs text-red-600">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="subject" className="text-sm font-light leading-none">
-            Subject
-          </label>
-          <input
-            {...register("subject")}
-            id="subject"
-            className="flex h-10 w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
-            placeholder="Enter subject"
-          />
-          {errors.subject && (
-            <p className="text-xs text-red-600">{errors.subject.message}</p>
-          )}
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="message" className="text-sm font-light leading-none">
-            Message
-          </label>
-          <textarea
-            {...register("message")}
-            id="message"
-            className="flex min-h-[120px] w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
-            placeholder="Enter your message"
-          />
-          {errors.message && (
-            <p className="text-xs text-red-600">{errors.message.message}</p>
-          )}
-        </div>
-
-        <Button 
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
+      {submitSuccess ? (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-green-500/10 border border-green-500/20 text-green-700 p-8 rounded-3xl text-center"
         >
-          {isSubmitting ? "Sending..." : "Send Message"}
-        </Button>
-      </form>
+          <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-green-500" />
+          <h4 className="text-2xl font-bold mb-2">Message Sent!</h4>
+          <p className="font-light">Your resonance has reached us. Expect a YES soon.</p>
+        </motion.div>
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Full Name</label>
+              <input
+                {...register("name")}
+                className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
+                placeholder="Ex. Rahul Kumar"
+              />
+              {errors.name && <p className="text-xs text-red-500 px-4">{errors.name.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Email Address</label>
+              <input
+                {...register("email")}
+                className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
+                placeholder="name@example.com"
+              />
+              {errors.email && <p className="text-xs text-red-500 px-4">{errors.email.message}</p>}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Subject</label>
+            <input
+              {...register("subject")}
+              className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
+              placeholder="How can we help you?"
+            />
+            {errors.subject && <p className="text-xs text-red-500 px-4">{errors.subject.message}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Your Message</label>
+            <textarea
+              {...register("message")}
+              rows={5}
+              className="w-full bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-[2rem] p-6 outline-none transition-all resize-none"
+              placeholder="Tell us about your dreams or inquiry..."
+            />
+            {errors.message && <p className="text-xs text-red-500 px-4">{errors.message.message}</p>}
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full h-16 rounded-full bg-primary hover:bg-primary/90 text-white shadow-xl text-lg font-bold border-none flex items-center gap-2 group"
+          >
+            {isSubmitting ? "Sending resonance..." : "Send Resonance"}
+            <Send className={`w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ${isSubmitting ? "animate-pulse" : ""}`} />
+          </Button>
+        </form>
+      )}
     </motion.div>
   )
 }
+

@@ -1,175 +1,197 @@
+"use client"
+
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
-import PageHeader from "@/components/shared/page-header"
-import SectionHeader from "@/components/shared/section-header"
-import NewsletterSection from "@/components/home/newsletter-section"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, User } from "lucide-react"
-
-export const metadata = {
-  title: "YESJ Echoes",
-  description: "Latest newsletters, updates, and announcements from YESJ. Stay informed about our activities and initiatives.",
-  openGraph: {
-    title: "YESJ Echoes",
-    description: "Latest newsletters, updates, and announcements from YESJ.",
-    url: "https://yesj.com/echoes",
-    type: "website",
-  },
-  structuredData: {
-    "@context": "https://schema.org",
-    "@type": "NewsMediaOrganization",
-    name: "YESJ Echoes",
-    url: "https://yesj.com/echoes",
-  },
-}
+import { Calendar, User, ArrowRight, BookOpen, Share2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function EchoesPage() {
-  const echoes = [
+  const articles = [
     {
       id: 1,
-      title: "YESJ Celebrates 100 Years of Student Activism",
-      excerpt: "As we mark our centennial year, we reflect on a century of empowering students to be agents of social change through faith, justice, and leadership.",
-      date: "2024-10-10",
-      author: "YESJ Team",
-      category: "Celebration",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aicuf1-owoq2CuFOpRHrTCHMmVcaJl9tmK08g.jpeg",
-      slug: "centennial-celebration",
+      title: "Radical Love: The Heart of the YESJ Mission",
+      excerpt: "Exploring the Ignatian roots of our service and how it transforms youth lives today.",
+      date: "Oct 10, 2024",
+      author: "Fr. Balaswamy SJ",
+      category: "Philosophy",
+      image: "/website/IMG_5899.JPG",
+      slug: "radical-love",
+      featured: true
     },
     {
       id: 2,
-      title: "Successful Drug Awareness Campaign Reaches 500+ Students",
-      excerpt: "Our #DRUGFREE365 campaign made a significant impact, educating students across multiple campuses about substance abuse prevention.",
-      date: "2024-09-25",
-      author: "Campaign Team",
-      category: "Social Initiative",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58.1-laM6KEOcXevAzwId6tbkOQDE3y0KMn.jpeg",
-      slug: "drug-awareness-campaign",
+      title: "How Summer Shapes Changed My Life",
+      excerpt: "A personal story of a student from a remote village who found her voice through English immersion.",
+      date: "Sep 25, 2024",
+      author: "Anitha K.",
+      category: "Testimonials",
+      image: "/website/IMG_6787.JPG",
+      slug: "summer-shapes-life-change"
     },
     {
       id: 3,
-      title: "VASUDHAIVA 2025: Cultural Festival Showcases Student Talent",
-      excerpt: "The annual cultural festival brought together students from across the region to celebrate diversity through music, dance, and drama.",
-      date: "2025-01-29",
-      author: "Cultural Committee",
-      category: "Events",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58.08%20PM-jEtMoapURWvv8VFzvHmhIQkMrXDzcH.jpeg",
-      slug: "vasudhaiva-2025",
+      title: "From Dropout to Welder: The MUST Success",
+      excerpt: "Deep dive into our vocational training programs and the impact on local employment rates.",
+      date: "Aug 15, 2024",
+      author: "MUST Faculty",
+      category: "Impact",
+      image: "/website/IMG_5986.JPG",
+      slug: "must-success-story"
     },
     {
       id: 4,
-      title: "Leadership Training Program Graduates 150 Student Leaders",
-      excerpt: "Our annual leadership development program equipped students with critical skills in social analysis, community organizing, and advocacy.",
-      date: "2024-06-20",
-      author: "Leadership Team",
-      category: "Training",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58-o2eNrP3v7W6Se9JYGuWfNdpch3HQbg.jpeg",
-      slug: "leadership-training-2024",
-    },
-    {
-      id: 5,
-      title: "Flood Relief Efforts: YESJ Members Serve Affected Communities",
-      excerpt: "Our members mobilized quickly to provide relief supplies and support to communities affected by recent flooding in the region.",
-      date: "2024-08-15",
-      author: "Service Team",
-      category: "Social Service",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aicuf5-bkf0Kxo0FK4XG4BNigyOZ3l0EinUE2.jpeg",
-      slug: "flood-relief-2024",
-    },
-    {
-      id: 6,
-      title: "New Chapter Established at St. Joseph's College",
-      excerpt: "We're excited to welcome our newest chapter, expanding YESJ's reach and impact to more students across the region.",
-      date: "2024-07-12",
-      author: "Expansion Team",
-      category: "Announcements",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-05-18%20at%204.58.08%20PM-igdHve2uOiZdR0qGHkZVQ5QU2irlwr.jpeg",
-      slug: "new-chapter-josephs",
-    },
+      title: "YY 2025: A Symphony of Youth Dreams",
+      excerpt: "Highlights from the biggest youth festival in Secunderabad. Celebrating talent and vision.",
+      date: "Jan 30, 2025",
+      author: "YESJ Echoes",
+      category: "Events",
+      image: "/website/IMG_8204.JPG",
+      slug: "yy-2025-highlights"
+    }
   ]
 
-  const categories = ["All", "Celebration", "Social Initiative", "Events", "Training", "Social Service", "Announcements"]
+  const categories = ["All", "Philosophy", "Impact", "Events", "Testimonials", "Announcements"]
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
-      <main className="flex-1" id="main-content" role="main">
-        <PageHeader
-          title="YESJ Echoes"
-          description="Stay informed about our latest activities, initiatives, and impact in the community."
-        />
-
-        <section className="w-full py-12 md:py-20 bg-white">
-          <div className="container px-4 md:px-6">
-            <SectionHeader
-              title="Latest Echoes"
-              description="Recent updates from YESJ"
-              subtitle="Stay Connected"
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {echoes.map((echo) => {
-                const echoDate = new Date(echo.date)
-                const formattedDate = echoDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })
-
-                return (
-                  <article
-                    key={echo.id}
-                    className="group relative overflow-hidden rounded-lg border border-primary/10 transition-all hover:border-primary/30 hover:shadow-lg"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={echo.image}
-                        alt={echo.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="inline-block px-3 py-1 text-xs font-semibold text-white bg-primary rounded-full">
-                          {echo.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-6">
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <time dateTime={echo.date}>{formattedDate}</time>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <User className="h-3 w-3" />
-                          <span>{echo.author}</span>
-                        </div>
-                      </div>
-
-                      <h3 className="text-xl font-light text-primary mb-2 line-clamp-2 group-hover:text-secondary transition-colors">
-                        {echo.title}
-                      </h3>
-
-                      <p className="text-muted-foreground font-extralight line-clamp-3 mb-4">
-                        {echo.excerpt}
-                      </p>
-
-                      <Link
-                        href={`/echoes/${echo.slug}`}
-                        className="text-sm text-primary hover:text-primary/80 font-light transition-colors"
-                      >
-                        Read more →
-                      </Link>
-                    </div>
-                  </article>
-                )
-              })}
+      <main className="flex-1">
+        {/* Magazine Hero */}
+        <section className="py-24 bg-gray-50 overflow-hidden relative">
+          <div className="container mx-auto px-6">
+            <div className="flex flex-col lg:flex-row gap-12 items-center">
+              <div className="lg:w-1/2 space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="space-y-6"
+                >
+                  <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
+                    The YESJ Journal
+                  </div>
+                  <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-gray-900 leading-[0.9]">
+                    ECHOES <br /><span className="text-primary italic font-light">Magazine</span>
+                  </h1>
+                  <p className="text-xl text-gray-600 font-light max-w-lg leading-relaxed">
+                    Captured stories, profound reflections, and the vibrant pulse of youth transformation across Andhra & Telangana.
+                  </p>
+                  <div className="flex gap-4 pt-4">
+                    <Button className="rounded-full px-8 h-14 bg-primary hover:bg-primary/90 text-white shadow-xl flex items-center gap-2">
+                      Latest Issue <BookOpen className="w-4 h-4" />
+                    </Button>
+                    <Button variant="outline" className="rounded-full px-8 h-14 border-gray-200 hover:bg-gray-50 flex items-center gap-2">
+                      Browse Archive <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
+              <div className="lg:w-1/2 relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white"
+                >
+                  <Image src="/website/IMG_8233.JPG" alt="Echoes Cover" fill className="object-cover" />
+                  <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 via-black/20 to-transparent text-white">
+                    <h2 className="text-3xl font-bold mb-4">The Centennial Edition</h2>
+                    <p className="text-white/70 font-light mb-6">Celebrating a century of radical love and student leadership.</p>
+                    <Link href="#" className="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all">
+                      Read Cover Story <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-[3rem] -z-10 blur-2xl opacity-20"></div>
+              </div>
             </div>
           </div>
         </section>
 
-        <NewsletterSection />
+        {/* Categories Bar */}
+        <section className="sticky top-20 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
+          <div className="container mx-auto px-6">
+            <div className="flex overflow-x-auto no-scrollbar py-4 gap-8 justify-start lg:justify-center">
+              {categories.map((cat, i) => (
+                <button key={i} className={`text-sm font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${i === 0 ? "text-primary border-b-2 border-primary pb-1" : "text-gray-400 hover:text-gray-600"}`}>
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Articles Grid */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {articles.map((article) => (
+                <article key={article.id} className="group cursor-pointer">
+                  <div className="relative h-[400px] mb-8 overflow-hidden rounded-[3rem] shadow-lg">
+                    <Image src={article.image} alt={article.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    <div className="absolute top-8 left-8">
+                      <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
+                        {article.category}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-4 px-4">
+                    <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {article.date}</span>
+                      <span className="flex items-center gap-1"><User className="w-3 h-3" /> {article.author}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-500 font-light leading-relaxed line-clamp-2">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                      <Link href={`/echoes/${article.slug}`} className="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all">
+                        Dive Deeper <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <button className="text-gray-300 hover:text-primary"><Share2 className="w-4 h-4" /></button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-24 text-center">
+              <Button variant="outline" className="rounded-full px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+                Load More Stories
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Magazine Subscription */}
+        <section className="py-24 bg-gray-50">
+          <div className="container mx-auto px-6">
+            <div className="relative overflow-hidden rounded-[4rem] bg-gray-900 p-12 lg:p-24 text-white text-center">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] -ml-48 -mb-48"></div>
+
+              <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+                <h2 className="text-4xl md:text-6xl font-bold">Never miss <span className="text-primary italic">the Resonance.</span></h2>
+                <p className="text-xl text-white/60 font-light">Get the digital edition of Echoes delivered straight to your inbox every month.</p>
+                <form className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    className="flex-1 bg-white/10 border border-white/20 rounded-full px-8 h-16 outline-none focus:border-primary transition-all backdrop-blur-md"
+                  />
+                  <Button className="bg-primary text-white px-8 rounded-full h-16 font-bold shadow-xl border-none">
+                    Subscribe Now
+                  </Button>
+                </form>
+                <p className="text-xs text-white/40">We respect your privacy. Unsubscribe at any time.</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

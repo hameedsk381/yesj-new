@@ -3,134 +3,170 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
-import { Carousel } from "@/components/ui/carousel"
-import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+
+const carouselSlides = [
+  {
+    src: "/website/IMG_5899.JPG",
+    alt: "YESJ Youth Movement - Empowering diverse youth in South India",
+    tagline: "YOUR DREAMS DESERVE A YES",
+    description: "YESJ (Youth Empowering Service - Jesuits) is transforming 55,000+ lives through radical love and systematic empowerment across Telugu states.",
+    cta1: { label: "Our Story", href: "/about" },
+    cta2: { label: "View Programs", href: "/programs" }
+  },
+  {
+    src: "/website/IMG_5986.JPG",
+    alt: "MuST Vocational Training - Skill development for marginalized youth",
+    tagline: "FROM MARGINS TO MAINSTREAM",
+    description: "Breaking the cycle of poverty through certified vocational training, placement support, and residential skill development programs.",
+    cta1: { label: "Skills Training", href: "/programs" },
+    cta2: { label: "Apply Today", href: "/programs" }
+  },
+  {
+    src: "/website/IMG_6787.JPG",
+    alt: "Summer Shapes Program - English immersion and leadership training",
+    tagline: "SPEAK YOUR SUCCESS",
+    description: "Mastering English communication and soft skills. Our 'Summer Shapes' immersion program opens doors to global opportunities.",
+    cta1: { label: "Summer Shapes", href: "/programs" },
+    cta2: { label: "Learn More", href: "/about" }
+  }
+]
 
 export default function HeroSection() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  }
+  const [current, setCurrent] = useState(0)
+  const [direction, setDirection] = useState(0)
 
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const carouselImages = [
-    {
-      src: "/website/IMG_5899.JPG",
-      alt: "Youth empowerment program in action",
-      tagline: "YOUR DREAMS DESERVE A YES",
-      description: "Empowering 50,000+ youth across Telugu states to break barriers and build futures"
-    },
-    {
-      src: "/website/IMG_5986.JPG",
-      alt: "Students engaged in educational activities",
-      tagline: "EDUCATION TRANSFORMS LIVES",
-      description: "Unlocking potential through quality learning experiences and skill development"
-    },
-    {
-      src: "/website/IMG_6787.JPG",
-      alt: "Community service and volunteer work",
-      tagline: "SERVICE CREATES CHANGE",
-      description: "Building stronger communities through dedicated service and volunteerism"
-    },
-    {
-      src: "/website/IMG_7254.JPG",
-      alt: "Leadership training session",
-      tagline: "LEADERSHIP EMPOWERS",
-      description: "Developing tomorrow's leaders with confidence and vision"
-    },
-    {
-      src: "/website/IMG_8159.JPG",
-      alt: "Cultural celebration and unity",
-      tagline: "UNITY STRENGTHENS",
-      description: "Celebrating diversity while building bridges across communities"
-    },
-  ]
-
-  // Update current slide when carousel changes
-  useEffect(() => {
-    const handleSlideChange = () => {
-      // This would be triggered by the carousel component
-      // For now, we'll simulate it with a simple interval
-    }
-    
-    return () => {
-      // Cleanup if needed
-    }
+  const nextSlide = useCallback(() => {
+    setDirection(1)
+    setCurrent((prev) => (prev + 1) % carouselSlides.length)
   }, [])
 
+  const prevSlide = useCallback(() => {
+    setDirection(-1)
+    setCurrent((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 7000)
+    return () => clearInterval(timer)
+  }, [nextSlide])
+
+  const variants = {
+    enter: (direction: number) => ({
+      opacity: 0,
+      scale: 1.1
+    }),
+    center: {
+      zIndex: 1,
+      opacity: 1,
+      scale: 1
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      opacity: 0,
+      scale: 0.9,
+      transition: { duration: 0.8 }
+    })
+  }
+
   return (
-    <section className="w-full py-8 md:py-16 lg:py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-secondary/10">
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-1 lg:gap-8 xl:grid-cols-2 xl:gap-12">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="flex flex-col justify-center space-y-4"
-          >
-            <div className="space-y-2">
-              <h1 className="text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {carouselImages[currentSlide]?.tagline || "YOUR DREAMS DESERVE A YES"}
-              </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl font-extralight">
-                {carouselImages[currentSlide]?.description || "Empowering 50,000+ youth across Telugu states to break barriers and build futures"}
-              </p>
-            </div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-              className="flex flex-col gap-3 min-[400px]:flex-row pt-2"
-            >
-              <Link href="/programs">
-                <Button className="inline-flex h-12 items-center justify-center rounded-none px-6 md:px-8 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white text-base">
-                  Explore Programs
-                </Button>
-              </Link>
-              <Link href="/echoes">
-                <Button
-                  variant="outline"
-                  className="inline-flex h-12 items-center justify-center rounded-none border-accent hover:bg-gradient-to-r hover:from-accent/10 hover:to-accent/5 text-accent text-base"
-                >
-                  Read Our Echoes
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center items-center"
-          >
-            <Carousel 
-              className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg shadow-lg overflow-hidden"
-              onSlideChange={(index) => setCurrentSlide(index)}
-            >
-              {carouselImages.map((image, index) => (
-                <div key={index} className="relative w-full h-full">
-                  <Image
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
-                    fill
-                    className="object-cover"
-                    priority={index === 0}
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+    <section className="relative w-full h-[90vh] min-h-[600px] md:h-screen bg-black overflow-hidden">
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={current}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <div className="relative w-full h-full">
+            <Image
+              src={carouselSlides[current].src}
+              alt={carouselSlides[current].alt}
+              fill
+              className="object-cover brightness-50"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex items-center">
+              <div className="container mx-auto px-6 md:px-12">
+                <div className="max-w-4xl space-y-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-black uppercase tracking-widest"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                    YESJ Movement
+                  </motion.div>
+
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter"
+                  >
+                    {carouselSlides[current].tagline.split(' ').map((word, i) => (
+                      <span key={i} className={i === 2 ? "text-primary italic" : ""}>{word} </span>
+                    ))}
+                  </motion.h1>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="text-lg md:text-2xl text-white/70 font-light max-w-2xl leading-relaxed"
+                  >
+                    {carouselSlides[current].description}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="flex flex-col sm:flex-row gap-4 pt-4"
+                  >
+                    <Link href={carouselSlides[current].cta1.href}>
+                      <Button className="w-full sm:w-auto h-16 px-10 rounded-2xl bg-primary hover:bg-primary/90 text-white text-lg font-bold shadow-2xl shadow-primary/20 flex items-center gap-2 group">
+                        {carouselSlides[current].cta1.label}
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                    <Link href={carouselSlides[current].cta2.href}>
+                      <Button variant="ghost" className="w-full sm:w-auto h-16 px-10 rounded-2xl bg-white/5 hover:bg-white/10 text-white border border-white/10 backdrop-blur-md text-lg font-bold">
+                        {carouselSlides[current].cta2.label}
+                      </Button>
+                    </Link>
+                  </motion.div>
                 </div>
-              ))}
-            </Carousel>
-          </motion.div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Responsive Navigation Controls */}
+      <div className="absolute bottom-12 right-6 md:right-12 flex items-center gap-6 z-10">
+        <div className="flex gap-2">
+          {carouselSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`h-1 transition-all rounded-full ${i === current ? "w-12 bg-primary" : "w-6 bg-white/20 hover:bg-white/40"}`}
+            />
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+            <ChevronRight className="w-6 h-6" />
+          </button>
         </div>
       </div>
     </section>

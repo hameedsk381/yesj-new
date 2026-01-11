@@ -1,391 +1,192 @@
+"use client"
+
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
-import PageHeader from "@/components/shared/page-header"
-import SectionHeader from "@/components/shared/section-header"
+import { motion } from "framer-motion"
+import { Handshake, Users, TrendingUp, Globe, Heart, ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Handshake, Users, TrendingUp, Globe, Heart } from "lucide-react"
-
-export const metadata = {
-  title: "Partner with YESJ",
-  description: "Explore partnership opportunities to empower youth across Telugu states through collaborative initiatives and shared resources.",
-}
+import Image from "next/image"
 
 export default function PartnersPage() {
-  const partnershipBenefits = [
-    {
-      title: "Shared Impact",
-      description: "Amplify your social impact by aligning with our mission to empower youth across Telugu states.",
-      icon: <Handshake className="h-6 w-6 text-primary" />,
-    },
-    {
-      title: "Community Reach",
-      description: "Access our network of 50,000+ youth and community stakeholders across Andhra Pradesh and Telangana.",
-      icon: <Users className="h-6 w-6 text-primary" />,
-    },
-    {
-      title: "Brand Alignment",
-      description: "Associate your brand with positive social change and youth empowerment initiatives.",
-      icon: <TrendingUp className="h-6 w-6 text-primary" />,
-    },
-    {
-      title: "CSR Compliance",
-      description: "Meet your corporate social responsibility goals through meaningful, measurable impact programs.",
-      icon: <Globe className="h-6 w-6 text-primary" />,
-    },
-  ]
-
-  const partnershipTypes = [
-    {
-      title: "Corporate Partnerships",
-      description: "Collaborate on programs that align with your CSR objectives and business values.",
-      benefits: [
-        "Employee volunteering opportunities",
-        "Cause marketing campaigns",
-        "Skill-based pro bono services",
-        "In-kind donations",
-      ],
-    },
+  const partnerTypes = [
     {
       title: "Educational Institutions",
-      description: "Partner with us to extend our reach to students and faculty in your institution.",
-      benefits: [
-        "Student leadership programs",
-        "Faculty development workshops",
-        "Research collaborations",
-        "Internship opportunities",
-      ],
+      icon: <Users className="w-8 h-8 text-primary" />,
+      items: ["MAGIC Youth Chapters", "PEP Program Hosting", "Student Volunteer Slots", "Research Partnerships"],
+      delay: 0.1
     },
     {
-      title: "NGO & Community Organizations",
-      description: "Work together to maximize our collective impact on youth empowerment.",
-      benefits: [
-        "Joint program implementation",
-        "Resource sharing",
-        "Capacity building",
-        "Advocacy initiatives",
-      ],
+      title: "Corporations",
+      icon: <Globe className="w-8 h-8 text-secondary" />,
+      items: ["CSR Program Funding", "Skill Training Collabs", "Employee Volunteering", "Placement Partnerships"],
+      delay: 0.2
     },
     {
-      title: "Government Agencies",
-      description: "Collaborate on policy implementation and community development initiatives.",
-      benefits: [
-        "Program co-design",
-        "Implementation support",
-        "Monitoring & evaluation",
-        "Knowledge sharing",
-      ],
-    },
+      title: "NGOs & Community",
+      icon: <Handshake className="w-8 h-8 text-teal-500" />,
+      items: ["Joint Implementation", "Resource Sharing", "Network Expansion", "Best Practice Exchange"],
+      delay: 0.3
+    }
+  ]
+
+  const processSteps = [
+    { title: "Conversation", desc: "Understanding goals and alignment." },
+    { title: "Prototyping", desc: "Customized program design." },
+    { title: "MOU & Planning", desc: "Formalizing the commitment." },
+    { title: "Execution", desc: "Impactful implementation." }
   ]
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
       <main className="flex-1">
-        <PageHeader
-          title="Partner with YESJ"
-          description="Join hands with us to empower 50,000+ youth across Telugu states through collaborative initiatives."
-        />
-
-        <section className="w-full py-12 md:py-20 bg-white">
-          <div className="container px-4 md:px-6">
-            <SectionHeader
-              title="PATHWAY 3: PARTNER WITH US"
-              description="Multiply Impact Through Strategic Partnerships"
-              subtitle="Partnership Types"
-            />
-            
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-12">
-              <Card className="border-primary/10 hover:border-primary/30 transition-all text-center">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Users className="h-12 w-12 text-primary" />
-                  </div>
-                  <CardTitle className="text-primary">Educational Institutions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-left">
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Establish MAGIC Youth chapters</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Host PEP programs</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Student volunteer placements</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Research partnerships</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-primary/10 hover:border-primary/30 transition-all text-center">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Globe className="h-12 w-12 text-primary" />
-                  </div>
-                  <CardTitle className="text-primary">Corporations</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-left">
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>CSR program funding</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Skill training collaborations</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Employee volunteering</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Placement partnerships</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-primary/10 hover:border-primary/30 transition-all text-center">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Handshake className="h-12 w-12 text-primary" />
-                  </div>
-                  <CardTitle className="text-primary">NGOs & Organizations</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-left">
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Joint program implementation</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Resource sharing</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Network expansion</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Best practice exchange</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-primary/10 hover:border-primary/30 transition-all text-center">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <TrendingUp className="h-12 w-12 text-primary" />
-                  </div>
-                  <CardTitle className="text-primary">Government</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-left">
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Skill India alignment</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Rural development schemes</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Youth empowerment initiatives</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Policy input and feedback</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-primary/10 hover:border-primary/30 transition-all text-center">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    <Heart className="h-12 w-12 text-primary" />
-                  </div>
-                  <CardTitle className="text-primary">Parishes & Churches</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-left">
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Community mobilization</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>EOTT center establishment</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Faith formation programs</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-muted-foreground font-extralight">
-                      <span className="text-primary font-bold">→</span>
-                      <span>Social outreach collaboration</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
+        {/* Partner Hero */}
+        <section className="py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+          <div className="container mx-auto px-6 text-center max-w-4xl relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none">
+                Strategic <span className="text-primary italic">Synergy.</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+                We believe in the power of collective resonance. Partner with YESJ to scale youth empowerment across Andhra & Telangana.
+              </p>
+              <div className="flex gap-4 justify-center">
+                <Button className="rounded-full bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
+                  Initiate Partnership
+                </Button>
+              </div>
+            </motion.div>
           </div>
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
         </section>
 
-        <section className="w-full py-12 md:py-20 bg-blue-50">
-          <div className="container px-4 md:px-6">
-            <SectionHeader
-              title="Partnership Opportunities"
-              description="Explore different ways to collaborate with us"
-              subtitle="How We Work Together"
-            />
-            
-            <div className="grid gap-8 md:grid-cols-2 mt-12">
-              {partnershipTypes.map((type, index) => (
-                <Card key={index} className="border-primary/10 hover:border-primary/30 transition-all">
-                  <CardHeader>
-                    <CardTitle className="text-primary">{type.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="font-extralight mb-4">
-                      {type.description}
-                    </CardDescription>
-                    <div className="space-y-2">
-                      <h4 className="font-light text-primary">Key Benefits:</h4>
-                      <ul className="space-y-1">
-                        {type.benefits.map((benefit, benefitIndex) => (
-                          <li key={benefitIndex} className="text-muted-foreground font-extralight flex items-start gap-2">
-                            <span className="text-primary">•</span> {benefit}
-                          </li>
-                        ))}
-                      </ul>
+        {/* Partner Types Grid */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4">A Network of <span className="text-primary italic">Trust</span></h2>
+              <p className="text-xl text-gray-500 font-light">Diverse pathways to shared impact.</p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {partnerTypes.map((type, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: type.delay }}
+                  className="p-12 glass-card rounded-[3.5rem] border border-gray-100 hover:shadow-2xl transition-all group"
+                >
+                  <div className="space-y-8">
+                    <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {type.icon}
                     </div>
-                  </CardContent>
-                </Card>
+                    <h3 className="text-3xl font-black text-gray-900">{type.title}</h3>
+                    <ul className="space-y-4">
+                      {type.items.map((item, j) => (
+                        <li key={j} className="flex items-center gap-3 text-gray-500 font-medium text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-primary" /> {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <Button variant="ghost" className="p-0 h-auto font-bold text-primary group-hover:text-secondary flex items-center gap-2 hover:bg-transparent transition-all">
+                      Explore Opportunities <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-20 bg-white">
-          <div className="container px-4 md:px-6">
-            <div className="max-w-3xl mx-auto">
-              <SectionHeader
-                title="Our Partnership Process"
-                subtitle="How We Collaborate"
-              />
-              
-              <div className="grid gap-6 mt-8">
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                    1
+        {/* Process Flow */}
+        <section className="py-24 bg-gray-900 text-white overflow-hidden relative">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold">The Road to <span className="text-secondary italic">Resonance</span></h2>
+              <p className="text-white/60 font-light mt-4">A clear, transparent journey to partnership.</p>
+            </div>
+
+            <div className="grid md:grid-cols-4 gap-4 relative">
+              {/* Connector line for desktop */}
+              <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 -translate-y-1/2 -z-0"></div>
+
+              {processSteps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative z-10 bg-gray-800/80 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 text-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black mx-auto mb-6 text-xl shadow-lg border-4 border-gray-900">
+                    {i + 1}
                   </div>
-                  <div>
-                    <h3 className="text-xl font-light text-primary mb-2">Initial Discussion</h3>
-                    <p className="text-muted-foreground font-extralight">
-                      We start with a conversation to understand your goals, resources, and how they align with our mission.
-                    </p>
-                  </div>
+                  <h4 className="text-xl font-bold mb-2">{step.title}</h4>
+                  <p className="text-white/40 font-light text-sm">{step.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Value Proposition */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl">
+                <Image src="/website/IMG_6038.JPG" alt="Partnership work" fill className="object-cover" />
+                <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 to-transparent text-white">
+                  <ShieldCheck className="w-12 h-12 text-secondary mb-4" />
+                  <h3 className="text-3xl font-bold">Transparent & Accountable</h3>
+                  <p className="text-white/70 font-light mt-4">We provide detailed impact reports and regular audits to all our strategic partners.</p>
                 </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                    2
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-light text-primary mb-2">Proposal Development</h3>
-                    <p className="text-muted-foreground font-extralight">
-                      Our team develops a customized partnership proposal outlining objectives, activities, and expected outcomes.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                    3
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-light text-primary mb-2">Agreement & Planning</h3>
-                    <p className="text-muted-foreground font-extralight">
-                      We formalize our partnership through a Memorandum of Understanding and develop detailed implementation plans.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                    4
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-light text-primary mb-2">Implementation & Monitoring</h3>
-                    <p className="text-muted-foreground font-extralight">
-                      We work together to implement the partnership activities with regular monitoring and communication.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary text-white rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0">
-                    5
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-light text-primary mb-2">Evaluation & Renewal</h3>
-                    <p className="text-muted-foreground font-extralight">
-                      We evaluate the partnership's impact and explore opportunities for continued collaboration.
-                    </p>
-                  </div>
+              </div>
+              <div className="space-y-8">
+                <h2 className="text-4xl md:text-6xl font-black leading-tight">Multiply Your <span className="text-primary italic">Impact.</span></h2>
+                <p className="text-xl text-gray-500 font-light leading-relaxed">
+                  By partnering with YESJ, you aren&apos;t just donating; you are investing in the systems that create sustainable change.
+                </p>
+                <div className="grid gap-4">
+                  {[
+                    { title: "Local Insights", desc: "Expertise in the socio-cultural landscape of Telugu Heartlands." },
+                    { title: "Scalable Programs", desc: "Ready-to-deploy modules for various community needs." },
+                    { title: "Holistic Approach", desc: "Ignatian principles of &apos;cura personalis&apos; for total development." }
+                  ].map((v, i) => (
+                    <div key={i} className="flex gap-4 p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:shadow-xl transition-all">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <TrendingUp className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold">{v.title}</h4>
+                        <p className="text-sm text-gray-500 font-light">{v.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-20 bg-gradient-to-r from-primary to-blue-700 text-white">
-          <div className="container px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-light tracking-tighter sm:text-4xl mb-6">
-                Together, We Say YES to 85 Million Dreams
-              </h2>
-              <p className="font-extralight mb-8 text-white/90">
-                Join the movement that's transforming lives across Telugu states
-              </p>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 mb-12">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="text-3xl font-bold mb-2">500+</div>
-                  <div className="text-sm font-extralight">Current Volunteers</div>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="text-3xl font-bold mb-2">1000+</div>
-                  <div className="text-sm font-extralight">Active Donors</div>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="text-3xl font-bold mb-2">50+</div>
-                  <div className="text-sm font-extralight">Partner Organizations</div>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="text-3xl font-bold mb-2">50,000+</div>
-                  <div className="text-sm font-extralight">Lives Impacted</div>
-                </div>
-              </div>
-              
-              <Button className="rounded-none bg-white text-primary hover:bg-white/90 px-8 py-3 text-lg">
-                Find Your Place in the Movement
-              </Button>
-            </div>
+        {/* Final CTA */}
+        <section className="py-24 bg-primary text-white text-center overflow-hidden relative">
+          <div className="container mx-auto px-6 relative z-10">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 italic">Say YES to Radical Collaboration.</h2>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto mb-12 font-light">
+              Let&apos;s co-create a future where every youth in Andhra & Telangana has the chance to thrive.
+            </p>
+            <Button className="bg-secondary text-white px-12 h-16 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform border-none">
+              Contact Our Partnership Lead
+            </Button>
           </div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] -ml-48 -mb-48"></div>
         </section>
       </main>
       <Footer />

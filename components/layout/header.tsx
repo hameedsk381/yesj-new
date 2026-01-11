@@ -9,7 +9,7 @@ import { motion } from "framer-motion"
 import MobileMenu from "./mobile-menu"
 import dynamic from "next/dynamic"
 
-const UrgentNotifications = dynamic(() => import("@/components/home/urgent-notifications"))
+const NotificationBar = dynamic(() => import("@/components/layout/notification-bar"))
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -55,68 +55,75 @@ export default function Header() {
 
   return (
     <>
-      <UrgentNotifications />
+      <NotificationBar />
       <header
-        className={`sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-300 ${scrollY > 50 ? "bg-white/90 shadow-sm" : "bg-transparent"
+        className={`sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-500 ${scrollY > 50 ? "bg-white/80 shadow-md border-b border-gray-100" : "bg-transparent"
           }`}
         role="banner"
       >
-        <div className="container flex h-20 items-center justify-between py-2">
+        <div className="container mx-auto flex h-20 items-center justify-between px-6">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center"
+            className="flex items-center shrink-0"
           >
-            <Link href="/" aria-label="Go to YESJ homepage">
-              <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative w-12 h-12 md:w-14 md:h-14 overflow-hidden rounded-full shadow-lg group-hover:scale-110 transition-transform">
                 <Image
                   src="/YESJ_Logo_Black-eaf43d27.png"
                   alt="YESJ Logo"
-                  width={50}
-                  height={50}
-                  className="rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14"
+                  fill
+                  className="object-cover"
                 />
               </div>
+              <span className="hidden sm:block text-2xl font-black tracking-tighter italic text-gray-900">YESJ</span>
             </Link>
           </motion.div>
+
           <motion.nav
             variants={navVariants}
             initial="hidden"
             animate="visible"
-            className="hidden md:flex gap-8"
+            className="hidden lg:flex items-center gap-10"
             role="navigation"
-            aria-label="Main navigation"
           >
             {navItems.map((item) => (
               <motion.div key={item.label} variants={itemVariants}>
                 <Link
                   href={item.href}
-                  className="text-sm font-light hover:text-primary transition-colors"
-                  aria-label={`Navigate to ${item.label}`}
+                  className="text-sm font-bold tracking-tight text-gray-600 hover:text-primary transition-colors relative group"
                 >
                   {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
                 </Link>
               </motion.div>
             ))}
           </motion.nav>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden text-primary"
-              onClick={() => setIsMenuOpen(true)}
-              aria-label="Open navigation menu"
-              aria-expanded={isMenuOpen}
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </motion.div>
+
+          <div className="flex items-center gap-4">
+            <Link href="/donate" className="hidden sm:block">
+              <Button className="btn-premium rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20">
+                Donate Online
+              </Button>
+            </Link>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="lg:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full hover:bg-primary/5 text-primary"
+                onClick={() => setIsMenuOpen(true)}
+              >
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </header>
 
-      {isMenuOpen && <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navItems={navItems} />}
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navItems={navItems} />
     </>
   )
 }

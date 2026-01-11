@@ -3,24 +3,27 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
 
 export default function GetInvolved() {
-  const involvementOptions = [
+  const options = [
     {
       id: 1,
       title: "I'm a Youth Seeking Support",
       description: "Ready to transform your life? Explore our programs and take the first step toward your dreams.",
       buttonText: "Explore Programs",
       buttonLink: "/programs",
-      bgColor: "bg-blue-100",
+      image: "/website/IMG_5986.JPG",
+      color: "from-blue-600/80 to-blue-900/80"
     },
     {
       id: 2,
       title: "I Want to Volunteer",
       description: "Be part of something bigger. Give your time, talent, and treasure to empower the next generation.",
       buttonText: "Join the Movement",
-      buttonLink: "/volunteer",
-      bgColor: "bg-green-100",
+      buttonLink: "/get-involved",
+      image: "/website/IMG_8159.JPG",
+      color: "from-teal-600/80 to-teal-900/80"
     },
     {
       id: 3,
@@ -28,39 +31,40 @@ export default function GetInvolved() {
       description: "Transform a life today. Every donation breaks the cycle of poverty and builds futures.",
       buttonText: "Donate Now",
       buttonLink: "/donate",
-      bgColor: "bg-purple-100",
+      image: "/website/IMG_5899.JPG",
+      color: "from-secondary/80 to-secondary/90"
     },
   ]
 
   return (
-    <section className="w-full py-20 md:py-32 bg-white">
-      <div className="container px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl font-light tracking-tighter sm:text-4xl text-primary mb-4">Get Involved</h2>
-        </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {involvementOptions.map((option, index) => (
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {options.map((option, index) => (
             <motion.div
               key={option.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`rounded-lg border border-primary/10 p-8 transition-all hover:shadow-lg ${option.bgColor}`}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              className="relative group h-[500px] rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-200"
             >
-              <h3 className="text-xl font-light mb-4 text-primary">{option.title}</h3>
-              <p className="text-muted-foreground font-extralight mb-6">{option.description}</p>
-              <Link href={option.buttonLink}>
-                <Button variant="outline" className="rounded-none border-secondary hover:bg-pink-50 text-secondary">
-                  {option.buttonText}
-                </Button>
-              </Link>
+              <img
+                src={option.image}
+                alt={option.title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className={`absolute inset-0 bg-gradient-to-b ${option.color} flex flex-col justify-end p-10 text-white`}>
+                <div className="space-y-4">
+                  <h3 className="text-3xl font-bold leading-tight">{option.title}</h3>
+                  <p className="text-white/80 font-light text-lg">{option.description}</p>
+                  <Link href={option.buttonLink} className="inline-block pt-4">
+                    <Button className="btn-premium rounded-full bg-white text-gray-900 hover:bg-white/90 px-8 h-14 text-lg border-none shadow-xl">
+                      {option.buttonText} <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -68,3 +72,4 @@ export default function GetInvolved() {
     </section>
   )
 }
+

@@ -4,47 +4,51 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
-    --foreground: 0 0% 10%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 200 85% 37%; /* Honolulu Blue #0B74B0 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 350 80% 68%; /* Coral Pink #f26669 */
-    --secondary-foreground: 0 0% 100%;
-    --accent: 350 80% 68%; /* Coral Pink #f26669 */
-    --accent-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 200 85% 37%; /* Honolulu Blue */
+    --popover-foreground: 222 47% 11%;
+    --primary: 207 98% 33%;
+    /* Brand Blue #025ca8 */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 0 70% 35%;
+    /* Maroon */
+    --secondary-foreground: 210 40% 98%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47% 11%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 207 98% 33%;
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 200 85% 37%; /* Honolulu Blue #0B74B0 */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 350 80% 68%; /* Coral Pink #f26669 */
-    --secondary-foreground: 0 0% 100%;
-    --accent: 350 80% 68%; /* Coral Pink #f26669 */
-    --accent-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 200 85% 37%; /* Honolulu Blue */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47% 11.2%;
+    --secondary: 0 70% 35%;
+    /* Maroon */
+    --secondary-foreground: 210 40% 98%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
@@ -52,122 +56,84 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  /* Improved responsive typography */
-  h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl;
-  }
-  
-  h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl;
-  }
-  
-  h3 {
-    @apply text-xl md:text-2xl lg:text-3xl;
-  }
-  
-  h4 {
-    @apply text-lg md:text-xl lg:text-2xl;
-  }
-  
-  h5 {
-    @apply text-base md:text-lg lg:text-xl;
-  }
-  
-  h6 {
-    @apply text-sm md:text-base lg:text-lg;
-  }
-  
-  p {
-    @apply text-base md:text-lg;
-  }
-
-  /* Responsive container padding */
-  .container {
-    @apply px-4 md:px-6 lg:px-8;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply tracking-tight;
-  }
-
-  *:focus-visible {
-    @apply outline-none ring-2 ring-secondary ring-offset-2 ring-offset-background;
-  }
-
-  button:focus-visible,
-  a:focus-visible,
-  input:focus-visible,
-  textarea:focus-visible,
-  select:focus-visible {
-    @apply outline-none ring-2 ring-secondary ring-offset-2;
   }
 }
 
-/* Smooth scrolling */
+@layer components {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-md border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-white/70 dark:bg-black/40 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-xl;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95 hover:shadow-lg hover:shadow-primary/20;
+  }
+
+  .hero-gradient {
+    background: radial-gradient(circle at top left, hsla(200, 85%, 37%, 0.15), transparent),
+      radial-gradient(circle at bottom right, hsla(350, 80%, 68%, 0.15), transparent);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Transition for all elements */
-* {
-  @apply transition-colors duration-200;
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Brand color classes */
-.text-primary {
-  color: hsl(200, 85%, 37%); /* Honolulu Blue #0B74B0 */
+::-webkit-scrollbar-track {
+  @apply bg-muted;
 }
 
-.bg-primary {
-  background-color: hsl(200, 85%, 37%); /* Honolulu Blue #0B74B0 */
-}
-
-.hover\:bg-primary\/90:hover {
-  background-color: hsl(200, 85%, 37%, 0.9); /* Honolulu Blue #0B74B0 */
-}
-
-.border-primary {
-  border-color: hsl(200, 85%, 37%); /* Honolulu Blue #0B74B0 */
-}
-
-.text-secondary {
-  color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
-}
-
-.bg-secondary {
-  background-color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
-}
-
-.hover\:bg-secondary\/90:hover {
-  background-color: hsl(350, 80%, 68%, 0.9); /* Coral Pink #f26669 */
-}
-
-.border-secondary {
-  border-color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
-}
-
-.text-accent {
-  color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
-}
-
-.bg-accent {
-  background-color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
-}
-
-.hover\:bg-accent\/90:hover {
-  background-color: hsl(350, 80%, 68%, 0.9); /* Coral Pink #f26669 */
-}
-
-.border-accent {
-  border-color: hsl(350, 80%, 68%); /* Coral Pink #f26669 */
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50 hover:bg-primary transition-colors rounded-full;
 }

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { X } from "lucide-react"
+import { X, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useRef } from "react"
 
@@ -15,12 +15,10 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
-      closeButtonRef.current?.focus()
     } else {
       document.body.style.overflow = "unset"
     }
@@ -29,107 +27,84 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
     }
   }, [isOpen])
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose()
-      }
-    }
-
-    const handleTab = (e: KeyboardEvent) => {
-      if (!isOpen || !menuRef.current) return
-
-      const focusableElements = menuRef.current.querySelectorAll(
-        'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
-      const firstElement = focusableElements[0] as HTMLElement
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
-
-      if (e.key === "Tab") {
-        if (e.shiftKey && document.activeElement === firstElement) {
-          e.preventDefault()
-          lastElement?.focus()
-        } else if (!e.shiftKey && document.activeElement === lastElement) {
-          e.preventDefault()
-          firstElement?.focus()
-        }
-      }
-    }
-
-    document.addEventListener("keydown", handleEscape)
-    document.addEventListener("keydown", handleTab)
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape)
-      document.removeEventListener("keydown", handleTab)
-    }
-  }, [isOpen, onClose])
-
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div className="fixed inset-0 z-[100] md:hidden">
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            className="absolute inset-0 bg-white/40 backdrop-blur-xl"
             onClick={onClose}
-            aria-label="Close navigation menu"
           />
+
+          {/* Menu Panel */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed right-0 top-0 bottom-0 z-50 w-[80%] max-w-sm bg-white p-6 shadow-xl md:hidden"
+            className="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl border-l border-gray-100 flex flex-col p-8"
             ref={menuRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
           >
-            <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center">
-                <Image
-                  src="/YESJ_Logo_Black-eaf43d27.png"
-                  alt="YESJ Logo"
-                  width={50}
-                  height={50}
-                  className="rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14"
-                />
-              </div>
+            <div className="flex justify-between items-center mb-12">
+              <Link href="/" onClick={onClose} className="flex items-center gap-3">
+                <div className="w-10 h-10 relative rounded-full overflow-hidden">
+                  <Image
+                    src="/YESJ_Logo_Black-eaf43d27.png"
+                    alt="YESJ Logo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <span className="text-xl font-black italic tracking-tighter">YESJ</span>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-primary"
+                className="rounded-full hover:bg-gray-100"
                 onClick={onClose}
-                ref={closeButtonRef}
               >
-                <X className="h-5 w-5" />
-                <span className="sr-only">Close menu</span>
+                <X className="h-6 w-6" />
               </Button>
             </div>
-            <nav className="flex flex-col gap-6" role="navigation" aria-label="Mobile navigation">
+
+            <nav className="flex flex-col gap-2">
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                  transition={{ delay: index * 0.05 }}
                 >
                   <Link
                     href={item.href}
-                    className="text-lg font-light hover:text-primary transition-colors block"
+                    className="flex items-center justify-between group py-4 px-6 rounded-2xl hover:bg-primary/5 transition-all"
                     onClick={onClose}
                   >
-                    {item.label}
+                    <span className="text-lg font-bold text-gray-700 group-hover:text-primary transition-colors">
+                      {item.label}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </Link>
                 </motion.div>
               ))}
             </nav>
+
+            <div className="mt-auto pt-8">
+              <Link href="/donate" onClick={onClose}>
+                <Button className="w-full h-16 rounded-2xl text-lg font-bold bg-primary shadow-xl shadow-primary/20">
+                  Donate Now
+                </Button>
+              </Link>
+              <p className="text-center text-xs text-gray-400 mt-6 font-medium">
+                © {new Date().getFullYear()} YESJ Movement. <br /> Empowering Telugu Youth.
+              </p>
+            </div>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   )
