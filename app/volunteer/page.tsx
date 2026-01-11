@@ -2,6 +2,7 @@
 
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { Clock, Star, Gift, Backpack, CheckCircle2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
