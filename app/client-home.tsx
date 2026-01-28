@@ -22,16 +22,11 @@ export default function Home() {
       <main className="flex-1" id="main-content" role="main">
         <HeroSection />
         <WelcomeSection />
+        <ProgramsPreview />
         <ImpactCounter />
         <TransformationStories />
         <GetInvolved />
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6">
-            <h2 className="text-4xl font-bold text-center mb-12">Resonating <span className="text-primary italic">Hope</span></h2>
-            <p className="text-center text-gray-500 mb-16 text-xl font-light">Stay connected with our latest programs, stories, and impact</p>
-            <LatestNews />
-          </div>
-        </section>
+        <LatestNews />
         <Collaborators />
         <FooterCTA />
       </main>

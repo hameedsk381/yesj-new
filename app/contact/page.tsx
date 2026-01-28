@@ -47,7 +47,7 @@ export default function ContactPage() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-7xl font-bold mb-6"
+              className="text-5xl md:text-7xl font-serif font-black mb-6"
             >
               Start a <span className="text-primary italic">Resonance</span>
             </motion.h1>
@@ -65,7 +65,7 @@ export default function ContactPage() {
               {/* Left Side: Info */}
               <div className="lg:col-span-5 space-y-12">
                 <div className="space-y-6">
-                  <h2 className="text-4xl font-bold mb-4">Connect With <span className="gradient-text">The Mission</span></h2>
+                  <h2 className="text-4xl font-serif font-black mb-4">Connect With <span className="text-primary italic">The Mission</span></h2>
                   <p className="text-gray-500 font-light text-lg">Our central hub at Andhra Loyola College is the heartbeat of our operations across the Telugu heartland.</p>
                 </div>
 
@@ -125,7 +125,7 @@ export default function ContactPage() {
             <div className="inline-flex p-4 rounded-3xl bg-white shadow-xl mb-8">
               <Globe className="w-12 h-12 text-primary" />
             </div>
-            <h2 className="text-4xl font-bold mb-6">A Network of Hope</h2>
+            <h2 className="text-4xl font-serif font-bold mb-6">A Network of Hope</h2>
             <p className="text-xl text-gray-500 font-light max-w-2xl mx-auto mb-12">
               Beyond our main office, we operate learning centers and youth chapters in over 20+ locations. Wherever there is a need, YESJ is present.
             </p>

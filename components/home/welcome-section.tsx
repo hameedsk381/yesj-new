@@ -19,10 +19,10 @@ export default function WelcomeSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
-                            Where Every Youth Shouts <span className="gradient-text">YES</span> to Their Dreams
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black tracking-tight text-gray-900 mb-6 leading-tight">
+                            Where Every Youth Shouts <span className="text-primary italic">YES</span> to Their Dreams
                         </h2>
-                        <h3 className="text-xl md:text-2xl font-medium text-primary mb-8">
+                        <h3 className="text-xl md:text-2xl font-light text-gray-500 mb-12 max-w-2xl mx-auto">
                             A Movement of Hope, A Ministry of Transformation
                         </h3>
                     </motion.div>
@@ -32,16 +32,17 @@ export default function WelcomeSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed font-light"
+                        className="space-y-8 text-lg md:text-xl text-gray-600 leading-loose font-light max-w-3xl mx-auto"
                     >
                         <p>
                             In the heart of India&apos;s Telugu states, where 85 million people call home, countless young dreamers face walls too high to climb alone. Poverty. Discrimination. Limited English. Broken education systems. These aren&apos;t just statistics. They&apos;re stolen futures.
                         </p>
-                        <p>
-                            But here&apos;s what we believe: Every young person, regardless of caste, religion, economic background, or past circumstances, carries infinite potential. They don&apos;t need charity. They need a launchpad.
-                        </p>
-                        <div className="text-2xl md:text-3xl font-bold text-gray-900 py-4">
-                            That&apos;s <span className="text-primary italic">YESJ</span>.
+                        <div className="flex items-center gap-4 py-6">
+                            <div className="h-px bg-gray-200 flex-1"></div>
+                            <div className="text-3xl md:text-4xl font-serif font-black text-gray-900">
+                                That&apos;s <span className="text-primary italic">YESJ</span>.
+                            </div>
+                            <div className="h-px bg-gray-200 flex-1"></div>
                         </div>
                         <p>
                             Since 2015, we&apos;ve been more than a program. We&apos;ve been a revolution. A Jesuit-rooted movement that walks alongside youth from rural villages to urban slums, transforming &quot;I can&apos;t&quot; into &quot;I CAN&quot; and &quot;I WILL.&quot;
@@ -53,10 +54,10 @@ export default function WelcomeSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="pt-8"
+                        className="pt-12"
                     >
                         <Link href="/about">
-                            <Button size="lg" className="btn-premium rounded-full px-8 h-14 text-lg">
+                            <Button size="lg" className="btn-premium rounded-full px-10 h-14 text-lg font-bold shadow-xl shadow-primary/20">
                                 Discover Our Story
                             </Button>
                         </Link>

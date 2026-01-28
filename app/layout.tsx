@@ -1,6 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Outfit } from "next/font/google"
+import { Outfit, Playfair_Display } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ErrorBoundary } from "@/components/error-boundary"
 import SkipLink from "@/components/skip-link"
@@ -10,6 +10,12 @@ import { siteConfig } from "@/lib/config"
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
   display: "swap",
 })
 
@@ -117,7 +123,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} font-sans`}>
+      <body className={`${outfit.variable} ${playfair.variable} font-sans`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

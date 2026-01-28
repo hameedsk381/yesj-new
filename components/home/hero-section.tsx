@@ -91,14 +91,14 @@ export default function HeroSection() {
               className="object-cover brightness-50"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex items-center">
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 flex items-center">
               <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-4xl space-y-6">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-black uppercase tracking-widest"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest shadow-lg"
                   >
                     <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
                     YESJ Movement
@@ -108,7 +108,7 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter"
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-black text-white leading-[0.9] tracking-tight drop-shadow-xl"
                   >
                     {carouselSlides[current].tagline.split(' ').map((word, i) => (
                       <span key={i} className={i === 2 ? "text-primary italic" : ""}>{word} </span>

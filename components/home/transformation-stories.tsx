@@ -50,17 +50,17 @@ export default function TransformationStories() {
     <section className="py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16 px-4">
-          <h2 className="text-4xl font-bold tracking-tight mb-4 text-gray-900">
-            Voices of <span className="gradient-text">Transformation</span>
+          <h2 className="text-4xl md:text-5xl font-serif font-black tracking-tight mb-6 text-gray-900">
+            Voices of <span className="text-primary italic">Transformation</span>
           </h2>
-          <p className="text-xl text-gray-600 font-light">
+          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Real stories from the youth who dared to say YES to their dreams.
           </p>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
-          <div className="absolute top-0 left-0 -translate-x-4 -translate-y-4 text-primary/10">
-            <Quote className="w-32 h-32" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="absolute top-0 left-0 -translate-x-12 -translate-y-12 text-primary/5">
+            <Quote className="w-64 h-64" />
           </div>
 
           <AnimatePresence mode="wait">
@@ -70,28 +70,29 @@ export default function TransformationStories() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5 }}
-              className="grid md:grid-cols-2 gap-12 items-center bg-gray-50 rounded-[2rem] overflow-hidden shadow-2xl shadow-primary/10 border border-white"
+              className="grid md:grid-cols-2 gap-0 items-stretch bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-gray-200 border border-gray-100"
             >
-              <div className="relative h-[400px] md:h-[500px]">
+              <div className="relative h-[400px] md:h-auto min-h-[500px]">
                 <Image
                   src={stories[current].image}
                   alt={stories[current].alt}
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8 text-white">
-                  <div className="bg-primary/20 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider w-fit mb-2">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
+                  <div className="bg-white/20 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest w-fit mb-4">
                     {stories[current].program}
                   </div>
-                  <h3 className="text-3xl font-bold">{stories[current].name}, {stories[current].age}</h3>
+                  <h3 className="text-4xl font-serif font-bold text-white mb-2">{stories[current].name}, {stories[current].age}</h3>
                 </div>
               </div>
 
-              <div className="p-8 md:p-12 space-y-6">
-                <p className="text-2xl md:text-3xl font-light leading-relaxed text-gray-800 italic">
+              <div className="p-10 md:p-16 flex flex-col justify-center bg-white relative">
+                <Quote className="w-12 h-12 text-primary/20 mb-6" />
+                <p className="text-2xl md:text-3xl font-serif leading-relaxed text-gray-800 italic mb-8">
                   &quot;{stories[current].story}&quot;
                 </p>
-                <div className="h-1 w-20 bg-secondary rounded-full"></div>
+                <div className="h-1.5 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
               </div>
             </motion.div>
           </AnimatePresence>

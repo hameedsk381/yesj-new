@@ -8,7 +8,7 @@ import Link from "next/link"
 import { Calendar, User, ArrowRight, BookOpen, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default function EchoesPage() {
+export default function StoriesPage() {
   const articles = [
     {
       id: 1,
@@ -73,7 +73,7 @@ export default function EchoesPage() {
                     The YESJ Journal
                   </div>
                   <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-gray-900 leading-[0.9]">
-                    ECHOES <br /><span className="text-primary italic font-light">Magazine</span>
+                    STORIES <br /><span className="text-primary italic font-light">Magazine</span>
                   </h1>
                   <p className="text-xl text-gray-600 font-light max-w-lg leading-relaxed">
                     Captured stories, profound reflections, and the vibrant pulse of youth transformation across Andhra & Telangana.
@@ -149,7 +149,7 @@ export default function EchoesPage() {
                       {article.excerpt}
                     </p>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                      <Link href={`/echoes/${article.slug}`} className="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all">
+                      <Link href={`/stories/${article.slug}`} className="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all">
                         Dive Deeper <ArrowRight className="w-4 h-4" />
                       </Link>
                       <button className="text-gray-300 hover:text-primary"><Share2 className="w-4 h-4" /></button>

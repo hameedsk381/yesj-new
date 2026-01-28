@@ -57,7 +57,7 @@ function CounterItem({ end, label, suffix, icon, index }: any) {
         {icon}
       </div>
       <div>
-        <div className="text-4xl font-bold tracking-tight text-gray-900">
+        <div className="text-4xl md:text-5xl font-serif font-bold tracking-tight text-gray-900">
           {count.toLocaleString()}{suffix}
         </div>
         <p className="text-sm font-medium text-gray-500 uppercase tracking-wider pt-2">{label}</p>

@@ -54,7 +54,7 @@ export default function NewsletterSection() {
           className="glass-card rounded-[3.5rem] p-12 md:p-20 bg-gray-50/50 border-gray-100 text-center space-y-8"
         >
           <div className="space-y-4 max-w-2xl mx-auto">
-            <h2 id="newsletter-heading" className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900">
+            <h2 id="newsletter-heading" className="text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900">
               Join the <span className="text-secondary italic">Resonance.</span>
             </h2>
             <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed">

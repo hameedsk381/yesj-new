@@ -92,15 +92,26 @@ export default function Footer() {
         </div>
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest text-center md:text-left">
-            © {new Date().getFullYear()} Youth Empowering Service Jesuits. <br className="md:hidden" /> Crafting change in Telugu Heartlands.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <p className="text-white/40 text-xs font-bold uppercase tracking-widest">
+              © {new Date().getFullYear()} Youth Empowering Service Jesuits.
+            </p>
+            <span className="hidden md:block text-white/20">|</span>
+            <Link
+              href="https://hamathopc.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:text-white text-xs font-bold uppercase tracking-widest transition-all"
+            >
+              Built by Hamath OPC Pvt Ltd
+            </Link>
+          </div>
           <div className="flex gap-8">
             {["Privacy", "Terms", "Cookies"].map((legal) => (
               <Link
                 key={legal}
                 href={`/${legal.toLowerCase()}`}
-                className="text-white/20 hover:text-white text-[10px] font-black uppercase tracking-widest transition-all"
+                className="text-white/40 hover:text-white text-xs font-bold uppercase tracking-widest transition-all"
               >
                 {legal}
               </Link>

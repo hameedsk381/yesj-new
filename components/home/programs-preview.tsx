@@ -91,28 +91,32 @@ export default function ProgramsPreview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="group relative overflow-hidden rounded-lg border border-primary/10 transition-all hover:border-accent/30 hover:shadow-lg"
+              whileHover={{ y: -10 }}
+              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg hover:shadow-2xl transition-all duration-300"
             >
-              <div className="relative h-48 w-full overflow-hidden">
+              <div className="relative h-56 w-full overflow-hidden">
                 <Image
                   src={program.image || "/placeholder.svg"}
                   alt={program.title}
                   width={600}
                   height={400}
-                  className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <div className="p-2 bg-white/20 backdrop-blur-md rounded-lg w-fit mb-2">
+                    {program.icon}
+                  </div>
+                </div>
               </div>
-              <div className="p-5 md:p-6">
-                {program.icon}
-                <h3 className="text-xl font-light mb-2 text-primary">{program.title}</h3>
-                <p className="text-muted-foreground font-extralight text-sm md:text-base">{program.description}</p>
+              <div className="p-6 md:p-8">
+                <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-primary transition-colors">{program.title}</h3>
+                <p className="text-gray-600 font-medium leading-relaxed mb-6">{program.description}</p>
                 <Link
                   href={program.link}
-                  className="mt-4 inline-flex items-center text-sm font-light text-accent group-hover:underline"
+                  className="inline-flex items-center text-sm font-bold text-primary hover:text-secondary uppercase tracking-wider group-hover:underline decoration-2 underline-offset-4"
                 >
-                  Learn more <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
                 </Link>
               </div>
             </motion.div>
