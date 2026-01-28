@@ -96,15 +96,6 @@ export default function Footer() {
             <p className="text-white/40 text-xs font-bold uppercase tracking-widest">
               © {new Date().getFullYear()} Youth Empowering Service Jesuits.
             </p>
-            <span className="hidden md:block text-white/20">|</span>
-            <Link
-              href="https://hamathopc.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-white text-xs font-bold uppercase tracking-widest transition-all"
-            >
-              Built by Hamath OPC Pvt Ltd
-            </Link>
           </div>
           <div className="flex gap-8">
             {["Privacy", "Terms", "Cookies"].map((legal) => (
@@ -116,6 +107,15 @@ export default function Footer() {
                 {legal}
               </Link>
             ))}
+            <span className="hidden md:block text-white/20">|</span>
+            <Link
+              href="https://hamathopc.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:text-white text-xs font-bold uppercase tracking-widest transition-all"
+            >
+              Built by Hamath OPC Pvt Ltd
+            </Link>
           </div>
         </div>
       </div>
