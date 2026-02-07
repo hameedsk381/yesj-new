@@ -15,7 +15,7 @@ export default function GetInvolved() {
       buttonText: "Explore Programs",
       buttonLink: "/programs",
       image: "/website/IMG_5986.JPG",
-      color: "from-blue-600/80 to-blue-900/80"
+      color: "from-primary/90 to-primary/60"
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export default function GetInvolved() {
       buttonText: "Join the Movement",
       buttonLink: "/get-involved",
       image: "/website/IMG_8159.JPG",
-      color: "from-teal-600/80 to-teal-900/80"
+      color: "from-tertiary/90 to-tertiary/60"
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ export default function GetInvolved() {
       buttonText: "Donate Now",
       buttonLink: "/donate",
       image: "/website/IMG_5899.JPG",
-      color: "from-secondary/80 to-secondary/90"
+      color: "from-secondary/90 to-secondary/60"
     },
   ]
 

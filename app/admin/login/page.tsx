@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-white p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-white p-4">
       <div className="w-full max-w-md">
         <div className="bg-white border border-primary/10 rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+              <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded">
                 <p className="text-sm">{error}</p>
               </div>
             )}

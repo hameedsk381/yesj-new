@@ -32,12 +32,28 @@ export default function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise(r => setTimeout(r, 1500))
-    setSubmitSuccess(true)
-    reset()
-    setIsSubmitting(false)
-    setTimeout(() => setSubmitSuccess(false), 5000)
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/contacts/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to send message")
+      }
+
+      setSubmitSuccess(true)
+      reset()
+      setTimeout(() => setSubmitSuccess(false), 5000)
+    } catch (error) {
+      console.error("Submission error:", error)
+      // Optionally handle error state here
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -56,9 +72,9 @@ export default function ContactForm() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-green-500/10 border border-green-500/20 text-green-700 p-8 rounded-3xl text-center"
+          className="bg-tertiary/10 border border-tertiary/20 text-tertiary p-8 rounded-3xl text-center"
         >
-          <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-green-500" />
+          <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-tertiary" />
           <h4 className="text-2xl font-bold mb-2">Message Sent!</h4>
           <p className="font-light">Your resonance has reached us. Expect a YES soon.</p>
         </motion.div>
@@ -66,44 +82,44 @@ export default function ContactForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Full Name</label>
+              <label className="text-xs font-black uppercase tracking-widest text-muted-foreground px-4">Full Name</label>
               <input
                 {...register("name")}
                 className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
                 placeholder="Ex. Rahul Kumar"
               />
-              {errors.name && <p className="text-xs text-red-500 px-4">{errors.name.message}</p>}
+              {errors.name && <p className="text-xs text-destructive px-4">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Email Address</label>
+              <label className="text-xs font-black uppercase tracking-widest text-muted-foreground px-4">Email Address</label>
               <input
                 {...register("email")}
                 className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
                 placeholder="name@example.com"
               />
-              {errors.email && <p className="text-xs text-red-500 px-4">{errors.email.message}</p>}
+              {errors.email && <p className="text-xs text-destructive px-4">{errors.email.message}</p>}
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Subject</label>
+            <label className="text-xs font-black uppercase tracking-widest text-muted-foreground px-4">Subject</label>
             <input
               {...register("subject")}
               className="w-full h-14 bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-2xl px-6 outline-none transition-all"
               placeholder="How can we help you?"
             />
-            {errors.subject && <p className="text-xs text-red-500 px-4">{errors.subject.message}</p>}
+            {errors.subject && <p className="text-xs text-destructive px-4">{errors.subject.message}</p>}
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-400 px-4">Your Message</label>
+            <label className="text-xs font-black uppercase tracking-widest text-muted-foreground px-4">Your Message</label>
             <textarea
               {...register("message")}
               rows={5}
               className="w-full bg-white/50 border-2 border-transparent focus:border-primary focus:bg-white rounded-[2rem] p-6 outline-none transition-all resize-none"
               placeholder="Tell us about your dreams or inquiry..."
             />
-            {errors.message && <p className="text-xs text-red-500 px-4">{errors.message.message}</p>}
+            {errors.message && <p className="text-xs text-destructive px-4">{errors.message.message}</p>}
           </div>
 
           <Button

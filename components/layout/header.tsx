@@ -54,7 +54,9 @@ export default function Header() {
     <>
       <NotificationBar />
       <header
-        className={`sticky top-0 z-50 w-full backdrop-blur-md transition-all duration-500 ${scrollY > 50 ? "bg-white/80 shadow-md border-b border-gray-100" : "bg-transparent"
+        className={`sticky top-0 z-50 w-full backdrop-blur-xl transition-all duration-500 border-b ${scrollY > 20
+          ? "bg-white/90 border-gray-200/50 shadow-sm py-2"
+          : "bg-transparent border-transparent py-4"
           }`}
         role="banner"
       >
@@ -89,10 +91,12 @@ export default function Header() {
               <motion.div key={item.label} variants={itemVariants}>
                 <Link
                   href={item.href}
-                  className="text-sm font-bold tracking-tight text-gray-600 hover:text-primary transition-colors relative group"
+                  className={`text-sm font-bold tracking-tight transition-colors relative group ${scrollY > 20 ? "text-gray-600 hover:text-primary" : "text-white/90 hover:text-white"
+                    }`}
                 >
                   {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${scrollY > 20 ? "bg-primary" : "bg-white"
+                    }`}></span>
                 </Link>
               </motion.div>
             ))}
@@ -100,7 +104,7 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <Link href="/donate" className="hidden sm:block">
-              <Button className="btn-premium rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20">
+              <Button variant="secondary" className="btn-premium rounded-full px-8 h-12 font-bold shadow-lg shadow-secondary/20">
                 Donate Online
               </Button>
             </Link>
@@ -109,7 +113,7 @@ export default function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full hover:bg-primary/5 text-primary"
+                className={`rounded-full hover:bg-white/20 ${scrollY > 20 ? "text-gray-900" : "text-white"}`}
                 onClick={() => setIsMenuOpen(true)}
               >
                 <Menu className="h-6 w-6" />

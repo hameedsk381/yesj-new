@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server"
-import bcrypt from "bcryptjs"
 import { SignJWT } from "jose"
-
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-secret-key")
 
 export async function POST(req: Request) {
   try {
@@ -12,69 +9,45 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email and password are required" }, { status: 400 })
     }
 
-    // Mock user data for quick deployment without database
-    const mockUsers = [
-      {
-        id: 1,
-        emailId: "admin@yesj.in",
-        password: "$2a$10$8K1p/a0dURXAm7QiTRqUzuN0/SpuDMaM1YWefl5f6O.9C256hD/vO", // bcrypt hash for "admin123"
-        role: "admin",
-        name: "Admin User"
+    // Call FastAPI backend
+    const formData = new URLSearchParams()
+    formData.append('username', email)
+    formData.append('password', password)
+
+    const baseUrl = process.env.BACKEND_API_URL || "http://127.0.0.1:8000/api/v1"
+    const backendUrl = `${baseUrl}/login/access-token`
+
+    // Note: In production, use env var for backend URL
+    const res = await fetch(backendUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      {
-        id: 2,
-        emailId: "user@yesj.in",
-        password: "$2a$10$8K1p/a0dURXAm7QiTRqUzuN0/SpuDMaM1YWefl5f6O.9C256hD/vO", // bcrypt hash for "admin123"
-        role: "member",
-        name: "Regular User"
-      }
-    ];
+      body: formData
+    })
 
-    // Find user by email
-    const user = mockUsers.find(u => u.emailId === email);
-
-    if (!user) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
-    }
-
-    // Check if admin role is required (for admin login)
-    if (requireAdmin && user.role !== 'admin') {
-      return NextResponse.json({ error: "Access denied. Admin privileges required." }, { status: 403 })
-    }
-
-    // Check if user has a password set
-    if (!user.password) {
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}))
       return NextResponse.json(
-        { error: "Account exists but no password set. Please contact admin." },
-        { status: 401 }
+        { error: errorData.detail || "Invalid credentials" },
+        { status: res.status }
       )
     }
 
-    // Verify password
-    const isValid = await bcrypt.compare(password, user.password)
+    const data = await res.json()
+    const token = data.access_token
 
-    if (!isValid) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
-    }
-
-    // Generate JWT
-    const token = await new SignJWT({
-      id: user.id,
-      email: user.emailId,
-      role: user.role
-    })
-      .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("24h")
-      .sign(JWT_SECRET)
+    // Decode token to check role if needed (or trust backend logic if specific endpoint used)
+    // Here we can just proceed as the token contains the role and middleware will verify it.
 
     // Create response with cookie
-    const response = NextResponse.json({ success: true, role: user.role })
+    const response = NextResponse.json({ success: true })
 
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24, // 24 hours
+      maxAge: 60 * 60 * 24 * 30, // 30 days (consistent with backend)
       path: "/",
     })
 

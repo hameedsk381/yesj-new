@@ -26,7 +26,7 @@ export default function ContactPage() {
       title: "Office Hours",
       hours: "Mon - Sat: 9:00 AM - 6:00 PM IST",
       note: "Sunday & Holidays: Closed",
-      icon: <Clock className="w-6 h-6 text-teal-500" />,
+      icon: <Clock className="w-6 h-6 text-tertiary" />,
       delay: 0.3
     }
   ]

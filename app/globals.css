@@ -13,9 +13,12 @@
     --primary: 207 98% 33%;
     /* Brand Blue #025ca8 */
     --primary-foreground: 210 40% 98%;
-    --secondary: 0 70% 35%;
-    /* Maroon */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 358 85% 67%;
+    /* Coral Pink #f26669 */
+    --secondary-foreground: 222 47% 11%;
+    --tertiary: 175 84% 32%;
+    /* Teal */
+    --tertiary-foreground: 210 40% 98%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222 47% 11%;
     --muted: 210 40% 96.1%;
@@ -37,9 +40,12 @@
     --popover-foreground: 210 40% 98%;
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47% 11.2%;
-    --secondary: 0 70% 35%;
-    /* Maroon */
+    --secondary: 358 85% 67%;
+    /* Coral Pink */
     --secondary-foreground: 210 40% 98%;
+    --tertiary: 175 84% 32%;
+    /* Teal */
+    --tertiary-foreground: 210 40% 98%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -80,13 +86,22 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
   }
 
+  /* Utility for better typography balance manually */
+  .text-balance {
+    text-wrap: balance;
+  }
+
   .btn-premium {
-    @apply relative overflow-hidden transition-all duration-300 active:scale-95 hover:shadow-lg hover:shadow-primary/20;
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20;
   }
 
   .hero-gradient {
     background: radial-gradient(circle at top left, hsla(200, 85%, 37%, 0.15), transparent),
       radial-gradient(circle at bottom right, hsla(350, 80%, 68%, 0.15), transparent);
+  }
+
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   }
 }
 

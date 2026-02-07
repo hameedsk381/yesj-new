@@ -20,30 +20,26 @@ export default function NewsletterPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) {
-      router.push("/admin/login")
-      return
-    }
+    fetchNewsletters()
+  }, [])
 
-    fetchNewsletters(token)
-  }, [router])
-
-  const fetchNewsletters = async (token: string) => {
+  const fetchNewsletters = async () => {
     try {
-      const response = await fetch("/api/admin/newsletters", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
+      const response = await fetch("/api/admin/newsletters")
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch newsletters")
+        throw new Error("Failed to fetch newsletters")
       }
 
-      setNewsletters(result.data)
+      const data = Array.isArray(result) ? result : (result.data || [])
+      const mappedData = data.map((item: any) => ({
+        id: item.id,
+        email: item.email,
+        subscribedAt: new Date(item.subscribed_at || item.createdAt || item.subscribedAt)
+      }))
+
+      setNewsletters(mappedData)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to load data")
     } finally {
@@ -54,23 +50,16 @@ export default function NewsletterPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this subscriber?")) return
 
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
-      const response = await fetch(`/api/admin/newsletters?id=${id}`, {
+      const response = await fetch(`/api/admin/newsletters/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       })
 
       if (!response.ok) {
         throw new Error("Failed to delete subscriber")
       }
 
-      // Refresh the list
-      fetchNewsletters(token)
+      fetchNewsletters()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete subscriber")
     }

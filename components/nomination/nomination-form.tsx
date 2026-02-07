@@ -85,20 +85,20 @@ export default function NominationForm() {
     try {
       const formData = new FormData()
       formData.append("name", data.name)
-      formData.append("unitName", data.unitName)
-      formData.append("contestingFor", data.contestingFor)
-      formData.append("educationQualification", data.educationQualification)
-      formData.append("nocFile", data.nocFile[0])
+      formData.append("unit_name", data.unitName)
+      formData.append("contesting_for", data.contestingFor)
+      formData.append("education_qualification", data.educationQualification)
+      formData.append("noc_file", data.nocFile[0])
 
-      const response = await fetch("/api/nomination", {
+      const response = await fetch("http://localhost:8000/api/v1/nominations/", {
         method: "POST",
         body: formData,
       })
 
       const result = await response.json()
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to submit nomination")
+      if (!response.ok) {
+        throw new Error(result.detail || "Failed to submit nomination")
       }
 
       setIsSubmitted(true)
@@ -122,7 +122,7 @@ export default function NominationForm() {
         className="text-center py-12"
       >
         <div className="flex justify-center mb-6">
-          <CheckCircle className="h-16 w-16 text-green-500" />
+          <CheckCircle className="h-16 w-16 text-tertiary" />
         </div>
         <h2 className="text-2xl font-light text-primary mb-4">
           Nomination Submitted Successfully!
@@ -143,7 +143,7 @@ export default function NominationForm() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-primary/20 rounded p-6 space-y-3">
+      <div className="bg-primary/5 border border-primary/20 rounded p-6 space-y-3">
         <p className="text-sm font-medium text-primary">
           ⏰ The last date of nomination form submission is <strong>18-11-25</strong>.
         </p>
@@ -155,7 +155,7 @@ export default function NominationForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid gap-2">
           <label htmlFor="name" className="text-sm font-light leading-none">
-            Name <span className="text-red-500">*</span>
+            Name <span className="text-destructive">*</span>
           </label>
           <input
             {...register("name")}
@@ -165,13 +165,13 @@ export default function NominationForm() {
             placeholder="Enter your full name"
           />
           {errors.name && (
-            <p className="text-xs text-red-600">{errors.name.message}</p>
+            <p className="text-xs text-destructive">{errors.name.message}</p>
           )}
         </div>
 
         <div className="grid gap-2">
           <label htmlFor="unitName" className="text-sm font-light leading-none">
-            Unit Name <span className="text-red-500">*</span>
+            Unit Name <span className="text-destructive">*</span>
           </label>
           <select
             {...register("unitName")}
@@ -186,13 +186,13 @@ export default function NominationForm() {
             ))}
           </select>
           {errors.unitName && (
-            <p className="text-xs text-red-600">{errors.unitName.message}</p>
+            <p className="text-xs text-destructive">{errors.unitName.message}</p>
           )}
         </div>
 
         <div className="grid gap-3">
           <label className="text-sm font-light leading-none">
-            Contesting For <span className="text-red-500">*</span>
+            Contesting For <span className="text-destructive">*</span>
           </label>
           <div className="space-y-2">
             {[
@@ -221,7 +221,7 @@ export default function NominationForm() {
             ))}
           </div>
           {errors.contestingFor && (
-            <p className="text-xs text-red-600">
+            <p className="text-xs text-destructive">
               {errors.contestingFor.message}
             </p>
           )}
@@ -229,7 +229,7 @@ export default function NominationForm() {
 
         <div className="grid gap-2">
           <label htmlFor="nocFile" className="text-sm font-light leading-none">
-            NOC from the Animator <span className="text-red-500">*</span>
+            NOC from the Animator <span className="text-destructive">*</span>
           </label>
           <div className="relative">
             <input
@@ -258,7 +258,7 @@ export default function NominationForm() {
             Supported formats: PDF, DOC, DOCX, JPG, PNG
           </p>
           {errors.nocFile && (
-            <p className="text-xs text-red-600">
+            <p className="text-xs text-destructive">
               {typeof errors.nocFile.message === 'string' ? errors.nocFile.message : 'Invalid file'}
             </p>
           )}

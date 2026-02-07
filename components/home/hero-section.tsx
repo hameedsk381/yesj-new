@@ -91,7 +91,10 @@ export default function HeroSection() {
               className="object-cover brightness-50"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 flex items-center">
+            {/* Grain Texture Overlay */}
+            <div className="absolute inset-0 bg-grain mix-blend-overlay opacity-20 pointer-events-none z-[1]"></div>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 flex items-center z-10">
               <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-4xl space-y-6">
                   <motion.div
@@ -157,17 +160,24 @@ export default function HeroSection() {
               key={i}
               onClick={() => setCurrent(i)}
               className={`h-1 transition-all rounded-full ${i === current ? "w-12 bg-primary" : "w-6 bg-white/20 hover:bg-white/40"}`}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
         <div className="flex gap-2">
-          <button onClick={prevSlide} className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+          <button onClick={prevSlide} aria-label="Previous slide" className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
             <ChevronLeft className="w-6 h-6" />
           </button>
-          <button onClick={nextSlide} className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
+          <button onClick={nextSlide} aria-label="Next slide" className="w-12 h-12 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-all">
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 animate-bounce">
+        <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-bold">Scroll</span>
+        <div className="w-[1px] h-8 bg-gradient-to-b from-white/0 via-white/50 to-white/0"></div>
       </div>
     </section>
   )

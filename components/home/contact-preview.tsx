@@ -88,17 +88,17 @@ export default function ContactPreview() {
             >
               <div className="flex flex-wrap gap-2">
                 <Link href="/volunteer">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
                     Volunteer
                   </Button>
                 </Link>
                 <Link href="/donate">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
                     Donate
                   </Button>
                 </Link>
                 <Link href="/partners">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
                     Partner With Us
                   </Button>
                 </Link>

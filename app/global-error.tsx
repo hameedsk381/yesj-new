@@ -27,7 +27,7 @@ export default function GlobalError({
               </button>
               <button
                 onClick={() => (window.location.href = "/")}
-                className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-pink-50 text-secondary transition-colors ml-4"
+                className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-secondary/5 text-secondary transition-colors ml-4"
               >
                 Go Home
               </button>

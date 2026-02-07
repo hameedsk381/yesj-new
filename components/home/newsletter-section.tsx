@@ -16,7 +16,7 @@ export default function NewsletterSection() {
     setMessage(null)
 
     try {
-      const response = await fetch("/api/newsletter", {
+      const response = await fetch("http://localhost:8000/api/v1/newsletters/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,8 +26,8 @@ export default function NewsletterSection() {
 
       const result = await response.json()
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to subscribe")
+      if (!response.ok) {
+        throw new Error(result.detail || "Failed to subscribe")
       }
 
       setMessage({ type: "success", text: "Successfully joined the resonance!" })
@@ -96,7 +96,7 @@ export default function NewsletterSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   role="alert"
-                  className={`text-sm mt-4 font-bold ${message.type === "success" ? "text-green-600" : "text-red-500"
+                  className={`text-sm mt-4 font-bold ${message.type === "success" ? "text-tertiary" : "text-destructive"
                     }`}
                 >
                   {message.text}

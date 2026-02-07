@@ -6,6 +6,7 @@ import { ErrorBoundary } from "@/components/error-boundary"
 import SkipLink from "@/components/skip-link"
 import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
+import ChatWidget from "@/components/chat/chat-widget"
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -133,6 +134,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <ErrorBoundary>
             {children}
+            <ChatWidget />
           </ErrorBoundary>
         </ThemeProvider>
       </body>

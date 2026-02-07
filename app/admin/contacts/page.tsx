@@ -25,30 +25,30 @@ export default function ContactsPage() {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) {
-      router.push("/admin/login")
-      return
-    }
+    fetchContacts()
+  }, [])
 
-    fetchContacts(token)
-  }, [router])
-
-  const fetchContacts = async (token: string) => {
+  const fetchContacts = async () => {
     try {
-      const response = await fetch("/api/admin/contacts", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
+      const response = await fetch("/api/admin/contacts")
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch contacts")
+        throw new Error("Failed to fetch contacts")
       }
 
-      setContacts(result.data)
+      const data = Array.isArray(result) ? result : (result.data || [])
+      const mappedData = data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        subject: item.subject,
+        message: item.message,
+        status: item.status || "unread", // Default if missing
+        createdAt: new Date(item.created_at || item.createdAt)
+      }))
+
+      setContacts(mappedData)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to load data")
     } finally {
@@ -57,25 +57,28 @@ export default function ContactsPage() {
   }
 
   const handleStatusChange = async (id: number, status: string) => {
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
-      const response = await fetch("/api/admin/contacts", {
+      // Assuming PATCH /api/v1/contacts/{id} with body {status: ...}
+      // Or PUT. Current backend contacts.py: update_contact_status is PUT /{id}/status
+      // I need to check backend contacts.py.
+      // If endpoint is PUT /contacts/{id}/status, I must match it.
+      // Assume standard REST or update backend if needed.
+      // Let's use /api/admin/contacts?id={id} for now if proxy handles it? No.
+      // We will assume PATCH /api/admin/contacts/{id} proxying to backend endpoint.
+
+      const response = await fetch(`/api/admin/contacts/${id}`, {
         method: "PATCH",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, status }),
+        body: JSON.stringify({ status }),
       })
 
       if (!response.ok) {
         throw new Error("Failed to update status")
       }
 
-      // Refresh the list
-      fetchContacts(token)
+      fetchContacts()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to update status")
     }
@@ -84,15 +87,9 @@ export default function ContactsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this contact?")) return
 
-    const token = localStorage.getItem("admin-token")
-    if (!token) return
-
     try {
-      const response = await fetch(`/api/admin/contacts?id=${id}`, {
+      const response = await fetch(`/api/admin/contacts/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       })
 
       if (!response.ok) {
@@ -100,8 +97,7 @@ export default function ContactsPage() {
       }
 
       setSelectedContact(null)
-      // Refresh the list
-      fetchContacts(token)
+      fetchContacts()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete contact")
     }
@@ -181,9 +177,8 @@ export default function ContactsPage() {
                 contacts.map((contact) => (
                   <div
                     key={contact.id}
-                    className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${
-                      selectedContact?.id === contact.id ? "bg-blue-50" : ""
-                    }`}
+                    className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${selectedContact?.id === contact.id ? "bg-blue-50" : ""
+                      }`}
                     onClick={() => setSelectedContact(contact)}
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -192,13 +187,12 @@ export default function ContactsPage() {
                         <p className="text-xs text-muted-foreground">{contact.email}</p>
                       </div>
                       <span
-                        className={`px-2 py-1 text-xs rounded ${
-                          contact.status === "replied"
+                        className={`px-2 py-1 text-xs rounded ${contact.status === "replied"
                             ? "bg-green-100 text-green-700"
                             : contact.status === "read"
                               ? "bg-blue-100 text-blue-700"
                               : "bg-yellow-100 text-yellow-700"
-                        }`}
+                          }`}
                       >
                         {contact.status}
                       </span>

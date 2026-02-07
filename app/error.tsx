@@ -25,15 +25,15 @@ export default function Error({
           </button>
           <button
             onClick={() => (window.location.href = "/")}
-            className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-pink-50 text-secondary transition-colors ml-4"
+            className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-secondary/5 text-secondary transition-colors ml-4"
           >
             Go Home
           </button>
         </div>
         {process.env.NODE_ENV === "development" && (
-          <div className="mt-8 p-4 bg-red-50 border border-red-200 rounded text-left">
-            <p className="text-sm text-red-800 font-mono">{error.message}</p>
-            {error.digest && <p className="text-xs text-red-600 mt-2">Error ID: {error.digest}</p>}
+          <div className="mt-8 p-4 bg-destructive/10 border border-destructive/20 rounded text-left">
+            <p className="text-sm text-destructive font-mono">{error.message}</p>
+            {error.digest && <p className="text-xs text-destructive mt-2">Error ID: {error.digest}</p>}
           </div>
         )}
       </div>

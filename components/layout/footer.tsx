@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Instagram, Facebook, Mail, Phone, Twitter, Youtube, Linkedin, Send } from "lucide-react"
 import { siteConfig } from "@/lib/config"
+import NewsletterForm from "@/components/shared/newsletter-form"
 
 export default function Footer() {
   return (
@@ -64,15 +65,8 @@ export default function Footer() {
           <div className="lg:col-span-5 space-y-8">
             <h4 className="text-xs font-black uppercase tracking-widest text-secondary">Stay in Resonance</h4>
             <p className="text-white/40 text-sm font-light">Join 10,000+ subscribers and get the latest from the YESJ movement.</p>
-            <div className="relative flex">
-              <input
-                type="email"
-                placeholder="Your email address..."
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 h-16 outline-none focus:border-primary transition-all pr-20"
-              />
-              <button className="absolute right-2 top-2 bottom-2 w-12 bg-primary text-white rounded-xl flex items-center justify-center hover:bg-primary/80 transition-all">
-                <Send className="w-5 h-5" />
-              </button>
+            <div className="relative">
+              <NewsletterForm />
             </div>
             <div className="pt-4 space-y-4">
               <a href={`mailto:${siteConfig.contact.email}`} className="flex items-center gap-3 text-white/40 hover:text-white transition-colors group">

@@ -192,18 +192,44 @@ export default function RegistrationForm() {
     setSubmitError(null)
 
     try {
-      const response = await fetch("/api/register", {
+      // Transform data to snake_case for backend
+      const payload = {
+        application_type: data.applicationType,
+        name: data.name,
+        gender: data.gender,
+        registration_no: data.registrationNo,
+        course: data.course,
+        age: parseInt(data.age),
+        instagram_id: data.instagramId,
+        mobile_no: data.mobileNo,
+        whatsapp_no: data.whatsappNo,
+        email_id: data.emailId,
+        religion: data.religion,
+        address: data.address,
+        skills: data.skills,
+        other_skills: data.otherSkills,
+        event_experience: data.eventExperience,
+        just_society_definition: data.justSocietyDefinition,
+        communication_example: data.communicationExample,
+        yesj_vision: data.yesjVision,
+        leadership_position: data.leadershipPosition,
+        declaration: data.declaration,
+        additional_message: data.additionalMessage,
+        password: data.password
+      }
+
+      const response = await fetch("http://localhost:8000/api/v1/registrations/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       })
 
       const result = await response.json()
 
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to submit registration")
+      if (!response.ok) {
+        throw new Error(result.detail || "Failed to submit registration")
       }
 
       console.log("Registration successful:", result)
@@ -251,7 +277,7 @@ export default function RegistrationForm() {
   return (
     <FormProvider {...methods}>
       {showRestorePrompt && (
-        <div className="mb-6 p-4 bg-blue-50 border border-primary/20 rounded">
+        <div className="mb-6 p-4 bg-primary/5 border border-primary/20 rounded">
           <p className="text-sm text-primary mb-3">
             We found a saved draft of your registration. Would you like to continue where you left off?
           </p>
@@ -306,7 +332,7 @@ export default function RegistrationForm() {
         </AnimatePresence>
 
         {submitError && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded">
             <p className="text-sm">{submitError}</p>
           </div>
         )}
@@ -318,7 +344,7 @@ export default function RegistrationForm() {
               variant="outline"
               onClick={goToPreviousStep}
               disabled={isSubmitting}
-              className="rounded-none border-primary hover:bg-blue-50 text-primary"
+              className="rounded-none border-primary hover:bg-primary/5 text-primary"
             >
               Previous
             </Button>

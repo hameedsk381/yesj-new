@@ -23,7 +23,7 @@ export default function PartnersPage() {
     },
     {
       title: "NGOs & Community",
-      icon: <Handshake className="w-8 h-8 text-teal-500" />,
+      icon: <Handshake className="w-8 h-8 text-tertiary" />,
       items: ["Joint Implementation", "Resource Sharing", "Network Expansion", "Best Practice Exchange"],
       delay: 0.3
     }

@@ -36,7 +36,7 @@ export default function VolunteerPage() {
       color: "pink"
     },
     {
-      icon: <Gift className="w-8 h-8 text-teal-500" />,
+      icon: <Gift className="w-8 h-8 text-tertiary" />,
       title: "TREASURE",
       subtitle: "Financial Support",
       description: "Your financial gifts power our infrastructure and provide scholarships to those in need.",
@@ -49,7 +49,7 @@ export default function VolunteerPage() {
       color: "teal"
     },
     {
-      icon: <Backpack className="w-8 h-8 text-orange-500" />,
+      icon: <Backpack className="w-8 h-8 text-secondary" />,
       title: "TESTIMONY",
       subtitle: "Be an Ambassador",
       description: "Use your voice to spread the mission. Become a digital ambassador for youth empowerment.",

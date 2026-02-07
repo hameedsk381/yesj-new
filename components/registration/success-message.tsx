@@ -18,14 +18,14 @@ export default function SuccessMessage({ passkeyRegistered = false }: SuccessMes
       className="text-center py-12"
     >
       <div className="flex justify-center mb-6">
-        <CheckCircle className="h-16 w-16 text-green-500" />
+        <CheckCircle className="h-16 w-16 text-tertiary" />
       </div>
       <h2 className="text-2xl font-light text-primary mb-4">Application Submitted Successfully!</h2>
       <p className="text-muted-foreground max-w-md mx-auto mb-4">
         Thank you for applying to YESJ. Your application has been received and is being processed.
       </p>
       {passkeyRegistered ? (
-        <div className="flex items-center justify-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded px-4 py-2 max-w-md mx-auto mb-8">
+        <div className="flex items-center justify-center gap-2 text-sm text-tertiary bg-tertiary/10 border border-tertiary/20 rounded px-4 py-2 max-w-md mx-auto mb-8">
           <Fingerprint className="h-4 w-4" />
           <span>Biometric login enabled! You can now login with your fingerprint or face.</span>
         </div>
@@ -41,7 +41,7 @@ export default function SuccessMessage({ passkeyRegistered = false }: SuccessMes
           </Button>
         </Link>
         <Link href="/">
-          <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+          <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
             Return to Home
           </Button>
         </Link>

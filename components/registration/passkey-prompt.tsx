@@ -78,7 +78,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                 className="text-center py-12"
             >
                 <div className="flex justify-center mb-6">
-                    <CheckCircle className="h-16 w-16 text-green-500" />
+                    <CheckCircle className="h-16 w-16 text-tertiary" />
                 </div>
                 <h2 className="text-2xl font-light text-primary mb-4">Biometric Login Enabled!</h2>
                 <p className="text-muted-foreground max-w-md mx-auto">

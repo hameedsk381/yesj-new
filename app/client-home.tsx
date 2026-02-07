@@ -4,7 +4,6 @@ import dynamic from "next/dynamic"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import HeroSection from "@/components/home/hero-section"
-import NotificationBar from "@/components/layout/notification-bar"
 import WelcomeSection from "@/components/home/welcome-section"
 
 const ImpactCounter = dynamic(() => import("@/components/home/impact-counter"))

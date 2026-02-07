@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { motion } from "framer-motion"
@@ -7,53 +8,35 @@ import Image from "next/image"
 import Link from "next/link"
 import { Calendar, User, ArrowRight, BookOpen, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import NewsletterForm from "@/components/shared/newsletter-form"
 
 export default function StoriesPage() {
-  const articles = [
-    {
-      id: 1,
-      title: "Radical Love: The Heart of the YESJ Mission",
-      excerpt: "Exploring the Ignatian roots of our service and how it transforms youth lives today.",
-      date: "Oct 10, 2024",
-      author: "Fr. Balaswamy SJ",
-      category: "Philosophy",
-      image: "/website/IMG_5899.JPG",
-      slug: "radical-love",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "How Summer Shapes Changed My Life",
-      excerpt: "A personal story of a student from a remote village who found her voice through English immersion.",
-      date: "Sep 25, 2024",
-      author: "Anitha K.",
-      category: "Testimonials",
-      image: "/website/IMG_6787.JPG",
-      slug: "summer-shapes-life-change"
-    },
-    {
-      id: 3,
-      title: "From Dropout to Welder: The MUST Success",
-      excerpt: "Deep dive into our vocational training programs and the impact on local employment rates.",
-      date: "Aug 15, 2024",
-      author: "MUST Faculty",
-      category: "Impact",
-      image: "/website/IMG_5986.JPG",
-      slug: "must-success-story"
-    },
-    {
-      id: 4,
-      title: "YY 2025: A Symphony of Youth Dreams",
-      excerpt: "Highlights from the biggest youth festival in Secunderabad. Celebrating talent and vision.",
-      date: "Jan 30, 2025",
-      author: "YESJ Echoes",
-      category: "Events",
-      image: "/website/IMG_8204.JPG",
-      slug: "yy-2025-highlights"
+  const [stories, setStories] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/stories/")
+        if (response.ok) {
+          const data = await response.json()
+          setStories(data)
+        }
+      } catch (error) {
+        console.error("Failed to fetch stories:", error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  ]
+
+    fetchStories()
+  }, [])
 
   const categories = ["All", "Philosophy", "Impact", "Events", "Testimonials", "Announcements"]
+
+  // In a real app, 'featured' logic would be handled by backend or filtered here
+  const featuredStory = stories.find(s => s.featured) || stories[0]
+  const otherStories = stories.filter(s => s.id !== featuredStory?.id)
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -88,21 +71,33 @@ export default function StoriesPage() {
                   </div>
                 </motion.div>
               </div>
-              <div className="lg:w-1/2 relative">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white"
-                >
-                  <Image src="/website/IMG_8233.JPG" alt="Echoes Cover" fill className="object-cover" />
-                  <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 via-black/20 to-transparent text-white">
-                    <h2 className="text-3xl font-bold mb-4">The Centennial Edition</h2>
-                    <p className="text-white/70 font-light mb-6">Celebrating a century of radical love and student leadership.</p>
-                    <Link href="#" className="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all">
-                      Read Cover Story <ArrowRight className="w-4 h-4" />
-                    </Link>
+
+              <div className="lg:w-1/2 relative hidden lg:block">
+                {featuredStory ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white"
+                  >
+                    <Image
+                      src={featuredStory.image_path ? `http://localhost:8000/${featuredStory.image_path}` : "/placeholder.svg"}
+                      alt={featuredStory.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 via-black/20 to-transparent text-white">
+                      <h2 className="text-3xl font-bold mb-4">{featuredStory.title}</h2>
+                      <p className="text-white/70 font-light mb-6 line-clamp-2">{featuredStory.excerpt}</p>
+                      <Link href={`/stories/${featuredStory.slug}`} className="inline-flex items-center gap-2 text-secondary font-bold hover:gap-4 transition-all">
+                        Read Cover Story <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <div className="h-[600px] w-full rounded-[4rem] bg-gray-200 flex items-center justify-center border-[16px] border-white text-gray-400">
+                    No featured story
                   </div>
-                </motion.div>
+                )}
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-[3rem] -z-10 blur-2xl opacity-20"></div>
               </div>
             </div>
@@ -110,9 +105,9 @@ export default function StoriesPage() {
         </section>
 
         {/* Categories Bar */}
-        <section className="sticky top-20 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <section className="sticky top-20 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-100 py-4">
           <div className="container mx-auto px-6">
-            <div className="flex overflow-x-auto no-scrollbar py-4 gap-8 justify-start lg:justify-center">
+            <div className="flex overflow-x-auto no-scrollbar gap-8 justify-start lg:justify-center">
               {categories.map((cat, i) => (
                 <button key={i} className={`text-sm font-bold uppercase tracking-widest whitespace-nowrap transition-colors ${i === 0 ? "text-primary border-b-2 border-primary pb-1" : "text-gray-400 hover:text-gray-600"}`}>
                   {cat}
@@ -125,39 +120,54 @@ export default function StoriesPage() {
         {/* Articles Grid */}
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {articles.map((article) => (
-                <article key={article.id} className="group cursor-pointer">
-                  <div className="relative h-[400px] mb-8 overflow-hidden rounded-[3rem] shadow-lg">
-                    <Image src={article.image} alt={article.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
-                    <div className="absolute top-8 left-8">
-                      <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
-                        {article.category}
-                      </span>
-                    </div>
+            {isLoading ? (
+              <div className="text-center py-20 text-gray-400">Loading stories...</div>
+            ) : (
+              <>
+                {stories.length === 0 ? (
+                  <div className="text-center py-20 text-gray-500">No stories published yet.</div>
+                ) : (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    {otherStories.map((article) => (
+                      <article key={article.id} className="group cursor-pointer">
+                        <div className="relative h-[400px] mb-8 overflow-hidden rounded-[3rem] shadow-lg border border-gray-100">
+                          <Image
+                            src={article.image_path ? `http://localhost:8000/${article.image_path}` : "/placeholder.svg"}
+                            alt={article.title}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                          <div className="absolute top-8 left-8">
+                            <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
+                              {article.category}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="space-y-4 px-4">
+                          <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {new Date(article.created_at).toLocaleDateString()}</span>
+                            <span className="flex items-center gap-1"><User className="w-3 h-3" /> {article.author}</span>
+                          </div>
+                          <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
+                            {article.title}
+                          </h3>
+                          <p className="text-gray-500 font-light leading-relaxed line-clamp-2">
+                            {article.excerpt}
+                          </p>
+                          <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                            <Link href={`/stories/${article.slug}`} className="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all">
+                              Dive Deeper <ArrowRight className="w-4 h-4" />
+                            </Link>
+                            <button className="text-gray-300 hover:text-primary"><Share2 className="w-4 h-4" /></button>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
                   </div>
-                  <div className="space-y-4 px-4">
-                    <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
-                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {article.date}</span>
-                      <span className="flex items-center gap-1"><User className="w-3 h-3" /> {article.author}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-500 font-light leading-relaxed line-clamp-2">
-                      {article.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                      <Link href={`/stories/${article.slug}`} className="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all">
-                        Dive Deeper <ArrowRight className="w-4 h-4" />
-                      </Link>
-                      <button className="text-gray-300 hover:text-primary"><Share2 className="w-4 h-4" /></button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+                )}
+              </>
+            )}
 
             <div className="mt-24 text-center">
               <Button variant="outline" className="rounded-full px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
@@ -178,14 +188,10 @@ export default function StoriesPage() {
                 <h2 className="text-4xl md:text-6xl font-bold">Never miss <span className="text-primary italic">the Resonance.</span></h2>
                 <p className="text-xl text-white/60 font-light">Get the digital edition of Echoes delivered straight to your inbox every month.</p>
                 <form className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="flex-1 bg-white/10 border border-white/20 rounded-full px-8 h-16 outline-none focus:border-primary transition-all backdrop-blur-md"
-                  />
-                  <Button className="bg-primary text-white px-8 rounded-full h-16 font-bold shadow-xl border-none">
-                    Subscribe Now
-                  </Button>
+                  {/* Reuse/Include Newsletter Form Component Here */}
+                  <div className="w-full">
+                    <NewsletterForm />
+                  </div>
                 </form>
                 <p className="text-xs text-white/40">We respect your privacy. Unsubscribe at any time.</p>
               </div>

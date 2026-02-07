@@ -38,16 +38,34 @@ export default function RegistrationsPage() {
 
   const fetchRegistrations = async () => {
     try {
-      // No token needed - cookie is sent automatically
       const response = await fetch("/api/admin/registrations")
-
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch registrations")
+        throw new Error("Failed to fetch registrations")
       }
 
-      setRegistrations(result.data)
+      // Backend returns array directly. Map to camelCase interface
+      const data = Array.isArray(result) ? result : (result.data || [])
+      const mappedData = data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        emailId: item.email_id || item.emailId,
+        mobileNo: item.mobile_no || item.mobileNo,
+        whatsappNo: item.whatsapp_no || item.whatsappNo,
+        applicationType: item.application_type || item.applicationType,
+        gender: item.gender,
+        age: item.age?.toString(),
+        course: item.course,
+        registrationNo: item.registration_no || item.registrationNo,
+        religion: item.religion,
+        address: item.address,
+        unitName: item.unit_name,
+        registrationId: item.id.toString(), // Approximating registrationId if not in backend yet
+        createdAt: new Date(item.created_at || item.createdAt)
+      }))
+
+      setRegistrations(mappedData)
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to load data")
     } finally {
@@ -59,7 +77,7 @@ export default function RegistrationsPage() {
     if (!confirm("Are you sure you want to delete this registration?")) return
 
     try {
-      const response = await fetch(`/api/admin/registrations?id=${id}`, {
+      const response = await fetch(`/api/admin/registrations/${id}`, {
         method: "DELETE",
       })
 
@@ -67,7 +85,6 @@ export default function RegistrationsPage() {
         throw new Error("Failed to delete registration")
       }
 
-      // Refresh the list
       fetchRegistrations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete registration")

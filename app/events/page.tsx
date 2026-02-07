@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { motion, AnimatePresence } from "framer-motion"
@@ -29,51 +29,39 @@ export default function EventsPage() {
   })
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list')
 
-  const allEvents: Event[] = [
-    {
-      date: "2026-01-29",
-      title: "YY 2026: YESJ Yuvotsavaalu",
-      description: "Our flagship youth festival! A week of collective vision building, cultural celebrating, and leadership development.",
-      location: "Secunderabad",
-      fee: "Free for members",
-      deadline: "Jan 15, 2026",
-      type: "cultural",
-      image: "/website/IMG_8204.JPG"
-    },
-    {
-      date: "2025-05-15",
-      title: "Summer Shapes 2025 Batch-I",
-      description: "Residential English immersion program begins for Batch-I. Transform your communication and confidence.",
-      location: "Hyderabad",
-      fee: "Zero Cost",
-      deadline: "April 30, 2025",
-      type: "camp",
-      image: "/website/IMG_6787.JPG"
-    },
-    {
-      date: "2025-06-10",
-      title: "O GOD Orientation",
-      description: "A two-day spiritual retreat to strengthen faith and personal connection with God.",
-      location: "Vijayawada",
-      fee: "Contribution Based",
-      deadline: "May 25, 2025",
-      type: "dialogue",
-      image: "/website/IMG_5899.JPG"
-    },
-    {
-      date: "2025-08-12",
-      title: "Regional MAGIC Youth Summit",
-      description: "Student leaders from across Telugu states gather to discuss social action and campus transformation.",
-      location: "Visakhapatnam",
-      fee: "500",
-      deadline: "July 20, 2025",
-      type: "conference",
-      image: "/website/IMG_5986.JPG"
+  const [events, setEvents] = useState<Event[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/events/")
+        if (response.ok) {
+          const data = await response.json()
+          const mappedEvents = data.map((e: any) => ({
+            date: e.date,
+            title: e.title,
+            description: e.description,
+            location: e.location,
+            fee: e.fee,
+            deadline: e.deadline,
+            type: e.type,
+            image: e.image_path ? `http://localhost:8000/${e.image_path}` : "/placeholder.svg"
+          }))
+          setEvents(mappedEvents)
+        }
+      } catch (error) {
+        console.error("Failed to fetch events:", error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  ]
+
+    fetchEvents()
+  }, [])
 
   const filteredEvents = useMemo(() => {
-    return allEvents.filter((event) => {
+    return events.filter((event) => {
       const eventDate = new Date(event.date)
       const eventMonth = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}`
 
@@ -86,7 +74,7 @@ export default function EventsPage() {
 
       return locationMatch && monthMatch && typeMatch
     })
-  }, [filters])
+  }, [filters, events])
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { motion, AnimatePresence } from "framer-motion"
@@ -13,44 +13,28 @@ export default function GalleryPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
-  const recentImages = [
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Whatsp%20Image%202025-05-18%20at%204.58.11%20PM-tgCf7upklaBi6FE6Tryb4wOsB3jtlF.jpeg",
-      alt: "YESJ Members with Indian Flag",
-      description: "Celebrating patriotism with the Indian flag.",
-      span: "md:col-span-2 md:row-span-2"
-    },
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%20205-05-18%20at%204.58.12%20PM-S6UFLR9WfDNY2GYgbyHyoFZPf0nLb1.jpeg",
-      alt: "YESJ Women's Chapter Activity",
-      description: "Women's chapter educational workshop.",
-      span: "col-span-1"
-    },
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%202025-05-18%20at%204.58.14%20PM-YG2rNq7sDeF58VRiPd4Y2L5djd3zuk.jpeg",
-      alt: "YESJ Conference Participants",
-      description: "Regional conference moments.",
-      span: "col-span-1"
-    },
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%202025-05-18%20at%204.58.34%20PM-HLAVJBLZoAml0R415IZITUC9Hqytuo.jpeg",
-      alt: "YESJ Cultural Exhibition",
-      description: "Andhra Pradesh chapter at a cultural exhibition.",
-      span: "col-span-1"
-    },
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-1%20at%204.58.35%20PM-Jr1kSptdYDYsgj17H7qYHTI1yVDvUB.jpeg",
-      alt: "YESJ Campus Installation",
-      description: "YESJ permanent installation on campus.",
-      span: "col-span-1"
-    },
-    {
-      src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58-o2eNrP3v7W6Se9JYGuWfNdpch3HQbg.jpeg",
-      alt: "Youth Empowering Service Certificate Ceremony",
-      description: "Certificate ceremony at Christmas event.",
-      span: "md:col-span-2"
+  const [images, setImages] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/api/v1/gallery/")
+        if (res.ok) {
+          const data = await res.json()
+          const mapped = data.map((item: any) => ({
+            src: item.image_path ? `http://localhost:8000/${item.image_path}` : "/placeholder.svg",
+            alt: item.title,
+            description: item.description,
+            span: "col-span-1" // Default span, or randomize/calculate based on something?
+          }))
+          setImages(mapped)
+        }
+      } catch (e) {
+        console.error(e)
+      }
     }
-  ]
+    fetchGallery()
+  }, [])
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index)
@@ -60,7 +44,7 @@ export default function GalleryPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Lightbox
-        images={recentImages}
+        images={images}
         initialIndex={lightboxIndex}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
@@ -90,7 +74,7 @@ export default function GalleryPage() {
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
-              {recentImages.map((image, index) => (
+              {images.map((image, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.95 }}

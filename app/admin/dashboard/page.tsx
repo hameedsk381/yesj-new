@@ -4,9 +4,9 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { 
-  Users, 
-  Mail, 
+import {
+  Users,
+  Mail,
   FileText,
   Calendar,
   Image,
@@ -42,42 +42,39 @@ export default function AdminDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      // No token needed - cookie is sent automatically
-      const [registrationsRes, nominationsRes, contactsRes, newslettersRes, eventsRes, galleryRes, teamRes] = await Promise.all([
-        fetch("/api/admin/registrations"),
-        fetch("/api/admin/nominations"),
-        fetch("/api/admin/contacts"),
-        fetch("/api/admin/newsletters"),
-        fetch("/api/admin/events"),
-        fetch("/api/admin/gallery"),
-        fetch("/api/admin/team")
-      ])
+      // Fetch aggregated stats from backend
+      const statsRes = await fetch("/api/admin/dashboard")
+      const statsData = await statsRes.json()
 
-      const [registrationsData, nominationsData, contactsData, newslettersData, eventsData, galleryData, teamData] = await Promise.all([
-        registrationsRes.json(),
-        nominationsRes.json(),
-        contactsRes.json(),
-        newslettersRes.json(),
-        eventsRes.json(),
-        galleryRes.json(),
-        teamRes.json()
-      ])
+      const dashboardData = statsData.data || {}
 
       setStats({
-        registrations: registrationsData.count || 0,
-        nominations: nominationsData.count || 0,
-        contacts: contactsData.count || 0,
-        newsletters: newslettersData.count || 0,
-        events: eventsData?.count || 0,
-        gallery: galleryData?.count || 0,
-        team: teamData?.count || 0
+        registrations: dashboardData.registrations || 0,
+        nominations: dashboardData.nominations || 0,
+        contacts: dashboardData.contacts || 0,
+        newsletters: dashboardData.newsletters || 0,
+        events: dashboardData.events || 0,
+        gallery: dashboardData.gallery || 0,
+        team: dashboardData.team || 0
       })
 
-      // Get recent 5 registrations
-      setRecentRegistrations(registrationsData.data?.slice(0, 5) || [])
-      
-      // Get recent 5 contacts
-      setRecentContacts(contactsData.data?.slice(0, 5) || [])
+      // Fetch recent items (limit via backend query param if supported, else slice)
+      // Note: Backend default limit is 100, we slice here.
+      const [registrationsListRes, contactsListRes] = await Promise.all([
+        fetch("/api/admin/registrations?limit=5"),
+        fetch("/api/admin/contacts?limit=5")
+      ])
+
+      const registrationsList = await registrationsListRes.json()
+      const contactsList = await contactsListRes.json()
+
+      // Handle if response is array (Active Backend) vs object (Legacy)
+      const recentRegs = Array.isArray(registrationsList) ? registrationsList : (registrationsList.data || [])
+      const recentConts = Array.isArray(contactsList) ? contactsList : (contactsList.data || [])
+
+      setRecentRegistrations(recentRegs.slice(0, 5))
+      setRecentContacts(recentConts.slice(0, 5))
+
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error)
     }
@@ -248,10 +245,10 @@ export default function AdminDashboard() {
                     <div key={reg.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
                       <div>
                         <p className="font-light">{reg.name}</p>
-                        <p className="text-sm text-muted-foreground font-extralight capitalize">{reg.applicationType}</p>
+                        <p className="text-sm text-muted-foreground font-extralight capitalize">{reg.application_type || reg.applicationType}</p>
                       </div>
                       <span className="text-xs text-muted-foreground">
-                        {new Date(reg.createdAt).toLocaleDateString()}
+                        {new Date(reg.created_at || reg.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                   ))
