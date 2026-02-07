@@ -1,143 +1,101 @@
 # YESJ Website - Docker Guide
 
-## Build and Run with Docker
+This project is containerized using Docker and orchestrated with Docker Compose. It consists of a Next.js frontend and a FastAPI backend.
 
-### Quick Start (Docker only)
+## Prerequisites
 
-1. **Build the image:**
+- Docker installed
+- Docker Compose installed
+- Environment variables configured (see `.env.example`)
+
+## Quick Start (Docker Compose)
+
+1. **Configure Environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your actual values (API Keys, etc.)
+   ```
+
+2. **Build and start all services:**
+   ```bash
+   docker-compose up --build -d
+   ```
+
+3. **View services status:**
+   ```bash
+   docker-compose ps
+   ```
+
+4. **View logs:**
+   ```bash
+   # All services
+   docker-compose logs -f
+
+   # Specific service
+   docker-compose logs -f web
+   docker-compose logs -f backend
+   ```
+
+5. **Stop services:**
+   ```bash
+   docker-compose down
+   ```
+
+## Services Architecture
+
+- **Web (Next.js):** Accessible at `http://localhost:3000`
+- **Backend (FastAPI):** Accessible at `http://localhost:8000`
+- **Database:** SQLite (persisted via `backend_data` volume)
+- **Uploads:** Persisted via `backend_uploads` volume
+
+## Persistence
+
+Data is persisted using Docker volumes:
+- `backend_data`: Stores the SQLite database (`sql_app.db`) and ChromaDB store.
+- `backend_uploads`: Stores user-uploaded files.
+
+To wipe all data and start fresh:
 ```bash
-docker build -t yesj-website .
-
-```
-
-2. **Run the container:**
-```bash
-docker run -d \
-  --name yesj-web \
-  -p 3000:3000 \
-  --env-file .env \
-  -v yesj-uploads:/app/public/uploads \
-  --restart unless-stopped \
-  yesj-website
-```
-
-3. **View logs:**
-```bash
-docker logs -f yesj-web
-```
-
-4. **Stop container:**
-```bash
-docker stop yesj-web
-```
-
-5. **Remove container:**
-```bash
-docker rm yesj-web
+docker-compose down -v
 ```
 
 ## Environment Variables
 
-Make sure your `.env` file is configured before running:
+The `docker-compose.yml` file passes essential environment variables to the containers. Key variables include:
 
+### Frontend (Web)
+- `BACKEND_API_URL`: Points to the backend service (`http://backend:8000/api/v1`)
+- `JWT_SECRET`: For authentication
+- `MINIO_*`: For object storage (optional)
+
+### Backend
+- `GROQ_API_KEY` / `OPENAI_API_KEY`: Required for RAG functionality
+- `DATA_DIR`: Set to `/app/data` for persistence within the container
+
+## Manual Docker Commands (Optional)
+
+If you need to run services individually:
+
+### Backend
 ```bash
-cp .env.example .env
-# Edit .env with your actual values
+cd backend
+docker build -t yesj-backend .
+docker run -p 8000:8000 -e GROQ_API_KEY=your_key yesj-backend
 ```
 
-Or pass environment variables directly:
-
+### Frontend
 ```bash
-docker run -d \
-  --name yesj-web \
-  -p 3000:3000 \
-  -e MONGODB_URI="your-mongodb-uri" \
-  -e ADMIN_TOKEN="your-token" \
-  -e ADMIN_USERNAME="admin" \
-  -e ADMIN_PASSWORD="password" \
-  -v yesj-uploads:/app/public/uploads \
-  yesj-website
-```
-
-## Access
-
-- Application: http://localhost:3000
-- Admin Panel: http://localhost:3000/admin/login
-
-## Production Deployment
-
-### Push to Docker Registry
-
-```bash
-# Tag image
-docker tag yesj-website:latest your-registry/yesj-website:latest
-
-# Push to registry
-docker push your-registry/yesj-website:latest
-```
-
-### Deploy on Production Server
-
-```bash
-# Pull image
-docker pull your-registry/yesj-website:latest
-
-# Run container
-docker run -d \
-  --name yesj-web \
-  -p 80:3000 \
-  --env-file .env.production \
-  -v /var/yesj/uploads:/app/public/uploads \
-  --restart unless-stopped \
-  your-registry/yesj-website:latest
-```
-
-## Common Commands
-
-**Rebuild image:**
-```bash
-docker build --no-cache -t yesj-website .
-```
-
-**Restart container:**
-```bash
-docker restart yesj-web
-```
-
-**View container stats:**
-```bash
-docker stats yesj-web
-```
-
-**Execute commands inside container:**
-```bash
-docker exec -it yesj-web sh
-```
-
-**Check uploaded files:**
-```bash
-docker exec -it yesj-web ls -la /app/public/uploads/noc
+docker build -t yesj-web .
+docker run -p 3000:3000 -e BACKEND_API_URL=http://your-ip:8000/api/v1 yesj-web
 ```
 
 ## Troubleshooting
 
-**Container fails to start:**
-```bash
-docker logs yesj-web
-```
+### Connection refused between frontend and backend
+Ensure both services are running in the same Docker network (handled automatically by Docker Compose). The frontend matches the backend service name `backend`.
 
-**Check if container is running:**
-```bash
-docker ps -a
-```
+### Database locking issues
+SQLite might have issues if multiple processes try to write simultaneously. Docker Compose setup ensures a single backend process handles DB operations.
 
-**Remove old containers and images:**
-```bash
-docker rm yesj-web
-docker rmi yesj-website
-```
-
-**Permission issues with uploads:**
-```bash
-docker exec -it yesj-web ls -la /app/public/uploads
-```
+### Missing API Keys
+If the chat/RAG feature doesn't work, check if `GROQ_API_KEY` or `OPENAI_API_KEY` is correctly set in your `.env` file before running `docker-compose up`.
