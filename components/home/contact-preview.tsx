@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 
 export default function ContactPreview() {
   return (
-    <section id="contact" className="w-full py-20 md:py-32 bg-white">
+    <section id="contact" className="w-full py-20 md:py-16 lg:py-24 bg-white">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,17 +88,17 @@ export default function ContactPreview() {
             >
               <div className="flex flex-wrap gap-2">
                 <Link href="/volunteer">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
+                  <Button variant="outline" className="rounded-md border-primary hover:bg-primary/5 text-primary">
                     Volunteer
                   </Button>
                 </Link>
                 <Link href="/donate">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
+                  <Button variant="outline" className="rounded-md border-primary hover:bg-primary/5 text-primary">
                     Donate
                   </Button>
                 </Link>
                 <Link href="/partners">
-                  <Button variant="outline" className="rounded-none border-primary hover:bg-primary/5 text-primary">
+                  <Button variant="outline" className="rounded-md border-primary hover:bg-primary/5 text-primary">
                     Partner With Us
                   </Button>
                 </Link>
@@ -128,7 +128,7 @@ export default function ContactPreview() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full border-gray-200 hover:border-gray-300 hover:bg-transparent"
+                className="rounded-md border-gray-200 hover:border-gray-300 hover:bg-transparent"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ export default function ContactPreview() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full border-gray-200 hover:border-gray-300 hover:bg-transparent"
+                className="rounded-md border-gray-200 hover:border-gray-300 hover:bg-transparent"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +170,7 @@ export default function ContactPreview() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full border-gray-200 hover:border-gray-300 hover:bg-transparent"
+                className="rounded-md border-gray-200 hover:border-gray-300 hover:bg-transparent"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@ export default function ContactPreview() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full border-gray-200 hover:border-gray-300 hover:bg-transparent"
+                className="rounded-md border-gray-200 hover:border-gray-300 hover:bg-transparent"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

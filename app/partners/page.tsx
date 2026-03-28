@@ -41,7 +41,7 @@ export default function PartnersPage() {
       <Header />
       <main className="flex-1">
         {/* Partner Hero */}
-        <section className="py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+        <section className="py-16 lg:py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
           <div className="container mx-auto px-6 text-center max-w-4xl relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -55,17 +55,17 @@ export default function PartnersPage() {
                 We believe in the power of collective resonance. Partner with YESJ to scale youth empowerment across Andhra & Telangana.
               </p>
               <div className="flex gap-4 justify-center">
-                <Button className="rounded-full bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
+                <Button className="rounded-md bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
                   Initiate Partnership
                 </Button>
               </div>
             </motion.div>
           </div>
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-md blur-[120px] -mr-64 -mt-64"></div>
         </section>
 
         {/* Partner Types Grid */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4">A Network of <span className="text-primary italic">Trust</span></h2>
@@ -80,10 +80,10 @@ export default function PartnersPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: type.delay }}
-                  className="p-12 glass-card rounded-[3.5rem] border border-gray-100 hover:shadow-2xl transition-all group"
+                  className="p-12 glass-card rounded-md border border-gray-100 hover:shadow-2xl transition-all group"
                 >
-                  <div className="space-y-8">
-                    <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="space-y-6">
+                    <div className="w-16 h-16 bg-gray-50 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
                       {type.icon}
                     </div>
                     <h3 className="text-3xl font-black text-gray-900">{type.title}</h3>
@@ -105,7 +105,7 @@ export default function PartnersPage() {
         </section>
 
         {/* Process Flow */}
-        <section className="py-24 bg-gray-900 text-white overflow-hidden relative">
+        <section className="py-16 lg:py-24 bg-gray-900 text-white overflow-hidden relative">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold">The Road to <span className="text-secondary italic">Resonance</span></h2>
@@ -123,9 +123,9 @@ export default function PartnersPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="relative z-10 bg-gray-800/80 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 text-center"
+                  className="relative z-10 bg-gray-800/80 backdrop-blur-md p-8 rounded-md border border-white/10 text-center"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black mx-auto mb-6 text-xl shadow-lg border-4 border-gray-900">
+                  <div className="w-12 h-12 rounded-md bg-primary text-white flex items-center justify-center font-black mx-auto mb-6 text-xl shadow-lg border-4 border-gray-900">
                     {i + 1}
                   </div>
                   <h4 className="text-xl font-bold mb-2">{step.title}</h4>
@@ -137,10 +137,10 @@ export default function PartnersPage() {
         </section>
 
         {/* Value Proposition */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl">
+              <div className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl">
                 <Image src="/website/IMG_6038.JPG" alt="Partnership work" fill className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <ShieldCheck className="w-12 h-12 text-secondary mb-4" />
@@ -148,7 +148,7 @@ export default function PartnersPage() {
                   <p className="text-white/70 font-light mt-4">We provide detailed impact reports and regular audits to all our strategic partners.</p>
                 </div>
               </div>
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <h2 className="text-4xl md:text-6xl font-black leading-tight">Multiply Your <span className="text-primary italic">Impact.</span></h2>
                 <p className="text-xl text-gray-500 font-light leading-relaxed">
                   By partnering with YESJ, you aren&apos;t just donating; you are investing in the systems that create sustainable change.
@@ -159,8 +159,8 @@ export default function PartnersPage() {
                     { title: "Scalable Programs", desc: "Ready-to-deploy modules for various community needs." },
                     { title: "Holistic Approach", desc: "Ignatian principles of &apos;cura personalis&apos; for total development." }
                   ].map((v, i) => (
-                    <div key={i} className="flex gap-4 p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:bg-white hover:shadow-xl transition-all">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <div key={i} className="flex gap-4 p-6 bg-gray-50 rounded-md border border-gray-100 hover:bg-white hover:shadow-xl transition-all">
+                      <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
                         <TrendingUp className="w-5 h-5 text-primary" />
                       </div>
                       <div>
@@ -176,17 +176,17 @@ export default function PartnersPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-primary text-white text-center overflow-hidden relative">
+        <section className="py-16 lg:py-24 bg-primary text-white text-center overflow-hidden relative">
           <div className="container mx-auto px-6 relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold mb-8 italic">Say YES to Radical Collaboration.</h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto mb-12 font-light">
               Let&apos;s co-create a future where every youth in Andhra & Telangana has the chance to thrive.
             </p>
-            <Button className="bg-secondary text-white px-12 h-16 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform border-none">
+            <Button className="bg-secondary text-white px-12 h-16 rounded-md text-xl font-bold shadow-2xl hover:scale-105 transition-transform border-none">
               Contact Our Partnership Lead
             </Button>
           </div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-[100px] -ml-48 -mb-48"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-md blur-[100px] -ml-48 -mb-48"></div>
         </section>
       </main>
       <Footer />

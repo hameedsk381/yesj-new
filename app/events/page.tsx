@@ -81,7 +81,7 @@ export default function EventsPage() {
       <Header />
       <main className="flex-1">
         {/* Page Header */}
-        <section className="py-24 bg-gray-50 border-b border-gray-100">
+        <section className="py-16 lg:py-24 bg-gray-50 border-b border-gray-100">
           <div className="container mx-auto px-6 text-center max-w-4xl">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -99,16 +99,16 @@ export default function EventsPage() {
         <section className="py-12 bg-white">
           <div className="container mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
-              <div className="flex gap-2 p-1 bg-gray-100 rounded-2xl">
+              <div className="flex gap-2 p-1 bg-gray-100 rounded-md">
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`flex items-center gap-2 px-6 py-2 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white shadow text-primary font-bold' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 px-6 py-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-white shadow text-primary font-bold' : 'text-gray-500'}`}
                 >
                   <List className="h-4 w-4" /> List
                 </button>
                 <button
                   onClick={() => setViewMode('calendar')}
-                  className={`flex items-center gap-2 px-6 py-2 rounded-xl transition-all ${viewMode === 'calendar' ? 'bg-white shadow text-primary font-bold' : 'text-gray-500'}`}
+                  className={`flex items-center gap-2 px-6 py-2 rounded-md transition-all ${viewMode === 'calendar' ? 'bg-white shadow text-primary font-bold' : 'text-gray-500'}`}
                 >
                   <CalendarDays className="h-4 w-4" /> Calendar
                 </button>
@@ -144,10 +144,10 @@ export default function EventsPage() {
                   className="grid gap-8 lg:grid-cols-2"
                 >
                   {filteredEvents.map((event, index) => (
-                    <div key={index} className="group relative bg-gray-50 rounded-[3rem] overflow-hidden flex flex-col md:flex-row h-[350px] border border-gray-100 hover:shadow-2xl transition-all">
+                    <div key={index} className="group relative bg-gray-50 rounded-md overflow-hidden flex flex-col md:flex-row h-[350px] border border-gray-100 hover:shadow-2xl transition-all">
                       <div className="md:w-2/5 relative h-full">
                         <Image src={event.image} alt={event.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                        <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur rounded-2xl shadow-sm">
+                        <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur rounded-md shadow-sm">
                           <div className="text-xl font-black text-primary leading-tight">
                             {new Date(event.date).getDate()}
                           </div>
@@ -183,7 +183,7 @@ export default function EventsPage() {
             </AnimatePresence>
 
             {filteredEvents.length === 0 && (
-              <div className="text-center py-24 bg-gray-50 rounded-[3rem]">
+              <div className="text-center py-16 lg:py-24 bg-gray-50 rounded-md">
                 <p className="text-2xl font-light text-gray-400">No events match your creative vision.</p>
                 <Button variant="link" onClick={() => setFilters({ location: "all", month: "all", type: "all" })} className="mt-4 text-primary font-bold underline">Clear all labels</Button>
               </div>
@@ -192,14 +192,14 @@ export default function EventsPage() {
         </section>
 
         {/* Global Impact CTA */}
-        <section className="py-24 bg-primary text-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px] -mr-64 -mt-64"></div>
+        <section className="py-16 lg:py-24 bg-primary text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-md blur-[100px] -mr-64 -mt-64"></div>
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 italic">Ready to make a transformation?</h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto mb-12 font-light">
               Join thousands of youth who have already said YES to leadership. Our events are the gateway to your future.
             </p>
-            <Button className="bg-secondary text-white px-10 rounded-full h-16 text-xl shadow-xl hover:scale-105 transition-transform border-none">
+            <Button className="bg-secondary text-white px-10 rounded-md h-16 text-xl shadow-xl hover:scale-105 transition-transform border-none">
               Register for Next Event
             </Button>
           </div>

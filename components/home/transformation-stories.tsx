@@ -1,117 +1,144 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
+import { motion } from "framer-motion"
+import { Quote } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const stories = [
   {
     id: 1,
     name: "Lakshmi",
     age: 22,
-    story: "I couldn't speak a single English sentence. My village laughed when I said I'd study in a English Medium College. Summer Shapes didn't just teach me English. It taught me to believe I deserve success. Today, I'm a proud graduate, supporting my entire family.",
+    story:
+      "I could not speak a single English sentence. Summer Shapes did not only teach me English. It taught me to believe that I deserve success. Today I am a graduate supporting my family.",
     image: "/website/IMG_6787.JPG",
-    alt: "Lakshmi, a Summer Shapes graduate, now successfully supporting her family",
-    program: "Summer Shapes"
+    alt: "Lakshmi, a Summer Shapes graduate",
+    program: "Summer Shapes",
   },
   {
     id: 2,
     name: "Ravi Kumar",
     age: 35,
-    story: "I dropped out after Class 10. Everyone said I'd be a daily wage labourer forever. YESJ's Driving program changed everything. Now I earn ₹25,000/month at the Maruti Toyota company. I'm building my family's first pucca house.",
+    story:
+      "After dropping out after class 10, I thought daily wage labour would be my future. YESJ's driving programme changed that. I now earn a steady income and I am building my family's first pucca house.",
     image: "/website/IMG_5986.JPG",
-    alt: "Ravi Kumar, a professional driver trained by YESJ, building his first home",
-    program: "Driving & Mechanic"
+    alt: "Ravi Kumar, a professional driver trained through YESJ",
+    program: "Driving and mechanic training",
   },
   {
     id: 3,
     name: "Sweatha",
     age: 22,
-    story: "I'm from a broken family. Graduation was an impossible dream until SSP said YES. I'm now working in a media Company. YESJ didn't just fund my education, they believed in me when no one else did.",
+    story:
+      "Graduation felt impossible until SSP said yes. I now work in media, and the biggest change was not only financial support. YESJ believed in me when no one else did.",
     image: "/website/IMG_7254.JPG",
-    alt: "Sweatha, a Scholar Support Programme (SSP) beneficiary, now in a media career",
-    program: "Scholar Support"
+    alt: "Sweatha, a Scholar Support Programme beneficiary",
+    program: "Scholar Support Programme",
   },
 ]
 
 export default function TransformationStories() {
-  const [current, setCurrent] = useState(0)
-
-  const next = () => setCurrent((prev) => (prev + 1) % stories.length)
-  const prev = () => setCurrent((prev) => (prev - 1 + stories.length) % stories.length)
-
-  useEffect(() => {
-    const timer = setInterval(next, 8000)
-    return () => clearInterval(timer)
-  }, [])
-
   return (
-    <section className="py-24 bg-white overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16 px-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-black tracking-tight mb-6 text-gray-900">
-            Voices of <span className="text-primary italic">Transformation</span>
-          </h2>
-          <p className="text-xl text-gray-600 font-light max-w-2xl mx-auto">
-            Real stories from the youth who dared to say YES to their dreams.
-          </p>
+    <section aria-labelledby="stories-heading" className="relative overflow-hidden bg-background py-24 lg:py-40">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl opacity-30" />
+
+      <div className="container relative z-10 px-6 lg:px-12">
+        <div className="mb-24 flex flex-col items-center text-center space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-primary uppercase tracking-[0.4em] text-xs font-bold"
+          >
+            Human Impact
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            id="stories-heading" 
+            className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-tight max-w-4xl"
+          >
+            Voices of Resilience: <span className="italic text-primary">Finding a Way Forward</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg leading-relaxed text-muted-foreground/80 max-w-2xl font-light"
+          >
+            Transformation is not just a statistical goal; it&apos;s a personal journey of rediscovering dignity and purpose.
+          </motion.p>
         </div>
 
-        <div className="relative max-w-6xl mx-auto">
-          <div className="absolute top-0 left-0 -translate-x-12 -translate-y-12 text-primary/5">
-            <Quote className="w-64 h-64" />
-          </div>
-
-          <AnimatePresence mode="wait">
+        <div className="space-y-32">
+          {stories.map((story, index) => (
             <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-              className="grid md:grid-cols-2 gap-0 items-stretch bg-white rounded-[2.5rem] overflow-hidden shadow-2xl shadow-gray-200 border border-gray-100"
+              key={story.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className={cn(
+                "flex flex-col lg:items-center gap-12 lg:gap-24",
+                index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
+              )}
             >
-              <div className="relative h-[400px] md:h-auto min-h-[500px]">
-                <Image
-                  src={stories[current].image}
-                  alt={stories[current].alt}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
-                  <div className="bg-white/20 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest w-fit mb-4">
-                    {stories[current].program}
+              <div className="relative flex-1 group">
+                <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 via-transparent to-secondary/20 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="relative aspect-[4/5] md:aspect-[16/10] lg:aspect-[4/5] overflow-hidden rounded-[2rem] shadow-2xl border border-white/10">
+                  <Image 
+                    src={story.image} 
+                    alt={story.alt} 
+                    fill 
+                    className="object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute bottom-8 left-8 text-white opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0">
+                    <span className="text-[10px] uppercase tracking-widest font-bold bg-primary px-3 py-1 rounded-full mb-2 inline-block">
+                      {story.program}
+                    </span>
                   </div>
-                  <h3 className="text-4xl font-serif font-bold text-white mb-2">{stories[current].name}, {stories[current].age}</h3>
+                </div>
+                {/* Decorative element for asymmetrical look */}
+                <div className={cn(
+                  "absolute -z-10 w-full h-full border border-primary/20 rounded-[2rem] translate-x-4 translate-y-4 transition-transform duration-700 group-hover:translate-x-2 group-hover:translate-y-2",
+                  index % 2 === 1 ? "-translate-x-8" : "translate-x-8"
+                )} />
+              </div>
+
+              <div className="flex-1 space-y-8 relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 0.1, scale: 1 }}
+                  transition={{ duration: 1 }}
+                  className="absolute -top-12 -left-8 text-primary"
+                >
+                  <Quote size={120} />
+                </motion.div>
+                
+                <div className="relative space-y-6">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold italic text-foreground/90 leading-tight">
+                    &ldquo;{story.story}&rdquo;
+                  </h3>
+                  
+                  <div className="pt-6 border-t border-white/10 flex items-center gap-6">
+                    <div className="space-y-1">
+                      <div className="text-2xl font-serif font-bold text-primary">{story.name}</div>
+                      <div className="text-sm text-muted-foreground/60 uppercase tracking-widest font-bold">
+                        {story.age} years old • {story.program}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div className="p-10 md:p-16 flex flex-col justify-center bg-white relative">
-                <Quote className="w-12 h-12 text-primary/20 mb-6" />
-                <p className="text-2xl md:text-3xl font-serif leading-relaxed text-gray-800 italic mb-8">
-                  &quot;{stories[current].story}&quot;
-                </p>
-                <div className="h-1.5 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
-              </div>
             </motion.div>
-          </AnimatePresence>
-
-          {/* Controls */}
-          <div className="flex justify-center md:justify-end gap-4 mt-8">
-            <button
-              onClick={prev}
-              className="p-4 rounded-full border border-gray-200 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-lg bg-white"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={next}
-              className="p-4 rounded-full border border-gray-200 hover:bg-primary hover:text-white hover:border-primary transition-all shadow-lg bg-white"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
+          ))}
         </div>
       </div>
     </section>

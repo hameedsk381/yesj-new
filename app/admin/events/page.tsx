@@ -113,7 +113,7 @@ export default function EventsPage() {
 
             <main className="container px-4 md:px-6 py-8">
                 {showAddForm && (
-                    <div className="mb-8 p-6 bg-white rounded-lg border shadow-sm max-w-2xl">
+                    <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
                         <h2 className="text-lg font-bold mb-4">Add New Event</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -134,7 +134,7 @@ export default function EventsPage() {
                                 <input className="border p-2 rounded" placeholder="Fee (Optional)" value={formData.fee} onChange={e => setFormData({ ...formData, fee: e.target.value })} />
                                 <input type="datetime-local" className="border p-2 rounded" placeholder="Deadline" value={formData.deadline} onChange={e => setFormData({ ...formData, deadline: e.target.value })} />
                             </div>
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : "Create Event"}</Button>
                         </form>
                     </div>
@@ -142,7 +142,7 @@ export default function EventsPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {events.map(event => (
-                        <div key={event.id} className="bg-white border rounded-lg overflow-hidden shadow-sm">
+                        <div key={event.id} className="bg-white border rounded-md overflow-hidden shadow-sm">
                             <div className="relative h-48 bg-gray-100">
                                 {event.image_path && <img src={`http://localhost:8000/${event.image_path}`} alt={event.title} className="w-full h-full object-cover" />}
                             </div>

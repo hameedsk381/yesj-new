@@ -68,7 +68,7 @@ export default function VolunteerPage() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="py-24 bg-gray-50 overflow-hidden relative border-b border-gray-100">
+        <section className="py-16 lg:py-24 bg-gray-50 overflow-hidden relative border-b border-gray-100">
           <div className="container mx-auto px-6 text-center relative z-10 max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -79,18 +79,18 @@ export default function VolunteerPage() {
                 Your <span className="text-primary italic">YES</span> Changes <br />Everything.
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                Join a legacy of service that has been empowering Telugu youth since 2015. There are four powerful ways to fuel the movement.
+                Join a legacy of service that has been empowering Telugu youth since 2016. There are four powerful ways to fuel the movement.
               </p>
-              <Button className="rounded-full bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
+              <Button className="rounded-md bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
                 Register as Volunteer
               </Button>
             </motion.div>
           </div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-md blur-[100px] -mr-48 -mt-48"></div>
         </section>
 
         {/* 4 T's Grid */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-4 gap-8">
               {fourTs.map((t, i) => (
@@ -100,10 +100,10 @@ export default function VolunteerPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="p-10 glass-card rounded-[3rem] border border-gray-100 hover:shadow-2xl transition-all group flex flex-col justify-between"
+                  className="p-10 glass-card rounded-md border border-gray-100 hover:shadow-2xl transition-all group flex flex-col justify-between"
                 >
                   <div className="space-y-6">
-                    <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-16 h-16 bg-gray-50 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
                       {t.icon}
                     </div>
                     <div className="space-y-2">
@@ -132,10 +132,10 @@ export default function VolunteerPage() {
         </section>
 
         {/* Why Volunteer */}
-        <section className="py-24 bg-gray-50">
+        <section className="py-16 lg:py-24 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight">Beyond Service: <br />The <span className="text-primary">Worker Journey</span></h2>
                 <p className="text-xl text-gray-600 font-light leading-relaxed">
                   Volunteering at YESJ is not just about what you give. It&apos;s about who you become. Our &apos;Ignitors&apos; find purpose, leadership, and a lifelong family.
@@ -146,8 +146,8 @@ export default function VolunteerPage() {
                     { title: "Community Hub", desc: "Access a wide network of Jesuits and professionals globally." },
                     { title: "Verified Service", desc: "Receive certificates and recommendations for career growth." }
                   ].map((item, i) => (
-                    <div key={i} className="flex gap-4 p-6 bg-white rounded-3xl shadow-sm border border-gray-100">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <div key={i} className="flex gap-4 p-6 bg-white rounded-md shadow-sm border border-gray-100">
+                      <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
                         <CheckCircle2 className="w-5 h-5 text-primary" />
                       </div>
                       <div>
@@ -158,7 +158,7 @@ export default function VolunteerPage() {
                   ))}
                 </div>
               </div>
-              <div className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl">
+              <div className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl">
                 <Image src="/website/IMG_6045.JPG" alt="Volunteer" width={1920} height={1080} className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/60 to-transparent text-white">
                   <p className="text-2xl font-medium italic">&quot;YESJ didn't just ask for my help; it asked for my heart. I found my voice here.&quot;</p>
@@ -169,13 +169,13 @@ export default function VolunteerPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-primary text-white overflow-hidden relative">
+        <section className="py-16 lg:py-24 bg-primary text-white overflow-hidden relative">
           <div className="absolute inset-0 bg-white/5 opacity-10">
             <Image src="/website/IMG_8233.JPG" alt="CTA backdrop" fill className="object-cover" />
           </div>
           <div className="container mx-auto px-6 text-center relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold mb-8 italic">Say YES to the Movement.</h2>
-            <Button className="bg-secondary text-white px-12 h-16 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform border-none">
+            <Button className="bg-secondary text-white px-12 h-16 rounded-md text-xl font-bold shadow-2xl hover:scale-105 transition-transform border-none">
               Start Your Journey Today
             </Button>
           </div>

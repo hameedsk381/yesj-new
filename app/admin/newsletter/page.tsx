@@ -106,7 +106,7 @@ export default function NewsletterPage() {
           </div>
           <Button
             onClick={exportToCSV}
-            className="rounded-none bg-primary hover:bg-primary/90 text-white"
+            className="rounded-md bg-primary hover:bg-primary/90 text-white"
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV
@@ -121,7 +121,7 @@ export default function NewsletterPage() {
           </div>
         )}
 
-        <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
+        <div className="bg-white border border-primary/10 rounded-md overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b">
@@ -156,7 +156,7 @@ export default function NewsletterPage() {
                           size="sm"
                           variant="destructive"
                           onClick={() => handleDelete(newsletter.id)}
-                          className="h-7 px-2 rounded-none"
+                          className="h-7 px-2 rounded-md"
                           title="Delete"
                         >
                           <Trash2 className="h-3 w-3" />

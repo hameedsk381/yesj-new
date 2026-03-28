@@ -48,9 +48,9 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-white p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white border border-primary/10 rounded-lg shadow-lg p-8">
+        <div className="bg-white border border-primary/10 rounded-md shadow-lg p-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-md bg-primary/10 mb-4">
               <Lock className="h-8 w-8 text-primary" />
             </div>
             <h1 className="text-2xl font-light text-primary mb-2">Admin Login</h1>
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
+              className="w-full rounded-md bg-primary hover:bg-primary/90 text-white"
             >
               {isLoading ? (
                 <>

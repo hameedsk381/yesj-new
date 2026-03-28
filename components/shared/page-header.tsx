@@ -8,9 +8,9 @@ interface PageHeaderProps {
   bgClass?: string
 }
 
-export default function PageHeader({ title, description, bgClass = "bg-blue-50" }: PageHeaderProps) {
+export default function PageHeader({ title, description, bgClass = "bg-secondary/10" }: PageHeaderProps) {
   return (
-    <section className={`w-full py-16 md:py-24 ${bgClass}`}>
+    <section className={`w-full py-16 md:py-16 lg:py-24 ${bgClass}`}>
       <div className="container px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

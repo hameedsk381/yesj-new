@@ -148,7 +148,7 @@ export default function ContactsPage() {
           </div>
           <Button
             onClick={exportToCSV}
-            className="rounded-none bg-primary hover:bg-primary/90 text-white"
+            className="rounded-md bg-primary hover:bg-primary/90 text-white"
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV
@@ -164,7 +164,7 @@ export default function ContactsPage() {
         )}
 
         <div className="grid lg:grid-cols-2 gap-6">
-          <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
+          <div className="bg-white border border-primary/10 rounded-md overflow-hidden">
             <div className="p-4 border-b bg-gray-50">
               <h2 className="font-medium text-primary">Messages</h2>
             </div>
@@ -209,7 +209,7 @@ export default function ContactsPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
+          <div className="bg-white border border-primary/10 rounded-md overflow-hidden">
             <div className="p-4 border-b bg-gray-50">
               <h2 className="font-medium text-primary">Message Details</h2>
             </div>
@@ -246,7 +246,7 @@ export default function ContactsPage() {
                     {selectedContact.status === "unread" && (
                       <Button
                         onClick={() => handleStatusChange(selectedContact.id, "read")}
-                        className="flex-1 rounded-none bg-blue-600 hover:bg-blue-700 text-white"
+                        className="flex-1 rounded-md bg-blue-600 hover:bg-blue-700 text-white"
                       >
                         <Check className="h-4 w-4 mr-2" />
                         Mark as Read
@@ -255,7 +255,7 @@ export default function ContactsPage() {
                     {selectedContact.status === "read" && (
                       <Button
                         onClick={() => handleStatusChange(selectedContact.id, "unread")}
-                        className="flex-1 rounded-none bg-gray-600 hover:bg-gray-700 text-white"
+                        className="flex-1 rounded-md bg-gray-600 hover:bg-gray-700 text-white"
                       >
                         Mark as Unread
                       </Button>
@@ -263,7 +263,7 @@ export default function ContactsPage() {
                     <Button
                       onClick={() => handleDelete(selectedContact.id)}
                       variant="destructive"
-                      className="flex-1 rounded-none"
+                      className="flex-1 rounded-md"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
                       Delete

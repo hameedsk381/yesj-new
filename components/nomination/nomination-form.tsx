@@ -133,7 +133,7 @@ export default function NominationForm() {
         </p>
         <Button
           onClick={() => window.location.reload()}
-          className="rounded-none bg-primary hover:bg-primary/90 text-white"
+          className="rounded-md bg-primary hover:bg-primary/90 text-white"
         >
           Submit Another Nomination
         </Button>
@@ -161,7 +161,7 @@ export default function NominationForm() {
             {...register("name")}
             id="name"
             type="text"
-            className="flex h-10 w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
+            className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
             placeholder="Enter your full name"
           />
           {errors.name && (
@@ -176,7 +176,7 @@ export default function NominationForm() {
           <select
             {...register("unitName")}
             id="unitName"
-            className="flex h-10 w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
+            className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
           >
             <option value="">Select your unit</option>
             {UNIT_NAMES.map((unit) => (
@@ -242,7 +242,7 @@ export default function NominationForm() {
             />
             <label
               htmlFor="nocFile"
-              className="flex items-center justify-center gap-2 h-24 w-full rounded-none border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors"
+              className="flex items-center justify-center gap-2 h-24 w-full rounded-md border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors"
             >
               <Upload className="h-5 w-5 text-muted-foreground" />
               <div className="text-sm text-muted-foreground">
@@ -275,7 +275,7 @@ export default function NominationForm() {
             {...register("educationQualification")}
             id="educationQualification"
             rows={4}
-            className="flex w-full rounded-none border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
+            className="flex w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0"
             placeholder="Enter your education qualification details"
           />
           {errors.educationQualification && (
@@ -294,7 +294,7 @@ export default function NominationForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
+          className="w-full rounded-md bg-primary hover:bg-primary/90 text-white"
         >
           {isSubmitting ? "Submitting..." : "Submit Nomination"}
         </Button>

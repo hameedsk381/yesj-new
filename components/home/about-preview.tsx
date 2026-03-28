@@ -26,7 +26,7 @@ export default function AboutPreview() {
   }
 
   return (
-    <section id="about" className="w-full py-20 md:py-32 bg-white">
+    <section id="about" className="w-full py-20 md:py-16 lg:py-24 bg-white">
       <div className="container px-4 md:px-6">
         <motion.div
           initial="hidden"
@@ -42,7 +42,7 @@ export default function AboutPreview() {
             </p>
           </div>
         </motion.div>
-        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+        <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +55,7 @@ export default function AboutPreview() {
               width={300}
               height={300}
               alt="YESJ Logo"
-              className="mx-auto rounded-full shadow-lg"
+              className="mx-auto rounded-md shadow-lg"
             />
           </motion.div>
           <motion.div
@@ -75,11 +75,11 @@ export default function AboutPreview() {
               That's YESJ.
             </motion.p>
             <motion.p variants={fadeInUp} className="text-muted-foreground font-extralight">
-              Since 2015, we've been more than a program. We've been a revolution. A Jesuit-rooted movement that walks alongside youth from rural villages to urban slums, transforming "I can't" into "I CAN" and "I WILL."
+              Since 2016, we have been more than a program. We have been a Jesuit-rooted movement that walks alongside youth from rural villages to urban slums, turning "I can't" into "I can" and "I will."
             </motion.p>
             <motion.div variants={fadeInUp} className="pt-4">
               <Link href="/about">
-                <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                <Button variant="outline" className="rounded-md border-primary hover:bg-blue-50 text-primary">
                   Discover Our Story
                 </Button>
               </Link>

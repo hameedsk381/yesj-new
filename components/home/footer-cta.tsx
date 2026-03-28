@@ -1,62 +1,68 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import Image from "next/image"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function FooterCTA() {
-    return (
-        <section className="relative py-24 overflow-hidden" aria-labelledby="footer-cta-heading">
-            {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src="/website/IMG_5899.JPG"
-                    alt="Group of empowered youth celebrating their achievements"
-                    fill
-                    className="object-cover brightness-50"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-black/80"></div>
+  return (
+    <section aria-labelledby="footer-cta-heading" className="bg-gray-950 text-primary-foreground">
+      <div className="container px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-center">
+          <div className="space-y-5">
+            <p className="text-sm font-medium text-secondary italic">Take the next step</p>
+            <h2
+              id="footer-cta-heading"
+              className="max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl font-serif"
+            >
+              Youth potential is not the problem. Access is.
+            </h2>
+            <p className="max-w-2xl text-base leading-7 text-primary-foreground/75">
+              If you want to be part of the YESJ movement, the homepage should make that choice
+              obvious. Apply for a programme, volunteer your time, or support a young person with a
+              contribution.
+            </p>
+          </div>
+
+          <div className="rounded-md border border-primary-foreground/10 bg-primary-foreground/5 p-6 sm:p-8">
+            <div className="space-y-4">
+              <div className="rounded-md border border-primary-foreground/10 bg-primary-foreground/5 p-4">
+                <div className="text-sm font-medium text-white font-serif">Apply</div>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Find the programme that fits your stage, goals, and context.
+                </p>
+              </div>
+              <div className="rounded-md border border-primary-foreground/10 bg-primary-foreground/5 p-4">
+                <div className="text-sm font-medium text-white font-serif">Volunteer</div>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Offer time, expertise, and presence in ways that strengthen the work.
+                </p>
+              </div>
+              <div className="rounded-md border border-primary-foreground/10 bg-primary-foreground/5 p-4 border-l-secondary border-l-2">
+                <div className="text-sm font-medium text-white font-serif italic text-secondary">Support</div>
+                <p className="mt-2 text-sm leading-7 text-white/70">
+                  Help remove the financial barriers that keep young people from opportunity.
+                </p>
+              </div>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10 text-center">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-4xl mx-auto space-y-10"
-                >
-                    <h2 id="footer-cta-heading" className="text-5xl md:text-6xl lg:text-7xl font-serif font-black text-white leading-[0.9] tracking-tight drop-shadow-2xl">
-                        The harvest is plentiful. <br />
-                        <span className="text-secondary italic">Will you answer the call?</span>
-                    </h2>
-
-                    <div className="space-y-6 text-xl md:text-2xl text-white/90 font-light max-w-2xl mx-auto">
-                        <p>Every 8 minutes, a youth in our region drops out of school.</p>
-                        <p>Every hour, dozens lose hope in their dreams.</p>
-                        <p className="text-3xl font-serif font-bold pt-4">But every day, YESJ says: <span className="underline decoration-secondary decoration-4 underline-offset-4">Your story doesn&apos;t end here.</span></p>
-                    </div>
-
-                    <div className="flex flex-wrap justify-center gap-6 pt-8">
-                        <Link href="/programs">
-                            <Button size="lg" className="btn-premium rounded-full px-10 h-16 text-xl bg-primary hover:bg-primary/90 text-white border-none shadow-xl shadow-primary/20" aria-label="Apply to join a YESJ program">
-                                Apply to Program
-                            </Button>
-                        </Link>
-                        <Link href="/get-involved">
-                            <Button size="lg" className="btn-premium rounded-full px-10 h-16 text-xl bg-white text-primary hover:bg-white/90 shadow-xl" aria-label="Learn how to volunteer with YESJ">
-                                Volunteer
-                            </Button>
-                        </Link>
-                        <Link href="/donate">
-                            <Button size="lg" className="btn-premium rounded-full px-10 h-16 text-xl bg-secondary text-white hover:bg-secondary/90 shadow-xl shadow-secondary/20" aria-label="Donate now to support youth empowerment">
-                                Donate Now
-                            </Button>
-                        </Link>
-                    </div>
-                </motion.div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Button asChild className="h-11 px-5 bg-primary hover:bg-primary/90 text-white border-none">
+                <Link href="/programs">Apply</Link>
+              </Button>
+              <Button asChild variant="outline" className="h-11 border-primary-foreground/20 bg-transparent px-5 text-primary-foreground hover:bg-primary-foreground hover:text-gray-950">
+                <Link href="/get-involved">Volunteer</Link>
+              </Button>
+              <Button asChild className="h-11 px-5 bg-accent hover:bg-accent/90 text-white border-none">
+                <Link href="/donate">
+                  Donate Now
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </Button>
             </div>
-        </section>
-    )
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

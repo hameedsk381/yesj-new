@@ -44,13 +44,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
             <div className="space-y-4">
               <button
                 onClick={() => window.location.reload()}
-                className="inline-flex h-10 items-center justify-center rounded-none px-8 bg-primary hover:bg-primary/90 text-white transition-colors"
+                className="inline-flex h-10 items-center justify-center rounded-md px-8 bg-primary hover:bg-primary/90 text-white transition-colors"
               >
                 Refresh Page
               </button>
               <button
                 onClick={() => (window.location.href = "/")}
-                className="inline-flex h-10 items-center justify-center rounded-none px-8 border border-secondary hover:bg-secondary/5 text-secondary transition-colors ml-4"
+                className="inline-flex h-10 items-center justify-center rounded-md px-8 border border-secondary hover:bg-secondary/5 text-secondary transition-colors ml-4"
               >
                 Go Home
               </button>

@@ -56,7 +56,7 @@ export default function StepThree() {
 
         <FormField
           control={control}
-          name="yesjVision"
+          name="aicufVision"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

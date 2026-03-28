@@ -66,7 +66,7 @@ const formSchema = z.object({
   // Leadership questions (conditional)
   justSocietyDefinition: z.string().optional(),
   communicationExample: z.string().optional(),
-  yesjVision: z.string().optional(),
+  aicufVision: z.string().optional(),
 
   // Leadership position (conditional)
   leadershipPosition: z.string().optional(),
@@ -162,7 +162,7 @@ export default function RegistrationForm() {
         break
       case 3:
         if (applicationType === "leadership") {
-          fieldsToValidate = ["justSocietyDefinition", "communicationExample", "yesjVision"]
+          fieldsToValidate = ["justSocietyDefinition", "communicationExample", "aicufVision"]
         } else {
           fieldsToValidate = ["declaration"]
         }
@@ -211,7 +211,7 @@ export default function RegistrationForm() {
         event_experience: data.eventExperience,
         just_society_definition: data.justSocietyDefinition,
         communication_example: data.communicationExample,
-        yesj_vision: data.yesjVision,
+        aicuf_vision: data.aicufVision,
         leadership_position: data.leadershipPosition,
         declaration: data.declaration,
         additional_message: data.additionalMessage,
@@ -285,7 +285,7 @@ export default function RegistrationForm() {
             <Button
               type="button"
               onClick={restoreDraft}
-              className="rounded-none bg-primary hover:bg-primary/90 text-white text-sm"
+              className="rounded-md bg-primary hover:bg-primary/90 text-white text-sm"
             >
               Restore Draft
             </Button>
@@ -293,14 +293,14 @@ export default function RegistrationForm() {
               type="button"
               variant="outline"
               onClick={discardDraft}
-              className="rounded-none border-primary text-primary text-sm"
+              className="rounded-md border-primary text-primary text-sm"
             >
               Start Fresh
             </Button>
           </div>
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-light text-primary">
             Application for {applicationType === "membership" ? "Membership" : "Leadership"}
@@ -309,7 +309,7 @@ export default function RegistrationForm() {
             {Array.from({ length: totalSteps }).map((_, index) => (
               <div
                 key={index}
-                className={`h-2 w-8 rounded-full ${currentStep >= index + 1 ? "bg-primary" : "bg-gray-200"}`}
+                className={`h-2 w-8 rounded-md ${currentStep >= index + 1 ? "bg-primary" : "bg-gray-200"}`}
               />
             ))}
           </div>
@@ -344,7 +344,7 @@ export default function RegistrationForm() {
               variant="outline"
               onClick={goToPreviousStep}
               disabled={isSubmitting}
-              className="rounded-none border-primary hover:bg-primary/5 text-primary"
+              className="rounded-md border-primary hover:bg-primary/5 text-primary"
             >
               Previous
             </Button>
@@ -355,7 +355,7 @@ export default function RegistrationForm() {
               type="button"
               onClick={goToNextStep}
               disabled={isSubmitting}
-              className="ml-auto rounded-none bg-primary hover:bg-primary/90 text-white"
+              className="ml-auto rounded-md bg-primary hover:bg-primary/90 text-white"
             >
               Next
             </Button>
@@ -363,7 +363,7 @@ export default function RegistrationForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="ml-auto rounded-none bg-primary hover:bg-primary/90 text-white"
+              className="ml-auto rounded-md bg-primary hover:bg-primary/90 text-white"
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
             </Button>

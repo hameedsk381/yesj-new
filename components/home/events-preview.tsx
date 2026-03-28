@@ -37,7 +37,7 @@ export default function EventsPreview() {
   ]
 
   return (
-    <section id="events" className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-blue-50 to-secondary/5">
+    <section id="events" className="w-full py-16 py-16 lg:py-24 bg-gradient-to-br from-blue-50 to-secondary/5">
       <div className="container px-4 md:px-6">
         <motion.div
           initial="hidden"
@@ -90,7 +90,7 @@ export default function EventsPreview() {
           className="flex justify-center mt-10 md:mt-12"
         >
           <Link href="/echoes">
-            <Button variant="outline" className="rounded-none border-accent hover:bg-accent/10 text-accent px-6 py-3 md:px-8 md:py-4 hover:text-accent">
+            <Button variant="outline" className="rounded-md border-accent hover:bg-accent/10 text-accent px-6 py-3 md:px-8 md:py-4 hover:text-accent">
               Read Our Echoes
             </Button>
           </Link>

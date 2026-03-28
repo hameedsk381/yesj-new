@@ -1,95 +1,121 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { FileText, GraduationCap, MapPin, Quote, Target, TrendingUp, Users } from "lucide-react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { Users, MapPin, GraduationCap, Target, Quote, TrendingUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+
+const stats = [
+  { icon: <Users className="h-5 w-5" aria-hidden="true" />, number: "50K+", label: "Youth impacted", color: "bg-primary" },
+  { icon: <MapPin className="h-5 w-5" aria-hidden="true" />, number: "15+", label: "Districts active", color: "bg-primary/85" },
+  { icon: <GraduationCap className="h-5 w-5" aria-hidden="true" />, number: "3K+", label: "Leaders trained", color: "bg-secondary" },
+  { icon: <Target className="h-5 w-5" aria-hidden="true" />, number: "85%", label: "Placement rate", color: "bg-secondary/85" },
+]
+
+const stories = [
+  {
+    name: "Lakshmi",
+    age: 22,
+    role: "Summer Shapes graduate",
+    quote: "In my village, English was a wall. YES-J helped me climb it.",
+    description:
+      "Lakshmi moved from a remote village in Guntur into a technical career after language immersion, mentoring, and steady support from the YES-J ecosystem.",
+    metrics: [
+      { label: "Salary growth", value: "260%" },
+      { label: "Confidence", value: "Peak" },
+    ],
+    image: "/website/IMG_6787.JPG",
+  },
+  {
+    name: "Ravi Kumar",
+    age: 35,
+    role: "MuST graduate",
+    quote: "I was not just learning to drive. I was learning to lead my family.",
+    description:
+      "Ravi moved from unstable construction work into professional driving, creating a reliable income for his family and a different future for his children.",
+    metrics: [
+      { label: "Income boost", value: "533%" },
+      { label: "Stability", value: "Solid" },
+    ],
+    image: "/website/IMG_5986.JPG",
+  },
+]
+
+const reports = [
+  {
+    year: "2024-25",
+    description: "Programme highlights, youth reach, partnerships, and financial accountability for the latest reporting cycle.",
+    href: "/contact?subject=Annual%20Report%202024-25%20Request#contact-form",
+    cta: "Request Annual Report 2024-25",
+  },
+  {
+    year: "2023-24",
+    description: "A year-wise snapshot of programme delivery, field presence, and outcomes across Andhra Pradesh and Telangana.",
+    href: "/contact?subject=Annual%20Report%202023-24%20Request#contact-form",
+    cta: "Request Annual Report 2023-24",
+  },
+]
 
 export default function ImpactPage() {
-  const stats = [
-    { icon: <Users />, number: "50K+", label: "Youth Impacted", color: "bg-primary" },
-    { icon: <MapPin />, number: "15+", label: "Districts Active", color: "bg-primary/80" },
-    { icon: <GraduationCap />, number: "3K+", label: "Leaders Trained", color: "bg-secondary" },
-    { icon: <Target />, number: "85%", label: "Placement Rate", color: "bg-secondary/80" }
-  ]
-
-  const stories = [
-    {
-      name: "Lakshmi",
-      age: 22,
-      role: "Summer Shapes Graduate",
-      quote: "In my village, English was a wall. YESJ helped me climb it.",
-      description: "From a remote village in Guntur to a top tech firm in Hyderabad. Lakshmi's journey is one of sheer resilience and the power of language immersion.",
-      metrics: [
-        { label: "Salary Growth", value: "260%" },
-        { label: "Confidence", value: "Peak" }
-      ],
-      image: "/website/IMG_6787.JPG"
-    },
-    {
-      name: "Ravi Kumar",
-      age: 35,
-      role: "MuST Driving Graduate",
-      quote: "I wasn't just learning to drive; I was learning to lead my family.",
-      description: "Ravi was a Class 10 dropout working construction sites. Today, he's a professional driver supporting his entire family and building their first home.",
-      metrics: [
-        { label: "Income Boost", value: "533%" },
-        { label: "Stability", value: "Solid" }
-      ],
-      image: "/website/IMG_5986.JPG"
-    }
-  ]
-
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
       <main className="flex-1">
-        {/* Impact Hero - Responsive & Theme-Aware */}
-        <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden bg-gray-950">
-          <Image src="/website/IMG_8204.JPG" alt="Impact" fill className="object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-950/60 to-gray-950" />
+        <section className="relative overflow-hidden bg-slate-950 text-white pt-32 lg:pt-36">
+          <Image
+            src="/website/IMG_8204.JPG"
+            alt="YES-J participants gathered at an event"
+            fill
+            priority
+            className="object-cover opacity-25"
+          />
+          <div className="absolute inset-0 bg-slate-950/80" />
 
-          <div className="container mx-auto px-6 relative z-10 text-center">
+          <div className="container relative px-6 py-20 text-center lg:px-8 lg:py-24">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              className="max-w-4xl mx-auto space-y-8"
+              transition={{ duration: 0.5 }}
+              className="mx-auto max-w-4xl space-y-5"
             >
-              <Badge className="bg-primary/20 text-primary border-primary/30 backdrop-blur-md px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest">
+              <Badge className="rounded-md bg-white/10 px-3 py-1 text-white hover:bg-white/10">
                 Measured Transformation
               </Badge>
-              <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-white leading-[0.85] tracking-tighter">
-                Impact <br /><span className="text-secondary italic font-medium">In Resonance.</span>
+              <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                Impact in lives, numbers, and stories
               </h1>
-              <p className="text-lg md:text-2xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
-                Beyond numbers, we measure success in lives transformed, voices found, and families uplifted across the Telugu heartland.
+              <p className="mx-auto max-w-2xl text-base leading-8 text-white/80 sm:text-lg">
+                Beyond numbers, YES-J measures change through young people who find confidence,
+                employment, education, community, and purpose.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Stats Grid - Responsive Cards */}
-        <section className="py-24 bg-white relative -mt-32 z-20">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, i) => (
+        <section className="border-b border-border bg-white">
+          <div className="container px-6 py-16 lg:px-8 lg:py-20">
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+              {stats.map((stat, index) => (
                 <motion.div
-                  key={i}
+                  key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: index * 0.08 }}
                 >
-                  <Card className="rounded-[2.5rem] border-none shadow-2xl p-8 hover:scale-105 transition-transform">
-                    <div className={`w-14 h-14 ${stat.color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-black/5`}>
+                  <Card className="border-border p-6 shadow-sm">
+                    <div className={`mb-5 inline-flex h-11 w-11 items-center justify-center text-white ${stat.color}`}>
                       {stat.icon}
                     </div>
-                    <div className="text-5xl font-black tracking-tighter text-gray-900 mb-2">{stat.number}</div>
-                    <div className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">{stat.label}</div>
+                    <div className="text-4xl font-bold tracking-tight text-foreground">
+                      {stat.number}
+                    </div>
+                    <p className="mt-2 text-sm font-medium text-muted-foreground">{stat.label}</p>
                   </Card>
                 </motion.div>
               ))}
@@ -97,93 +123,105 @@ export default function ImpactPage() {
           </div>
         </section>
 
-        {/* Transformation Stories - Fully Responsive */}
-        <section className="py-24 bg-gray-50 overflow-hidden">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
-              <div className="space-y-4 max-w-2xl">
-                <h2 className="text-4xl md:text-6xl font-black tracking-tighter">Human <span className="text-primary italic">Stories.</span></h2>
-                <p className="text-xl text-gray-400 font-light">Real lives reaching their radical potential through the YES movement.</p>
+        <section className="border-b border-border bg-background">
+          <div className="container px-6 py-16 lg:px-8 lg:py-20">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl space-y-4">
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                  Human Stories
+                </p>
+                <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Meet the YES - real people, real change
+                </h2>
               </div>
-              <Button variant="outline" className="rounded-full h-14 px-8 border-gray-200 text-gray-500 font-bold hover:bg-white hover:text-primary transition-all">
-                View Case Studies
+              <Button asChild variant="outline" className="rounded-md">
+                <Link href="/media">View More Stories</Link>
               </Button>
             </div>
 
-            <div className="grid gap-12 sm:gap-16">
-              {stories.map((story, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+            <div className="mt-10 grid gap-10">
+              {stories.map((story, index) => (
+                <motion.article
+                  key={story.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className={`flex flex-col ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-12 lg:gap-24 items-center`}
+                  transition={{ delay: index * 0.08 }}
+                  className={`grid gap-8 lg:grid-cols-2 lg:items-center ${
+                    index % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
+                  }`}
                 >
-                  <div className="w-full lg:w-1/2">
-                    <div className="relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-square rounded-[4rem] overflow-hidden shadow-2xl group">
-                      <Image src={story.image} alt={story.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                      <div className="absolute inset-0 bg-black/10 transition-opacity group-hover:opacity-0" />
-                      <div className="absolute top-8 left-8">
-                        <Badge className="bg-white/90 backdrop-blur-md text-primary px-6 py-2 rounded-full border-none font-black uppercase text-[10px] tracking-widest">
-                          {story.role}
-                        </Badge>
-                      </div>
+                  <div className="relative overflow-hidden border border-border bg-white">
+                    <div className="relative aspect-[4/3] lg:aspect-[5/4]">
+                      <Image src={story.image} alt={story.name} fill className="object-cover" />
                     </div>
                   </div>
-                  <div className="w-full lg:w-1/2 space-y-8">
-                    <Quote className="w-12 h-12 text-secondary opacity-30" />
-                    <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight italic">
-                      &quot;{story.quote}&quot;
+
+                  <div className="space-y-5">
+                    <Badge className="rounded-md bg-primary/10 px-3 py-1 text-primary hover:bg-primary/10">
+                      {story.role}
+                    </Badge>
+                    <Quote className="h-10 w-10 text-secondary/50" aria-hidden="true" />
+                    <h3 className="font-serif text-3xl font-bold tracking-tight text-foreground">
+                      {story.quote}
                     </h3>
-                    <div className="space-y-4">
-                      <div className="text-2xl font-bold flex items-center gap-3">
-                        {story.name} <span className="text-base text-gray-400 font-light">— {story.age} Yrs</span>
-                      </div>
-                      <p className="text-xl text-gray-500 font-light leading-relaxed">
-                        {story.description}
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-200">
-                      {story.metrics.map((m, j) => (
-                        <div key={j}>
-                          <div className="text-3xl font-black text-primary flex items-center gap-2">
-                            <TrendingUp className="w-5 h-5 text-secondary" />
-                            {m.value}
+                    <p className="text-sm font-medium text-foreground">
+                      {story.name}
+                      <span className="text-muted-foreground"> - {story.age} years</span>
+                    </p>
+                    <p className="text-base leading-8 text-muted-foreground">{story.description}</p>
+
+                    <div className="grid gap-4 border-t border-border pt-5 sm:grid-cols-2">
+                      {story.metrics.map((metric) => (
+                        <div key={metric.label} className="border border-border bg-white p-4">
+                          <div className="flex items-center gap-2 text-primary">
+                            <TrendingUp className="h-4 w-4" aria-hidden="true" />
+                            <span className="text-2xl font-semibold text-foreground">{metric.value}</span>
                           </div>
-                          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pt-1">{m.label}</div>
+                          <p className="mt-2 text-sm text-muted-foreground">{metric.label}</p>
                         </div>
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </motion.article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Action Section - Neutral Theme */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-6">
-            <div className="glass-card bg-gray-900 rounded-[4rem] p-12 md:p-24 overflow-hidden relative text-center">
-              {/* Decorative Pink Glow */}
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px] -mr-64 -mt-64" />
+        <section id="annual-reports" className="scroll-mt-32 border-b border-border bg-white">
+          <div className="container px-6 py-16 lg:px-8 lg:py-20">
+            <div className="max-w-3xl space-y-4">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                Transparency and Accountability
+              </p>
+              <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Annual reports
+              </h2>
+              <p className="text-base leading-8 text-muted-foreground">
+                YES-J publishes year-wise reporting on programme reach, organisational stewardship,
+                and impact. Until the downloadable PDFs are uploaded, requests can be sent directly
+                through the contact form.
+              </p>
+            </div>
 
-              <div className="relative z-10 max-w-3xl mx-auto space-y-12">
-                <h2 className="text-4xl md:text-7xl font-black text-white leading-none tracking-tighter">
-                  Be part of the next <span className="text-primary">50,000</span> stories.
-                </h2>
-                <p className="text-xl text-white/50 font-light leading-relaxed">
-                  Your support fuels the programs that turn obstacles into opportunities. Every contribution writes a new chapter of empowerment.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="h-16 px-10 rounded-2xl bg-primary hover:bg-primary/90 text-white font-bold text-lg shadow-2xl shadow-primary/20">
-                    Support Mission
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {reports.map((report) => (
+                <article key={report.year} className="border border-border bg-background p-6">
+                  <div className="flex items-center gap-3 text-primary">
+                    <FileText className="h-5 w-5" aria-hidden="true" />
+                    <p className="text-sm font-semibold uppercase tracking-[0.16em]">
+                      Annual Report {report.year}
+                    </p>
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                    {report.description}
+                  </p>
+                  <Button asChild variant="outline" className="mt-6 rounded-md">
+                    <Link href={report.href}>{report.cta}</Link>
                   </Button>
-                  <Button variant="ghost" className="h-16 px-10 rounded-2xl bg-white/5 hover:bg-white/10 text-white border border-white/10 text-lg font-bold">
-                    Get Involved
-                  </Button>
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>

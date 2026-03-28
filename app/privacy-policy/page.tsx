@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
 
         <section className="w-full py-12 md:py-20 bg-white">
           <div className="container px-4 md:px-6 max-w-4xl">
-            <div className="space-y-8 text-muted-foreground font-extralight">
+            <div className="space-y-6 text-muted-foreground font-extralight">
               <div>
                 <h2 className="text-2xl font-light text-primary mb-4">1. Information We Collect</h2>
                 <p className="mb-4">

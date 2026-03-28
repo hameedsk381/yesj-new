@@ -105,7 +105,7 @@ export default function TeamPage() {
 
             <main className="container px-4 md:px-6 py-8">
                 {showAddForm && (
-                    <div className="mb-8 p-6 bg-white rounded-lg border shadow-sm max-w-2xl">
+                    <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
                         <h2 className="text-lg font-bold mb-4">Add New Member</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -117,7 +117,7 @@ export default function TeamPage() {
                                 <input className="border p-2 rounded" placeholder="Twitter URL" value={formData.twitter_url} onChange={e => setFormData({ ...formData, twitter_url: e.target.value })} />
                                 <input className="border p-2 rounded" placeholder="LinkedIn URL" value={formData.linkedin_url} onChange={e => setFormData({ ...formData, linkedin_url: e.target.value })} />
                             </div>
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : "Add Member"}</Button>
                         </form>
                     </div>
@@ -125,8 +125,8 @@ export default function TeamPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {members.map(member => (
-                        <div key={member.id} className="bg-white border rounded-lg p-6 flex flex-col items-center text-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 mb-4">
+                        <div key={member.id} className="bg-white border rounded-md p-6 flex flex-col items-center text-center">
+                            <div className="w-24 h-24 rounded-md overflow-hidden bg-gray-100 mb-4">
                                 {member.image_path && <img src={`http://localhost:8000/${member.image_path}`} alt={member.name} className="w-full h-full object-cover" />}
                             </div>
                             <h3 className="font-bold text-lg">{member.name}</h3>

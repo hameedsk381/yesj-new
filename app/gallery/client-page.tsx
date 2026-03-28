@@ -52,7 +52,7 @@ export default function GalleryPage() {
       <Header />
       <main className="flex-1">
         {/* Gallery Hero */}
-        <section className="py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+        <section className="pt-32 py-16 lg:pt-36 lg:py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
           <div className="container mx-auto px-6 text-center max-w-4xl relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -67,11 +67,11 @@ export default function GalleryPage() {
               </p>
             </motion.div>
           </div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-md blur-[100px] -mr-48 -mt-48"></div>
         </section>
 
         {/* Masonry Grid */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
               {images.map((image, index) => (
@@ -81,7 +81,7 @@ export default function GalleryPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className={`group relative overflow-hidden rounded-[3rem] cursor-pointer shadow-lg border border-gray-100 ${image.span || ""}`}
+                  className={`group relative overflow-hidden rounded-md cursor-pointer shadow-lg border border-gray-100 ${image.span || ""}`}
                   onClick={() => openLightbox(index)}
                 >
                   <Image
@@ -96,14 +96,14 @@ export default function GalleryPage() {
                     <motion.div
                       initial={{ y: 20, opacity: 0 }}
                       whileInView={{ y: 0, opacity: 1 }}
-                      className="glass-card p-6 rounded-3xl translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                      className="glass-card p-6 rounded-md translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
                     >
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Activity</p>
                           <p className="text-sm font-medium text-gray-900 line-clamp-1">{image.description}</p>
                         </div>
-                        <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center">
                           <Maximize2 className="w-4 h-4" />
                         </div>
                       </div>
@@ -114,7 +114,7 @@ export default function GalleryPage() {
             </div>
 
             <div className="mt-16 text-center">
-              <Button className="rounded-full bg-gray-900 hover:bg-black text-white px-10 h-16 text-xl font-bold flex items-center gap-3 group">
+              <Button className="rounded-md bg-gray-900 hover:bg-black text-white px-10 h-16 text-xl font-bold flex items-center gap-3 group">
                 <Camera className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Load More Memories
               </Button>
@@ -123,7 +123,7 @@ export default function GalleryPage() {
         </section>
 
         {/* Categories Section */}
-        <section className="py-24 bg-gray-50">
+        <section className="py-16 lg:py-24 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -134,7 +134,7 @@ export default function GalleryPage() {
                 <motion.div
                   key={i}
                   whileHover={{ y: -10 }}
-                  className="p-10 bg-white rounded-[4rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all"
+                  className="p-10 bg-white rounded-md border border-gray-100 shadow-sm hover:shadow-2xl transition-all"
                 >
                   <h3 className="text-3xl font-black mb-4">{cat.title}</h3>
                   <p className="text-gray-500 font-light leading-relaxed mb-8">{cat.desc}</p>

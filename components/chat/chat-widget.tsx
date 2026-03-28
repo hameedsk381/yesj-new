@@ -89,25 +89,25 @@ export default function ChatWidget() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
+                        className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-md shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
                     >
                         {/* Header */}
                         <div className="bg-primary p-4 flex items-center justify-between text-white">
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                                <div className="w-8 h-8 rounded-md bg-white/20 flex items-center justify-center backdrop-blur-sm">
                                     <Bot className="w-5 h-5" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-sm">YESJ Assistant</h3>
                                     <p className="text-xs text-white/70 flex items-center gap-1">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                        <span className="w-1.5 h-1.5 rounded-md bg-green-400 animate-pulse"></span>
                                         Online
                                     </p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                                className="p-1 hover:bg-white/20 rounded-md transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -120,11 +120,11 @@ export default function ChatWidget() {
                                     key={msg.id}
                                     className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                                 >
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === "user" ? "bg-gray-200" : "bg-primary/10 text-primary"
+                                    <div className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 ${msg.role === "user" ? "bg-gray-200" : "bg-primary/10 text-primary"
                                         }`}>
                                         {msg.role === "user" ? <User className="w-4 h-4 text-gray-600" /> : <Bot className="w-4 h-4" />}
                                     </div>
-                                    <div className={`max-w-[80%] rounded-2xl p-3 text-sm ${msg.role === "user"
+                                    <div className={`max-w-[80%] rounded-md p-3 text-sm ${msg.role === "user"
                                             ? "bg-primary text-white rounded-tr-none"
                                             : "bg-white border border-gray-100 text-gray-700 rounded-tl-none shadow-sm"
                                         }`}>
@@ -137,13 +137,13 @@ export default function ChatWidget() {
                             ))}
                             {isLoading && (
                                 <div className="flex gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                                    <div className="w-8 h-8 rounded-md bg-primary/10 text-primary flex items-center justify-center shrink-0">
                                         <Bot className="w-4 h-4" />
                                     </div>
-                                    <div className="bg-white border border-gray-100 rounded-2xl p-3 rounded-tl-none shadow-sm flex items-center gap-2">
-                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+                                    <div className="bg-white border border-gray-100 rounded-md p-3 rounded-tl-none shadow-sm flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-md animate-bounce [animation-delay:-0.3s]"></span>
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-md animate-bounce [animation-delay:-0.15s]"></span>
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-md animate-bounce"></span>
                                     </div>
                                 </div>
                             )}
@@ -158,12 +158,12 @@ export default function ChatWidget() {
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     placeholder="Type a message..."
-                                    className="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 h-10 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
+                                    className="flex-1 bg-gray-50 border border-gray-200 rounded-md px-4 h-10 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"
                                 />
                                 <button
                                     type="submit"
                                     disabled={!input.trim() || isLoading}
-                                    className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg shadow-primary/20"
+                                    className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg shadow-primary/20"
                                 >
                                     {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                                 </button>
@@ -180,7 +180,7 @@ export default function ChatWidget() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-gray-100 text-gray-600 rotate-90" : "bg-gradient-to-r from-primary to-secondary text-white"
+                className={`w-14 h-14 rounded-md shadow-2xl flex items-center justify-center transition-all duration-300 ${isOpen ? "bg-gray-100 text-gray-600 rotate-90" : "bg-gradient-to-r from-primary to-secondary text-white"
                     }`}
             >
                 {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}

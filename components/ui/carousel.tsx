@@ -64,7 +64,7 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
                 const newIndex = (currentIndex - 1 + totalSlides) % totalSlides
                 setCurrentIndex(newIndex)
               }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-lg transition-all"
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-md shadow-lg transition-all"
               aria-label="Previous slide"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -74,7 +74,7 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
                 const newIndex = (currentIndex + 1) % totalSlides
                 setCurrentIndex(newIndex)
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-full shadow-lg transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-primary p-2 rounded-md shadow-lg transition-all"
               aria-label="Next slide"
             >
               <ChevronRight className="h-6 w-6" />
@@ -86,7 +86,7 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={cn(
-                    "w-2 h-2 rounded-full transition-all",
+                    "w-2 h-2 rounded-md transition-all",
                     currentIndex === index ? "bg-white w-8" : "bg-white/50"
                   )}
                   aria-label={`Go to slide ${index + 1}`}

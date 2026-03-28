@@ -55,42 +55,43 @@ export default function DonatePage() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Header />
       <main className="flex-1">
         {/* Donate Hero */}
-        <section className="py-24 bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+        <section className="pt-32 py-16 lg:pt-36 lg:py-24 bg-background border-b border-border relative overflow-hidden">
           <div className="container mx-auto px-6 text-center max-w-4xl relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none">
-                Invest in <br /><span className="text-primary italic">Futures.</span>
+              <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none font-serif">
+                Your Money. <br /><span className="text-primary italic text-6xl md:text-8xl">Their Dream.</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                Your generosity fuels the programs that empower 50,000+ youth across Telugu states to break barriers and build futures.
+                Every rupee you give goes directly to a young person&apos;s future. No dream should die
+                for lack of funding.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="rounded-full bg-primary hover:bg-primary/90 text-white px-10 h-16 text-xl font-bold shadow-xl border-none">
+                <Button className="rounded-md bg-accent hover:bg-accent/90 text-accent-foreground px-10 h-16 text-xl font-bold shadow-xl shadow-accent/20 border-none">
                   Donate Online
                 </Button>
-                <Button variant="outline" className="rounded-full border-gray-200 text-gray-900 bg-white hover:bg-gray-50 px-10 h-16 text-xl font-bold transition-all">
+                <Button variant="outline" className="rounded-md border-gray-200 text-gray-900 bg-white hover:bg-gray-50 px-10 h-16 text-xl font-bold transition-all">
                   Bank Transfer Info
                 </Button>
               </div>
             </motion.div>
           </div>
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -ml-48 -mt-48"></div>
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-md blur-[100px] -ml-48 -mt-48"></div>
         </section>
 
         {/* Sponsorship Tiers */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-background">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16 space-y-4">
-              <h2 className="text-4xl font-bold">Pathway 2: <span className="text-primary italic">Sponsorship</span></h2>
-              <p className="text-xl text-gray-500 font-light italic">Direct impact, radical transformation.</p>
+              <h2 className="text-4xl font-bold font-serif">Pathway 2: <span className="text-primary italic">Sponsorship</span></h2>
+              <p className="text-xl text-muted-foreground font-light italic">Direct impact, radical transformation.</p>
             </div>
 
             <div className="grid lg:grid-cols-4 gap-8">
@@ -101,10 +102,10 @@ export default function DonatePage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: tier.delay }}
-                  className="p-10 glass-card rounded-[3.5rem] border border-gray-100 hover:shadow-2xl transition-all group flex flex-col justify-between"
+                  className="p-10 glass-card rounded-md border border-gray-100 hover:shadow-2xl transition-all group flex flex-col justify-between"
                 >
                   <div className="space-y-6">
-                    <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 bg-gray-50 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform">
                       {tier.icon}
                     </div>
                     <div className="space-y-1">
@@ -123,21 +124,21 @@ export default function DonatePage() {
         </section>
 
         {/* Recognition Levels */}
-        <section className="py-24 bg-gray-50">
+        <section className="py-16 lg:py-24 bg-background">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <h2 className="text-4xl md:text-6xl font-black leading-tight">Your Legacy of <span className="text-primary italic">Kindness.</span></h2>
-                <p className="text-xl text-gray-500 font-light leading-relaxed">
+              <div className="space-y-6">
+                <h2 className="text-4xl md:text-6xl font-black leading-tight font-serif italic">Your Legacy of <span className="text-primary not-italic">Kindness.</span></h2>
+                <p className="text-xl text-muted-foreground font-light leading-relaxed">
                   Every contribution is a brick in the foundation of a youth&apos;s dream. We value and honor every partner in this journey.
                 </p>
                 <div className="space-y-4">
                   {recognitionLevels.map((lvl, i) => (
-                    <div key={i} className="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                      <h4 className="text-xl font-bold text-primary mb-4">{lvl.level}</h4>
+                    <div key={i} className="p-8 bg-card rounded-md border border-border shadow-sm">
+                      <h4 className="text-xl font-bold text-primary mb-4 font-serif">{lvl.level}</h4>
                       <ul className="grid sm:grid-cols-2 gap-3">
                         {lvl.benefits.map((b, j) => (
-                          <li key={j} className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                          <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
                             <CheckCircle2 className="w-4 h-4 text-secondary" /> {b}
                           </li>
                         ))}
@@ -146,7 +147,7 @@ export default function DonatePage() {
                   ))}
                 </div>
               </div>
-              <div className="relative h-[700px] w-full rounded-[4.5rem] overflow-hidden shadow-2xl">
+              <div className="relative h-[700px] w-full rounded-md overflow-hidden shadow-2xl">
                 <Image src="/website/IMG_6034.JPG" alt="Donor impact" fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                 <div className="absolute bottom-12 left-12 right-12 text-white">
@@ -160,26 +161,26 @@ export default function DonatePage() {
         </section>
 
         {/* Trust & Transparency */}
-        <section className="py-24 bg-white text-center">
+        <section className="py-16 lg:py-24 bg-background text-center">
           <div className="container mx-auto px-6 max-w-4xl">
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-8">
+            <div className="w-20 h-20 bg-primary/10 rounded-md flex items-center justify-center mx-auto mb-8">
               <ShieldCheck className="w-10 h-10 text-primary" />
             </div>
-            <h2 className="text-4xl font-bold mb-6">Trust & <span className="text-primary">Transparency</span></h2>
-            <p className="text-xl text-gray-500 font-light leading-relaxed mb-12">
+            <h2 className="text-4xl font-bold mb-6 font-serif">Trust & <span className="text-primary">Transparency</span></h2>
+            <p className="text-xl text-muted-foreground font-light leading-relaxed mb-12">
               YESJ is committed to the highest standards of financial accountability. All donations are tax-exempt under Section 80G. We provide detailed impact audits and financial statements to our community annually.
             </p>
             <div className="flex flex-wrap justify-center gap-8">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-secondary" />
+                <CheckCircle2 className="w-5 h-5 text-accent" />
                 <span className="font-bold">FCRA Compliant</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-secondary" />
+                <CheckCircle2 className="w-5 h-5 text-accent" />
                 <span className="font-bold">80G Certified</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-secondary" />
+                <CheckCircle2 className="w-5 h-5 text-accent" />
                 <span className="font-bold">Annual Audits</span>
               </div>
             </div>
@@ -187,7 +188,7 @@ export default function DonatePage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-gray-900 text-white overflow-hidden relative">
+        <section className="py-16 lg:py-24 bg-[#1A1A1A] text-white overflow-hidden relative">
           <div className="absolute inset-0 bg-white/5 opacity-10">
             <Image src="/website/IMG_8204.JPG" alt="CTA focus" fill className="object-cover" />
           </div>
@@ -197,10 +198,10 @@ export default function DonatePage() {
               Your support is the resonance that echoes through generations. Every gift, large or small, creates a ripple of hope.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-gray-900 border-none px-12 h-16 rounded-full text-xl font-bold shadow-2xl hover:scale-105 transition-transform">
+              <Button className="bg-accent text-accent-foreground border-none px-12 h-16 rounded-md text-xl font-bold shadow-xl shadow-accent/20 hover:scale-105 transition-transform">
                 Donate Online Immediately
               </Button>
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 px-12 h-16 rounded-full text-xl font-bold">
+              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 px-12 h-16 rounded-md text-xl font-bold">
                 Contact Development Office
               </Button>
             </div>

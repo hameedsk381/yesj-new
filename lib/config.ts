@@ -14,6 +14,7 @@ export const siteConfig = {
   contact: {
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@yesj.org",
     phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+91-886-672-7202",
+    whatsapp: process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || "+91-886-672-7202",
   },
 
   analytics: {

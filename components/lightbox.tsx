@@ -61,7 +61,7 @@ export default function Lightbox({ images, initialIndex, isOpen, onClose }: Ligh
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-50 p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+            className="absolute top-4 right-4 z-50 p-2 text-white hover:bg-white/10 rounded-md transition-colors"
             aria-label="Close lightbox"
           >
             <X className="h-6 w-6" />
@@ -72,7 +72,7 @@ export default function Lightbox({ images, initialIndex, isOpen, onClose }: Ligh
               e.stopPropagation()
               goToPrevious()
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 text-white hover:bg-white/10 rounded-md transition-colors"
             aria-label="Previous image"
           >
             <ChevronLeft className="h-8 w-8" />
@@ -83,7 +83,7 @@ export default function Lightbox({ images, initialIndex, isOpen, onClose }: Ligh
               e.stopPropagation()
               goToNext()
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-2 text-white hover:bg-white/10 rounded-md transition-colors"
             aria-label="Next image"
           >
             <ChevronRight className="h-8 w-8" />
@@ -128,7 +128,7 @@ export default function Lightbox({ images, initialIndex, isOpen, onClose }: Ligh
                   e.stopPropagation()
                   setCurrentIndex(index)
                 }}
-                className={`w-2 h-2 rounded-full transition-all ${
+                className={`w-2 h-2 rounded-md transition-all ${
                   currentIndex === index ? "bg-white w-8" : "bg-white/50"
                 }`}
                 aria-label={`Go to image ${index + 1}`}

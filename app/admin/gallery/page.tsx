@@ -103,7 +103,7 @@ export default function GalleryPage() {
 
             <main className="container px-4 md:px-6 py-8">
                 {showAddForm && (
-                    <div className="mb-8 p-6 bg-white rounded-lg border shadow-sm max-w-2xl">
+                    <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
                         <h2 className="text-lg font-bold mb-4">Add New Image</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -115,7 +115,7 @@ export default function GalleryPage() {
                                 </select>
                             </div>
                             <textarea className="w-full border p-2 rounded" placeholder="Description" rows={2} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Uploading..." : "Add to Gallery"}</Button>
                         </form>
                     </div>
@@ -123,12 +123,12 @@ export default function GalleryPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {items.map(item => (
-                        <div key={item.id} className="relative group rounded-xl overflow-hidden aspect-square border bg-gray-100">
+                        <div key={item.id} className="relative group rounded-md overflow-hidden aspect-square border bg-gray-100">
                             <img src={`http://localhost:8000/${item.image_path}`} alt={item.title} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
                                 <p className="font-bold text-sm">{item.title}</p>
                                 <p className="text-xs opacity-80 capitalize">{item.category}</p>
-                                <button onClick={() => handleDelete(item.id)} className="absolute top-2 right-2 bg-red-500 p-2 rounded-full hover:bg-red-600"><Trash2 className="h-4 w-4" /></button>
+                                <button onClick={() => handleDelete(item.id)} className="absolute top-2 right-2 bg-red-500 p-2 rounded-md hover:bg-red-600"><Trash2 className="h-4 w-4" /></button>
                             </div>
                         </div>
                     ))}

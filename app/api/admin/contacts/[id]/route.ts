@@ -1,15 +1,53 @@
-import { NextRequest } from "next/server";
-import { proxyToBackend } from "@/lib/backend-proxy";
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { contacts } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import { getSession } from "@/lib/auth";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-    // Current backend might use specific path for status, or general update
-    // If backend is PUT /contacts/{id}/status, we should support that.
-    // Let's assume generic update first or check backend.
-    // Checking backend contacts.py would be ideal.
-    // If unavailable, proxying to /contacts/{id} with PATCH is standard.
-    return proxyToBackend(req, `/contacts/${params.id}`, "PATCH");
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await getSession();
+  if (!session || session.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const id = parseInt(params.id);
+    const body = await req.json();
+    
+    const updated = await db.update(contacts)
+      .set(body)
+      .where(eq(contacts.id, id))
+      .returning();
+
+    if (updated.length === 0) {
+      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(updated[0]);
+  } catch (error) {
+    console.error("Contact PATCH error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-    return proxyToBackend(req, `/contacts/${params.id}`, "DELETE");
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const session = await getSession();
+  if (!session || session.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const id = parseInt(params.id);
+    await db.delete(contacts).where(eq(contacts.id, id));
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Contact DELETE error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }

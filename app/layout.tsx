@@ -1,23 +1,26 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Outfit, Playfair_Display } from "next/font/google"
+import { Playfair_Display, Poppins } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ErrorBoundary } from "@/components/error-boundary"
 import SkipLink from "@/components/skip-link"
 import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
 import ChatWidget from "@/components/chat/chat-widget"
+import PageTransition from "@/components/layout/page-transition"
 
-const outfit = Outfit({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-poppins",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 })
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
+  weight: ["400", "700"],
 })
 
 export const metadata = {
@@ -26,7 +29,7 @@ export const metadata = {
     template: "%s | YESJ - Youth Empowering Service Jesuits"
   },
   description:
-    "Official website of YESJ (Youth Empowering Service - Jesuits). Empowering marginalized youth in Andhra Pradesh and Telangana through skill development, English immersion, and leadership programs since 2015.",
+    "Official website of YESJ (Youth Empowering Service - Jesuits). Empowering marginalized youth in Andhra Pradesh and Telangana through skill development, English immersion, and leadership programs since 2016.",
   keywords: [
     "YESJ",
     "Youth Empowering Service Jesuits",
@@ -124,7 +127,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${playfair.variable} font-sans`}>
+      <body className={`${poppins.variable} ${playfair.variable} font-sans`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -133,7 +136,9 @@ export default function RootLayout({
         <SkipLink />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <ErrorBoundary>
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
             <ChatWidget />
           </ErrorBoundary>
         </ThemeProvider>

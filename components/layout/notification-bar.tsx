@@ -1,80 +1,105 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { X, Flame, Megaphone, Trophy, Briefcase } from "lucide-react"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Bell, X } from "lucide-react"
 import Link from "next/link"
 
 const notifications = [
-    {
-        id: 1,
-        icon: <Flame className="w-4 h-4" />,
-        text: "Apply Now: Summer Shapes Residential Program 2025 →",
-        href: "/programs"
-    },
-    {
-        id: 2,
-        icon: <Megaphone className="w-4 h-4" />,
-        text: "Scholar Support Program: Applications Open for 2025-26 →",
-        href: "/programs"
-    },
-    {
-        id: 3,
-        icon: <Trophy className="w-4 h-4" />,
-        text: "Celebrating 10 Years: 55,000+ Lives Transformed →",
-        href: "/about"
-    },
-    {
-        id: 4,
-        icon: <Briefcase className="w-4 h-4" />,
-        text: "Job Openings: Check Latest Opportunities for Trained Youth →",
-        href: "/programs"
-    }
+  {
+    id: 1,
+    text: "Applications Open: English Proficiency Course (EPC) - Summer 2026",
+    ctaLabel: "Apply Now",
+    href: "/programs/summer-shapes",
+  },
+  {
+    id: 2,
+    text: "Summer Shapes 2026 registrations are open for the free residential programme",
+    ctaLabel: "Register",
+    href: "/programs/summer-shapes",
+  },
+  {
+    id: 3,
+    text: "MAGIS Youth Festival is coming soon in Vijayawada",
+    ctaLabel: "Know More",
+    href: "/programs/magis",
+  },
+  {
+    id: 4,
+    text: "YES-J is looking for volunteers to join the VIP programme",
+    ctaLabel: "Apply",
+    href: "/volunteer",
+  },
 ]
 
+const STORAGE_KEY = "yesj-notification-dismissed"
+
 export default function NotificationBar() {
-    const [isVisible, setIsVisible] = useState(true)
-    const [current, setCurrent] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const [current, setCurrent] = useState(0)
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % notifications.length)
-        }, 5000)
-        return () => clearInterval(timer)
-    }, [])
+  useEffect(() => {
+    const dismissed = window.sessionStorage.getItem(STORAGE_KEY)
+    setIsVisible(dismissed !== "true")
+  }, [])
 
-    if (!isVisible) return null
+  useEffect(() => {
+    if (!isVisible) {
+      return
+    }
 
-    return (
-        <div className="relative z-[60] w-full bg-primary text-white py-2 px-4 shadow-sm border-b border-primary/20">
-            <div className="container mx-auto flex items-center justify-between">
-                <div className="flex-1 flex justify-center items-center overflow-hidden h-6">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={notifications[current].id}
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: -20, opacity: 0 }}
-                            className="absolute"
-                        >
-                            <Link
-                                href={notifications[current].href}
-                                className="flex items-center gap-2 text-xs md:text-sm font-bold hover:underline decoration-white/50 underline-offset-4 tracking-wide"
-                            >
-                                {notifications[current].icon}
-                                <span>{notifications[current].text}</span>
-                            </Link>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-                <button
-                    onClick={() => setIsVisible(false)}
-                    className="p-1 hover:bg-white/20 rounded-full transition-colors ml-4 z-10"
-                    aria-label="Dismiss notification"
-                >
-                    <X className="w-3 h-3" />
-                </button>
-            </div>
+    const timer = window.setInterval(() => {
+      setCurrent((prev) => (prev + 1) % notifications.length)
+    }, 5000)
+
+    return () => window.clearInterval(timer)
+  }, [isVisible])
+
+  if (!isVisible) {
+    return null
+  }
+
+  const currentNotification = notifications[current]
+
+  return (
+    <div className="border-b border-accent/50 bg-accent text-foreground">
+      <div className="container flex min-h-11 items-center gap-3 px-5 py-2 sm:px-6 lg:px-8">
+        <div className="flex shrink-0 items-center gap-2 text-sm font-medium">
+          <Bell className="h-4 w-4" aria-hidden="true" />
+          <span>Announcement</span>
         </div>
-    )
+
+        <div className="relative flex-1 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentNotification.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0 flex items-center"
+            >
+              <p className="truncate text-sm text-foreground/80">{currentNotification.text}</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <Link href={currentNotification.href} className="shrink-0 text-sm font-semibold text-primary hover:underline">
+          {currentNotification.ctaLabel} &rarr;
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => {
+            window.sessionStorage.setItem(STORAGE_KEY, "true")
+            setIsVisible(false)
+          }}
+          className="rounded-md p-1 transition-colors hover:bg-black/5"
+          aria-label="Dismiss notification"
+        >
+          <X className="h-3.5 w-3.5" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  )
 }

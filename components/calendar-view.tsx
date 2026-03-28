@@ -60,7 +60,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
   }
 
   return (
-    <div className="bg-white border border-primary/10 rounded-lg overflow-hidden">
+    <div className="bg-white border border-primary/10 rounded-md overflow-hidden">
       <div className="flex items-center justify-between p-4 bg-blue-50 border-b border-primary/10">
         <Button
           variant="ghost"
@@ -114,7 +114,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
               <div
                 className={`text-sm font-light mb-1 ${
                   isTodayDate
-                    ? 'inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white'
+                    ? 'inline-flex items-center justify-center w-6 h-6 rounded-md bg-primary text-white'
                     : 'text-muted-foreground'
                 }`}
               >
@@ -144,7 +144,7 @@ export default function CalendarView({ events, onEventClick }: CalendarViewProps
             <span>Event Day</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-primary"></div>
+            <div className="w-4 h-4 rounded-md bg-primary"></div>
             <span>Today</span>
           </div>
         </div>

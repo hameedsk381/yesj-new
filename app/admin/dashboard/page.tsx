@@ -137,7 +137,7 @@ export default function AdminDashboard() {
               return (
                 <div
                   key={index}
-                  className="bg-white border border-primary/10 rounded-lg p-6 hover:shadow-md transition-shadow"
+                  className="bg-white border border-primary/10 rounded-md p-6 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <Icon className={`h-8 w-8 ${stat.color}`} />
@@ -150,11 +150,11 @@ export default function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white border border-primary/10 rounded-lg p-6 lg:col-span-2">
+            <div className="bg-white border border-primary/10 rounded-md p-6 lg:col-span-2">
               <h3 className="text-lg font-light text-primary mb-6">Recent Activity</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3 py-2">
-                  <div className="mt-1 p-2 bg-blue-100 rounded-full">
+                  <div className="mt-1 p-2 bg-blue-100 rounded-md">
                     <UserPlus className="h-4 w-4 text-blue-600" />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3 py-2">
-                  <div className="mt-1 p-2 bg-green-100 rounded-full">
+                  <div className="mt-1 p-2 bg-green-100 rounded-md">
                     <Mail className="h-4 w-4 text-green-600" />
                   </div>
                   <div>
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3 py-2">
-                  <div className="mt-1 p-2 bg-purple-100 rounded-full">
+                  <div className="mt-1 p-2 bg-purple-100 rounded-md">
                     <FileText className="h-4 w-4 text-purple-600" />
                   </div>
                   <div>
@@ -181,7 +181,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3 py-2">
-                  <div className="mt-1 p-2 bg-orange-100 rounded-full">
+                  <div className="mt-1 p-2 bg-orange-100 rounded-md">
                     <Newspaper className="h-4 w-4 text-orange-600" />
                   </div>
                   <div>
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white border border-primary/10 rounded-lg p-6">
+            <div className="bg-white border border-primary/10 rounded-md p-6">
               <h3 className="text-lg font-light text-primary mb-6">Quick Stats</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="bg-white border border-primary/10 rounded-lg p-6 mb-8">
+          <div className="bg-white border border-primary/10 rounded-md p-6 mb-8">
             <h3 className="text-lg font-light text-primary mb-6">Quick Actions</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {quickActions.map((action, index) => {
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white border border-primary/10 rounded-lg p-6">
+            <div className="bg-white border border-primary/10 rounded-md p-6">
               <h3 className="text-lg font-light text-primary mb-4">Recent Registrations</h3>
               <div className="space-y-4">
                 {recentRegistrations.length === 0 ? (
@@ -259,7 +259,7 @@ export default function AdminDashboard() {
               </Link>
             </div>
 
-            <div className="bg-white border border-primary/10 rounded-lg p-6">
+            <div className="bg-white border border-primary/10 rounded-md p-6">
               <h3 className="text-lg font-light text-primary mb-4">Recent Contact Messages</h3>
               <div className="space-y-4">
                 {recentContacts.length === 0 ? (

@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button"
 
 export default function CentennialCelebration() {
   return (
-    <section className="w-full py-20 md:py-32 bg-white overflow-hidden">
+    <section className="w-full py-20 md:py-16 lg:py-24 bg-white overflow-hidden">
       <div className="container px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-none overflow-hidden"
+          className="relative rounded-md overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90 z-10"></div>
           <Image
@@ -44,7 +44,7 @@ export default function CentennialCelebration() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Button className="bg-white text-primary hover:bg-white/90 rounded-none">Become a Partner</Button>
+                <Button className="bg-white text-primary hover:bg-white/90 rounded-md">Become a Partner</Button>
               </motion.div>
             </div>
           </div>

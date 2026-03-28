@@ -68,7 +68,7 @@ export default function AdminSidebar() {
         <Button
           onClick={handleLogout}
           variant="outline"
-          className="w-full rounded-none border-primary text-primary hover:bg-primary/10"
+          className="w-full rounded-md border-primary text-primary hover:bg-primary/10"
         >
           <LogOut className="h-4 w-4 mr-2" />
           Logout

@@ -51,7 +51,7 @@ export default function GalleryPreview() {
   ]
 
   return (
-    <section id="gallery" className="w-full py-20 md:py-32 bg-blue-50">
+    <section id="gallery" className="w-full py-20 md:py-16 lg:py-24 bg-blue-50">
       <div className="container px-4 md:px-6">
         <motion.div
           initial="hidden"
@@ -76,7 +76,7 @@ export default function GalleryPreview() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
               whileHover={{ scale: 1.03 }}
-              className="overflow-hidden rounded-lg"
+              className="overflow-hidden rounded-md"
             >
               <Image
                 src={image.src || "/placeholder.svg"}
@@ -96,7 +96,7 @@ export default function GalleryPreview() {
           className="flex justify-center mt-12"
         >
           <Link href="/stories">
-            <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+            <Button variant="outline" className="rounded-md border-primary hover:bg-blue-50 text-primary">
               Read More Success Stories
             </Button>
           </Link>

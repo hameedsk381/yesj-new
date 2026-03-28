@@ -1,140 +1,114 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { BookOpen, Heart, Users, Wrench, Wand2, School, ArrowRight, Star } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { programsData } from "@/lib/data/programs"
+import { ProgramIcon } from "@/components/shared/program-icon"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export default function ProgramsPreview() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  }
-
-  const programs = [
-    {
-      icon: <BookOpen className="h-8 w-8 text-primary mb-4" />,
-      title: "Summer Shapes",
-      description: "Break the English barrier. Unlock unlimited opportunities through our 30-day residential training program.",
-      link: "/programs#summer-shapes",
-      image: "/assets/slider-01.jpg",
-    },
-    {
-      icon: <Wrench className="h-8 w-8 text-primary mb-4" />,
-      title: "Multi-Skill Training",
-      description: "From dropout to dignified employment with our residential skill training programs in tailoring, ICT, driving, and welding.",
-      link: "/programs#must",
-      image: "/assets/slider-2.jpg",
-    },
-    {
-      icon: <Users className="h-8 w-8 text-primary mb-4" />,
-      title: "Scholar Support Program",
-      description: "Supporting academically gifted students to achieve their tertiary education dreams with comprehensive scholarships.",
-      link: "/programs#ssp",
-      image: "/assets/slider-3.jpg",
-    },
-    {
-      icon: <Wand2 className="h-8 w-8 text-primary mb-4" />,
-      title: "MAGIC Youth",
-      description: "Student-led leadership development and campus community transformation.",
-      link: "/programs#magic",
-      image: "/assets/team-1.jpg",
-    },
-    {
-      icon: <School className="h-8 w-8 text-primary mb-4" />,
-      title: "EOTT",
-      description: "Improving literacy and numeracy skills through community-based learning centers.",
-      link: "/programs#eott",
-      image: "/assets/eachone.png",
-    },
-    {
-      icon: <Star className="h-8 w-8 text-primary mb-4" />,
-      title: "Yuvotsavaalu",
-      description: "Annual youth festival celebration with cultural performances and leadership activities.",
-      link: "/programs#yuvotsavaalu",
-      image: "/assets/Yuvotsavaalu.png",
-    },
-  ]
+  // Take first 8 programs for the bento preview to keep it tight
+  const previewPrograms = programsData.slice(0, 8)
 
   return (
-    <section id="programs" className="w-full py-16 md:py-24 lg:py-32 bg-white">
-      <div className="container px-4 md:px-6">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="flex flex-col items-center justify-center space-y-4 text-center mb-12 md:mb-16"
-        >
-          <div className="space-y-2">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-12 bg-primary"></div>
-              <span className="text-sm font-light text-primary">What We Do</span>
-              <div className="h-1 w-12 bg-primary"></div>
-            </div>
-            <h2 className="text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl text-primary">Our Programs</h2>
-            <p className="max-w-[700px] text-muted-foreground md:text-xl font-extralight">
-              10+ Pathways to Transformation. Comprehensive programs addressing every barrier youth face.
-            </p>
-          </div>
-        </motion.div>
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {programs.map((program, index) => (
-            <motion.div
-              key={program.title}
+    <section id="programs" aria-labelledby="programs-heading" className="relative overflow-hidden bg-background py-24 lg:py-32">
+      <div className="container px-6 lg:px-12">
+        <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl space-y-4">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-2 text-primary uppercase tracking-[0.3em] text-xs font-bold"
+            >
+              <span className="h-[1px] w-8 bg-primary/50" />
+              Our Initiatives
+            </motion.div>
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg hover:shadow-2xl transition-all duration-300"
+              transition={{ delay: 0.1 }}
+              id="programs-heading"
+              className="text-4xl md:text-5xl font-serif font-bold text-foreground leading-tight"
             >
-              <div className="relative h-56 w-full overflow-hidden">
+              Programmes that <span className="italic text-primary font-bold">Empower & Transform.</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-lg leading-relaxed text-muted-foreground/80 max-w-2xl font-light"
+            >
+              Each initiative tackles a specific barrier, from English immersion and employability to scholarships, community leadership, and spiritual formation.
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <Button asChild variant="outline" className="h-12 px-8 rounded-full border-primary/20 hover:border-primary hover:bg-primary/5 text-primary font-bold transition-all shadow-lg shadow-primary/5">
+              <Link href="/programs">View All Programmes</Link>
+            </Button>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:grid-rows-2">
+          {previewPrograms.map((program, index) => (
+            <motion.article
+              key={program.slug}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              whileHover={{ y: -10 }}
+              className={cn(
+                "group relative h-full flex flex-col overflow-hidden rounded-3xl border border-white/10 dark:border-white/5 bg-card transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10",
+                index === 0 ? "lg:col-span-2 lg:row-span-2" : "",
+                index === 1 ? "lg:col-span-1 lg:row-span-1" : "",
+                index === 5 ? "lg:col-span-2 lg:row-span-1" : ""
+              )}
+            >
+              <div className="relative flex-1 overflow-hidden">
                 <Image
-                  src={program.image || "/placeholder.svg"}
-                  alt={program.title}
-                  width={600}
-                  height={400}
-                  className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                  src={program.image}
+                  alt={`${program.title} programme`}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <div className="p-2 bg-white/20 backdrop-blur-md rounded-lg w-fit mb-2">
-                    {program.icon}
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-gray-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                
+                <div className="absolute top-6 left-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-xl">
+                   <ProgramIcon name={program.icon} logo={program.logo} className="h-6 w-6" aria-hidden="true" />
                 </div>
               </div>
-              <div className="p-6 md:p-8">
-                <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-primary transition-colors">{program.title}</h3>
-                <p className="text-gray-600 font-medium leading-relaxed mb-6">{program.description}</p>
-                <Link
-                  href={program.link}
-                  className="inline-flex items-center text-sm font-bold text-primary hover:text-secondary uppercase tracking-wider group-hover:underline decoration-2 underline-offset-4"
+
+              <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <h3 className={cn(
+                  "font-serif font-bold text-white transition-colors group-hover:text-primary",
+                  index === 0 ? "text-3xl" : "text-xl"
+                )}>
+                  {program.shortTitle}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/70 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 font-light">
+                  {program.overviewDescription}
+                </p>
+                <Link 
+                  href={`/programs/${program.slug}`} 
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200"
                 >
-                  Learn more <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-2" />
+                  Learn more <span className="text-lg">→</span>
                 </Link>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex justify-center mt-10 md:mt-12"
-        >
-          <Link href="/programs">
-            <Button variant="outline" className="rounded-none border-accent hover:bg-accent/10 text-accent px-6 py-3 md:px-8 md:py-4 hover:text-accent">
-              Explore Programs
-            </Button>
-          </Link>
-        </motion.div>
       </div>
     </section>
   )

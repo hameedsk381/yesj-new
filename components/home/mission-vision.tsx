@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 
 export default function MissionVision() {
   return (
-    <section id="mission" className="w-full py-20 md:py-32 bg-blue-50">
+    <section id="mission" className="w-full py-20 md:py-16 lg:py-24 bg-blue-50">
       <div className="container px-4 md:px-6">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ export default function MissionVision() {
               className="pt-4"
             >
               <Link href="/about">
-                <Button variant="outline" className="rounded-none border-primary hover:bg-blue-50 text-primary">
+                <Button variant="outline" className="rounded-md border-primary hover:bg-blue-50 text-primary">
                   Explore Programs
                 </Button>
               </Link>

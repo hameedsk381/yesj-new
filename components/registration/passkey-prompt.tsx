@@ -97,7 +97,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
         >
             <div className="text-center mb-8">
                 <div className="flex justify-center mb-6">
-                    <div className="bg-primary/10 p-4 rounded-full">
+                    <div className="bg-primary/10 p-4 rounded-md">
                         <Fingerprint className="h-12 w-12 text-primary" />
                     </div>
                 </div>
@@ -124,7 +124,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                 <Button
                     onClick={handleRegisterPasskey}
                     disabled={isRegistering}
-                    className="rounded-none bg-primary hover:bg-primary/90 text-white"
+                    className="rounded-md bg-primary hover:bg-primary/90 text-white"
                 >
                     {isRegistering && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {isRegistering ? "Setting up..." : "Set up Biometric Login"}
@@ -133,7 +133,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
                     variant="outline"
                     onClick={onSkip}
                     disabled={isRegistering}
-                    className="rounded-none border-primary hover:bg-blue-50 text-primary"
+                    className="rounded-md border-primary hover:bg-blue-50 text-primary"
                 >
                     Skip for Now
                 </Button>

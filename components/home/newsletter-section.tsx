@@ -1,22 +1,26 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, type FormEvent } from "react"
 import { Button } from "@/components/ui/button"
-import { Send } from "lucide-react"
+
+const newsletterPoints = [
+  "Monthly stories of transformation",
+  "Programme updates and announcements",
+  "Volunteer and partnership opportunities",
+]
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     setIsSubmitting(true)
     setMessage(null)
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/newsletters/", {
+      const response = await fetch("/api/newsletters", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,10 +31,10 @@ export default function NewsletterSection() {
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.detail || "Failed to subscribe")
+        throw new Error(result.details || result.detail || result.error || "Failed to subscribe")
       }
 
-      setMessage({ type: "success", text: "Successfully joined the resonance!" })
+      setMessage({ type: "success", text: "Thanks for subscribing." })
       setEmail("")
     } catch (error) {
       setMessage({
@@ -43,72 +47,66 @@ export default function NewsletterSection() {
   }
 
   return (
-    <section className="relative overflow-hidden py-24 bg-white" aria-labelledby="newsletter-heading">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+    <section aria-labelledby="newsletter-heading" className="border-b border-border bg-background">
+      <div className="container px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="rounded-md border border-border bg-card p-8 sm:p-10 shadow-sm">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)] lg:items-center">
+            <div className="space-y-4">
+              <p className="text-sm font-medium text-primary uppercase tracking-widest">Stay in touch</p>
+              <h2
+                id="newsletter-heading"
+                className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl font-serif"
+              >
+                Subscribe for steady updates, not noise.
+              </h2>
+              <p className="max-w-xl text-base leading-7 text-muted-foreground">
+                Stay connected to programme updates, stories of transformation, and practical ways
+                to support youth across the region.
+              </p>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-[3.5rem] p-12 md:p-20 bg-gray-50/50 border-gray-100 text-center space-y-8"
-        >
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <h2 id="newsletter-heading" className="text-4xl md:text-5xl font-serif font-black tracking-tight text-gray-900">
-              Join the <span className="text-secondary italic">Resonance.</span>
-            </h2>
-            <p className="text-lg md:text-xl text-gray-500 font-light leading-relaxed">
-              Get monthly stories of transformation, program updates, and volunteer opportunities delivered with purpose to your inbox.
-            </p>
-          </div>
+              <ul className="grid gap-2 text-sm leading-7 text-muted-foreground sm:grid-cols-2">
+                {newsletterPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            </div>
 
-          <form onSubmit={handleSubmit} className="relative max-w-lg mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="newsletter-email" className="mb-2 block text-sm font-medium text-foreground">
+                  Email address
+                </label>
                 <input
                   id="newsletter-email"
                   type="email"
-                  placeholder="Your impact begins with an email..."
+                  placeholder="name@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(event) => setEmail(event.target.value)}
                   required
                   disabled={isSubmitting}
-                  className="w-full h-16 bg-white border-2 border-transparent focus:border-primary rounded-3xl px-8 outline-none shadow-sm transition-all text-gray-900"
-                  aria-required="true"
+                  className="h-11 w-full rounded-md border border-input bg-white px-4 outline-none transition-colors focus:border-primary"
                 />
               </div>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="h-16 rounded-3xl bg-primary hover:bg-primary/90 text-white px-8 font-bold text-lg shadow-xl shadow-primary/20 flex items-center gap-2 group shrink-0"
-                aria-label={isSubmitting ? "Submitting your email" : "Subscribe to newsletter"}
-              >
-                {isSubmitting ? "Syncing..." : "Sync Now"}
-                <Send className={`w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ${isSubmitting ? "animate-pulse" : ""}`} aria-hidden="true" />
-              </Button>
-            </div>
 
-            <AnimatePresence>
-              {message && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
+              <Button type="submit" disabled={isSubmitting} className="h-11 w-full sm:w-auto">
+                {isSubmitting ? "Submitting..." : "Subscribe"}
+              </Button>
+
+              {message ? (
+                <p
                   role="alert"
-                  className={`text-sm mt-4 font-bold ${message.type === "success" ? "text-tertiary" : "text-destructive"
-                    }`}
+                  className={`text-sm ${message.type === "success" ? "text-tertiary" : "text-destructive"}`}
                 >
                   {message.text}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </form>
+                </p>
+              ) : null}
 
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black">
-            NO SPAM. ONLY PURE IMPACT. UNFOLLOW ANYTIME.
-          </p>
-        </motion.div>
+              <p className="text-xs text-muted-foreground">
+                No spam. Only programme updates, stories, and ways to support the work.
+              </p>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
   )

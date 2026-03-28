@@ -1,60 +1,48 @@
-import { NextResponse } from "next/server"
-import { SignJWT } from "jose"
+import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import { verifyPassword, createAccessToken } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
-    const { email, password, requireAdmin } = await req.json()
+    const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json({ error: "Email and password are required" }, { status: 400 })
+      return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
     }
 
-    // Call FastAPI backend
-    const formData = new URLSearchParams()
-    formData.append('username', email)
-    formData.append('password', password)
+    // native database verification
+    const user = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
 
-    const baseUrl = process.env.BACKEND_API_URL || "http://127.0.0.1:8000/api/v1"
-    const backendUrl = `${baseUrl}/login/access-token`
-
-    // Note: In production, use env var for backend URL
-    const res = await fetch(backendUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: formData
-    })
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}))
-      return NextResponse.json(
-        { error: errorData.detail || "Invalid credentials" },
-        { status: res.status }
-      )
+    if (!user || !(await verifyPassword(password, user.hashedPassword))) {
+      return NextResponse.json({ error: "Incorrect email or password" }, { status: 400 });
     }
 
-    const data = await res.json()
-    const token = data.access_token
+    if (!user.isActive) {
+      return NextResponse.json({ error: "Inactive user" }, { status: 400 });
+    }
 
-    // Decode token to check role if needed (or trust backend logic if specific endpoint used)
-    // Here we can just proceed as the token contains the role and middleware will verify it.
+    const role = user.isSuperuser ? "admin" : "member";
+    const token = await createAccessToken({ sub: user.id.toString(), role });
 
     // Create response with cookie
-    const response = NextResponse.json({ success: true })
+    const response = NextResponse.json({ success: true, user: { id: user.id, email: user.email, fullName: user.fullName, role } });
 
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30, // 30 days (consistent with backend)
+      maxAge: 60 * 60 * 24 * 30, // 30 days
       path: "/",
-    })
+    });
 
-    return response
+    return response;
 
   } catch (error) {
-    console.error("Login error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("Login error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

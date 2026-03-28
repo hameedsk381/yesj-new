@@ -1,54 +1,83 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 const partners = [
-    { name: "Maruti Toyota", logo: "/placeholder.svg" },
-    { name: "Skill India", logo: "/placeholder.svg" },
-    { name: "Andhra Province Jesuits", logo: "/placeholder.svg" },
-    { name: "MAGIC Youth", logo: "/placeholder.svg" },
-    { name: "JoY Desk", logo: "/placeholder.svg" },
-    { name: "Summer Shapes", logo: "/placeholder.svg" },
-    { name: "CSR India", logo: "/placeholder.svg" },
-    { name: "Local Parishes", logo: "/placeholder.svg" },
+  {
+    name: "Coromandel International",
+    logo: "/assets/COLLABORATORS/Coramandel International.png",
+  },
+  {
+    name: "Deichman Foundation",
+    logo: "/assets/COLLABORATORS/Deichman Foundation.png",
+  },
+  {
+    name: "Friendly Hands London",
+    logo: "/assets/COLLABORATORS/Friendly Hands, London.png",
+  },
+  {
+    name: "KIMS Hospitals Hyderabad",
+    logo: "/assets/COLLABORATORS/KIMS Hospitals, Hyderabad.png",
+  },
+  {
+    name: "LINSI Foundation",
+    logo: "/assets/COLLABORATORS/LINSI Foundation.jpg",
+  },
+  {
+    name: "MOM Foundation USA",
+    logo: "/assets/COLLABORATORS/MOM foundatiom, USA.png",
+  },
+  {
+    name: "NorthSouth Foundation",
+    logo: "/assets/COLLABORATORS/NorthSouth LOGO.png",
+  },
+  {
+    name: "Samaritan Purse Germany",
+    logo: "/assets/COLLABORATORS/Samaritan Purse, Germany.png",
+  },
 ]
 
 export default function Collaborators() {
-    return (
-        <section className="py-20 bg-gray-50 overflow-hidden" aria-labelledby="partners-heading">
-            <div className="container mx-auto px-6 mb-12 text-center">
-                <h2 id="partners-heading" className="text-4xl font-serif font-bold text-gray-900 mb-4">Partnering for Greater Impact</h2>
-                <p className="text-lg text-gray-600 italic font-light">
-                    &quot;Alone we can do so little; together we can do so much&quot;
-                </p>
-            </div>
+  return (
+    <section aria-labelledby="partners-heading" className="border-b border-border bg-background">
+      <div className="container px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl space-y-3">
+            <p className="text-sm font-medium text-primary uppercase tracking-widest">Collaborators</p>
+            <h2 id="partners-heading" className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl font-serif">
+              Partnerships that extend the work.
+            </h2>
+            <p className="text-base leading-7 text-muted-foreground">
+              The work grows through collaboration across philanthropy, education, healthcare, and
+              community organisations that share a commitment to youth dignity.
+            </p>
+          </div>
 
-            <div className="relative flex overflow-x-hidden mb-12">
-                <div className="animate-scroll flex whitespace-nowrap">
-                    {[...partners, ...partners].map((partner, index) => (
-                        <div key={index} className="flex items-center justify-center mx-12 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100">
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="relative h-16 w-32">
-                                    <Image
-                                        src={partner.logo}
-                                        alt={`${partner.name} logo`}
-                                        fill
-                                        className="object-contain"
-                                    />
-                                </div>
-                                <span className="text-xs font-medium text-gray-400 uppercase tracking-widest">{partner.name}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+          <Button asChild variant="outline" className="h-11 px-5 border-primary/20 hover:bg-primary/5">
+            <Link href="/contact">Become a partner</Link>
+          </Button>
+        </div>
 
-            <div className="text-center">
-                <Button variant="outline" className="rounded-full px-8 border-primary text-primary hover:bg-primary hover:text-white transition-all h-12 text-lg">
-                    Become a Partner →
-                </Button>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {partners.map((partner) => (
+            <div
+              key={partner.name}
+              className="flex min-h-[132px] flex-col items-center justify-center rounded-md border border-border bg-card p-6 text-center shadow-sm"
+            >
+              <Image
+                src={partner.logo}
+                alt={`${partner.name} logo`}
+                width={180}
+                height={72}
+                className="h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+              />
+              <div className="mt-4 text-sm font-medium text-muted-foreground font-serif italic">{partner.name}</div>
             </div>
-        </section>
-    )
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }

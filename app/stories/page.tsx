@@ -43,16 +43,16 @@ export default function StoriesPage() {
       <Header />
       <main className="flex-1">
         {/* Magazine Hero */}
-        <section className="py-24 bg-gray-50 overflow-hidden relative">
+        <section className="py-16 lg:py-24 bg-gray-50 overflow-hidden relative">
           <div className="container mx-auto px-6">
-            <div className="flex flex-col lg:flex-row gap-12 items-center">
-              <div className="lg:w-1/2 space-y-8">
+            <div className="flex flex-col lg:flex-row gap-8 items-center">
+              <div className="lg:w-1/2 space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   className="space-y-6"
                 >
-                  <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
+                  <div className="inline-flex items-center gap-2 px-4 py-1 rounded-md bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
                     The YESJ Journal
                   </div>
                   <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-gray-900 leading-[0.9]">
@@ -62,10 +62,10 @@ export default function StoriesPage() {
                     Captured stories, profound reflections, and the vibrant pulse of youth transformation across Andhra & Telangana.
                   </p>
                   <div className="flex gap-4 pt-4">
-                    <Button className="rounded-full px-8 h-14 bg-primary hover:bg-primary/90 text-white shadow-xl flex items-center gap-2">
+                    <Button className="rounded-md px-8 h-14 bg-primary hover:bg-primary/90 text-white shadow-xl flex items-center gap-2">
                       Latest Issue <BookOpen className="w-4 h-4" />
                     </Button>
-                    <Button variant="outline" className="rounded-full px-8 h-14 border-gray-200 hover:bg-gray-50 flex items-center gap-2">
+                    <Button variant="outline" className="rounded-md px-8 h-14 border-gray-200 hover:bg-gray-50 flex items-center gap-2">
                       Browse Archive <ArrowRight className="w-4 h-4" />
                     </Button>
                   </div>
@@ -77,7 +77,7 @@ export default function StoriesPage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="relative h-[600px] w-full rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white"
+                    className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl border-[16px] border-white"
                   >
                     <Image
                       src={featuredStory.image_path ? `http://localhost:8000/${featuredStory.image_path}` : "/placeholder.svg"}
@@ -94,11 +94,11 @@ export default function StoriesPage() {
                     </div>
                   </motion.div>
                 ) : (
-                  <div className="h-[600px] w-full rounded-[4rem] bg-gray-200 flex items-center justify-center border-[16px] border-white text-gray-400">
+                  <div className="h-[600px] w-full rounded-md bg-gray-200 flex items-center justify-center border-[16px] border-white text-gray-400">
                     No featured story
                   </div>
                 )}
-                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-[3rem] -z-10 blur-2xl opacity-20"></div>
+                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-md -z-10 blur-2xl opacity-20"></div>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function StoriesPage() {
         </section>
 
         {/* Articles Grid */}
-        <section className="py-24 bg-white">
+        <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
             {isLoading ? (
               <div className="text-center py-20 text-gray-400">Loading stories...</div>
@@ -127,10 +127,10 @@ export default function StoriesPage() {
                 {stories.length === 0 ? (
                   <div className="text-center py-20 text-gray-500">No stories published yet.</div>
                 ) : (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {otherStories.map((article) => (
                       <article key={article.id} className="group cursor-pointer">
-                        <div className="relative h-[400px] mb-8 overflow-hidden rounded-[3rem] shadow-lg border border-gray-100">
+                        <div className="relative h-[400px] mb-8 overflow-hidden rounded-md shadow-lg border border-gray-100">
                           <Image
                             src={article.image_path ? `http://localhost:8000/${article.image_path}` : "/placeholder.svg"}
                             alt={article.title}
@@ -139,7 +139,7 @@ export default function StoriesPage() {
                           />
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                           <div className="absolute top-8 left-8">
-                            <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-full text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
+                            <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-md text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
                               {article.category}
                             </span>
                           </div>
@@ -170,7 +170,7 @@ export default function StoriesPage() {
             )}
 
             <div className="mt-24 text-center">
-              <Button variant="outline" className="rounded-full px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+              <Button variant="outline" className="rounded-md px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
                 Load More Stories
               </Button>
             </div>
@@ -178,13 +178,13 @@ export default function StoriesPage() {
         </section>
 
         {/* Magazine Subscription */}
-        <section className="py-24 bg-gray-50">
+        <section className="py-16 lg:py-24 bg-gray-50">
           <div className="container mx-auto px-6">
-            <div className="relative overflow-hidden rounded-[4rem] bg-gray-900 p-12 lg:p-24 text-white text-center">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] -mr-48 -mt-48"></div>
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-[100px] -ml-48 -mb-48"></div>
+            <div className="relative overflow-hidden rounded-md bg-gray-900 p-12 lg:p-24 text-white text-center">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-md blur-[100px] -mr-48 -mt-48"></div>
+              <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-md blur-[100px] -ml-48 -mb-48"></div>
 
-              <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+              <div className="relative z-10 max-w-3xl mx-auto space-y-6">
                 <h2 className="text-4xl md:text-6xl font-bold">Never miss <span className="text-primary italic">the Resonance.</span></h2>
                 <p className="text-xl text-white/60 font-light">Get the digital edition of Echoes delivered straight to your inbox every month.</p>
                 <form className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">

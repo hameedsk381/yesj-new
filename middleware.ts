@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { jwtVerify } from "jose"
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-secret-key")
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "change-this-to-a-secure-random-string-in-production")
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname

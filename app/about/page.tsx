@@ -3,7 +3,7 @@ import AboutClientPage from "./client-page"
 
 export const metadata: Metadata = {
   title: "About YESJ - Our Story and Jesuit Foundation",
-  description: "Learn about the radical love and theological foundation of YESJ. Discover our story, the YES philosophy, and the Ignatian pillars that guide our youth empowerment mission since 2015.",
+  description: "Learn about the Jesuit foundation of YESJ. Discover our story, the YES philosophy, and the principles guiding youth empowerment across Andhra Pradesh and Telangana since 2016.",
   keywords: ["YESJ History", "Jesuit Mission Telugu states", "Fr. Bala Bollineni SJ", "Ignatian Pedagogy", "Youth Philosophy YES"],
 }
 

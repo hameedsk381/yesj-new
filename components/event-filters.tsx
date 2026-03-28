@@ -41,7 +41,7 @@ export default function EventFilters({ onFilterChange }: EventFiltersProps) {
   const hasActiveFilters = Object.values(filters).some(v => v !== "all")
 
   return (
-    <div className="bg-blue-50 border border-primary/10 rounded-lg p-6 mb-8">
+    <div className="bg-secondary/10 border border-primary/10 rounded-md p-6 mb-8">
       <div className="flex items-center gap-2 mb-4">
         <Filter className="h-5 w-5 text-primary" />
         <h3 className="text-lg font-light text-primary">Filter Events</h3>
@@ -113,7 +113,7 @@ export default function EventFilters({ onFilterChange }: EventFiltersProps) {
           <Button
             onClick={clearFilters}
             variant="outline"
-            className="rounded-none border-primary text-primary hover:bg-primary/10"
+            className="rounded-md border-primary text-primary hover:bg-primary/10"
           >
             Clear Filters
           </Button>

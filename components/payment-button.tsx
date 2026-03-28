@@ -16,9 +16,43 @@ interface PaymentButtonProps {
   onFailure?: (error: string) => void
 }
 
+type RazorpayHandlerResponse = {
+  razorpay_order_id: string
+  razorpay_payment_id: string
+  razorpay_signature: string
+}
+
+type RazorpayTheme = {
+  color: string
+}
+
+type RazorpayOptions = {
+  key: string
+  amount: number
+  currency: string
+  name: string
+  description: string
+  image: string
+  order_id: string
+  handler: (response: RazorpayHandlerResponse) => Promise<void> | void
+  prefill: {
+    name: string
+    email: string
+    contact: string
+  }
+  theme: RazorpayTheme
+  modal: {
+    ondismiss: () => void
+  }
+}
+
+type RazorpayInstance = {
+  open: () => void
+}
+
 declare global {
   interface Window {
-    Razorpay: any
+    Razorpay: new (options: RazorpayOptions) => RazorpayInstance
   }
 }
 
@@ -86,14 +120,14 @@ export default function PaymentButton({
       const config = getRazorpayConfig()
 
       const options = {
-        key: config.keyId,
+        key: config.keyId ?? "",
         amount: amount * 100,
         currency: config.currency,
         name: config.name,
         description: `Payment for ${eventName}`,
         image: config.image,
         order_id: data.orderId,
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayHandlerResponse) {
           try {
             const verifyResponse = await fetch("/api/payment/verify", {
               method: "POST",
@@ -149,7 +183,7 @@ export default function PaymentButton({
     return (
       <Button
         onClick={() => setShowForm(true)}
-        className="w-full rounded-none bg-primary hover:bg-primary/90 text-white"
+        className="w-full rounded-md bg-primary hover:bg-primary/90 text-white"
       >
         <CreditCard className="h-4 w-4 mr-2" />
         Pay ₹{amount}
@@ -158,7 +192,7 @@ export default function PaymentButton({
   }
 
   return (
-    <div className="space-y-4 p-6 border border-primary/10 rounded-lg bg-blue-50">
+    <div className="space-y-4 p-6 border border-primary/10 rounded-md bg-secondary/10">
       <h3 className="text-lg font-light text-primary mb-4">Payment Details</h3>
       
       <div className="space-y-4">
@@ -198,7 +232,7 @@ export default function PaymentButton({
           />
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-white rounded border border-primary/10">
+        <div className="flex items-center justify-between p-4 bg-card/70 rounded border border-primary/10">
           <span className="text-sm font-light">Total Amount:</span>
           <span className="text-xl font-semibold text-primary">₹{amount}</span>
         </div>
@@ -207,7 +241,7 @@ export default function PaymentButton({
           <Button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="flex-1 rounded-none bg-primary hover:bg-primary/90 text-white"
+            className="flex-1 rounded-md bg-primary hover:bg-primary/90 text-white"
           >
             {isProcessing ? (
               <>
@@ -225,7 +259,7 @@ export default function PaymentButton({
             onClick={() => setShowForm(false)}
             variant="outline"
             disabled={isProcessing}
-            className="rounded-none border-primary text-primary"
+            className="rounded-md border-primary text-primary"
           >
             Cancel
           </Button>
