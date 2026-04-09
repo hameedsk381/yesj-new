@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
 import { Anchor, Heart, Shield, Users, Zap, ArrowRight, Building2, Target } from "lucide-react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
@@ -11,15 +10,24 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 const philosophyStatements = [
-  "YES - I have dreams.",
-  "YES - I am capable of fulfilling my dreams.",
-  "YES - I can and I will be the dream I want to be, if only I am given the opportunity.",
+  {
+    title: "YES - I have dreams.",
+    desc: "Every young person carries a vision for their life that deserves to be honored and nurtured."
+  },
+  {
+    title: "YES - I am capable of fulfilling my dreams.",
+    desc: "Potential is universal; only opportunity is not. We provide the platform for that potential to flourish."
+  },
+  {
+    title: "YES - I can and I will be the dream I want to be.",
+    desc: "With the right accompaniment, hurdles become stepping stones toward a life of dignity and service."
+  },
 ]
 
 const organizationFacts = [
   { label: "Full Name", value: "Youth Empowering Service - Jesuits (YES-J)" },
   { label: "Type", value: "Ministry of the Andhra Jesuit Province" },
-  { label: "Headquarters", value: "Vijayawada, AP - 520008" },
+  { label: "Headquarters", value: "Vijayawada, AP" },
   { label: "Founded", value: "2016" },
   { label: "Target Group", value: "Youth aged 15-25 years" },
   { label: "States Served", value: "Andhra Pradesh and Telangana" },
@@ -49,260 +57,190 @@ const ignatianPillars = [
 ]
 
 export default function AboutPage() {
-  const [data, setData] = useState<any>(null)
-
-  useEffect(() => {
-    const fetchAbout = async () => {
-      try {
-        const res = await fetch('/api/about')
-        if (res.ok) {
-          const about = await res.json()
-          setData(about)
-        }
-      } catch (err) {
-        console.error('Failed to fetch about content', err)
-      }
-    }
-    fetchAbout()
-  }, [])
-
   return (
-    <div className="flex min-h-screen flex-col bg-white text-foreground selection:bg-primary selection:text-white">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
       
-      <main className="flex-1">
-        {/* Cinematic Hero */}
-        <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-black pt-16">
+      <main className="flex-1 pt-24">
+        {/* Simple Hero */}
+        <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-black">
           <Image
             src="https://storage.googleapis.com/yesj/website/IMG_5899.JPG"
-            alt="Cinematic background"
+            alt="YESJ Mission"
             fill
             priority
-            className="object-cover opacity-40 scale-105"
+            className="object-cover opacity-70"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/40" />
           
-          <div className="container relative z-10 px-6 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto"
-            >
-              <Badge className="bg-primary/20 backdrop-blur-md border-primary/20 text-primary px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.3em] mb-8">
-                ESTABLISHED 2016
-              </Badge>
-              <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-[0.9]">
-                BORN FOR <span className="text-primary italic">THE MARGINS</span>
+          <div className="container relative z-10 px-5 text-center sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <p className="text-sm font-medium text-primary uppercase tracking-[0.2em] mb-4">Established 2016</p>
+              <h1 className="text-4xl md:text-7xl font-bold text-white tracking-tight mb-6">
+                Born for the Margins
               </h1>
-              <p className="text-xl md:text-2xl text-white/70 font-light leading-relaxed max-w-2xl mx-auto mb-12">
-                A Jesuit ministry. A social movement. A radical "YES" to every young person.
+              <p className="text-lg md:text-xl text-white/80 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+                A Jesuit ministry. A social movement. A radical commitment to every young person's potential.
               </p>
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="flex flex-wrap justify-center gap-4"
-              >
-                <Button size="lg" className="bg-primary text-white h-14 px-10 rounded-full font-bold shadow-xl shadow-primary/20" asChild>
-                  <a href="#story">OUR JOURNEY</a>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button size="lg" className="h-12 px-8 bg-primary text-white border-none hover:bg-primary/90 shadow-lg font-bold" asChild>
+                  <a href="#story">Our Story</a>
                 </Button>
-                <Button variant="outline" size="lg" className="text-white border-white/20 h-14 px-10 rounded-full font-bold backdrop-blur-md hover:bg-white hover:text-black transition-all" asChild>
-                  <Link href="/about/team">MEET THE TEAM</Link>
+                <Button size="lg" className="h-12 px-8 bg-white text-primary border-none hover:bg-gray-100 shadow-lg font-bold" asChild>
+                  <Link href="/about/team">Meet the Team</Link>
                 </Button>
-              </motion.div>
-            </motion.div>
-          </div>
-          
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block">
-            <motion.div 
-               animate={{ y: [0, 10, 0] }}
-               transition={{ repeat: Infinity, duration: 2 }}
-               className="w-1 h-12 bg-gradient-to-b from-primary to-transparent rounded-full"
-            />
-          </div>
-        </section>
-
-        {/* The "Why" - Mission Section */}
-        <section id="story" className="py-24 lg:py-32 bg-white">
-          <div className="container px-6 mx-auto">
-            <div className="grid lg:grid-cols-2 gap-20 items-center">
-              <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="space-y-8"
-              >
-                <div className="space-y-4">
-                  <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em]">Our Core Story</h2>
-                  <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-tight">
-                    Walking with the <span className="italic underline decoration-primary underline-offset-8">last, lost, and the least.</span>
-                  </h3>
-                </div>
-                <div className="space-y-6 text-lg text-muted-foreground font-medium leading-relaxed">
-                  <p>
-                    YES-J was born from a conviction that every young person, regardless of background, has the capacity to live a meaningful life. Since 2016, we have walked into rural villages, urban slums, and campuses to ignite this potential.
-                  </p>
-                  <p className="bg-muted p-8 border-l-4 border-primary rounded-r-2xl italic text-foreground">
-                    "We don't just provide services; we provide a community where a young person's 'No' from society becomes their 'YES' to the world."
-                  </p>
-                  <div className="grid grid-cols-2 gap-8 pt-4">
-                    <div>
-                      <h4 className="text-3xl font-black text-primary">50K+</h4>
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Lives Touched</p>
-                    </div>
-                    <div>
-                      <h4 className="text-3xl font-black text-primary">12+</h4>
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Impact Programs</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]"
-              >
-                <Image
-                  src="https://storage.googleapis.com/yesj/website/IMG_5986.JPG"
-                  alt="Story visual"
-                  fill
-                  className="object-cover"
-                />
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Philosophy - The Power of YES */}
-        <section className="py-24 lg:py-32 bg-black text-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[50%] h-full bg-primary/5 blur-[150px] -mr-32" />
-          <div className="container px-6 mx-auto relative z-10 text-center">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="max-w-4xl mx-auto space-y-12"
-            >
-              <div className="inline-flex h-20 w-20 items-center justify-center rounded-[2rem] bg-primary/20 text-primary mb-6">
-                <Target className="h-10 w-10" />
+        {/* Our Story - Welcome Section Style */}
+        <section id="story" className="border-b border-border/70 bg-background">
+          <div className="container px-5 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-24">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
+              <div className="space-y-5">
+                <p className="text-sm font-medium text-primary uppercase tracking-wider">Our Core Story</p>
+                <h2 className="max-w-xl text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
+                  Walking with the last, lost, and the least.
+                </h2>
+                <div className="max-w-lg space-y-4 text-base leading-7 text-muted-foreground">
+                  <p className="text-foreground/72">
+                    YES-J was born from a conviction that every young person, regardless of background, has the capacity to live a meaningful life.
+                  </p>
+                  <p>
+                    Since 2016, we have walked into rural villages, urban slums, and campuses to ignite this potential. We don't just provide services; we provide a community where a young person's 'No' from society becomes their 'YES' to the world.
+                  </p>
+                </div>
+                <div className="flex gap-8 pt-4">
+                  <div>
+                    <h4 className="text-3xl font-semibold text-primary">50K+</h4>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1">Lives Touched</p>
+                  </div>
+                  <div>
+                    <h4 className="text-3xl font-semibold text-primary">12+</h4>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1">Impact Programs</p>
+                  </div>
+                </div>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tighter italic">THE POWER OF <span className="text-primary not-italic">YES</span></h2>
-              
-              <div className="grid gap-6">
-                {philosophyStatements.map((text, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.2 }}
-                    className="p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all text-xl md:text-2xl font-bold tracking-tight"
-                  >
-                    {text}
-                  </motion.div>
+
+              <div className="space-y-5">
+                <div className="border-l-2 border-primary pl-5">
+                  <p className="text-base italic leading-8 text-foreground font-medium">
+                    "We provide a community where a young person's 'No' from society becomes their 'YES' to the world."
+                  </p>
+                </div>
+                <div className="relative aspect-[16/9] rounded-lg overflow-hidden border border-border">
+                  <Image
+                    src="https://storage.googleapis.com/yesj/website/IMG_5986.JPG"
+                    alt="Story visual"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Philosophy Section - Dark Style from Home */}
+        <section className="border-b border-border bg-[#1A1A1A] text-white">
+          <div className="container px-5 py-14 sm:px-6 lg:px-8 lg:py-24">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start">
+              <div className="space-y-5">
+                <p className="text-sm font-medium text-secondary italic uppercase tracking-wider">Our core conviction</p>
+                <h2 className="max-w-xl text-3xl sm:text-4xl font-semibold tracking-tight leading-snug">
+                  The Power of <span className="text-primary italic">YES</span>
+                </h2>
+                <p className="max-w-lg text-base leading-7 text-white/75">
+                  Our philosophy is built on three fundamental affirmations that every young person deserves to hear and believe.
+                </p>
+              </div>
+
+              <div className="grid gap-4">
+                {philosophyStatements.map((statement, index) => (
+                  <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-6">
+                    <div className="text-xs font-medium tracking-[0.18em] text-secondary/90 uppercase">
+                      Philosophy 0{index + 1}
+                    </div>
+                    <h3 className="mt-3 text-xl font-bold text-white uppercase italic tracking-tight">
+                      {statement.title}
+                    </h3>
+                    <p className="mt-2 text-base leading-7 text-white/70">{statement.desc}</p>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* Ignatian Pillars - Grid */}
-        <section className="py-24 lg:py-32 bg-[#fafafa]">
-          <div className="container px-6 mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-              <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em]">Our Foundation</h2>
-              <h3 className="text-4xl font-black text-foreground">Ignatian Pillars</h3>
-              <p className="text-muted-foreground font-medium">Principles that shape every intervention and every encounter.</p>
+        {/* Ignatian Pillars - Grid Style */}
+        <section className="py-14 sm:py-24 bg-background">
+          <div className="container px-5 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+              <p className="text-sm font-medium text-primary uppercase tracking-widest">Our Foundation</p>
+              <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">Ignatian Pillars</h2>
+              <p className="text-muted-foreground">Principles that shape every intervention and every encounter.</p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {ignatianPillars.map((pillar, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white p-10 rounded-3xl border border-gray-100 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all group"
-                >
-                  <div className="h-16 w-16 bg-muted rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all mb-8 shadow-sm">
+                <div key={i} className="bg-card p-8 rounded-lg border border-border hover:border-primary/50 transition-colors">
+                  <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6">
                     {pillar.icon}
                   </div>
-                  <h4 className="text-xl font-black mb-4 tracking-tight">{pillar.title}</h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed font-medium">{pillar.description}</p>
-                </motion.div>
+                  <h4 className="text-xl font-semibold mb-3 tracking-tight text-foreground">{pillar.title}</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{pillar.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Centre for Excellence - Call to visit */}
-        <section className="py-24 lg:py-40 bg-white border-t">
-          <div className="container px-6 mx-auto">
-            <div className="bg-primary rounded-[4rem] px-10 py-20 lg:p-24 overflow-hidden relative text-white">
-               <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-               
-               <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-                  <div className="space-y-8 text-center lg:text-left">
-                    <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9]">YESJ CENTRE FOR <span className="opacity-60">EXCELLENCE</span></h2>
-                    <p className="text-xl text-white/80 font-medium max-w-xl mx-auto lg:mx-0">
-                      Located in Vijayawada, our headquarters is a hub of youth mobilization, spiritual formation, and vocational empowerment.
-                    </p>
-                    <Link href="/contact" className="inline-flex items-center gap-2 text-white font-black hover:gap-4 transition-all">
-                      SCHEDULE A VISIT <ArrowRight className="h-6 w-6" />
-                    </Link>
-                  </div>
-                  
-                  <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl skew-y-3">
-                    <Image
-                      src="/yesj-building.jpg"
-                      alt="The Centre"
-                      fill
-                      className="object-contain bg-white/10"
-                    />
-                  </div>
-               </div>
+        {/* Centre for Excellence */}
+        <section className="py-14 sm:py-24 bg-muted/30 border-t border-border">
+          <div className="container px-5 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <p className="text-sm font-medium text-primary uppercase tracking-widest">Our Headquarters</p>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight leading-tight">
+                  YESJ Centre for Excellence
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Located in Vijayawada, our headquarters is a hub of youth mobilization, spiritual formation, and vocational empowerment.
+                </p>
+                <div className="space-y-4 text-sm font-medium">
+                  {organizationFacts.map((fact, i) => (
+                    <div key={i} className="flex justify-between border-b border-border pb-2">
+                       <span className="text-foreground/80">{fact.label}</span>
+                       <span className="text-foreground font-semibold">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button variant="link" className="p-0 h-auto font-semibold gap-2" asChild>
+                  <Link href="/contact">Schedule a visit <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+              </div>
+              
+              <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg border border-border">
+                <Image
+                  src="/yesj-building.jpg"
+                  alt="The Centre"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Org Profile - Mini Footer Section */}
-        <section className="py-24 bg-[#050505] text-white">
-          <div className="container px-6 mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <Building2 className="text-primary h-6 w-6" />
-                  <h3 className="text-xl font-black uppercase tracking-widest">Org Profile</h3>
-                </div>
-                <div className="space-y-4 text-sm font-medium text-white/50">
-                  {organizationFacts.map((fact, i) => (
-                    <div key={i} className="flex justify-between border-b border-white/5 pb-2">
-                       <span className="text-white/80">{fact.label}</span>
-                       <span>{fact.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="space-y-6 lg:col-span-2 flex flex-col justify-between">
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-black tracking-tight leading-tight">Ready to see how we work?</h3>
-                  <p className="text-white/60 max-w-xl">Meet the Jesuits and lay collaborators who carry this mission across India.</p>
-                </div>
-                <div>
-                   <Button asChild variant="link" className="text-primary p-0 h-auto font-black text-2xl hover:no-underline hover:text-white transition-all group">
-                     <Link href="/about/team">
-                        MEET THE LEADERSHIP <ArrowRight className="inline-block h-6 w-6 transition-transform group-hover:translate-x-2" />
-                     </Link>
-                   </Button>
-                </div>
-              </div>
-            </div>
+        {/* Bottom CTA */}
+        <section className="py-14 sm:py-20 bg-primary text-white">
+          <div className="container px-5 text-center">
+            <h2 className="text-3xl font-semibold mb-6">Want to see our team in action?</h2>
+            <p className="text-white/80 mb-10 max-w-xl mx-auto">Meet the Jesuits and lay collaborators who carry this mission across India.</p>
+            <Button size="lg" className="h-12 px-10 bg-white text-primary border-none hover:bg-gray-100 font-bold shadow-xl" asChild>
+              <Link href="/about/team">Meet the Leadership</Link>
+            </Button>
           </div>
         </section>
       </main>
