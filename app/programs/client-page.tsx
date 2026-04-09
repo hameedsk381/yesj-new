@@ -34,10 +34,11 @@ export default function ProgramsClientPage() {
     fetchPrograms()
   }, [])
 
-  const filteredPrograms =
-    activeFilter === "All Programs"
-      ? programs
-      : programs.filter((program) => program.categories.includes(activeFilter))
+  const filteredPrograms = Array.isArray(programs) 
+    ? (activeFilter === "All Programs"
+        ? programs
+        : programs.filter((program) => program?.categories?.includes(activeFilter)))
+    : []
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -84,7 +85,7 @@ export default function ProgramsClientPage() {
                 <article key={program.slug} className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-all">
                   <div className={`h-1 w-full ${program.cardBarClassName || "bg-primary"}`} />
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <Image src={program.image} alt={program.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                    <Image src={program.image || "/placeholder.jpg"} alt={program.title || "Program Image"} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                   <div className="p-6">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-transparent">
@@ -92,7 +93,7 @@ export default function ProgramsClientPage() {
                         <div className="relative h-10 w-10">
                           <Image
                             src={program.logo}
-                            alt={`${program.shortTitle} Logo`}
+                            alt={`${program.shortTitle || "Program"} Logo`}
                             fill
                             className="object-contain"
                           />
@@ -108,7 +109,7 @@ export default function ProgramsClientPage() {
                       {program.overviewDescription}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {program.categories.map((category: string) => (
+                      {program.categories?.map((category: string) => (
                         <span key={category} className="rounded-sm bg-muted/50 border border-border px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                           {category}
                         </span>

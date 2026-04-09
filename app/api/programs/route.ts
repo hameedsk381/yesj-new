@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { programs } from "@/lib/db/schema";
 import { asc, eq } from "drizzle-orm";
+import { programsData } from "@/lib/data/programs";
 
 export const dynamic = 'force-dynamic';
 
@@ -12,11 +13,30 @@ export async function GET() {
       orderBy: [asc(programs.order)],
     });
     
-    // Fallback logic could go here if DB is empty, but we seeded it.
+    // Map database fields to the structure expected by the frontend
+    // And merge with static data for missing fields like 'sections', 'heroActions', etc.
+    const mappedPrograms = allPrograms.map(dbProgram => {
+      const staticProgram = programsData.find(p => p.slug === dbProgram.slug);
+      
+      return {
+        ...staticProgram, // Start with static data if available
+        ...dbProgram,    // Override with DB data
+        // Ensure field names match what the frontend expects
+        image: dbProgram.imagePath || staticProgram?.image || "/placeholder.jpg",
+        logo: dbProgram.logoPath || staticProgram?.logo,
+        categories: staticProgram?.categories || ["All Programs"], // DB doesn't have categories yet
+      };
+    });
     
-    return NextResponse.json(allPrograms);
+    // If DB is empty, fallback to programsData
+    if (mappedPrograms.length === 0) {
+      return NextResponse.json(programsData);
+    }
+    
+    return NextResponse.json(mappedPrograms);
   } catch (error) {
     console.error("Programs public GET error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    // On error, we still want the page to work, so fallback to static data
+    return NextResponse.json(programsData);
   }
 }
