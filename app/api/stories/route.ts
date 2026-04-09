@@ -4,6 +4,7 @@ import { stories } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
 import { minioClient, BUCKET_NAME } from "@/lib/minio";
+import { getStories, STRAPI_URL } from "@/lib/strapi";
 
 function slugify(text: string) {
   return text
@@ -17,6 +18,18 @@ function slugify(text: string) {
 
 export async function GET(req: NextRequest) {
   try {
+    // Try Strapi first if configured
+    if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
+      try {
+        const strapiStories = await getStories();
+        if (strapiStories && strapiStories.length > 0) {
+          return NextResponse.json(strapiStories);
+        }
+      } catch (err) {
+        console.warn("Strapi fetch failed, falling back to local DB:", err);
+      }
+    }
+
     const { searchParams } = new URL(req.url);
     const limit = parseInt(searchParams.get("limit") || "100");
     const offset = parseInt(searchParams.get("offset") || "0");

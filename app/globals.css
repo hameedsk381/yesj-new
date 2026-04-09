@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    --background: 36 32% 92%; /* Surface Warm Cream #F3EDE3 */
-    --foreground: 0 0% 10%; /* Text Charcoal #1A1A1A */
-    --card: 36 32% 95%;
-    --card-foreground: 0 0% 10%;
-    --popover: 36 32% 95%;
-    --popover-foreground: 0 0% 10%;
+    --background: 36 33% 98%;
+    --foreground: 24 18% 16%;
+    --card: 36 25% 99%;
+    --card-foreground: 24 18% 16%;
+    --popover: 36 25% 99%;
+    --popover-foreground: 24 18% 16%;
     --primary: 29 100% 38%; /* Primary Saffron #C05C00 */
     --primary-foreground: 0 0% 100%;
     --secondary: 28 82% 52%; /* Mid Amber #E87C1E */
@@ -18,14 +18,14 @@
     --tertiary-foreground: 0 0% 100%;
     --accent: 150 57% 26%; /* Accent Forest Green #1D6B44 mapped to accent for CTA */
     --accent-foreground: 0 0% 100%;
-    --muted: 36 32% 88%;
-    --muted-foreground: 0 0% 30%;
+    --muted: 36 18% 94%;
+    --muted-foreground: 24 10% 39%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 36 10% 80%;
-    --input: 36 10% 80%;
+    --border: 31 18% 86%;
+    --input: 31 18% 86%;
     --ring: 29 100% 38%;
-    --radius: 1rem;
+    --radius: 0.55rem;
 
     /* RGB variants for opacity-based effects */
     --primary-rgb: 192, 92, 0;
@@ -35,11 +35,11 @@
   }
 
   .dark {
-    --background: 36 32% 12%;
+    --background: 0 0% 0%; /* Pure black like Vercel */
     --foreground: 0 0% 98%;
-    --card: 36 32% 16%;
+    --card: 0 0% 3%;
     --card-foreground: 0 0% 98%;
-    --popover: 36 32% 16%;
+    --popover: 0 0% 3%;
     --popover-foreground: 0 0% 98%;
 
     /* Match light palette: Saffron (primary) + Amber (secondary) + Forest Green (tertiary/accent). */
@@ -52,13 +52,13 @@
     --accent: 150 57% 26%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 36 32% 18%;
-    --muted-foreground: 0 0% 72%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 63%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 20% 98%;
-    --border: 36 10% 24%;
-    --input: 36 10% 24%;
-    --ring: 29 100% 38%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 29 100% 45%;
   }
 }
 
@@ -70,52 +70,55 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image:
+      linear-gradient(to bottom, rgba(var(--secondary-rgb), 0.04), transparent 220px),
+      linear-gradient(to right, rgba(var(--tertiary-rgb), 0.025), transparent 30%, transparent 70%, rgba(var(--primary-rgb), 0.03));
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-white/5 backdrop-blur-md border border-white/10;
+    @apply border border-border bg-card text-foreground;
   }
 
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-md border border-white/5;
+    @apply border border-border bg-foreground/[0.04] text-foreground;
   }
 
   .glass-card {
-    @apply bg-white/[0.03] dark:bg-black/40 backdrop-blur-xl border border-white/10 dark:border-white/5 shadow-2xl;
+    @apply bg-card border border-border shadow-sm;
   }
 
   .glass-premium {
-    @apply bg-white/[0.01] backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+    @apply bg-card border border-border shadow-sm;
   }
 
   .glow-primary {
-    @apply shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)];
+    @apply shadow-none;
   }
 
   .glow-secondary {
-    @apply shadow-[0_0_20px_rgba(var(--secondary-rgb),0.3)];
+    @apply shadow-none;
   }
 
   .bg-mesh-saffron {
-    background-color: hsla(36, 32%, 92%, 1);
+    background-color: hsl(var(--background));
     background-image:
-      radial-gradient(at 0% 0%, hsla(29, 100%, 38%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 50% 0%, hsla(28, 82%, 52%, 0.1) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(150, 57%, 26%, 0.05) 0px, transparent 50%);
+      linear-gradient(135deg, hsla(29, 100%, 38%, 0.05), transparent 38%),
+      radial-gradient(circle at top right, hsla(150, 57%, 26%, 0.045), transparent 30%),
+      radial-gradient(circle at bottom left, hsla(28, 82%, 52%, 0.04), transparent 28%);
   }
 
   .dark .bg-mesh-saffron {
-    background-color: hsla(36, 100%, 8%, 1);
+    background-color: hsl(0 0% 2%);
     background-image:
-      radial-gradient(at 0% 0%, hsla(29, 100%, 38%, 0.2) 0px, transparent 50%),
-      radial-gradient(at 50% 0%, hsla(28, 82%, 52%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(150, 57%, 26%, 0.1) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, hsla(29, 100%, 38%, 0.06) 0px, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(28, 82%, 52%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(150, 57%, 26%, 0.03) 0px, transparent 50%);
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] animate-gradient;
+    @apply bg-clip-text text-foreground;
   }
 
   /* Utility for better typography balance manually */
@@ -124,12 +127,11 @@
   }
 
   .btn-premium {
-    @apply relative overflow-hidden transition-all duration-500 active:scale-95 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20;
+    @apply transition-colors duration-200 shadow-sm;
   }
 
   .hero-gradient {
-    background: radial-gradient(circle at top right, hsla(var(--primary), 0.15), transparent 40%),
-                radial-gradient(circle at bottom left, hsla(var(--secondary), 0.1), transparent 40%);
+    background: transparent;
   }
 
   .bg-grain {
@@ -200,8 +202,8 @@ html {
 
 .reveal-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .reveal-up.active {
@@ -218,5 +220,5 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/50 hover:bg-primary transition-colors rounded-none;
+  @apply bg-primary/40 hover:bg-primary/60 transition-colors rounded-none;
 }

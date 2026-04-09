@@ -67,7 +67,7 @@ export default function EventsPreview() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5 }}
-              className="group relative overflow-hidden border border-primary/10 p-5 md:p-6 transition-all hover:border-accent/30 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-md border border-primary/10 p-5 md:p-6 transition-all hover:border-accent/30 hover:shadow-lg"
             >
               <div className="flex items-center gap-4 mb-4">
                 <Calendar className="h-5 w-5 text-accent" />

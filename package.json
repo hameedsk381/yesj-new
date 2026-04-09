@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "formidable": "^3.5.4",
     "framer-motion": "latest",
+    "geist": "^1.7.0",
     "jose": "^6.1.2",
     "lucide-react": "^0.454.0",
     "minio": "^8.0.6",

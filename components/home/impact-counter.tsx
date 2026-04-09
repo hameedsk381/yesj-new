@@ -23,8 +23,8 @@ const counters: Counter[] = [
     suffix: "+",
     label: "Lives Touched",
     detail: "Through direct accompaniment, training, and community programmes across decades of service.",
-    icon: <Users className="h-6 w-6" aria-hidden="true" />,
-    className: "md:col-span-2 md:row-span-2 bg-primary/5 border-primary/20",
+    icon: <Users className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />,
+    className: "sm:col-span-2 md:col-span-2 md:row-span-2 bg-primary/5 border-primary/20",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const counters: Counter[] = [
     suffix: "+",
     label: "Events Conducted",
     detail: "Workshops, camps, festivals, and youth formation spaces.",
-    icon: <CalendarDays className="h-5 w-5" aria-hidden="true" />,
+    icon: <CalendarDays className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />,
     className: "md:col-span-1 md:row-span-1",
   },
   {
@@ -40,7 +40,7 @@ const counters: Counter[] = [
     value: 12,
     label: "Active Programs",
     detail: "Education, employability, and spiritual formation.",
-    icon: <Goal className="h-5 w-5" aria-hidden="true" />,
+    icon: <Goal className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />,
     className: "md:col-span-1 md:row-span-1",
   },
   {
@@ -49,7 +49,7 @@ const counters: Counter[] = [
     suffix: "+",
     label: "Years of Service",
     detail: "A decade of work with marginalized youth.",
-    icon: <Star className="h-5 w-5" aria-hidden="true" />,
+    icon: <Star className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />,
     className: "md:col-span-1 md:row-span-1",
   },
   {
@@ -57,15 +57,15 @@ const counters: Counter[] = [
     display: "2 States",
     label: "AP & Telangana",
     detail: "Serving young people across both Telugu states through dedicated centres.",
-    icon: <MapPin className="h-5 w-5" aria-hidden="true" />,
-    className: "md:col-span-2 md:row-span-1 bg-secondary/5 border-secondary/20",
+    icon: <MapPin className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />,
+    className: "sm:col-span-2 md:col-span-2 md:row-span-1 bg-secondary/5 border-secondary/20",
   },
   {
     id: 6,
     display: "Free",
     label: "All Programs",
     detail: "Ensuring high-quality training is accessible to all.",
-    icon: <Handshake className="h-5 w-5" aria-hidden="true" />,
+    icon: <Handshake className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />,
     className: "md:col-span-1 md:row-span-1",
   },
 ]
@@ -125,30 +125,29 @@ function CounterItem({ counter, index }: { counter: Counter; index: number }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.6 }}
       className={cn(
-        "group relative overflow-hidden rounded-3xl border border-white/10 dark:border-white/5 bg-card p-8 glass-card transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl",
+        "group relative overflow-hidden rounded-md border border-border bg-card p-5 sm:p-6 md:p-8 transition-colors duration-300 hover:border-primary/30",
         counter.className
       )}
     >
-      <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-3xl group-hover:bg-primary/10 transition-colors" />
-      <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-secondary/5 blur-3xl group-hover:bg-secondary/10 transition-colors" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
       <div className="relative z-10 flex flex-col h-full justify-between">
         <div className="flex items-start justify-between">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary sm:h-11 sm:w-11">
             {counter.icon}
           </div>
-          <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">{counter.label}</div>
+          <div className="text-xs font-medium text-muted-foreground">{counter.label}</div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-5 sm:mt-8">
           <div className={cn(
-            "font-serif font-bold tracking-tighter text-foreground leading-none",
-            counter.id === 1 ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
+            "font-sans font-semibold tracking-[-0.05em] text-foreground leading-none",
+            counter.id === 1 ? "text-4xl sm:text-5xl md:text-7xl" : "text-3xl sm:text-4xl md:text-5xl"
           )}>
             {counter.display ?? `${count.toLocaleString()}${counter.suffix ?? ""}`}
           </div>
-          <h3 className="mt-4 text-lg font-semibold text-foreground/90">{counter.label}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground/80 font-light text-balance">{counter.detail}</p>
+          <h3 className="mt-3 sm:mt-4 text-base font-semibold text-foreground">{counter.label}</h3>
+          <p className="mt-2 text-sm leading-7 text-muted-foreground text-balance">{counter.detail}</p>
         </div>
       </div>
     </motion.div>
@@ -156,44 +155,64 @@ function CounterItem({ counter, index }: { counter: Counter; index: number }) {
 }
 
 export default function ImpactCounter() {
+  const [data, setData] = useState<any>(null)
+  const [items, setItems] = useState<Counter[]>(counters)
+
+  useEffect(() => {
+    const fetchImpact = async () => {
+      try {
+        const res = await fetch('/api/homepage')
+        if (res.ok) {
+          const homepage = await res.json()
+          setData(homepage)
+          if (homepage.impactCounters && homepage.impactCounters.length > 0) {
+            setItems(homepage.impactCounters.map((item: any, i: number) => ({
+              ...counters[i % counters.length], // Preserve layout/icons
+              id: item.id || i,
+              value: item.value,
+              suffix: item.suffix || "+",
+              label: item.label,
+              detail: item.description,
+              display: item.display
+            })))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch impact content', err)
+      }
+    }
+    fetchImpact()
+  }, [])
+
   return (
-    <section aria-labelledby="impact-heading" className="relative overflow-hidden bg-background py-24 lg:py-32">
-      <div className="absolute inset-0 bg-mesh-saffron opacity-30 dark:opacity-10" />
+    <section aria-labelledby="impact-heading" className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-32">
+      <div className="absolute inset-0 bg-mesh-saffron opacity-70 dark:opacity-10" />
       
-      <div className="container relative z-10 px-6 lg:px-12">
-        <div className="mb-16 max-w-3xl space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-2 text-primary uppercase tracking-[0.3em] text-xs font-bold"
-          >
-            <span className="h-[1px] w-8 bg-primary/50" />
-            Impact in numbers
-          </motion.div>
+      <div className="container relative z-10 px-5 sm:px-6 lg:px-12">
+        <div className="mb-10 sm:mb-16 max-w-3xl space-y-4">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             id="impact-heading" 
-            className="text-4xl md:text-5xl font-serif font-bold text-foreground leading-tight"
+            className="text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl md:text-5xl"
           >
-            A Snapshot of <span className="italic text-primary">Radical Transformation</span>
+            {data?.impactTitle || "The scale of the work is measurable. The dignity behind it matters more."}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg leading-relaxed text-muted-foreground/80 max-w-2xl font-light"
+            className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Our reach extends far beyond data; it&apos;s about walking alongside youth to restore dignity and ignite hope for a brighter future.
+            {data?.impactSubtitle || "YESJ works across education, employability, youth formation, and direct community response. These numbers offer a grounded view of that reach."}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 md:grid-rows-2">
-          {counters.map((counter, index) => (
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:grid-rows-2">
+          {items.map((counter, index) => (
             <CounterItem key={counter.id} counter={counter} index={index} />
           ))}
         </div>

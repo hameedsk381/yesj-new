@@ -33,7 +33,7 @@ const getInvolvedLinks: DropdownItem[] = [
   { href: "/get-involved#internship-details", label: "Intern with Us" },
 ]
 
-const programLinks: DropdownItem[] = [
+const defaultProgramLinks: DropdownItem[] = [
   { href: "/programs/pep", label: "PEP" },
   { href: "/programs/magic", label: "MAGIC" },
   { href: "/programs/must", label: "MuST" },
@@ -48,15 +48,6 @@ const programLinks: DropdownItem[] = [
   { href: "/programs/eott", label: "Each One Teach Ten" },
 ]
 
-const mobileNavItems: MobileNavItem[] = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About", children: aboutLinks },
-  { href: "/programs", label: "Programs", children: programLinks },
-  { href: "/impact", label: "Impact" },
-  { href: "/get-involved", label: "Get Involved", children: getInvolvedLinks },
-  { href: "/media", label: "Media" },
-  { href: "/contact", label: "Contact" },
-]
 
 function SmallDropdown({
   href,
@@ -89,13 +80,13 @@ function SmallDropdown({
       </Link>
 
       {open ? (
-        <div className="absolute left-0 top-full min-w-[220px] rounded-2xl border border-border bg-card p-3 shadow-lg">
+        <div className="absolute left-0 top-full min-w-[220px] border border-border bg-card p-2 shadow-[0_12px_32px_rgba(25,20,13,0.08)]">
           <ul className="space-y-1">
             {items.map((item) => (
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className="block rounded-xl px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
+                  className="block px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
                 >
                   {item.label}
                 </Link>
@@ -115,6 +106,47 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<"about" | "programs" | "get-involved" | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [programLinks, setProgramLinks] = useState<DropdownItem[]>(defaultProgramLinks)
+  const [config, setConfig] = useState<any>(null)
+
+  const mobileNavItems: MobileNavItem[] = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About", children: aboutLinks },
+    { href: "/programs", label: "Programs", children: programLinks },
+    { href: "/impact", label: "Impact" },
+    { href: "/get-involved", label: "Get Involved", children: getInvolvedLinks },
+    { href: "/media", label: "Media" },
+    { href: "/contact", label: "Contact" },
+  ]
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [settingsRes, programsRes] = await Promise.all([
+          fetch('/api/settings'),
+          fetch('/api/programs')
+        ])
+        
+        if (settingsRes.ok) {
+          const data = await settingsRes.json()
+          setConfig(data)
+        }
+        
+        if (programsRes.ok) {
+          const programs = await programsRes.json()
+          if (programs && programs.length > 0) {
+            setProgramLinks(programs.map((p: any) => ({
+              href: `/programs/${p.slug}`,
+              label: p.shortTitle || p.title
+            })))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch header data', err)
+      }
+    }
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,13 +162,25 @@ export default function Header() {
   const isSolid = isScrolled || !isHomePage
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[100] transition-transform">
-      <NotificationBar />
+    <div className={cn(
+      "top-0 left-0 right-0 z-[100] w-full flex flex-col",
+      isHomePage ? "fixed" : "sticky"
+    )}>
+      <div 
+        className={cn(
+          "grid transition-[grid-template-rows] duration-300 ease-in-out w-full",
+          isScrolled ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
+        )}
+      >
+        <div className="overflow-hidden">
+          <NotificationBar />
+        </div>
+      </div>
       <header
         className={cn(
-          "relative transition-all duration-500 ease-in-out",
+          "w-full transition-all duration-300 ease-in-out",
           isSolid 
-            ? "mx-auto mt-4 max-w-7xl rounded-full border border-white/10 bg-background/60 shadow-2xl backdrop-blur-xl py-0 px-2 glass-premium" 
+            ? "border-b border-border bg-background/92 shadow-sm backdrop-blur-md py-0" 
             : "bg-transparent border-transparent py-4"
         )}
         role="banner"
@@ -177,7 +221,7 @@ export default function Header() {
             <Link
               href="/"
               className={cn(
-                "py-7 text-sm font-semibold transition-all hover:scale-105 active:scale-95",
+                "py-7 text-sm font-semibold transition-colors",
                 isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
               )}
             >
@@ -259,8 +303,8 @@ export default function Header() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Button asChild className={cn(
-              "hidden h-10 rounded-full px-6 transition-all duration-500 sm:inline-flex btn-premium shadow-xl",
-              isSolid ? "bg-primary text-white hover:bg-primary/90 shadow-primary/20" : "bg-white text-primary border-none hover:bg-white/90 shadow-white/10"
+              "hidden h-10 px-5 text-sm font-semibold sm:inline-flex shadow-sm",
+              isSolid ? "bg-primary text-white hover:bg-primary/90" : "bg-background text-primary hover:bg-background/90"
             )}>
               <Link href="/donate" aria-label="Make a secure online donation">
                 <Heart className="mr-2 h-4 w-4 fill-current" aria-hidden="true" />
@@ -287,4 +331,3 @@ export default function Header() {
     </div>
   )
 }
-

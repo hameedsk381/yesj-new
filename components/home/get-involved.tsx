@@ -115,7 +115,7 @@ export default function GetInvolved() {
                 </p>
                 
                 <div className="mt-8 overflow-hidden">
-                  <Button asChild className="h-12 w-full rounded-full bg-white text-gray-950 hover:bg-white/90 transition-all group/btn">
+                  <Button asChild className="h-12 w-full rounded-md bg-white text-gray-950 hover:bg-white/90 transition-all group/btn shadow-sm">
                     <Link href={option.buttonLink} className="flex items-center justify-center gap-2 font-bold">
                       {option.buttonText}
                       <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover/btn:translate-x-1" />

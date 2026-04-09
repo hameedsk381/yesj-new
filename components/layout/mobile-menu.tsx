@@ -52,7 +52,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col border-l border-border bg-white p-6 shadow-2xl"
+            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col border-l border-border bg-background p-6 shadow-[0_18px_40px_rgba(25,20,13,0.12)]"
           >
             <div className="mb-8 flex items-center justify-between">
               <Link href="/" onClick={onClose} className="flex items-center gap-3">
@@ -78,7 +78,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
             <nav className="space-y-2 overflow-y-auto pb-6">
               {navItems.map((item) =>
                 item.children?.length ? (
-                  <details key={item.label} className="rounded-2xl border border-border bg-muted/30">
+                  <details key={item.label} className="border border-border bg-card">
                     <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-base font-medium text-foreground">
                       <span>{item.label}</span>
                       <ChevronDown className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
@@ -87,7 +87,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className="block rounded-xl px-3 py-2 text-sm font-medium text-primary"
+                        className="block px-3 py-2 text-sm font-medium text-primary"
                       >
                         Overview
                       </Link>
@@ -96,7 +96,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                           key={child.label}
                           href={child.href}
                           onClick={onClose}
-                          className="block rounded-xl px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white hover:text-primary"
+                          className="block px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
                         >
                           {child.label}
                         </Link>
@@ -108,7 +108,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
                     key={item.label}
                     href={item.href}
                     onClick={onClose}
-                    className="block rounded-2xl border border-transparent px-4 py-3 text-base font-medium text-foreground transition-colors hover:border-border hover:bg-muted/40"
+                    className="block border border-transparent px-4 py-3 text-base font-medium text-foreground transition-colors hover:border-border hover:bg-muted/40"
                   >
                     {item.label}
                   </Link>
@@ -117,7 +117,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
             </nav>
 
             <div className="mt-auto space-y-4 border-t border-border pt-6">
-              <Button asChild className="h-11 w-full rounded-full bg-accent text-accent-foreground hover:bg-accent/90">
+              <Button asChild className="h-11 w-full bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link href="/donate" onClick={onClose}>
                   Donate Now
                 </Link>

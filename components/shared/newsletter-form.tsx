@@ -57,7 +57,7 @@ export default function NewsletterForm() {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email address"
-          className="h-12 flex-1 rounded-full border-primary-foreground/30 bg-primary-foreground/10 px-4 text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground"
+          className="h-12 flex-1 rounded-md border-primary-foreground/30 bg-primary-foreground/10 px-4 text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-2 focus-visible:ring-primary-foreground"
           disabled={status === "loading" || status === "success"}
           aria-invalid={status === "error"}
           aria-describedby={message ? "footer-newsletter-status" : undefined}
@@ -66,7 +66,7 @@ export default function NewsletterForm() {
           type="submit"
           variant="accent"
           disabled={status === "loading" || status === "success"}
-          className="h-12 rounded-full px-5 text-sm font-semibold"
+          className="h-12 rounded-md px-5 text-sm font-semibold"
         >
           {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : "Subscribe Now"}
         </Button>

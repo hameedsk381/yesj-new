@@ -4,9 +4,22 @@ import { teamMembers } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
 import { minioClient, BUCKET_NAME } from "@/lib/minio";
+import { getTeamMembers, STRAPI_URL } from "@/lib/strapi";
 
 export async function GET(req: NextRequest) {
   try {
+    // Try Strapi first if configured
+    if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
+      try {
+        const strapiTeam = await getTeamMembers();
+        if (strapiTeam && strapiTeam.length > 0) {
+          return NextResponse.json(strapiTeam);
+        }
+      } catch (err) {
+        console.warn("Strapi fetch failed, falling back to local DB:", err);
+      }
+    }
+
     const { searchParams } = new URL(req.url);
     const limit = parseInt(searchParams.get("limit") || "100");
     const offset = parseInt(searchParams.get("offset") || "0");

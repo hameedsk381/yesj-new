@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Header from "@/components/layout/header"
@@ -14,21 +14,40 @@ const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp.replace(/\D/g, 
 
 export default function ProgramsClientPage() {
   const [activeFilter, setActiveFilter] = useState<(typeof programFilters)[number]>("All Programs")
+  const [programs, setPrograms] = useState<any[]>(programsData)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        const res = await fetch("/api/programs")
+        if (res.ok) {
+          const data = await res.json()
+          setPrograms(data)
+        }
+      } catch (err) {
+        console.error("Failed to fetch programs", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPrograms()
+  }, [])
 
   const filteredPrograms =
     activeFilter === "All Programs"
-      ? programsData
-      : programsData.filter((program) => program.categories.includes(activeFilter))
+      ? programs
+      : programs.filter((program) => program.categories.includes(activeFilter))
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <section className="border-b border-border bg-background pt-32 lg:pt-36">
-          <div className="container px-6 py-16 text-center lg:px-8 lg:py-20 text-[#1A1A1A]">
-            <p className="text-sm font-medium text-primary uppercase tracking-widest font-serif">Programs Overview</p>
-            <h1 className="mt-4 font-serif text-4xl font-bold sm:text-5xl italic">
-              12 Programs. One Mission. <span className="text-primary not-italic uppercase tracking-tighter">Infinite Possibilities.</span>
+        <section className="border-b border-border bg-background pt-12 lg:pt-16">
+          <div className="container px-6 py-16 text-center lg:px-8 lg:py-20 text-foreground">
+            <p className="text-sm font-semibold text-primary uppercase tracking-widest font-sans">Programs Overview</p>
+            <h1 className="mt-4 font-sans text-4xl font-extrabold sm:text-5xl tracking-[-0.03em] text-balance">
+              12 Programs. One Mission. <span className="text-primary tracking-[-0.03em]">Infinite Possibilities.</span>
             </h1>
             <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-muted-foreground">
               YES-J reaches young people wherever they are: in classrooms, slums, villages,
@@ -45,10 +64,10 @@ export default function ProgramsClientPage() {
                   key={filter}
                   type="button"
                   onClick={() => setActiveFilter(filter)}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-all ${
+                  className={`rounded-md border px-4 py-2 text-sm font-medium transition-all ${
                     activeFilter === filter
-                      ? "border-primary bg-primary text-white shadow-md shadow-primary/20"
-                      : "border-border bg-card text-foreground hover:border-primary/30 hover:text-primary"
+                      ? "border-primary bg-primary text-white shadow-sm"
+                      : "border-border bg-card text-foreground hover:border-foreground/20 hover:text-foreground"
                   }`}
                 >
                   {filter}
@@ -62,10 +81,10 @@ export default function ProgramsClientPage() {
           <div className="container px-6 py-16 lg:px-8 lg:py-20">
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {filteredPrograms.map((program) => (
-                <article key={program.slug} className="overflow-hidden rounded-md border border-border bg-card shadow-sm hover:shadow-md transition-all">
-                  <div className={`h-1.5 w-full ${program.cardBarClassName}`} />
-                  <div className="relative aspect-[16/10] grayscale hover:grayscale-0 transition-all duration-300">
-                    <Image src={program.image} alt={program.title} fill className="object-cover" />
+                <article key={program.slug} className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-all">
+                  <div className={`h-1 w-full ${program.cardBarClassName || "bg-primary"}`} />
+                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                    <Image src={program.image} alt={program.title} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                   <div className="p-6">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-transparent">
@@ -84,19 +103,19 @@ export default function ProgramsClientPage() {
                         </div>
                       )}
                     </div>
-                    <h2 className="text-2xl font-semibold text-foreground font-serif italic text-primary/80">{program.title}</h2>
+                    <h2 className="text-2xl font-bold text-foreground font-sans tracking-tight group-hover:text-primary transition-colors">{program.title}</h2>
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
                       {program.overviewDescription}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-2">
-                      {program.categories.map((category) => (
-                        <span key={category} className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                      {program.categories.map((category: string) => (
+                        <span key={category} className="rounded-sm bg-muted/50 border border-border px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                           {category}
                         </span>
                       ))}
                     </div>
-                    <Button asChild className="mt-6 rounded-full px-5">
-                      <Link href={`/programs/${program.slug}`}>Learn More</Link>
+                    <Button asChild className="mt-6 rounded-md px-5 shadow-sm active:scale-[0.98] transition-all group/btn">
+                      <Link href={`/programs/${program.slug}`}>Learn More <span className="ml-1 transition-transform group-hover/btn:translate-x-1">→</span></Link>
                     </Button>
                   </div>
                 </article>
@@ -107,17 +126,17 @@ export default function ProgramsClientPage() {
 
         <section className="border-t border-border bg-background">
           <div className="container px-6 py-16 text-center lg:px-8 lg:py-20">
-            <h2 className="font-serif text-3xl font-bold text-foreground sm:text-4xl">
+            <h2 className="font-sans text-3xl font-extrabold tracking-[-0.03em] text-foreground sm:text-4xl">
               Not Sure Which Program is Right for You?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
               Reach out to us and we will guide you toward the best fit.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild className="rounded-full px-5">
+              <Button asChild className="rounded-md px-5 shadow-sm active:scale-[0.98] transition-all">
                 <Link href="/contact">Contact Us</Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-full px-5">
+              <Button asChild variant="outline" className="rounded-md px-5 shadow-sm active:scale-[0.98] transition-all border-border text-foreground hover:bg-muted">
                 <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                   WhatsApp Us
                 </a>

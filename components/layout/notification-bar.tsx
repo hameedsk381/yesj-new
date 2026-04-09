@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bell, X } from "lucide-react"
 import Link from "next/link"
+import { getAnnouncements, STRAPI_URL } from "@/lib/strapi"
 
 const notifications = [
   {
@@ -37,8 +38,30 @@ const STORAGE_KEY = "yesj-notification-dismissed"
 export default function NotificationBar() {
   const [isVisible, setIsVisible] = useState(false)
   const [current, setCurrent] = useState(0)
+  const [items, setItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const fetchData = async () => {
+      if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
+        try {
+          const data = await getAnnouncements()
+          if (data && data.length > 0) {
+            setItems(data)
+          } else {
+            setItems(notifications) // Fallback
+          }
+        } catch (err) {
+          setItems(notifications) // Fallback
+        }
+      } else {
+        setItems(notifications)
+      }
+      setLoading(false)
+    }
+
+    fetchData()
+    
     const dismissed = window.sessionStorage.getItem(STORAGE_KEY)
     setIsVisible(dismissed !== "true")
   }, [])
@@ -49,24 +72,24 @@ export default function NotificationBar() {
     }
 
     const timer = window.setInterval(() => {
-      setCurrent((prev) => (prev + 1) % notifications.length)
+      setCurrent((prev) => (prev + 1) % items.length)
     }, 5000)
 
     return () => window.clearInterval(timer)
-  }, [isVisible])
+  }, [isVisible, items.length])
 
-  if (!isVisible) {
+  if (!isVisible || loading || items.length === 0) {
     return null
   }
 
-  const currentNotification = notifications[current]
+  const currentNotification = items[current]
 
   return (
-    <div className="border-b border-accent/50 bg-accent text-foreground">
+    <div className="border-b border-white/10 bg-black text-white">
       <div className="container flex min-h-11 items-center gap-3 px-5 py-2 sm:px-6 lg:px-8">
-        <div className="flex shrink-0 items-center gap-2 text-sm font-medium">
-          <Bell className="h-4 w-4" aria-hidden="true" />
-          <span>Announcement</span>
+        <div className="flex shrink-0 items-center gap-2 text-sm font-semibold">
+          <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+          <span>New</span>
         </div>
 
         <div className="relative flex-1 overflow-hidden">
@@ -79,12 +102,12 @@ export default function NotificationBar() {
               transition={{ duration: 0.2 }}
               className="absolute inset-0 flex items-center"
             >
-              <p className="truncate text-sm text-foreground/80">{currentNotification.text}</p>
+              <p className="truncate text-sm text-white/80">{currentNotification.text}</p>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        <Link href={currentNotification.href} className="shrink-0 text-sm font-semibold text-primary hover:underline">
+        <Link href={currentNotification.href} className="shrink-0 text-sm font-medium text-white hover:underline decoration-white/50 underline-offset-4 transition-all">
           {currentNotification.ctaLabel} &rarr;
         </Link>
 
@@ -94,7 +117,7 @@ export default function NotificationBar() {
             window.sessionStorage.setItem(STORAGE_KEY, "true")
             setIsVisible(false)
           }}
-          className="rounded-md p-1 transition-colors hover:bg-black/5"
+          className="rounded-md p-1 transition-colors text-white/50 hover:bg-white/10 hover:text-white"
           aria-label="Dismiss notification"
         >
           <X className="h-3.5 w-3.5" aria-hidden="true" />

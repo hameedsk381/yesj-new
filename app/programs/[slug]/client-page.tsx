@@ -13,20 +13,20 @@ function actionProps(action: ProgramAction) {
   if (action.tone === "secondary") {
     return {
       variant: "outline" as const,
-      className: "rounded-full px-5",
+      className: "rounded-md px-5 shadow-sm active:scale-[0.98] transition-all",
     }
   }
 
   if (action.tone === "accent") {
     return {
       variant: "default" as const,
-      className: "rounded-full bg-accent px-5 text-accent-foreground hover:bg-accent/90",
+      className: "rounded-md bg-accent px-5 text-accent-foreground hover:bg-accent/90 shadow-sm active:scale-[0.98] transition-all",
     }
   }
 
   return {
     variant: "default" as const,
-    className: "rounded-full px-5",
+    className: "rounded-md px-5 shadow-sm active:scale-[0.98] transition-all",
   }
 }
 
@@ -35,7 +35,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1" id="main-content" role="main">
-        <section className="border-b border-border bg-white pt-32 lg:pt-36">
+        <section className="border-b border-border bg-background pt-12 lg:pt-16">
           <div className="container px-6 py-12 lg:px-8 lg:py-16">
             <Link
               href="/programs"
@@ -62,7 +62,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                   )}
                   {program.badge}
                 </div>
-                <h1 className="mt-5 font-serif text-4xl font-bold text-foreground sm:text-5xl">
+                <h1 className="mt-5 font-sans text-4xl font-extrabold tracking-[-0.03em] text-foreground sm:text-5xl text-balance">
                   {program.title}
                 </h1>
                 <p className="mt-4 text-xl text-primary">{program.tagline}</p>
@@ -81,8 +81,8 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-3xl border border-border bg-background">
-                <div className={`h-2 w-full ${program.cardBarClassName}`} />
+              <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
+                <div className={`h-1.5 w-full ${program.cardBarClassName}`} />
                 <div className="relative aspect-[16/11]">
                   <Image src={program.image} alt={program.title} fill className="object-cover" />
                 </div>
@@ -95,8 +95,8 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
           <div className="container px-6 py-16 lg:px-8 lg:py-20">
             <div className="grid gap-6">
               {program.sections.map((section) => (
-                <article key={section.title} className="rounded-3xl border border-border bg-white p-8">
-                  <h2 className="font-serif text-2xl font-bold text-foreground">{section.title}</h2>
+                <article key={section.title} className="rounded-xl border border-border bg-card p-8 shadow-sm">
+                  <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">{section.title}</h2>
                   {section.paragraphs?.map((paragraph) => (
                     <p key={paragraph} className="mt-4 text-base leading-8 text-muted-foreground">
                       {paragraph}
@@ -117,8 +117,8 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                   {section.cards?.length ? (
                     <div className="mt-6 grid gap-4 md:grid-cols-2">
                       {section.cards.map((card) => (
-                        <div key={card.title} className="rounded-2xl border border-border bg-background p-5">
-                          <h3 className="text-sm font-semibold text-foreground">{card.title}</h3>
+                        <div key={card.title} className="rounded-lg border border-border bg-card/60 p-5 shadow-sm">
+                          <h3 className="text-sm font-bold text-foreground">{card.title}</h3>
                           <p className="mt-2 text-sm leading-7 text-muted-foreground">{card.description}</p>
                         </div>
                       ))}
@@ -129,8 +129,8 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
             </div>
 
             {program.bottomActions?.length ? (
-              <div className="mt-10 rounded-3xl border border-border bg-white p-8">
-                <h2 className="font-serif text-2xl font-bold text-foreground">Take the Next Step</h2>
+              <div className="mt-10 rounded-xl border border-border bg-card p-8 shadow-sm">
+                <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">Take the Next Step</h2>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   {program.bottomActions.map((action) => (
                     <Button key={action.label} asChild {...actionProps(action)}>

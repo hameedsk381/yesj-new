@@ -1,6 +1,5 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Playfair_Display, Poppins } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ErrorBoundary } from "@/components/error-boundary"
 import SkipLink from "@/components/skip-link"
@@ -9,19 +8,8 @@ import { siteConfig } from "@/lib/config"
 import ChatWidget from "@/components/chat/chat-widget"
 import PageTransition from "@/components/layout/page-transition"
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-})
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-  weight: ["400", "700"],
-})
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
 
 export const metadata = {
   title: {
@@ -127,7 +115,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} ${playfair.variable} font-sans`}>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

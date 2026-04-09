@@ -2,9 +2,18 @@ import { Metadata } from 'next';
 import ProgramClientPage from './client-page';
 import { getProgramBySlug } from '@/lib/data/programs';
 import { notFound } from 'next/navigation';
+import { getProgramBySlugFetcher, STRAPI_URL } from '@/lib/strapi';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const program = getProgramBySlug(params.slug);
+  let program = null;
+  
+  if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
+    program = await getProgramBySlugFetcher(params.slug);
+  }
+  
+  if (!program) {
+    program = getProgramBySlug(params.slug);
+  }
   
   if (!program) {
     return {
@@ -18,8 +27,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function ProgramPage({ params }: { params: { slug: string } }) {
-  const program = getProgramBySlug(params.slug);
+export default async function ProgramPage({ params }: { params: { slug: string } }) {
+  let program = null;
+
+  if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
+    program = await getProgramBySlugFetcher(params.slug);
+  }
+
+  if (!program) {
+    program = getProgramBySlug(params.slug);
+  }
 
   if (!program) {
     notFound();

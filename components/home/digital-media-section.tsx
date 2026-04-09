@@ -84,7 +84,7 @@ export default function DigitalMediaSection() {
               transition={{ delay: 0.3 }}
               className="pt-4"
             >
-              <Button asChild className="h-14 px-10 bg-primary/10 hover:bg-primary/20 text-primary border-none rounded-full text-lg font-bold transition-all group">
+              <Button asChild className="h-14 px-10 bg-primary/10 hover:bg-primary/20 text-primary border-none rounded-md text-lg font-bold transition-all group shadow-sm">
                 <Link href="/media#echoes" className="flex items-center gap-2">
                   Explore Media Hub
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />

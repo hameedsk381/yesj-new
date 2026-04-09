@@ -19,8 +19,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-poppins)", "sans-serif"],
-        serif: ["var(--font-playfair)", "serif"],
+        sans: ["var(--font-geist-sans)", "sans-serif"],
+        serif: ["var(--font-geist-sans)", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",

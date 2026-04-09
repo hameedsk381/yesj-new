@@ -1,11 +1,12 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const stories = [
+const defaultStories = [
   {
     id: 1,
     name: "Lakshmi",
@@ -39,9 +40,37 @@ const stories = [
 ]
 
 export default function TransformationStories() {
+  const [data, setData] = useState<any>(null)
+  const [items, setItems] = useState<any[]>(defaultStories)
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const res = await fetch('/api/homepage')
+        if (res.ok) {
+          const homepage = await res.json()
+          setData(homepage)
+          if (homepage.transformationStories && homepage.transformationStories.length > 0) {
+            setItems(homepage.transformationStories.map((item: any) => ({
+              id: item.id,
+              name: item.name,
+              age: item.age,
+              story: item.content,
+              image: item.image?.url || "/placeholder.svg",
+              alt: item.imageAlt || item.name,
+              program: item.programTag
+            })))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch transformation stories', err)
+      }
+    }
+    fetchStories()
+  }, [])
+
   return (
     <section aria-labelledby="stories-heading" className="relative overflow-hidden bg-background py-24 lg:py-40">
-      {/* Decorative background elements */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl opacity-50" />
       <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl opacity-30" />
 
@@ -53,7 +82,7 @@ export default function TransformationStories() {
             viewport={{ once: true }}
             className="text-primary uppercase tracking-[0.4em] text-xs font-bold"
           >
-            Human Impact
+            {data?.storiesBadge || "Human Impact"}
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -63,7 +92,7 @@ export default function TransformationStories() {
             id="stories-heading" 
             className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-tight max-w-4xl"
           >
-            Voices of Resilience: <span className="italic text-primary">Finding a Way Forward</span>
+            {data?.storiesTitle || "Voices of Resilience: Finding a Way Forward"}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -72,12 +101,12 @@ export default function TransformationStories() {
             transition={{ delay: 0.2 }}
             className="text-lg leading-relaxed text-muted-foreground/80 max-w-2xl font-light"
           >
-            Transformation is not just a statistical goal; it&apos;s a personal journey of rediscovering dignity and purpose.
+            {data?.storiesSubtitle || "Transformation is not just a statistical goal; it's a personal journey of rediscovering dignity and purpose."}
           </motion.p>
         </div>
 
         <div className="space-y-32">
-          {stories.map((story, index) => (
+          {items.map((story, index) => (
             <motion.div
               key={story.id}
               initial={{ opacity: 0, y: 50 }}
@@ -94,7 +123,7 @@ export default function TransformationStories() {
                 <div className="relative aspect-[4/5] md:aspect-[16/10] lg:aspect-[4/5] overflow-hidden rounded-[2rem] shadow-2xl border border-white/10">
                   <Image 
                     src={story.image} 
-                    alt={story.alt} 
+                    alt={story.alt || story.name} 
                     fill 
                     className="object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
                   />
@@ -105,7 +134,6 @@ export default function TransformationStories() {
                     </span>
                   </div>
                 </div>
-                {/* Decorative element for asymmetrical look */}
                 <div className={cn(
                   "absolute -z-10 w-full h-full border border-primary/20 rounded-[2rem] translate-x-4 translate-y-4 transition-transform duration-700 group-hover:translate-x-2 group-hover:translate-y-2",
                   index % 2 === 1 ? "-translate-x-8" : "translate-x-8"
