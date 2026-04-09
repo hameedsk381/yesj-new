@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { Download, Eye, FileText, Search, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/layout/header"
@@ -176,7 +177,18 @@ export default function EchoesPage() {
                   className="group"
                 >
                   <div className="relative aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_rgba(189,153,61,0.25)]">
-                    <PDFThumbnail url={echo.filePath} />
+                    {/* Use static thumbnail if it's not a placeholder, otherwise use live PDF preview */}
+                    {echo.thumbnailPath && !echo.thumbnailPath.includes('placehold.co') ? (
+                      <Image
+                        src={echo.thumbnailPath}
+                        alt={echo.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        unoptimized={echo.thumbnailPath.includes('storage.googleapis.com')}
+                      />
+                    ) : (
+                      <PDFThumbnail url={echo.filePath} />
+                    )}
                     
                     {/* Overlay Actions */}
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4 z-20">
