@@ -175,7 +175,21 @@ storybook-static
 .yarn/install-state.gz
 .pnp.*
 
-# Temporary files
-*.tmp
-*.temp
-nul
+# YESJ Project Specific
+/scripts/
+/temp_docx/
+*.docx
+*.mjs
+*.pdf
+/public/anniversary.png
+/public/*.mp4
+gen-lang-client-*.json
+*_log*.txt
+content.txt
+db-inspection.txt
+yesj_start.*
+docker-run.*
+migrate.sh
+web-design-guidelines.md
+/brain/
+.qoder/

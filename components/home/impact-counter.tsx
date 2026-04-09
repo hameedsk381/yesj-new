@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { CalendarDays, Goal, Handshake, MapPin, Star, Users } from "lucide-react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 type Counter = {
@@ -131,6 +132,18 @@ function CounterItem({ counter, index }: { counter: Counter; index: number }) {
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
+      {counter.id === 1 && (
+        <div className="absolute inset-0 opacity-10 grayscale group-hover:opacity-20 transition-opacity duration-500">
+           <Image 
+             src="https://storage.googleapis.com/yesj/website/IMG_8159.JPG" 
+             alt="Impact Background" 
+             fill 
+             className="object-cover"
+           />
+           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
+        </div>
+      )}
+
       <div className="relative z-10 flex flex-col h-full justify-between">
         <div className="flex items-start justify-between">
           <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary sm:h-11 sm:w-11">
@@ -167,12 +180,12 @@ export default function ImpactCounter() {
           setData(homepage)
           if (homepage.impactCounters && homepage.impactCounters.length > 0) {
             setItems(homepage.impactCounters.map((item: any, i: number) => ({
-              ...counters[i % counters.length], // Preserve layout/icons
-              id: item.id || i,
-              value: item.value,
+              ...counters[i % counters.length], 
+              id: item.id || i + 1,
+              value: typeof item.value === 'number' ? item.value : 0,
               suffix: item.suffix || "+",
-              label: item.label,
-              detail: item.description,
+              label: item.label || "Lives Touched",
+              detail: item.description || "",
               display: item.display
             })))
           }

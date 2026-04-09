@@ -115,6 +115,7 @@ export default function Header() {
     { href: "/programs", label: "Programs", children: programLinks },
     { href: "/impact", label: "Impact" },
     { href: "/get-involved", label: "Get Involved", children: getInvolvedLinks },
+    { href: "/echoes", label: "Echoes" },
     { href: "/media", label: "Media" },
     { href: "/contact", label: "Contact" },
   ]
@@ -278,6 +279,16 @@ export default function Header() {
               onClose={() => setOpenDropdown(null)}
               isScrolled={!isTransparent}
             />
+
+            <Link
+              href="/echoes"
+              className={cn(
+                "py-7 text-sm font-bold tracking-tight transition-colors",
+                isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
+              )}
+            >
+              Echoes
+            </Link>
 
             <Link
               href="/media"
