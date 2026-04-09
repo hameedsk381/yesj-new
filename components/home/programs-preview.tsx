@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -9,7 +10,20 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export default function ProgramsPreview() {
-  const previewPrograms = programsData.slice(0, 8)
+  const [previewPrograms, setPreviewPrograms] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    fetch("/api/programs")
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setPreviewPrograms(data.slice(0, 8))
+      })
+      .catch(err => console.error(err))
+      .finally(() => setIsLoading(false))
+  }, [])
+
+  if (isLoading) return null
 
   return (
     <section id="programs" aria-labelledby="programs-heading" className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-28">
@@ -76,7 +90,7 @@ export default function ProgramsPreview() {
 
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src={program.image}
+                  src={program.imagePath || "https://storage.googleapis.com/yesj/website/IMG_8159.JPG"}
                   alt={`${program.title} programme`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -95,7 +109,7 @@ export default function ProgramsPreview() {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-primary">
                     <ProgramIcon
                       name={program.icon}
-                      logo={program.logo}
+                      logo={program.logoPath}
                       className="h-5 w-5"
                       aria-hidden="true"
                     />
@@ -107,7 +121,7 @@ export default function ProgramsPreview() {
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {program.categories.slice(0, 2).map((category) => (
+                  {program.categories && program.categories.slice(0, 2).map((category: string) => (
                     <span
                       key={category}
                       className="rounded-md border border-border bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground"

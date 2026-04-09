@@ -3,13 +3,15 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2 } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Plus, Trash2, Image as ImageIcon, Upload } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function HomepageManager() {
     const [data, setData] = useState<any>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isSaving, setIsSaving] = useState(false)
+    const [isUploading, setIsUploading] = useState<string | null>(null) // index or field
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
     useEffect(() => {
@@ -20,7 +22,14 @@ export default function HomepageManager() {
         try {
             const res = await fetch("/api/homepage")
             if (res.ok) {
-                setData(await res.json())
+                const fetchedData = await res.json()
+                // Ensure array existences
+                setData({
+                    ...fetchedData,
+                    hero: fetchedData.hero || [],
+                    welcomeBlocks: fetchedData.welcomeBlocks || [],
+                    transformationStories: fetchedData.transformationStories || []
+                })
             }
         } catch (error) {
             console.error(error)
@@ -40,6 +49,8 @@ export default function HomepageManager() {
             })
             if (res.ok) {
                 setMessage({ type: 'success', text: "Homepage updated successfully" })
+                // Refresh local data
+                window.scrollTo({ top: 0, behavior: 'smooth' })
             } else {
                 throw new Error("Failed to save")
             }
@@ -48,6 +59,61 @@ export default function HomepageManager() {
         } finally {
             setIsSaving(false)
         }
+    }
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, path: string) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setIsUploading(path)
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("folder", "homepage")
+
+        try {
+            const res = await fetch("/api/admin/upload", {
+                method: "POST",
+                body: formData
+            })
+            const result = await res.json()
+            if (res.ok && result.url) {
+                // Update specific path in data object
+                updateDataByPath(path, result.url)
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Upload failed")
+        } finally {
+            setIsUploading(null)
+        }
+    }
+
+    const updateDataByPath = (path: string, value: any) => {
+        const newData = { ...data }
+        const parts = path.split('.')
+        let current = newData
+        for (let i = 0; i < parts.length - 1; i++) {
+            current = current[parts[i]]
+        }
+        current[parts[parts.length - 1]] = value
+        setData(newData)
+    }
+
+    const addHeroSlide = () => {
+        const newHero = [...(data.hero || [])]
+        newHero.push({
+            id: Date.now(),
+            image: "",
+            title: "New Hero Title",
+            description: "New hero description goes here."
+        })
+        setData({ ...data, hero: newHero })
+    }
+
+    const removeHeroSlide = (index: number) => {
+        const newHero = [...data.hero]
+        newHero.splice(index, 1)
+        setData({ ...data, hero: newHero })
     }
 
     if (isLoading) {
@@ -62,7 +128,7 @@ export default function HomepageManager() {
 
     return (
         <AdminLayout>
-            <header className="bg-white border-b sticky top-0 z-10">
+            <header className="bg-white border-b sticky top-0 z-50">
                 <div className="container flex items-center justify-between h-16 px-4 md:px-6">
                     <div className="flex items-center gap-4">
                         <Link href="/admin/dashboard">
@@ -81,35 +147,124 @@ export default function HomepageManager() {
                 </div>
             </header>
 
-            <main className="container px-4 md:px-6 py-8 max-w-4xl space-y-8">
+            <main className="container px-4 md:px-6 py-8 max-w-5xl space-y-12 pb-24">
                 {message && (
                     <div className={`p-4 rounded-md border ${message.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
                         {message.text}
                     </div>
                 )}
 
-                {/* Hero Section */}
-                <section className="bg-white border rounded-md p-6 space-y-4 shadow-sm">
-                    <h2 className="text-lg font-bold border-b pb-2">Welcome Section</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Badge</label>
-                            <input 
-                                className="w-full border rounded p-2" 
-                                value={data.welcomeBadge || ""} 
-                                onChange={e => setData({...data, welcomeBadge: e.target.value})}
-                            />
+                {/* ── Hero Slides ── */}
+                <section className="space-y-6">
+                    <div className="flex items-center justify-between border-b pb-4">
+                        <div>
+                            <h2 className="text-2xl font-light text-primary">Hero Slider</h2>
+                            <p className="text-sm text-muted-foreground mt-1">Manage the large images and text on the main landing page.</p>
+                        </div>
+                        <Button onClick={addHeroSlide} variant="outline" size="sm">
+                            <Plus className="h-4 w-4 mr-2" /> Add Slide
+                        </Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-8">
+                        {data.hero.map((slide: any, index: number) => (
+                            <div key={slide.id || index} className="bg-white border rounded-lg p-6 shadow-sm relative group">
+                                <button 
+                                    onClick={() => removeHeroSlide(index)}
+                                    className="absolute -top-3 -right-3 h-8 w-8 bg-white border border-red-100 text-red-500 rounded-full flex items-center justify-center shadow-md hover:bg-red-50"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                </button>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6">
+                                    <div className="space-y-3">
+                                        <div className="aspect-video relative bg-muted rounded overflow-hidden border">
+                                            {slide.image ? (
+                                                <Image src={slide.image} alt="Hero image" fill className="object-cover" />
+                                            ) : (
+                                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                                    <ImageIcon className="h-10 w-10 opacity-20" />
+                                                </div>
+                                            )}
+                                            {isUploading === `hero.${index}.image` && (
+                                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                                    <Loader2 className="h-6 w-6 animate-spin text-white" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="relative">
+                                            <input 
+                                                type="file" 
+                                                id={`hero-upload-${index}`}
+                                                className="hidden" 
+                                                accept="image/*"
+                                                onChange={(e) => handleFileUpload(e, `hero.${index}.image`)}
+                                            />
+                                            <label 
+                                                htmlFor={`hero-upload-${index}`}
+                                                className="flex items-center justify-center gap-2 w-full p-2 border-2 border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer"
+                                            >
+                                                <Upload className="h-3 w-3" /> {slide.image ? "Change Image" : "Upload Image"}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Slide Title</label>
+                                            <input 
+                                                className="w-full border rounded p-2 text-lg font-light" 
+                                                value={slide.title} 
+                                                onChange={(e) => {
+                                                    const newHero = [...data.hero]
+                                                    newHero[index].title = e.target.value
+                                                    setData({ ...data, hero: newHero })
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Slide Description</label>
+                                            <textarea 
+                                                className="w-full border rounded p-2 h-20 text-sm font-light leading-relaxed" 
+                                                value={slide.description} 
+                                                onChange={(e) => {
+                                                    const newHero = [...data.hero]
+                                                    newHero[index].description = e.target.value
+                                                    setData({ ...data, hero: newHero })
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* ── Welcome Section ── */}
+                <section className="space-y-4">
+                    <h2 className="text-2xl font-light text-primary border-b pb-4">Welcome & Purpose</h2>
+                    <div className="bg-white border rounded-lg p-6 shadow-sm space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold uppercase text-muted-foreground">Badge Text</label>
+                                <input 
+                                    className="w-full border rounded p-2" 
+                                    value={data.welcomeBadge || ""} 
+                                    onChange={e => setData({...data, welcomeBadge: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold uppercase text-muted-foreground">Section Title</label>
+                                <input 
+                                    className="w-full border rounded p-2" 
+                                    value={data.welcomeTitle || ""} 
+                                    onChange={e => setData({...data, welcomeTitle: e.target.value})}
+                                />
+                            </div>
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Title</label>
-                            <input 
-                                className="w-full border rounded p-2" 
-                                value={data.welcomeTitle || ""} 
-                                onChange={e => setData({...data, welcomeTitle: e.target.value})}
-                            />
-                        </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Subtitle</label>
+                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Intro Sentence</label>
                             <input 
                                 className="w-full border rounded p-2" 
                                 value={data.welcomeSubtitle || ""} 
@@ -117,9 +272,9 @@ export default function HomepageManager() {
                             />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Description</label>
+                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Detailed Description</label>
                             <textarea 
-                                className="w-full border rounded p-2 h-24" 
+                                className="w-full border rounded p-2 h-32 leading-relaxed" 
                                 value={data.welcomeDescription || ""} 
                                 onChange={e => setData({...data, welcomeDescription: e.target.value})}
                             />
@@ -127,20 +282,20 @@ export default function HomepageManager() {
                     </div>
                 </section>
 
-                {/* Impact Section */}
-                <section className="bg-white border rounded-md p-6 space-y-4 shadow-sm">
-                    <h2 className="text-lg font-bold border-b pb-2">Impact Section</h2>
-                    <div className="grid grid-cols-1 gap-4">
+                {/* ── Impact Stats ── */}
+                <section className="space-y-4">
+                    <h2 className="text-2xl font-light text-primary border-b pb-4">Impact Numbers</h2>
+                    <div className="bg-white border rounded-lg p-6 shadow-sm space-y-6">
                         <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Title</label>
+                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Section Title</label>
                             <input 
-                                className="w-full border rounded p-2" 
+                                className="w-full border rounded p-2 font-bold" 
                                 value={data.impactTitle || ""} 
                                 onChange={e => setData({...data, impactTitle: e.target.value})}
                             />
                         </div>
                         <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Subtitle</label>
+                            <label className="text-[10px] font-bold uppercase text-muted-foreground">Impact Subtitle / Context</label>
                             <textarea 
                                 className="w-full border rounded p-2 h-20" 
                                 value={data.impactSubtitle || ""} 
@@ -150,25 +305,27 @@ export default function HomepageManager() {
                     </div>
                 </section>
 
-                {/* Philosophy Section */}
-                <section className="bg-white border rounded-md p-6 space-y-4 shadow-sm">
-                    <h2 className="text-lg font-bold border-b pb-2">Philosophy Section</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Badge</label>
-                            <input 
-                                className="w-full border rounded p-2" 
-                                value={data.philosophyBadge || ""} 
-                                onChange={e => setData({...data, philosophyBadge: e.target.value})}
-                            />
-                        </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase text-gray-400">Title</label>
-                            <input 
-                                className="w-full border rounded p-2" 
-                                value={data.philosophyTitle || ""} 
-                                onChange={e => setData({...data, philosophyTitle: e.target.value})}
-                            />
+                {/* ── Philosophy ── */}
+                <section className="space-y-4">
+                    <h2 className="text-2xl font-light text-primary border-b pb-4">Our Philosophy</h2>
+                    <div className="bg-white border rounded-lg p-6 shadow-sm space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold uppercase text-muted-foreground">Badge</label>
+                                <input 
+                                    className="w-full border rounded p-2" 
+                                    value={data.philosophyBadge || ""} 
+                                    onChange={e => setData({...data, philosophyBadge: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold uppercase text-muted-foreground">Title</label>
+                                <input 
+                                    className="w-full border rounded p-2 font-bold" 
+                                    value={data.philosophyTitle || ""} 
+                                    onChange={e => setData({...data, philosophyTitle: e.target.value})}
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>

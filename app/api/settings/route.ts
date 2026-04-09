@@ -3,6 +3,8 @@ import { db } from '@/lib/db';
 import { siteSettings } from '@/lib/db/schema';
 import { siteConfig } from '@/lib/config';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const settings = await db.select().from(siteSettings);

@@ -12,18 +12,22 @@ import {
   Newspaper,
   Image,
   Calendar,
-  UserPlus
+  UserPlus,
+  Briefcase,
+  Layers,
+  Home
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigationItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { name: "Homepage", href: "/admin/homepage", icon: LayoutDashboard }, // Using LayoutDashboard for now
+  { name: "Homepage", href: "/admin/homepage", icon: Home },
+  { name: "Programmes", href: "/admin/programs", icon: Briefcase },
   { name: "Registrations", href: "/admin/registrations", icon: Users },
   { name: "Nominations", href: "/admin/nominations", icon: FileText },
   { name: "Contacts", href: "/admin/contacts", icon: Mail },
   { name: "Newsletter", href: "/admin/newsletter", icon: Newspaper },
-  { name: "Echoes", href: "/admin/echoes", icon: FileText },
+  { name: "Echoes", href: "/admin/echoes", icon: Layers },
   { name: "Stories", href: "/admin/stories", icon: FileText },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Gallery", href: "/admin/gallery", icon: Image },

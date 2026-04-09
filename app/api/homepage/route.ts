@@ -4,6 +4,8 @@ import { siteSettings } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { homepageData } from '@/lib/data/site-content';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const setting = await db.query.siteSettings.findFirst({

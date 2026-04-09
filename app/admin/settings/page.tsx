@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2 } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Upload } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function SettingsPage() {
     const [settings, setSettings] = useState<Record<string, string>>({})
@@ -69,6 +70,9 @@ export default function SettingsPage() {
         { key: "siteName", label: "Site Name", type: "text" },
         { key: "title", label: "Site Title", type: "text" },
         { key: "description", label: "SEO Description", type: "textarea" },
+        { key: "aboutHeroImage", label: "About Page Hero Image", type: "image", folder: "website" },
+        { key: "aboutMissionImage", label: "About Page Mission Image", type: "image", folder: "website" },
+        { key: "contactHeroImage", label: "Contact Page Hero Image", type: "image", folder: "website" },
         { key: "email", label: "Contact Email", type: "email" },
         { key: "phone", label: "Contact Phone", type: "text" },
         { key: "whatsapp", label: "WhatsApp Number", type: "text" },
@@ -78,6 +82,32 @@ export default function SettingsPage() {
         { key: "youtube", label: "YouTube Link", type: "text" },
     ]
 
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: string, folder: string) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setIsSaving(true)
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("folder", folder)
+
+        try {
+            const res = await fetch("/api/admin/upload", {
+                method: "POST",
+                body: formData
+            })
+            const result = await res.json()
+            if (res.ok && result.url) {
+                await handleSave(key, result.url)
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Upload failed")
+        } finally {
+            setIsSaving(false)
+        }
+    }
+
     return (
         <AdminLayout>
             <header className="bg-white border-b sticky top-0 z-10">
@@ -86,7 +116,7 @@ export default function SettingsPage() {
                         <Link href="/admin/dashboard">
                             <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
                         </Link>
-                        <h1 className="text-xl font-light text-primary">Site Settings</h1>
+                        <h1 className="text-xl font-light text-primary">Site Settings & Imagery</h1>
                     </div>
                 </div>
             </header>
@@ -115,6 +145,36 @@ export default function SettingsPage() {
                                                 value={settings[field.key] || ""}
                                                 onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })}
                                             />
+                                        ) : field.type === "image" ? (
+                                            <div className="space-y-3">
+                                                <div className="aspect-video relative bg-muted rounded overflow-hidden border">
+                                                    {settings[field.key] ? (
+                                                        <Image src={settings[field.key]} alt="Preview" fill className="object-cover" />
+                                                    ) : (
+                                                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground italic text-xs">No image set</div>
+                                                    )}
+                                                </div>
+                                                <div className="flex gap-2">
+                                                    <input 
+                                                        type="file" 
+                                                        id={`upload-${field.key}`}
+                                                        className="hidden" 
+                                                        accept="image/*"
+                                                        onChange={(e) => handleImageUpload(e, field.key, field.folder || "website")}
+                                                    />
+                                                    <label 
+                                                        htmlFor={`upload-${field.key}`}
+                                                        className="flex items-center justify-center gap-2 p-2 px-4 border border-primary/20 rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer flex-1"
+                                                    >
+                                                        <Upload className="h-3 w-3" /> {settings[field.key] ? "Replace Image" : "Upload Image"}
+                                                    </label>
+                                                    {settings[field.key] && (
+                                                        <Button variant="outline" size="sm" onClick={() => handleSave(field.key, "")} className="text-red-500 border-red-100 hover:bg-red-50">
+                                                            Remove
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </div>
                                         ) : (
                                             <input 
                                                 type={field.type}
@@ -123,14 +183,16 @@ export default function SettingsPage() {
                                                 onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })}
                                             />
                                         )}
-                                        <Button 
-                                            size="sm" 
-                                            onClick={() => handleSave(field.key, settings[field.key])}
-                                            disabled={isSaving}
-                                            className="bg-primary text-white"
-                                        >
-                                            <Save className="h-4 w-4 mr-2" /> Save {field.label}
-                                        </Button>
+                                        {field.type !== "image" && (
+                                            <Button 
+                                                size="sm" 
+                                                onClick={() => handleSave(field.key, settings[field.key])}
+                                                disabled={isSaving}
+                                                className="bg-primary text-white"
+                                            >
+                                                <Save className="h-4 w-4 mr-2" /> Save {field.label}
+                                            </Button>
+                                        )}
                                     </div>
                                 </div>
                             ))}

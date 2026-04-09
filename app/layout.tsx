@@ -7,6 +7,8 @@ import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
 import ChatWidget from "@/components/chat/chat-widget"
 import PageTransition from "@/components/layout/page-transition"
+import AnniversaryPopup from "@/components/shared/anniversary-popup"
+import ScrollToTop from "@/components/layout/scroll-to-top"
 
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
@@ -127,6 +129,8 @@ export default function RootLayout({
             <PageTransition>
               {children}
             </PageTransition>
+            <AnniversaryPopup />
+            <ScrollToTop />
             <ChatWidget />
           </ErrorBoundary>
         </ThemeProvider>

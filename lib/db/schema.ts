@@ -132,3 +132,20 @@ export const echoes = mysqlTable("echoes", {
   description: text("description"),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+export const programs = mysqlTable("programs", {
+  id: serial("id").primaryKey(),
+  slug: varchar("slug", { length: 100 }).unique().notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  shortTitle: varchar("short_title", { length: 100 }),
+  badge: varchar("badge", { length: 255 }),
+  tagline: varchar("tagline", { length: 512 }),
+  imagePath: varchar("image_path", { length: 512 }),
+  logoPath: varchar("logo_path", { length: 512 }),
+  icon: varchar("icon", { length: 100 }),
+  overviewDescription: text("overview_description"),
+  order: int("order").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+});

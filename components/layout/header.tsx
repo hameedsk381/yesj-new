@@ -158,57 +158,56 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Header should be solid if we've scrolled OR if we're not on the home page
-  const isSolid = isScrolled || !isHomePage
+  // Header should be transparent initially on home page, solid elsewhere or when scrolled
+  const isTransparent = isHomePage && !isScrolled
 
   return (
     <div className={cn(
-      "top-0 left-0 right-0 z-[100] w-full flex flex-col",
-      isHomePage ? "fixed" : "sticky"
+      "fixed top-0 left-0 right-0 z-[100] w-full flex flex-col transition-all duration-300",
+      isTransparent ? "bg-transparent border-transparent" : "bg-background border-b border-border shadow-sm"
     )}>
-      <div 
+      {/* Notification bar hidden per request */}
+      {/* <div 
         className={cn(
-          "grid transition-[grid-template-rows] duration-300 ease-in-out w-full",
+          "grid transition-[grid-template-rows] duration-300 ease-in-out w-full bg-primary text-white",
           isScrolled ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
         )}
       >
         <div className="overflow-hidden">
           <NotificationBar />
         </div>
-      </div>
+      </div> */}
       <header
         className={cn(
           "w-full transition-all duration-300 ease-in-out",
-          isSolid 
-            ? "border-b border-border bg-background/92 shadow-sm backdrop-blur-md py-0" 
-            : "bg-transparent border-transparent py-4"
+          isTransparent ? "bg-transparent" : "bg-background/95 backdrop-blur-md"
         )}
         role="banner"
       >
         <div className={cn(
           "container flex items-center justify-between gap-6 px-5 transition-all duration-500",
-          isSolid ? "h-16" : "h-20"
+          isScrolled ? "h-16" : "h-24"
         )}>
           <Link
             href="/"
             aria-label="YESJ Home Page"
             className="flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
-            <div className="relative h-12 w-12 overflow-hidden transition-all">
+            <div className="relative h-16 w-16 overflow-hidden transition-all bg-white rounded-full p-3 shadow-sm border border-black/5">
               <Image
                 src="/YESJ_Logo_Black-eaf43d27.png"
                 alt="YESJ logo"
                 fill
-                className={cn("object-contain transition-all", !isSolid && "brightness-0 invert")}
+                className="object-contain"
                 priority
               />
             </div>
             <div className="hidden sm:block">
-              <div className={cn("text-xl font-bold tracking-tight transition-colors", isSolid ? "text-primary" : "text-primary-foreground")}>
+              <div className={cn("text-2xl font-black tracking-tighter transition-colors", isTransparent ? "text-white" : "text-primary")}>
                 YES-J
               </div>
-              <div className={cn("text-[10px] uppercase tracking-wider transition-colors", isSolid ? "text-muted-foreground" : "text-primary-foreground/60")}>
-                Youth Empowering Service - Jesuits
+              <div className={cn("text-[10px] font-bold uppercase tracking-widest transition-colors", isTransparent ? "text-white/60" : "text-muted-foreground")}>
+                Youth Empowering Service
               </div>
             </div>
           </Link>
@@ -221,8 +220,8 @@ export default function Header() {
             <Link
               href="/"
               className={cn(
-                "py-7 text-sm font-semibold transition-colors",
-                isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
+                "py-7 text-sm font-bold tracking-tight transition-colors",
+                isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
               )}
             >
               Home
@@ -235,7 +234,7 @@ export default function Header() {
               open={openDropdown === "about"}
               onOpen={() => setOpenDropdown("about")}
               onClose={() => setOpenDropdown(null)}
-              isScrolled={isSolid}
+              isScrolled={!isTransparent}
             />
 
             <div
@@ -245,12 +244,12 @@ export default function Header() {
               <Link
                 href="/programs"
                 className={cn(
-                  "inline-flex items-center gap-1 py-7 text-sm font-medium transition-colors",
-                  isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
+                  "inline-flex items-center gap-1 py-7 text-sm font-bold tracking-tight transition-colors",
+                  isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
                 )}
               >
                 Programs
-                <ChevronDown className={cn("h-4 w-4", !isSolid && "opacity-70")} aria-hidden="true" />
+                <ChevronDown className={cn("h-4 w-4", isTransparent ? "text-white/70" : "text-muted-foreground")} aria-hidden="true" />
               </Link>
 
               <MegaMenu
@@ -263,8 +262,8 @@ export default function Header() {
             <Link
               href="/impact"
               className={cn(
-                "py-7 text-sm font-medium transition-colors",
-                isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
+                "py-7 text-sm font-bold tracking-tight transition-colors",
+                isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
               )}
             >
               Impact
@@ -277,14 +276,14 @@ export default function Header() {
               open={openDropdown === "get-involved"}
               onOpen={() => setOpenDropdown("get-involved")}
               onClose={() => setOpenDropdown(null)}
-              isScrolled={isSolid}
+              isScrolled={!isTransparent}
             />
 
             <Link
               href="/media"
               className={cn(
-                "py-7 text-sm font-medium transition-colors",
-                isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
+                "py-7 text-sm font-bold tracking-tight transition-colors",
+                isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
               )}
             >
               Media
@@ -293,8 +292,8 @@ export default function Header() {
             <Link
               href="/contact"
               className={cn(
-                "py-7 text-sm font-medium transition-colors",
-                isSolid ? "text-foreground/80 hover:text-primary" : "text-primary-foreground/90 hover:text-primary-foreground"
+                "py-7 text-sm font-bold tracking-tight transition-colors",
+                isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
               )}
             >
               Contact
@@ -303,11 +302,11 @@ export default function Header() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Button asChild className={cn(
-              "hidden h-10 px-5 text-sm font-semibold sm:inline-flex shadow-sm",
-              isSolid ? "bg-primary text-white hover:bg-primary/90" : "bg-background text-primary hover:bg-background/90"
+              "hidden h-11 px-6 text-sm font-bold sm:inline-flex shadow-xl transition-all active:scale-[0.98]",
+              isTransparent ? "bg-white text-primary hover:bg-white/90" : "bg-primary text-white hover:bg-primary/90"
             )}>
               <Link href="/donate" aria-label="Make a secure online donation">
-                <Heart className="mr-2 h-4 w-4 fill-current" aria-hidden="true" />
+                <Heart className={cn("mr-2 h-4 w-4 fill-current", isTransparent ? "text-primary" : "text-white")} aria-hidden="true" />
                 Donate Now
               </Link>
             </Button>
@@ -318,10 +317,10 @@ export default function Header() {
               size="icon"
               aria-expanded={isMenuOpen}
               aria-label="Toggle mobile menu"
-              className={cn("lg:hidden transition-colors", isSolid ? "text-foreground" : "text-primary-foreground")}
+              className={cn("lg:hidden transition-colors", isTransparent ? "text-white" : "text-foreground")}
               onClick={() => setIsMenuOpen(true)}
             >
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              <Menu className="h-7 w-7" aria-hidden="true" />
             </Button>
           </div>
         </div>
