@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Plus } from "lucide-react"
+import { ArrowLeft, Trash2, Plus, LayoutGrid, Tag } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 interface GalleryItem {
     id: number
@@ -14,21 +15,30 @@ interface GalleryItem {
     imagePath: string
 }
 
+interface Program {
+    slug: string
+    title: string
+    shortTitle: string | null
+}
+
 export default function GalleryPage() {
     const [items, setItems] = useState<GalleryItem[]>([])
+    const [programs, setPrograms] = useState<Program[]>([])
     const [showAddForm, setShowAddForm] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState<string>("all")
 
     // Form State
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        category: "leadership"
+        category: "general"
     })
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => {
         fetchGallery()
+        fetchPrograms()
     }, [])
 
     const fetchGallery = async () => {
@@ -40,6 +50,18 @@ export default function GalleryPage() {
             }
         } catch (error) {
             console.error("Failed to fetch gallery", error)
+        }
+    }
+
+    const fetchPrograms = async () => {
+        try {
+            const res = await fetch("/api/programs")
+            if (res.ok) {
+                const data = await res.json()
+                setPrograms(data)
+            }
+        } catch (err) {
+            console.error("Failed to fetch programs", err)
         }
     }
 
@@ -80,7 +102,7 @@ export default function GalleryPage() {
             if (!res.ok) throw new Error("Failed to add image")
 
             setShowAddForm(false)
-            setFormData({ title: "", description: "", category: "leadership" })
+            setFormData({ title: "", description: "", category: "general" })
             setImageFile(null)
             fetchGallery()
         } catch (error) {
@@ -90,6 +112,16 @@ export default function GalleryPage() {
         }
     }
 
+    const filteredItems = selectedCategory === "all" 
+        ? items 
+        : items.filter(item => item.category === selectedCategory)
+
+    const categories = [
+        { label: "All Items", value: "all" },
+        { label: "General", value: "general" },
+        ...programs.map(p => ({ label: p.shortTitle || p.title, value: p.slug }))
+    ]
+
     return (
         <AdminLayout>
             <header className="bg-white border-b sticky top-0 z-10">
@@ -98,7 +130,7 @@ export default function GalleryPage() {
                         <Link href="/admin/dashboard">
                             <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
                         </Link>
-                        <h1 className="text-xl font-light text-primary">Gallery</h1>
+                        <h1 className="text-xl font-bold tracking-tight text-primary">Gallery Management</h1>
                     </div>
                     <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-primary text-white">
                         {showAddForm ? "Cancel" : <><Plus className="mr-2 h-4 w-4" /> Add Image</>}
@@ -108,40 +140,100 @@ export default function GalleryPage() {
 
             <main className="container px-4 md:px-6 py-8">
                 {showAddForm && (
-                    <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
-                        <h2 className="text-lg font-bold mb-4">Add New Image</h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <input className="border p-2 rounded" placeholder="Title" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
-                                <select className="border p-2 rounded" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
-                                    <option value="leadership">Leadership</option>
-                                    <option value="social_service">Social Service</option>
-                                    <option value="cultural">Cultural</option>
-                                </select>
+                    <div className="mb-10 p-6 bg-white rounded-xl border-2 border-primary/10 shadow-lg max-w-2xl bg-gradient-to-br from-white to-primary/5">
+                        <h2 className="text-xl font-black text-primary mb-6 flex items-center gap-2">
+                             <Plus className="h-5 w-5" /> NEW GALLERY ASSET
+                        </h2>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Title</label>
+                                    <input className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-primary/20 outline-none" placeholder="e.g. Graduation Ceremony 2024" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Category / Program</label>
+                                    <select className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-primary/20 outline-none bg-white" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })}>
+                                        <option value="general">General Website</option>
+                                        <optgroup label="Programs">
+                                            {programs.map(p => (
+                                                <option key={p.slug} value={p.slug}>{p.title}</option>
+                                            ))}
+                                        </optgroup>
+                                    </select>
+                                </div>
                             </div>
-                            <textarea className="w-full border p-2 rounded" placeholder="Description" rows={2} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
-                            <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Uploading..." : "Add to Gallery"}</Button>
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Caption / Description</label>
+                                <textarea className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Brief description of the image content..." rows={2} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Image Source</label>
+                                <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-black file:bg-primary file:text-white hover:file:bg-primary/90" />
+                            </div>
+                            <Button type="submit" disabled={isSubmitting} className="w-full h-12 bg-primary text-white text-md font-bold shadow-xl active:scale-[0.98] transition-all">
+                                {isSubmitting ? "Uploading asset..." : "DEPLOY TO GALLERY"}
+                            </Button>
                         </form>
                     </div>
                 )}
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {items.map(item => (
-                        <div key={item.id} className="relative group rounded-md overflow-hidden aspect-square border bg-gray-100">
+                {/* Filters */}
+                <div className="flex flex-wrap items-center gap-2 mb-8">
+                    <div className="flex items-center gap-2 px-3 py-2 mr-2 bg-muted rounded-lg text-muted-foreground text-sm font-bold uppercase tracking-widest">
+                        <LayoutGrid className="h-4 w-4" /> Filter by
+                    </div>
+                    {categories.map(cat => (
+                        <button
+                            key={cat.value}
+                            onClick={() => setSelectedCategory(cat.value)}
+                            className={cn(
+                                "px-4 py-2 rounded-full text-xs font-bold transition-all border",
+                                selectedCategory === cat.value 
+                                    ? "bg-primary text-white border-primary shadow-md scale-105" 
+                                    : "bg-white text-muted-foreground border-border hover:border-primary/50"
+                            )}
+                        >
+                            {cat.label}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                    {filteredItems.map(item => (
+                        <div key={item.id} className="group relative rounded-xl overflow-hidden aspect-[4/5] border-2 border-transparent hover:border-primary transition-all shadow-md bg-muted">
                             {item.imagePath ? (
                                 <Image src={item.imagePath} alt={item.title} fill className="object-cover" unoptimized />
                             ) : (
-                                <div className="w-full h-full bg-gray-200" />
+                                <div className="w-full h-full flex items-center justify-center">
+                                    <Tag className="h-8 w-8 text-muted-foreground/20" />
+                                </div>
                             )}
-                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                                <p className="font-bold text-sm">{item.title}</p>
-                                <p className="text-xs opacity-80 capitalize">{item.category}</p>
-                                <button onClick={() => handleDelete(item.id)} className="absolute top-2 right-2 bg-red-500 p-2 rounded-md hover:bg-red-600"><Trash2 className="h-4 w-4" /></button>
+                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                <p className="font-black text-white text-xs truncate leading-tight tracking-tight uppercase">{item.title}</p>
+                                <div className="mt-2 flex items-center justify-between">
+                                    <span className="text-[10px] font-black bg-primary/90 text-white px-2 py-0.5 rounded shadow-sm">
+                                        {item.category.toUpperCase()}
+                                    </span>
+                                    <button 
+                                        onClick={() => handleDelete(item.id)} 
+                                        className="bg-white/10 hover:bg-red-500 text-white p-1.5 rounded-lg backdrop-blur-md transition-all"
+                                    >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
+
+                {filteredItems.length === 0 && (
+                    <div className="py-20 text-center">
+                        <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-muted mb-4">
+                            <LayoutGrid className="h-10 w-10 text-muted-foreground/30" />
+                        </div>
+                        <p className="text-muted-foreground font-bold">No images found in this category.</p>
+                    </div>
+                )}
             </main>
         </AdminLayout>
     )

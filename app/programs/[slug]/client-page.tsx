@@ -1,13 +1,21 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Camera, Maximize2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { ProgramAction, ProgramData } from "@/lib/data/programs"
 import { ProgramIcon } from "@/components/shared/program-icon"
+import { cn } from "@/lib/utils"
+
+interface GalleryItem {
+  id: number
+  title: string
+  imagePath: string
+}
 
 function actionProps(action: ProgramAction) {
   if (action.tone === "secondary") {
@@ -31,11 +39,30 @@ function actionProps(action: ProgramAction) {
 }
 
 export default function ProgramClientPage({ program }: { program: ProgramData }) {
+  const [gallery, setGallery] = useState<GalleryItem[]>([])
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await fetch("/api/gallery")
+        if (res.ok) {
+          const data = await res.json()
+          // Filter gallery items by program slug
+          const items = Array.isArray(data) ? data : (data.data || [])
+          setGallery(items.filter((item: any) => item.category === program.slug))
+        }
+      } catch (err) {
+        console.error("Failed to fetch program gallery", err)
+      }
+    }
+    fetchGallery()
+  }, [program.slug])
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1" id="main-content" role="main">
-        <section className="border-b border-border bg-background pt-12 lg:pt-16">
+        <section className="border-b border-border bg-background pt-12 lg:pt-32">
           <div className="container px-6 py-12 lg:px-8 lg:py-16">
             <Link
               href="/programs"
@@ -62,10 +89,10 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                   )}
                   {program.badge}
                 </div>
-                <h1 className="mt-5 font-sans text-4xl font-extrabold tracking-[-0.03em] text-foreground sm:text-5xl text-balance">
+                <h1 className="mt-5 font-sans text-4xl font-extrabold tracking-[-0.03em] text-foreground sm:text-5xl text-balance uppercase">
                   {program.title}
                 </h1>
-                <p className="mt-4 text-xl text-primary">{program.tagline}</p>
+                <p className="mt-4 text-xl text-primary font-medium tracking-tight leading-7">{program.tagline}</p>
                 {program.subheading ? (
                   <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
                     {program.subheading}
@@ -128,8 +155,43 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
               ))}
             </div>
 
+            {/* Program Gallery Section */}
+            {gallery.length > 0 && (
+              <div className="mt-16">
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <h2 className="text-3xl font-black tracking-tight text-foreground uppercase italic">Program in <span className="text-primary not-italic">Action</span></h2>
+                    <p className="text-muted-foreground mt-2">Glimpses of transformation and community from this initiative.</p>
+                  </div>
+                  <Camera className="h-10 w-10 text-primary/20" />
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {gallery.map((item, idx) => (
+                    <div key={item.id} className={cn(
+                      "group relative rounded-xl overflow-hidden shadow-md transition-all duration-500 hover:-translate-y-1 hover:shadow-xl",
+                      idx % 5 === 0 ? "md:col-span-2 md:row-span-2 aspect-square md:aspect-auto" : "aspect-square"
+                    )}>
+                      <Image 
+                        src={item.imagePath} 
+                        alt={item.title} 
+                        fill 
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <div className="flex items-center justify-between w-full">
+                          <p className="text-white text-xs font-bold uppercase tracking-wider">{item.title}</p>
+                          <Maximize2 className="h-4 w-4 text-white/50" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {program.bottomActions?.length ? (
-              <div className="mt-10 rounded-xl border border-border bg-card p-8 shadow-sm">
+              <div className="mt-16 rounded-xl border border-border bg-card p-8 shadow-sm">
                 <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">Take the Next Step</h2>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   {program.bottomActions.map((action) => (
