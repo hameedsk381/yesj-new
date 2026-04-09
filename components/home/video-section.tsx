@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { PlayCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -10,22 +9,25 @@ export default function VideoSection() {
     <section id="video" aria-labelledby="video-heading" className="border-b border-border bg-background">
       <div className="container px-5 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
-          <div className="overflow-hidden rounded-md border border-border bg-gray-950 text-white">
+          <div className="overflow-hidden rounded-md border border-border bg-gray-950 text-white shadow-2xl">
             <div className="relative aspect-video">
-              <Image
-                src="https://storage.googleapis.com/yesj/assets/slider-01.jpg"
-                alt="Preview still from the YESJ documentary"
-                fill
-                className="object-cover opacity-70"
-              />
-              <div className="absolute inset-0 bg-black/35" />
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover opacity-60"
+              >
+                <source src="https://storage.googleapis.com/yesj/website/hero-video.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-black/40" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10">
-                  <PlayCircle className="h-8 w-8" aria-hidden="true" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm group hover:scale-110 transition-transform">
+                  <PlayCircle className="h-8 w-8 text-primary shadow-glow" aria-hidden="true" />
                 </div>
               </div>
-              <div className="absolute bottom-4 left-4 rounded-md bg-black/70 px-3 py-2 text-sm">
-                Documentary in production
+              <div className="absolute bottom-4 left-4 rounded-md bg-primary/90 text-white px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg">
+                Documentary Preview
               </div>
             </div>
           </div>

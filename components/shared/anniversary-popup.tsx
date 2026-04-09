@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import ReactConfettiBoom from 'react-confetti-boom'
+import { Confetti, ConfettiRef } from "@/components/ui/confetti"
+import { useRef } from "react"
 
 export default function AnniversaryPopup() {
   const [isOpen, setIsOpen] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
+  const confettiRef = useRef<ConfettiRef>(null)
 
   useEffect(() => {
     // Check if user has already seen the popup in this session
@@ -30,16 +31,27 @@ export default function AnniversaryPopup() {
   }
 
   const handleLaunch = () => {
-    setShowConfetti(true)
+    confettiRef.current?.fire({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#BD993D', '#000000', '#ffffff'] // YESJ Gold, Black, White
+    })
+
     // Wait for confetti to show for a bit before closing the modal
     setTimeout(() => {
       setIsOpen(false)
       sessionStorage.setItem("anniversary-popup-seen", "true")
-    }, 3000)
+    }, 2500)
   }
 
   return (
     <>
+      <Confetti
+        ref={confettiRef}
+        className="fixed inset-0 pointer-events-none z-[110] w-full h-full"
+        manualstart
+      />
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
@@ -114,21 +126,6 @@ export default function AnniversaryPopup() {
           </div>
         )}
       </AnimatePresence>
-
-      {/* Confetti Effect */}
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-[110]">
-          <ReactConfettiBoom 
-            mode="boom"
-            particleCount={200}
-            deg={270}
-            shapeSize={15}
-            x={50}
-            y={50}
-            colors={['#C05C00', '#1D6B44']} // Saffron and Forest Green
-          />
-        </div>
-      )}
     </>
   )
 }
