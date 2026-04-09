@@ -90,7 +90,7 @@ export default function ProgramsPreview() {
 
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                  src={program.imagePath || "https://storage.googleapis.com/yesj/website/IMG_8159.JPG"}
+                  src={program.image || "https://storage.googleapis.com/yesj/website/IMG_8159.JPG"}
                   alt={`${program.title} programme`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
