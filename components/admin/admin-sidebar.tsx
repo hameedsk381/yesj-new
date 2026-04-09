@@ -23,6 +23,8 @@ const navigationItems = [
   { name: "Nominations", href: "/admin/nominations", icon: FileText },
   { name: "Contacts", href: "/admin/contacts", icon: Mail },
   { name: "Newsletter", href: "/admin/newsletter", icon: Newspaper },
+  { name: "Echoes", href: "/admin/echoes", icon: FileText },
+  { name: "Stories", href: "/admin/stories", icon: FileText },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Gallery", href: "/admin/gallery", icon: Image },
   { name: "Team", href: "/admin/team", icon: UserPlus },

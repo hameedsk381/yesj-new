@@ -1,123 +1,134 @@
-import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
+import { mysqlTable, serial, varchar, text, int, boolean, timestamp, json } from "drizzle-orm/mysql-core";
 import { sql } from "drizzle-orm";
 
-export const users = sqliteTable("users", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  fullName: text("full_name").notNull(),
-  email: text("email").unique().notNull(),
-  hashedPassword: text("hashed_password").notNull(),
-  isActive: integer("is_active", { mode: "boolean" }).default(true),
-  isSuperuser: integer("is_superuser", { mode: "boolean" }).default(false),
+export const users = mysqlTable("users", {
+  id: serial("id").primaryKey(),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).unique().notNull(),
+  hashedPassword: varchar("hashed_password", { length: 255 }).notNull(),
+  isActive: boolean("is_active").default(true),
+  isSuperuser: boolean("is_superuser").default(false),
 });
 
-export const contacts = sqliteTable("contacts", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name"),
-  email: text("email"),
-  subject: text("subject"),
+export const contacts = mysqlTable("contacts", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }),
+  subject: varchar("subject", { length: 255 }),
   message: text("message"),
-  status: text("status").default("unread"),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  status: varchar("status", { length: 50 }).default("unread"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const events = sqliteTable("events", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  title: text("title").notNull(),
+export const events = mysqlTable("events", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  date: integer("date", { mode: "timestamp" }),
-  location: text("location"),
-  fee: text("fee"),
-  deadline: integer("deadline", { mode: "timestamp" }),
-  imagePath: text("image_path"),
-  type: text("type"),
-  isActive: integer("is_active", { mode: "boolean" }).default(true),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  date: timestamp("date"),
+  location: varchar("location", { length: 255 }),
+  fee: varchar("fee", { length: 100 }),
+  deadline: timestamp("deadline"),
+  imagePath: varchar("image_path", { length: 512 }),
+  type: varchar("type", { length: 100 }),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const galleries = sqliteTable("galleries", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  title: text("title").notNull(),
+export const galleries = mysqlTable("galleries", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  imagePath: text("image_path").notNull(),
-  category: text("category"),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  imagePath: varchar("image_path", { length: 512 }).notNull(),
+  category: varchar("category", { length: 100 }),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const newsletters = sqliteTable("newsletters", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  email: text("email").unique().notNull(),
-  isActive: integer("is_active", { mode: "boolean" }).default(true),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+export const newsletters = mysqlTable("newsletters", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 255 }).unique().notNull(),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const nominations = sqliteTable("nominations", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
-  unitName: text("unit_name").notNull(),
-  contestingFor: text("contesting_for").notNull(),
+export const nominations = mysqlTable("nominations", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  unitName: varchar("unit_name", { length: 255 }).notNull(),
+  contestingFor: varchar("contesting_for", { length: 255 }).notNull(),
   educationQualification: text("education_qualification"),
-  nocFilePath: text("noc_file_path"),
-  status: text("status").default("pending"),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  nocFilePath: varchar("noc_file_path", { length: 512 }),
+  status: varchar("status", { length: 50 }).default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const registrations = sqliteTable("registrations", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  applicationType: text("application_type").notNull(),
-  name: text("name").notNull(),
-  gender: text("gender"),
-  registrationId: text("registration_id"),
-  registrationNo: text("registration_no"),
-  course: text("course"),
-  age: integer("age"),
-  instagramId: text("instagram_id"),
-  mobileNo: text("mobile_no"),
-  whatsappNo: text("whatsapp_no"),
-  emailId: text("email_id").notNull(),
-  religion: text("religion"),
+export const registrations = mysqlTable("registrations", {
+  id: serial("id").primaryKey(),
+  applicationType: varchar("application_type", { length: 100 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  gender: varchar("gender", { length: 20 }),
+  registrationId: varchar("registration_id", { length: 100 }),
+  registrationNo: varchar("registration_no", { length: 100 }),
+  course: varchar("course", { length: 100 }),
+  age: int("age"),
+  instagramId: varchar("instagram_id", { length: 100 }),
+  mobileNo: varchar("mobile_no", { length: 20 }),
+  whatsappNo: varchar("whatsapp_no", { length: 20 }),
+  emailId: varchar("email_id", { length: 255 }).notNull(),
+  religion: varchar("religion", { length: 50 }),
   address: text("address"),
-  skills: text("skills", { mode: "json" }),
+  skills: json("skills"),
   otherSkills: text("other_skills"),
   eventExperience: text("event_experience"),
   justSocietyDefinition: text("just_society_definition"),
   communicationExample: text("communication_example"),
   aicufVision: text("aicuf_vision"),
   leadershipPosition: text("leadership_position"),
-  hashedPassword: text("hashed_password"),
-  declaration: integer("declaration", { mode: "boolean" }).default(false),
+  hashedPassword: varchar("hashed_password", { length: 255 }),
+  declaration: boolean("declaration").default(false),
   additionalMessage: text("additional_message"),
-  status: text("status").default("pending"),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  status: varchar("status", { length: 50 }).default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const stories = sqliteTable("stories", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  title: text("title").notNull(),
-  slug: text("slug").unique().notNull(),
+export const stories = mysqlTable("stories", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).unique().notNull(),
   excerpt: text("excerpt"),
   content: text("content"),
-  author: text("author"),
-  category: text("category").default("General"),
-  imagePath: text("image_path"),
-  featured: integer("featured", { mode: "boolean" }).default(false),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  author: varchar("author", { length: 100 }),
+  category: varchar("category", { length: 100 }).default("General"),
+  imagePath: varchar("image_path", { length: 512 }),
+  featured: boolean("featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
 });
 
-export const teamMembers = sqliteTable("team_members", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
-  role: text("role").notNull(),
+export const teamMembers = mysqlTable("team_members", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }).notNull(),
   bio: text("bio"),
-  imagePath: text("image_path"),
-  twitterUrl: text("twitter_url"),
-  linkedinUrl: text("linkedin_url"),
-  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  imagePath: varchar("image_path", { length: 512 }),
+  twitterUrl: varchar("twitter_url", { length: 512 }),
+  linkedinUrl: varchar("linkedin_url", { length: 512 }),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const siteSettings = sqliteTable("site_settings", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  key: text("key").unique().notNull(),
+export const siteSettings = mysqlTable("site_settings", {
+  id: serial("id").primaryKey(),
+  key: varchar("key", { length: 255 }).unique().notNull(),
   value: text("value").notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+});
+
+export const echoes = mysqlTable("echoes", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  edition: varchar("edition", { length: 100 }), // e.g. "Vol 1, Issue 2"
+  releaseDate: timestamp("release_date"),
+  filePath: varchar("file_path", { length: 512 }).notNull(), // PDF URL
+  thumbnailPath: varchar("thumbnail_path", { length: 512 }), // Preview image
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
 });

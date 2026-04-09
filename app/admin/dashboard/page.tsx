@@ -28,7 +28,8 @@ export default function AdminDashboard() {
     newsletters: 0,
     events: 0,
     gallery: 0,
-    team: 0
+    team: 0,
+    stories: 0
   })
   const [recentRegistrations, setRecentRegistrations] = useState<any[]>([])
   const [recentContacts, setRecentContacts] = useState<any[]>([])
@@ -55,7 +56,8 @@ export default function AdminDashboard() {
         newsletters: dashboardData.newsletters || 0,
         events: dashboardData.events || 0,
         gallery: dashboardData.gallery || 0,
-        team: dashboardData.team || 0
+        team: dashboardData.team || 0,
+        stories: dashboardData.stories || 0
       })
 
       // Fetch recent items (limit via backend query param if supported, else slice)
@@ -102,6 +104,7 @@ export default function AdminDashboard() {
     { label: "Events", value: stats.events.toString(), icon: Calendar, color: "text-red-600" },
     { label: "Gallery Items", value: stats.gallery.toString(), icon: Image, color: "text-yellow-600" },
     { label: "Team Members", value: stats.team.toString(), icon: UserPlus, color: "text-indigo-600" },
+    { label: "Journal Stories", value: stats.stories.toString(), icon: FileText, color: "text-pink-600" },
   ]
 
   const quickActions = [
@@ -112,6 +115,7 @@ export default function AdminDashboard() {
     { label: "Manage Events", href: "/admin/events", icon: Calendar },
     { label: "Gallery Management", href: "/admin/gallery", icon: Image },
     { label: "Team Members", href: "/admin/team", icon: UserPlus },
+    { label: "Manage Stories", href: "/admin/stories", icon: FileText },
   ]
 
   return (

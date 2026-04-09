@@ -1,20 +1,13 @@
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import Database from "better-sqlite3";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import * as schema from "./db/schema";
-import * as fs from "node:fs";
-import * as path from "node:path";
 
-function getDb() {
-    console.log("Using SQLite for local development...");
-    const dataDir = path.join(process.cwd(), "data");
-    const dbPath = path.join(dataDir, "aicuf_v2.db");
-    
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir);
-    }
+const dbUrl = process.env.DATABASE_URL;
 
-    const sqlite = new Database(dbPath);
-    return drizzle(sqlite, { schema });
+if (!dbUrl) {
+  throw new Error("DATABASE_URL is not defined in environment variables");
 }
 
-export const db = getDb();
+const poolConnection = mysql.createPool(dbUrl);
+
+export const db = drizzle(poolConnection, { schema, mode: "default" });

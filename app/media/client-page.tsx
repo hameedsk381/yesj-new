@@ -1,12 +1,21 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import Link from "next/link"
+import Image from "next/image"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { PlayCircle, Flame, FileText, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function MediaClientPage() {
+  const [echoesList, setEchoesList] = useState<any[]>([])
+
+  useEffect(() => {
+    fetch("/api/echoes?limit=3").then(res => res.json()).then(data => setEchoesList(data))
+  }, [])
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
@@ -102,22 +111,51 @@ export default function MediaClientPage() {
                 </div>
 
                 {/* Echoes Newsletter Section */}
-                <div id="echoes" className="space-y-8 bg-[#1A1A1A] text-white p-8 md:p-12 lg:p-16 rounded-md shadow-2xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] pointer-events-none group-hover:scale-110 transition-transform duration-1000" />
-                    
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="bg-primary/20 p-3 rounded-md">
+                <div id="echoes" className="space-y-12">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-4">
                                 <FileText className="w-8 h-8 text-primary" />
+                                <h2 className="text-3xl font-serif font-bold text-foreground">YES-J Echoes</h2>
                             </div>
-                            <h2 className="text-3xl font-serif font-bold">YES-J Echoes</h2>
+                            <p className="text-muted-foreground text-lg max-w-2xl leading-relaxed font-light">
+                                Our quarterly impact newsletter. Focusing on real stories of transformation and comprehensive metrics from the field.
+                            </p>
                         </div>
-                        <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-                            The official YES-J impact newsletter. Distributed quarterly to our partners, volunteers, and benefactors focusing on real stories and comprehensive metrics.
-                        </p>
-                        <Button className="h-14 px-8 bg-primary hover:bg-primary/90 text-white font-semibold text-lg animate-pulse-slow">
-                            Subscribe to Echoes <ArrowRight className="w-5 h-5 ml-2" />
+                        <Button asChild variant="outline" className="h-12 px-6">
+                            <Link href="/echoes">View Full Archive <ArrowRight className="w-5 h-5 ml-2" /></Link>
                         </Button>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {echoesList.length === 0 ? (
+                            <div className="col-span-full py-20 text-center border rounded-md border-dashed text-muted-foreground font-light">
+                                Official releases are uploaded periodically. Check back soon.
+                            </div>
+                        ) : (
+                            echoesList.map((echo) => (
+                                <div key={echo.id} className="group cursor-pointer">
+                                    <div className="relative aspect-[3/4] rounded-md overflow-hidden bg-gray-100 shadow-md border border-border/50 mb-4 font-light">
+                                        {echo.thumbnailPath ? (
+                                            <Image src={echo.thumbnailPath} alt={echo.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" unoptimized />
+                                        ) : (
+                                            <div className="flex items-center justify-center h-full text-primary/10 bg-primary/5">
+                                                <FileText size={80} strokeWidth={1} />
+                                            </div>
+                                        )}
+                                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <a href={echo.filePath} target="_blank" rel="noopener noreferrer" className="bg-white text-primary p-4 rounded-full shadow-xl">
+                                                <FileText />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <div className="text-[10px] font-bold text-primary uppercase tracking-widest">{echo.edition}</div>
+                                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{echo.title}</h3>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
 
