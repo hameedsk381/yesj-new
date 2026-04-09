@@ -34,9 +34,9 @@ RUN adduser --system --uid 1001 nextjs
 # Copy public assets (excluding uploads which will be volume mounted)
 COPY --from=builder /app/public ./public
 
-# Set the correct permissions for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Set the correct permissions for prerender cache and data
+RUN mkdir .next data
+RUN chown nextjs:nodejs .next data
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

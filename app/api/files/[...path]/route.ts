@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
-import { minioClient, BUCKET_NAME } from "@/lib/minio"
-import { jwtVerify } from "jose"
-
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default-secret-key")
+import { getFile, BUCKET_NAME } from "@/lib/storage"
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { path: string[] } }
 ) {
   try {
-    // Note: Files are publicly accessible since bucket is public
-    // Remove authentication to allow direct URL access
-    
     const filePath = params.path.join("/")
     
     if (!filePath) {
@@ -22,7 +16,6 @@ export async function GET(
     }
 
     // Extract just the file key if a full URL was passed
-    // e.g., "http://minio.yesj.com:9000/yesj-uploads/noc/123.jpg" -> "noc/123.jpg"
     let fileKey = filePath
     if (filePath.startsWith("http")) {
       const urlMatch = filePath.match(/\/[^/]+\/(.+)$/)
@@ -31,32 +24,23 @@ export async function GET(
       }
     }
 
-    console.log("[File Download] Attempting to fetch:", {
+    console.log("[File Download] Transitioning to GCS fetch:", {
       originalPath: filePath,
       extractedKey: fileKey,
       bucket: BUCKET_NAME,
     })
 
-    // Get the file from MinIO
-    const stream = await minioClient.getObject(BUCKET_NAME, fileKey)
+    // Get the file from GCS
+    const { buffer, metadata } = await getFile(fileKey)
     
-    // Get file metadata
-    const stat = await minioClient.statObject(BUCKET_NAME, fileKey)
-    
-    // Convert stream to buffer
-    const chunks: Buffer[] = []
-    for await (const chunk of stream) {
-      chunks.push(chunk)
-    }
-    const buffer = Buffer.concat(chunks)
-
     // Determine if this is a download or view request
     const download = request.nextUrl.searchParams.get("download")
-    const filename = filePath.split("/").pop() || "file"
+    const filename = fileKey.split("/").pop() || "file"
 
     // Set appropriate headers
     const headers = new Headers()
-    headers.set("Content-Type", stat.metaData["content-type"] || "application/octet-stream")
+    const contentType = metadata.contentType || "application/octet-stream"
+    headers.set("Content-Type", contentType)
     headers.set("Content-Length", buffer.length.toString())
     
     if (download === "true") {
@@ -65,14 +49,15 @@ export async function GET(
       headers.set("Content-Disposition", `inline; filename="${filename}"`)
     }
 
-    return new NextResponse(buffer, {
+    return new NextResponse(new Uint8Array(buffer), {
       status: 200,
       headers,
     })
   } catch (error) {
-    console.error("Error fetching file from MinIO:", error)
+    console.error("Error fetching file from GCS:", error)
     
-    if ((error as any).code === "NoSuchKey") {
+    // Check for GCS not found error (usually 404 in the download() call)
+    if ((error as any).code === 404) {
       return NextResponse.json(
         { error: "File not found" },
         { status: 404 }

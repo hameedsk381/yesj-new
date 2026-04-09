@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { nominations } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
-import { minioClient, BUCKET_NAME } from "@/lib/minio";
+import { uploadFile } from "@/lib/storage";
 
 export async function GET(req: NextRequest) {
   try {
@@ -42,16 +42,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Upload to MinIO
+    // Upload to GCS
     const fileExtension = nocFile.name.split(".").pop();
     const fileName = `nominations/${crypto.randomUUID()}.${fileExtension}`;
-    const buffer = Buffer.from(await nocFile.arrayBuffer());
-
-    await (minioClient as any).putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
-      "Content-Type": nocFile.type,
-    });
-
-    const publicUrl = `${process.env.MINIO_USE_SSL === "true" ? "https" : "http"}://${process.env.MINIO_ENDPOINT}/${BUCKET_NAME}/${fileName}`;
+    
+    const publicUrl = await uploadFile(nocFile, fileName);
 
     const newNomination = await db.insert(nominations).values({
       name,

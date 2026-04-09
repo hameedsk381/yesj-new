@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bell, X } from "lucide-react"
 import Link from "next/link"
-import { getAnnouncements, STRAPI_URL } from "@/lib/strapi"
 
 const notifications = [
   {
@@ -42,25 +41,8 @@ export default function NotificationBar() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
-        try {
-          const data = await getAnnouncements()
-          if (data && data.length > 0) {
-            setItems(data)
-          } else {
-            setItems(notifications) // Fallback
-          }
-        } catch (err) {
-          setItems(notifications) // Fallback
-        }
-      } else {
-        setItems(notifications)
-      }
-      setLoading(false)
-    }
-
-    fetchData()
+    setItems(notifications)
+    setLoading(false)
     
     const dismissed = window.sessionStorage.getItem(STORAGE_KEY)
     setIsVisible(dismissed !== "true")

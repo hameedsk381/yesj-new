@@ -3,8 +3,7 @@ import { db } from "@/lib/db";
 import { stories } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
-import { minioClient, BUCKET_NAME } from "@/lib/minio";
-import { getStories, STRAPI_URL } from "@/lib/strapi";
+import { uploadFile } from "@/lib/storage";
 
 function slugify(text: string) {
   return text
@@ -18,17 +17,6 @@ function slugify(text: string) {
 
 export async function GET(req: NextRequest) {
   try {
-    // Try Strapi first if configured
-    if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
-      try {
-        const strapiStories = await getStories();
-        if (strapiStories && strapiStories.length > 0) {
-          return NextResponse.json(strapiStories);
-        }
-      } catch (err) {
-        console.warn("Strapi fetch failed, falling back to local DB:", err);
-      }
-    }
 
     const { searchParams } = new URL(req.url);
     const limit = parseInt(searchParams.get("limit") || "100");
@@ -79,17 +67,11 @@ export async function POST(req: NextRequest) {
     }
 
     let imagePath = null;
-    if (image && image.size > 0) {
-      const fileExtension = image.name.split(".").pop();
-      const fileName = `stories/${crypto.randomUUID()}.${fileExtension}`;
-      const buffer = Buffer.from(await image.arrayBuffer());
-
-      await (minioClient as any).putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
-        "Content-Type": image.type,
-      });
-
-      imagePath = `${process.env.MINIO_USE_SSL === "true" ? "https" : "http"}://${process.env.MINIO_ENDPOINT}/${BUCKET_NAME}/${fileName}`;
-    }
+    // Upload to GCS
+    const fileExtension = image.name.split(".").pop();
+    const fileName = `stories/${crypto.randomUUID()}.${fileExtension}`;
+    
+    imagePath = await uploadFile(image, fileName);
 
     const newStory = await db.insert(stories).values({
       title,

@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { teamMembers } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
-import { minioClient, BUCKET_NAME } from "@/lib/minio";
+import { uploadFile } from "@/lib/storage";
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
@@ -39,12 +39,8 @@ export async function POST(req: NextRequest) {
 
     let imagePath = null;
     if (image && image.size > 0) {
-      const fileName = `${crypto.randomUUID()}-${image.name}`;
-      const buffer = Buffer.from(await image.arrayBuffer());
-      await minioClient.putObject(BUCKET_NAME, fileName, buffer, image.size, {
-        "content-type": image.type,
-      });
-      imagePath = fileName;
+      const fileName = `team/${crypto.randomUUID()}-${image.name}`;
+      imagePath = await uploadFile(image, fileName);
     }
 
     const newMember = await db.insert(teamMembers).values({

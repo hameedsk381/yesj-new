@@ -3,22 +3,10 @@ import { db } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
-import { minioClient, BUCKET_NAME } from "@/lib/minio";
-import { getEvents, STRAPI_URL } from "@/lib/strapi";
+import { uploadFile } from "@/lib/storage";
 
 export async function GET(req: NextRequest) {
   try {
-    // Try Strapi first if configured
-    if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
-      try {
-        const strapiEvents = await getEvents();
-        if (strapiEvents && strapiEvents.length > 0) {
-          return NextResponse.json(strapiEvents);
-        }
-      } catch (err) {
-        console.warn("Strapi fetch failed, falling back to local DB:", err);
-      }
-    }
 
     const { searchParams } = new URL(req.url);
     const limit = parseInt(searchParams.get("limit") || "100");
@@ -59,16 +47,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Upload to MinIO
+    // Upload to GCS
     const fileExtension = image.name.split(".").pop();
     const fileName = `events/${crypto.randomUUID()}.${fileExtension}`;
-    const buffer = Buffer.from(await image.arrayBuffer());
-
-    await (minioClient as any).putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
-      "Content-Type": image.type,
-    });
-
-    const publicUrl = `${process.env.MINIO_USE_SSL === "true" ? "https" : "http"}://${process.env.MINIO_ENDPOINT}/${BUCKET_NAME}/${fileName}`;
+    
+    const publicUrl = await uploadFile(image, fileName);
 
     const newEvent = await db.insert(events).values({
       title,

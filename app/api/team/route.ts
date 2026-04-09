@@ -2,24 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { teamMembers } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
-import { desc, eq } from "drizzle-orm";
-import { minioClient, BUCKET_NAME } from "@/lib/minio";
-import { getTeamMembers, STRAPI_URL } from "@/lib/strapi";
+import { desc } from "drizzle-orm";
+import { uploadFile } from "@/lib/storage";
 
 export async function GET(req: NextRequest) {
   try {
-    // Try Strapi first if configured
-    if (STRAPI_URL && process.env.STRAPI_API_TOKEN) {
-      try {
-        const strapiTeam = await getTeamMembers();
-        if (strapiTeam && strapiTeam.length > 0) {
-          return NextResponse.json(strapiTeam);
-        }
-      } catch (err) {
-        console.warn("Strapi fetch failed, falling back to local DB:", err);
-      }
-    }
-
     const { searchParams } = new URL(req.url);
     const limit = parseInt(searchParams.get("limit") || "100");
     const offset = parseInt(searchParams.get("offset") || "0");
@@ -56,16 +43,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Upload to MinIO
+    // Upload to GCS
     const fileExtension = image.name.split(".").pop();
     const fileName = `team/${crypto.randomUUID()}.${fileExtension}`;
-    const buffer = Buffer.from(await image.arrayBuffer());
-
-    await (minioClient as any).putObject(BUCKET_NAME, fileName, buffer, buffer.length, {
-      "Content-Type": image.type,
-    });
-
-    const publicUrl = `${process.env.MINIO_USE_SSL === "true" ? "https" : "http"}://${process.env.MINIO_ENDPOINT}/${BUCKET_NAME}/${fileName}`;
+    
+    const publicUrl = await uploadFile(image, fileName);
 
     const newMember = await db.insert(teamMembers).values({
       name,

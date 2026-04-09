@@ -1,0 +1,66 @@
+import { Storage } from "@google-cloud/storage"
+
+const BUCKET_NAME = process.env.GCS_BUCKET_NAME || "yesj-uploads"
+
+// Singleton pattern for GCS client
+let gcsInstance: Storage | null = null
+
+function getGCSClient() {
+  if (!process.env.GCS_PROJECT_ID) {
+    throw new Error("GCS_PROJECT_ID is required in .env file")
+  }
+
+  if (!gcsInstance) {
+    gcsInstance = new Storage({
+      projectId: process.env.GCS_PROJECT_ID,
+      credentials: {
+        client_email: process.env.GCS_CLIENT_EMAIL,
+        private_key: process.env.GCS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      },
+    })
+  }
+
+  return gcsInstance
+}
+
+/**
+ * Uploads a file to GCS and returns the public URL
+ */
+export async function uploadFile(file: File | Buffer, destination: string, contentType?: string): Promise<string> {
+  const storage = getGCSClient()
+  const bucket = storage.bucket(BUCKET_NAME)
+  const gcsFile = bucket.file(destination)
+
+  let buffer: Buffer
+  if (file instanceof File) {
+    buffer = Buffer.from(await file.arrayBuffer())
+    if (!contentType) contentType = file.type
+  } else {
+    buffer = file
+  }
+
+  await gcsFile.save(buffer, {
+    metadata: {
+      contentType: contentType,
+    },
+    resumable: false,
+  })
+
+  return `https://storage.googleapis.com/${BUCKET_NAME}/${destination}`
+}
+
+/**
+ * Gets a file from GCS as a Buffer
+ */
+export async function getFile(path: string): Promise<{ buffer: Buffer; metadata: any }> {
+  const storage = getGCSClient()
+  const bucket = storage.bucket(BUCKET_NAME)
+  const file = bucket.file(path)
+
+  const [buffer] = await file.download()
+  const [metadata] = await file.getMetadata()
+
+  return { buffer, metadata }
+}
+
+export { BUCKET_NAME }
