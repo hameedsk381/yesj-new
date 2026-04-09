@@ -5,13 +5,16 @@ import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Trash2, Plus } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 interface TeamMember {
     id: number
     name: string
     role: string
     bio: string
-    image_path: string
+    imagePath: string
+    twitterUrl?: string
+    linkedinUrl?: string
 }
 
 export default function TeamPage() {
@@ -22,8 +25,8 @@ export default function TeamPage() {
         name: "",
         role: "",
         bio: "",
-        twitter_url: "",
-        linkedin_url: ""
+        twitterUrl: "",
+        linkedinUrl: ""
     })
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -34,7 +37,7 @@ export default function TeamPage() {
 
     const fetchTeam = async () => {
         try {
-            const response = await fetch("/api/admin/team")
+            const response = await fetch("/api/team")
             const result = await response.json()
             if (response.ok) {
                 setMembers(Array.isArray(result) ? result : (result.data || []))
@@ -47,8 +50,12 @@ export default function TeamPage() {
     const handleDelete = async (id: number) => {
         if (!confirm("Remove this member?")) return
         try {
-            await fetch(`/api/admin/team/${id}`, { method: "DELETE" })
-            fetchTeam()
+            const res = await fetch(`/api/admin/team/${id}`, { method: "DELETE" })
+            if (res.ok) {
+                fetchTeam()
+            } else {
+                alert("Failed to delete")
+            }
         } catch (error) {
             console.error("Delete failed", error)
         }
@@ -77,7 +84,7 @@ export default function TeamPage() {
             if (!res.ok) throw new Error("Failed to add member")
 
             setShowAddForm(false)
-            setFormData({ name: "", role: "", bio: "", twitter_url: "", linkedin_url: "" })
+            setFormData({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "" })
             setImageFile(null)
             fetchTeam()
         } catch (error) {
@@ -114,8 +121,8 @@ export default function TeamPage() {
                             </div>
                             <textarea className="w-full border p-2 rounded" placeholder="Bio" rows={3} value={formData.bio} onChange={e => setFormData({ ...formData, bio: e.target.value })} />
                             <div className="grid grid-cols-2 gap-4">
-                                <input className="border p-2 rounded" placeholder="Twitter URL" value={formData.twitter_url} onChange={e => setFormData({ ...formData, twitter_url: e.target.value })} />
-                                <input className="border p-2 rounded" placeholder="LinkedIn URL" value={formData.linkedin_url} onChange={e => setFormData({ ...formData, linkedin_url: e.target.value })} />
+                                <input className="border p-2 rounded" placeholder="Twitter URL" value={formData.twitterUrl} onChange={e => setFormData({ ...formData, twitterUrl: e.target.value })} />
+                                <input className="border p-2 rounded" placeholder="LinkedIn URL" value={formData.linkedinUrl} onChange={e => setFormData({ ...formData, linkedinUrl: e.target.value })} />
                             </div>
                             <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : "Add Member"}</Button>
@@ -125,9 +132,13 @@ export default function TeamPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {members.map(member => (
-                        <div key={member.id} className="bg-white border rounded-md p-6 flex flex-col items-center text-center">
-                            <div className="w-24 h-24 rounded-md overflow-hidden bg-gray-100 mb-4">
-                                {member.image_path && <img src={`http://localhost:8000/${member.image_path}`} alt={member.name} className="w-full h-full object-cover" />}
+                        <div key={member.id} className="bg-white border rounded-md p-6 flex flex-col items-center text-center shadow-sm">
+                            <div className="w-24 h-24 rounded-md overflow-hidden bg-gray-100 mb-4 relative">
+                                {member.imagePath ? (
+                                    <Image src={member.imagePath} alt={member.name} fill className="object-cover" unoptimized />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-200" />
+                                )}
                             </div>
                             <h3 className="font-bold text-lg">{member.name}</h3>
                             <p className="text-sm text-primary font-medium mb-2">{member.role}</p>

@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 
 const navigationItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { name: "Homepage", href: "/admin/homepage", icon: LayoutDashboard }, // Using LayoutDashboard for now
   { name: "Registrations", href: "/admin/registrations", icon: Users },
   { name: "Nominations", href: "/admin/nominations", icon: FileText },
   { name: "Contacts", href: "/admin/contacts", icon: Mail },

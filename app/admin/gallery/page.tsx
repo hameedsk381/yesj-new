@@ -5,12 +5,13 @@ import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Trash2, Plus } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 interface GalleryItem {
     id: number
     title: string
     category: string
-    image_path: string
+    imagePath: string
 }
 
 export default function GalleryPage() {
@@ -32,7 +33,7 @@ export default function GalleryPage() {
 
     const fetchGallery = async () => {
         try {
-            const response = await fetch("/api/admin/gallery")
+            const response = await fetch("/api/gallery")
             const result = await response.json()
             if (response.ok) {
                 setItems(Array.isArray(result) ? result : (result.data || []))
@@ -45,8 +46,12 @@ export default function GalleryPage() {
     const handleDelete = async (id: number) => {
         if (!confirm("Delete this image?")) return
         try {
-            await fetch(`/api/admin/gallery/${id}`, { method: "DELETE" })
-            fetchGallery()
+            const res = await fetch(`/api/admin/gallery/${id}`, { method: "DELETE" })
+            if (res.ok) {
+                fetchGallery()
+            } else {
+                alert("Failed to delete")
+            }
         } catch (error) {
             console.error("Delete failed", error)
         }
@@ -124,7 +129,11 @@ export default function GalleryPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {items.map(item => (
                         <div key={item.id} className="relative group rounded-md overflow-hidden aspect-square border bg-gray-100">
-                            <img src={`http://localhost:8000/${item.image_path}`} alt={item.title} className="w-full h-full object-cover" />
+                            {item.imagePath ? (
+                                <Image src={item.imagePath} alt={item.title} fill className="object-cover" unoptimized />
+                            ) : (
+                                <div className="w-full h-full bg-gray-200" />
+                            )}
                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
                                 <p className="font-bold text-sm">{item.title}</p>
                                 <p className="text-xs opacity-80 capitalize">{item.category}</p>

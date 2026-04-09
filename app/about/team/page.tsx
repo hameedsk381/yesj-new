@@ -5,7 +5,7 @@ import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import { Twitter, Linkedin } from "lucide-react"
 
 export default function TeamPage() {
     const [members, setMembers] = useState<any[]>([])
@@ -14,7 +14,7 @@ export default function TeamPage() {
     useEffect(() => {
         const fetchTeam = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/v1/team/")
+                const response = await fetch("/api/team")
                 if (response.ok) {
                     const data = await response.json()
                     setMembers(data)
@@ -66,12 +66,17 @@ export default function TeamPage() {
                                                 className="bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group"
                                             >
                                                 <div className="relative h-80 overflow-hidden bg-gray-100">
-                                                    <Image
-                                                        src={member.image_path ? `http://localhost:8000/${member.image_path}` : "/placeholder.svg"}
-                                                        alt={member.name}
-                                                        fill
-                                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                                    />
+                                                    {member.imagePath ? (
+                                                        <Image
+                                                            src={member.imagePath}
+                                                            alt={member.name}
+                                                            fill
+                                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                            unoptimized
+                                                        />
+                                                    ) : (
+                                                        <div className="w-full h-full bg-gray-200" />
+                                                    )}
                                                 </div>
                                                 <div className="p-8">
                                                     <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
@@ -79,13 +84,13 @@ export default function TeamPage() {
                                                     <p className="text-gray-500 mb-6 leading-relaxed line-clamp-3">{member.bio}</p>
 
                                                     <div className="flex gap-4">
-                                                        {member.twitter_url && (
-                                                            <a href={member.twitter_url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                                                        {member.twitterUrl && (
+                                                            <a href={member.twitterUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
                                                                 <Twitter className="w-4 h-4" />
                                                             </a>
                                                         )}
-                                                        {member.linkedin_url && (
-                                                            <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                                                        {member.linkedinUrl && (
+                                                            <a href={member.linkedinUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
                                                                 <Linkedin className="w-4 h-4" />
                                                             </a>
                                                         )}

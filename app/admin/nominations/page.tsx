@@ -4,18 +4,18 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Download, ExternalLink, Trash2, Check, X, FileDown } from "lucide-react"
+import { ArrowLeft, Download, ExternalLink, Trash2, Check, X } from "lucide-react"
 import Link from "next/link"
 
 interface Nomination {
   id: number
   name: string
-  unit_name: string
-  contesting_for: string
-  education_qualification: string
-  noc_file_path: string
+  unitName: string
+  contestingFor: string
+  educationQualification: string
+  nocFilePath: string
   status: string
-  created_at: string
+  createdAt: string
 }
 
 export default function NominationsPage() {
@@ -25,24 +25,19 @@ export default function NominationsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    // No need to check localStorage - middleware handles authentication
     fetchNominations()
   }, [])
 
   const fetchNominations = async () => {
     try {
-      // No token needed - cookie is sent automatically
       const response = await fetch("/api/admin/nominations")
-
       const result = await response.json()
 
       if (!response.ok) {
         throw new Error("Failed to fetch nominations")
       }
 
-      // Backend returns array directly
-      const data = Array.isArray(result) ? result : (result.data || [])
-      setNominations(data)
+      setNominations(Array.isArray(result) ? result : (result.data || []))
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed to load data")
     } finally {
@@ -52,16 +47,14 @@ export default function NominationsPage() {
 
   const handleStatusChange = async (id: number, status: string) => {
     try {
-      // We need to implement PATCH in backend or use PUT
-      // For now, assuming PATCH /api/v1/nominations/{id} or similar
-      // BUT my created backend endpoints only have GET and POST for nominations in the summary.
-      // I need to check if I implemented update status.
-      // Previous session summary says: "updating status, and deleting contact messages".
-      // Let's assume I implemented it or will need to.
-      // The backend "nominations.py" I read in step 467 ONLY had GET and POST.
-      // I need to ADD status update endpoint to backend.
-      // For now, I will comment this out or alerting "Not implemented yet" would be better, but I should fix the backend.
-      alert("Status update not yet implemented in backend")
+      const response = await fetch(`/api/admin/nominations/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      })
+
+      if (!response.ok) throw new Error("Failed to update status")
+      fetchNominations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to update status")
     }
@@ -71,16 +64,11 @@ export default function NominationsPage() {
     if (!confirm("Are you sure you want to delete this nomination?")) return
 
     try {
-      // Backend expects DELETE /nominations/{id}
       const response = await fetch(`/api/admin/nominations/${id}`, {
         method: "DELETE",
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to delete nomination")
-      }
-
-      // Refresh the list
+      if (!response.ok) throw new Error("Failed to delete nomination")
       fetchNominations()
     } catch (error) {
       alert(error instanceof Error ? error.message : "Failed to delete nomination")
@@ -100,12 +88,12 @@ export default function NominationsPage() {
 
     const rows = nominations.map((nom) => [
       nom.name,
-      nom.unit_name,
-      nom.contesting_for,
-      nom.education_qualification.replace(/,/g, ";"),
-      nom.noc_file_path,
+      nom.unitName,
+      nom.contestingFor,
+      (nom.educationQualification || "").replace(/,/g, ";"),
+      nom.nocFilePath,
       nom.status,
-      new Date(nom.created_at).toLocaleDateString(),
+      new Date(nom.createdAt).toLocaleDateString(),
     ])
 
     const csvContent = [headers, ...rows].map((row) => row.join(",")).join("\n")
@@ -198,26 +186,30 @@ export default function NominationsPage() {
                   nominations.map((nom) => (
                     <tr key={nom.id} className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm font-medium">{nom.name}</td>
-                      <td className="px-4 py-3 text-sm">{nom.unit_name}</td>
-                      <td className="px-4 py-3 text-sm">{nom.contesting_for}</td>
+                      <td className="px-4 py-3 text-sm">{nom.unitName}</td>
+                      <td className="px-4 py-3 text-sm">{nom.contestingFor}</td>
                       <td className="px-4 py-3 text-sm max-w-xs truncate">
-                        {nom.education_qualification}
+                        {nom.educationQualification}
                       </td>
                       <td className="px-4 py-3 text-sm">
-                        <div className="flex flex-col gap-1">
-                          <a
-                            href={`http://localhost:8000/${nom.noc_file_path}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline flex items-center gap-1 text-xs"
-                          >
-                            <ExternalLink className="h-3 w-3" />
-                            View
-                          </a>
-                          <span className="text-xs text-gray-500 truncate max-w-[120px]">
-                            {nom.noc_file_path.split('/').pop()}
-                          </span>
-                        </div>
+                        {nom.nocFilePath ? (
+                           <div className="flex flex-col gap-1">
+                           <a
+                             href={nom.nocFilePath}
+                             target="_blank"
+                             rel="noopener noreferrer"
+                             className="text-primary hover:underline flex items-center gap-1 text-xs"
+                           >
+                             <ExternalLink className="h-3 w-3" />
+                             View
+                           </a>
+                           <span className="text-xs text-gray-500 truncate max-w-[120px]">
+                             {nom.nocFilePath.split('/').pop()}
+                           </span>
+                         </div>
+                        ) : (
+                          <span className="text-xs text-gray-400 italic">No file</span>
+                        )}
                       </td>
                       <td className="px-4 py-3 text-sm">
                         <span
@@ -232,7 +224,7 @@ export default function NominationsPage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-sm">
-                        {new Date(nom.created_at).toLocaleDateString()}
+                        {new Date(nom.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3 text-sm">
                         <div className="flex items-center gap-2">

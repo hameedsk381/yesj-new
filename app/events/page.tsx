@@ -4,13 +4,14 @@ import { useState, useMemo, useEffect } from "react"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { motion, AnimatePresence } from "framer-motion"
-import { Calendar, MapPin, List, CalendarDays, ArrowRight, Tag, Clock } from "lucide-react"
+import { Calendar, MapPin, List, CalendarDays, ArrowRight, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import EventFilters, { EventFilters as EventFiltersType } from "@/components/event-filters"
 import CalendarView from "@/components/calendar-view"
 
 interface Event {
+  id: number
   date: string
   title: string
   description: string
@@ -18,7 +19,7 @@ interface Event {
   fee?: string
   deadline?: string
   type: string
-  image: string
+  imagePath: string
 }
 
 export default function EventsPage() {
@@ -35,20 +36,10 @@ export default function EventsPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/v1/events/")
+        const response = await fetch("/api/events")
         if (response.ok) {
           const data = await response.json()
-          const mappedEvents = data.map((e: any) => ({
-            date: e.date,
-            title: e.title,
-            description: e.description,
-            location: e.location,
-            fee: e.fee,
-            deadline: e.deadline,
-            type: e.type,
-            image: e.image_path ? `http://localhost:8000/${e.image_path}` : "/placeholder.svg"
-          }))
-          setEvents(mappedEvents)
+          setEvents(data)
         }
       } catch (error) {
         console.error("Failed to fetch events:", error)
@@ -119,7 +110,9 @@ export default function EventsPage() {
             </div>
 
             <AnimatePresence mode="wait">
-              {viewMode === 'calendar' ? (
+              {isLoading ? (
+                <div className="text-center py-20">Loading events...</div>
+              ) : viewMode === 'calendar' ? (
                 <motion.div
                   key="calendar"
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -146,7 +139,11 @@ export default function EventsPage() {
                   {filteredEvents.map((event, index) => (
                     <div key={index} className="group relative bg-gray-50 rounded-md overflow-hidden flex flex-col md:flex-row h-[350px] border border-gray-100 hover:shadow-2xl transition-all">
                       <div className="md:w-2/5 relative h-full">
-                        <Image src={event.image} alt={event.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                        {event.imagePath ? (
+                           <Image src={event.imagePath} alt={event.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" unoptimized />
+                        ) : (
+                           <div className="w-full h-full bg-gray-200" />
+                        )}
                         <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur rounded-md shadow-sm">
                           <div className="text-xl font-black text-primary leading-tight">
                             {new Date(event.date).getDate()}
@@ -182,7 +179,7 @@ export default function EventsPage() {
               )}
             </AnimatePresence>
 
-            {filteredEvents.length === 0 && (
+            {!isLoading && filteredEvents.length === 0 && (
               <div className="text-center py-16 lg:py-24 bg-gray-50 rounded-md">
                 <p className="text-2xl font-light text-gray-400">No events match your creative vision.</p>
                 <Button variant="link" onClick={() => setFilters({ location: "all", month: "all", type: "all" })} className="mt-4 text-primary font-bold underline">Clear all labels</Button>

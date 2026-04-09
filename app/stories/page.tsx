@@ -17,7 +17,7 @@ export default function StoriesPage() {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/v1/stories/")
+        const response = await fetch("/api/stories")
         if (response.ok) {
           const data = await response.json()
           setStories(data)
@@ -34,7 +34,7 @@ export default function StoriesPage() {
 
   const categories = ["All", "Philosophy", "Impact", "Events", "Testimonials", "Announcements"]
 
-  // In a real app, 'featured' logic would be handled by backend or filtered here
+  // Featured logic
   const featuredStory = stories.find(s => s.featured) || stories[0]
   const otherStories = stories.filter(s => s.id !== featuredStory?.id)
 
@@ -79,12 +79,17 @@ export default function StoriesPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl border-[16px] border-white"
                   >
-                    <Image
-                      src={featuredStory.image_path ? `http://localhost:8000/${featuredStory.image_path}` : "/placeholder.svg"}
-                      alt={featuredStory.title}
-                      fill
-                      className="object-cover"
-                    />
+                    {featuredStory.imagePath ? (
+                        <Image
+                            src={featuredStory.imagePath}
+                            alt={featuredStory.title}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                         />
+                    ) : (
+                        <div className="w-full h-full bg-gray-200" />
+                    )}
                     <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 via-black/20 to-transparent text-white">
                       <h2 className="text-3xl font-bold mb-4">{featuredStory.title}</h2>
                       <p className="text-white/70 font-light mb-6 line-clamp-2">{featuredStory.excerpt}</p>
@@ -131,12 +136,17 @@ export default function StoriesPage() {
                     {otherStories.map((article) => (
                       <article key={article.id} className="group cursor-pointer">
                         <div className="relative h-[400px] mb-8 overflow-hidden rounded-md shadow-lg border border-gray-100">
-                          <Image
-                            src={article.image_path ? `http://localhost:8000/${article.image_path}` : "/placeholder.svg"}
-                            alt={article.title}
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
+                          {article.imagePath ? (
+                              <Image
+                                src={article.imagePath}
+                                alt={article.title}
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                unoptimized
+                              />
+                          ) : (
+                              <div className="w-full h-full bg-gray-200" />
+                          )}
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                           <div className="absolute top-8 left-8">
                             <span className="px-4 py-1.5 bg-white/90 backdrop-blur rounded-md text-[10px] font-black uppercase tracking-widest text-primary shadow-sm">
@@ -146,7 +156,7 @@ export default function StoriesPage() {
                         </div>
                         <div className="space-y-4 px-4">
                           <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
-                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {new Date(article.created_at).toLocaleDateString()}</span>
+                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {new Date(article.createdAt).toLocaleDateString()}</span>
                             <span className="flex items-center gap-1"><User className="w-3 h-3" /> {article.author}</span>
                           </div>
                           <h3 className="text-2xl font-bold group-hover:text-primary transition-colors leading-snug">
@@ -169,11 +179,13 @@ export default function StoriesPage() {
               </>
             )}
 
-            <div className="mt-24 text-center">
-              <Button variant="outline" className="rounded-md px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
-                Load More Stories
-              </Button>
-            </div>
+            {!isLoading && stories.length > 0 && (
+              <div className="mt-24 text-center">
+                <Button variant="outline" className="rounded-md px-12 h-16 text-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+                  Load More Stories
+                </Button>
+              </div>
+            )}
           </div>
         </section>
 
@@ -187,12 +199,9 @@ export default function StoriesPage() {
               <div className="relative z-10 max-w-3xl mx-auto space-y-6">
                 <h2 className="text-4xl md:text-6xl font-bold">Never miss <span className="text-primary italic">the Resonance.</span></h2>
                 <p className="text-xl text-white/60 font-light">Get the digital edition of Echoes delivered straight to your inbox every month.</p>
-                <form className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-                  {/* Reuse/Include Newsletter Form Component Here */}
-                  <div className="w-full">
+                <div className="max-w-xl mx-auto">
                     <NewsletterForm />
-                  </div>
-                </form>
+                </div>
                 <p className="text-xs text-white/40">We respect your privacy. Unsubscribe at any time.</p>
               </div>
             </div>

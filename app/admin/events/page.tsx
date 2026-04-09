@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin, Tag } from "lucide-react"
+import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 interface Event {
     id: number
@@ -13,7 +14,7 @@ interface Event {
     date: string
     location: string
     type: string
-    image_path: string
+    imagePath: string
 }
 
 export default function EventsPage() {
@@ -40,7 +41,7 @@ export default function EventsPage() {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch("/api/admin/events")
+            const response = await fetch("/api/events")
             const result = await response.json()
             if (response.ok) {
                 setEvents(Array.isArray(result) ? result : (result.data || []))
@@ -55,8 +56,12 @@ export default function EventsPage() {
     const handleDelete = async (id: number) => {
         if (!confirm("Delete this event?")) return
         try {
-            await fetch(`/api/admin/events/${id}`, { method: "DELETE" })
-            fetchEvents()
+            const res = await fetch(`/api/admin/events/${id}`, { method: "DELETE" })
+            if (res.ok) {
+                fetchEvents()
+            } else {
+                alert("Failed to delete")
+            }
         } catch (error) {
             console.error("Delete failed", error)
         }
@@ -140,27 +145,39 @@ export default function EventsPage() {
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {events.map(event => (
-                        <div key={event.id} className="bg-white border rounded-md overflow-hidden shadow-sm">
-                            <div className="relative h-48 bg-gray-100">
-                                {event.image_path && <img src={`http://localhost:8000/${event.image_path}`} alt={event.title} className="w-full h-full object-cover" />}
-                            </div>
-                            <div className="p-4">
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className="text-xs font-bold uppercase text-primary tracking-wider">{event.type}</span>
-                                    <button onClick={() => handleDelete(event.id)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="h-4 w-4" /></button>
+                {isLoading ? (
+                    <p>Loading events...</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {events.map(event => (
+                            <div key={event.id} className="bg-white border rounded-md overflow-hidden shadow-sm">
+                                <div className="relative h-48 bg-gray-100">
+                                    {event.imagePath && (
+                                        <Image 
+                                            src={event.imagePath} 
+                                            alt={event.title} 
+                                            fill 
+                                            className="object-cover"
+                                            unoptimized // Since it's from GCS and might not have width/height known easily if we don't want to define all
+                                        />
+                                    )}
                                 </div>
-                                <h3 className="font-bold text-lg mb-1">{event.title}</h3>
-                                <p className="text-sm text-gray-500 line-clamp-2 mb-4">{event.description}</p>
-                                <div className="flex items-center gap-2 text-xs text-gray-500">
-                                    <CalendarIcon className="h-3 w-3" /> {new Date(event.date).toLocaleDateString()}
-                                    <MapPin className="h-3 w-3 ml-2" /> {event.location}
+                                <div className="p-4">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <span className="text-xs font-bold uppercase text-primary tracking-wider">{event.type}</span>
+                                        <button onClick={() => handleDelete(event.id)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="h-4 w-4" /></button>
+                                    </div>
+                                    <h3 className="font-bold text-lg mb-1">{event.title}</h3>
+                                    <p className="text-sm text-gray-500 line-clamp-2 mb-4">{event.description}</p>
+                                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                                        <CalendarIcon className="h-3 w-3" /> {new Date(event.date).toLocaleDateString()}
+                                        <MapPin className="h-3 w-3 ml-2" /> {event.location}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </main>
         </AdminLayout>
     )

@@ -56,9 +56,9 @@ export default function TransformationStories() {
               name: item.name,
               age: item.age,
               story: item.content,
-              image: item.image?.url || "/placeholder.svg",
+              image: typeof item.image === 'string' ? item.image : (item.image?.url || "/placeholder.svg"),
               alt: item.imageAlt || item.name,
-              program: item.programTag
+              program: item.programTag || item.program
             })))
           }
         }

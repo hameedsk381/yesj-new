@@ -14,23 +14,26 @@ export default function GalleryPage() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
 
   const [images, setImages] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/gallery/")
+        const res = await fetch("/api/gallery")
         if (res.ok) {
           const data = await res.json()
           const mapped = data.map((item: any) => ({
-            src: item.image_path ? `http://localhost:8000/${item.image_path}` : "/placeholder.svg",
+            src: item.imagePath || "/placeholder.svg",
             alt: item.title,
             description: item.description,
-            span: "col-span-1" // Default span, or randomize/calculate based on something?
+            span: "col-span-1" // Default span
           }))
           setImages(mapped)
         }
       } catch (e) {
         console.error(e)
+      } finally {
+        setLoading(false)
       }
     }
     fetchGallery()
@@ -73,52 +76,63 @@ export default function GalleryPage() {
         {/* Masonry Grid */}
         <section className="py-16 lg:py-24 bg-white">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
-              {images.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`group relative overflow-hidden rounded-md cursor-pointer shadow-lg border border-gray-100 ${image.span || ""}`}
-                  onClick={() => openLightbox(index)}
-                >
-                  <Image
-                    src={image.src || "/placeholder.svg"}
-                    fill
-                    alt={image.alt}
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-
-                  {/* Glass Overlay */}
-                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+            {loading ? (
+                <div className="text-center py-20 text-gray-400">Loading gallery...</div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
+                  {images.map((image, index) => (
                     <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      className="glass-card p-6 rounded-md translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.05 }}
+                      className={`group relative overflow-hidden rounded-md cursor-pointer shadow-lg border border-gray-100 ${image.span || ""}`}
+                      onClick={() => openLightbox(index)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Activity</p>
-                          <p className="text-sm font-medium text-gray-900 line-clamp-1">{image.description}</p>
-                        </div>
-                        <div className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center">
-                          <Maximize2 className="w-4 h-4" />
-                        </div>
+                      <Image
+                        src={image.src}
+                        fill
+                        alt={image.alt}
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        unoptimized
+                      />
+
+                      {/* Glass Overlay */}
+                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          whileInView={{ y: 0, opacity: 1 }}
+                          className="glass-card p-6 rounded-md translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Activity</p>
+                              <p className="text-sm font-medium text-gray-900 line-clamp-1">{image.description}</p>
+                            </div>
+                            <div className="w-10 h-10 rounded-md bg-primary text-white flex items-center justify-center">
+                              <Maximize2 className="w-4 h-4" />
+                            </div>
+                          </div>
+                        </motion.div>
                       </div>
                     </motion.div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  ))}
+                </div>
+            )}
 
-            <div className="mt-16 text-center">
-              <Button className="rounded-md bg-gray-900 hover:bg-black text-white px-10 h-16 text-xl font-bold flex items-center gap-3 group">
-                <Camera className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                Load More Memories
-              </Button>
-            </div>
+            {!loading && images.length > 0 && (
+              <div className="mt-16 text-center">
+                <Button className="rounded-md bg-gray-900 hover:bg-black text-white px-10 h-16 text-xl font-bold flex items-center gap-3 group">
+                  <Camera className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  Load More Memories
+                </Button>
+              </div>
+            )}
+            
+            {!loading && images.length === 0 && (
+                <div className="text-center py-20 text-gray-400">No photos in the gallery yet.</div>
+            )}
           </div>
         </section>
 
@@ -152,4 +166,3 @@ export default function GalleryPage() {
     </div>
   )
 }
-
