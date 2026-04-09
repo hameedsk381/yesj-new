@@ -29,7 +29,7 @@ const stories = [
       { label: "Salary growth", value: "260%" },
       { label: "Confidence", value: "Peak" },
     ],
-    image: "/website/IMG_6787.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_6787.JPG",
   },
   {
     name: "Ravi Kumar",
@@ -42,7 +42,7 @@ const stories = [
       { label: "Income boost", value: "533%" },
       { label: "Stability", value: "Solid" },
     ],
-    image: "/website/IMG_5986.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
   },
 ]
 

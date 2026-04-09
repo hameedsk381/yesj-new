@@ -17,16 +17,11 @@ export async function PATCH(
     const id = parseInt(params.id);
     const body = await req.json();
     
-    const updated = await db.update(teamMembers)
+    await db.update(teamMembers)
       .set(body)
-      .where(eq(teamMembers.id, id))
-      .returning();
+      .where(eq(teamMembers.id, id));
 
-    if (updated.length === 0) {
-      return NextResponse.json({ error: "Team member not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Team member PATCH error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

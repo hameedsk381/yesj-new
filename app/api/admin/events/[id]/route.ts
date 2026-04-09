@@ -21,16 +21,11 @@ export async function PATCH(
     if (body.date) body.date = new Date(body.date);
     if (body.deadline) body.deadline = new Date(body.deadline);
 
-    const updated = await db.update(events)
+    await db.update(events)
       .set(body)
-      .where(eq(events.id, id))
-      .returning();
+      .where(eq(events.id, id));
 
-    if (updated.length === 0) {
-      return NextResponse.json({ error: "Event not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Event PATCH error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

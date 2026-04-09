@@ -67,7 +67,7 @@ export default function MissionPage() {
               </motion.div>
               <div className="w-full lg:w-1/2">
                 <div className="relative aspect-video lg:aspect-[4/3] rounded-md overflow-hidden shadow-2xl group">
-                  <Image src="/website/IMG_6787.JPG" alt="Vision" fill className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
+                  <Image src="https://storage.googleapis.com/yesj/website/IMG_6787.JPG" alt="Vision" fill className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
               </div>
@@ -100,7 +100,7 @@ export default function MissionPage() {
               </motion.div>
               <div className="w-full lg:w-1/2">
                 <div className="relative aspect-video lg:aspect-[4/3] rounded-md overflow-hidden border-8 border-white/5 shadow-2xl">
-                  <Image src="/website/IMG_5899.JPG" alt="Mission" fill className="object-cover" />
+                  <Image src="https://storage.googleapis.com/yesj/website/IMG_5899.JPG" alt="Mission" fill className="object-cover" />
                 </div>
               </div>
             </div>

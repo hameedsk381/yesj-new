@@ -8,19 +8,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 const defaultSlides = [
   {
     id: 1,
-    image: "/website/IMG_8159.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
     title: "Accompaniment that stays with young people",
     description: "YESJ builds confidence, community, and concrete pathways for youth who are often left out of opportunity.",
   },
   {
     id: 2,
-    image: "/website/IMG_6787.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_6787.JPG",
     title: "Formation rooted in dignity and access",
     description: "From English immersion to leadership and scholarships, each program responds to a barrier that shapes real lives.",
   },
   {
     id: 3,
-    image: "/website/IMG_5986.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
     title: "Practical support across Andhra and Telangana",
     description: "Residential training, mentoring, volunteering, and community outreach help young people move with confidence into work and leadership.",
   },

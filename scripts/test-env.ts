@@ -12,7 +12,7 @@ async function test() {
     const [userCount] = await db.select({ value: count() }).from(users);
     console.log(`[✓] MySQL Connected! User count: ${userCount.value}`);
   } catch (err) {
-    console.error(`[✗] MySQL Connection Failed: ${err.message}`);
+    console.error(`[✗] MySQL Connection Failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   // 2. Test GCS
@@ -48,8 +48,9 @@ async function test() {
         console.error(`[✗] GCS Connected, but bucket '${process.env.GCS_BUCKET_NAME}' was not found.`);
     }
   } catch (err) {
-    console.error(`[✗] GCS Connection Failed: ${err.message}`);
-    if (err.message.includes("PEM")) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    console.error(`[✗] GCS Connection Failed: ${errorMessage}`);
+    if (errorMessage.includes("PEM")) {
         console.log("TIP: Your private key format might be incorrect. Ensure it starts with '-----BEGIN PRIVATE KEY-----' and you use backslashes for newlines if needed.");
     }
   }

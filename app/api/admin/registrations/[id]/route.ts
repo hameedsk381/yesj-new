@@ -17,16 +17,11 @@ export async function PATCH(
     const id = parseInt(params.id);
     const body = await req.json();
     
-    const updated = await db.update(registrations)
+    await db.update(registrations)
       .set(body)
-      .where(eq(registrations.id, id))
-      .returning();
+      .where(eq(registrations.id, id));
 
-    if (updated.length === 0) {
-      return NextResponse.json({ error: "Registration not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Registration PATCH error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

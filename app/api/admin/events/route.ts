@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       imagePath = await uploadFile(image, fileName);
     }
 
-    const newEvent = await db.insert(events).values({
+    const result = await db.insert(events).values({
       title,
       description,
       date: date ? new Date(date) : null,
@@ -53,9 +53,9 @@ export async function POST(req: NextRequest) {
       type,
       imagePath,
       isActive: true,
-    }).returning();
+    });
 
-    return NextResponse.json(newEvent[0]);
+    return NextResponse.json({ id: result[0].insertId, title, imagePath });
   } catch (error) {
     console.error("Events POST error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

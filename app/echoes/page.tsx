@@ -7,6 +7,8 @@ import { Download, FileText, Calendar } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
+export const dynamic = "force-dynamic"
+
 export default async function EchoesPage() {
   const releases = await db.select().from(echoes).orderBy(desc(echoes.createdAt))
 

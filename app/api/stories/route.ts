@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     
     imagePath = await uploadFile(image, fileName);
 
-    const newStory = await db.insert(stories).values({
+    const result = await db.insert(stories).values({
       title,
       slug,
       excerpt,
@@ -82,9 +82,9 @@ export async function POST(req: NextRequest) {
       category,
       featured,
       imagePath,
-    }).returning();
+    });
 
-    return NextResponse.json(newStory[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating story:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

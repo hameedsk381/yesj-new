@@ -30,7 +30,7 @@ export default function GalleryPage() {
           }))
           setImages(mapped)
         }
-      } catch (e) {
+      } catch (e: any) {
         console.error(e)
       } finally {
         setLoading(false)

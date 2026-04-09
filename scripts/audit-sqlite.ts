@@ -12,6 +12,6 @@ for (const file of ["data/aicuf.db", "data/aicuf_v2.db"]) {
             console.log(`${t.name}: ${count.c} rows`);
         }
     } catch (e) {
-        console.log(`Error reading ${file}: ${e.message}`);
+        console.log(`Error reading ${file}: ${e instanceof Error ? e.message : String(e)}`);
     }
 }

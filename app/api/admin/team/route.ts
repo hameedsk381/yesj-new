@@ -43,16 +43,16 @@ export async function POST(req: NextRequest) {
       imagePath = await uploadFile(image, fileName);
     }
 
-    const newMember = await db.insert(teamMembers).values({
+    const result = await db.insert(teamMembers).values({
       name,
       role,
       bio,
       imagePath,
       twitterUrl,
       linkedinUrl,
-    }).returning();
+    });
 
-    return NextResponse.json(newMember[0]);
+    return NextResponse.json({ id: result[0].insertId, name, role, imagePath });
   } catch (error) {
     console.error("Team POST error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

@@ -2,19 +2,19 @@ export const homepageData = {
   hero: [
     {
       id: 1,
-      image: "/website/IMG_8159.JPG",
+      image: "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
       title: "Accompaniment that stays with young people",
       description: "YESJ builds confidence, community, and concrete pathways for youth who are often left out of opportunity.",
     },
     {
       id: 2,
-      image: "/website/IMG_6787.JPG",
+      image: "https://storage.googleapis.com/yesj/website/IMG_6787.JPG",
       title: "Formation rooted in dignity and access",
       description: "From English immersion to leadership and scholarships, each program responds to a barrier that shapes real lives.",
     },
     {
       id: 3,
-      image: "/website/IMG_5986.JPG",
+      image: "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
       title: "Practical support across Andhra and Telangana",
       description: "Residential training, mentoring, volunteering, and community outreach help young people move with confidence into work and leadership.",
     },
@@ -62,7 +62,7 @@ export const homepageData = {
       age: 22,
       programTag: "Summer Shapes",
       content: "I could not speak a single English sentence. Summer Shapes did not only teach me English. It taught me to believe that I deserve success. Today I am a graduate supporting my family.",
-      image: "/website/IMG_6787.JPG",
+      image: "https://storage.googleapis.com/yesj/website/IMG_6787.JPG",
     },
     {
       id: 2,
@@ -70,7 +70,7 @@ export const homepageData = {
       age: 35,
       programTag: "Driving and mechanic training",
       content: "After dropping out after class 10, I thought daily wage labour would be my future. YESJ's driving programme changed that. I now earn a steady income and I am building my family's first pucca house.",
-      image: "/website/IMG_5986.JPG",
+      image: "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
     },
   ]
 };

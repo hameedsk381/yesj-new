@@ -1,0 +1,90 @@
+﻿
+> yesj-website@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.production, .env
+
+   Creating an optimized production build ...
+node.exe : (node:11520) 
+ExperimentalWarning: Type 
+Stripping is an 
+experimental feature and 
+might change at any time
+At C:\nvm4w\nodejs\npm.ps1
+:16 char:5
++     & 
+"$basedir/node$exe"  "$bas
+edir/node_modules/npm/bin/
+npm-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: ((  
+  node:11520) Ex...nge    
+ at any time:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+(Use `node 
+--trace-warnings ...` to 
+show where the warning 
+was created)
+
+[1m[33mwarn[39m[22m - 
+The class 
+`duration-[1.5s]` is 
+ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with `duration-&lsqb;1.5s&
+rsqb;` to silence this 
+warning.
+
+[1m[33mwarn[39m[22m - 
+The class `duration-[2s]` 
+is ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with 
+`duration-&lsqb;2s&rsqb;` 
+to silence this warning.
+ Γ£ô Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./scripts/audit-sqlite.ts:
+15:47
+Type error: 'e' is of 
+type 'unknown'.
+
+[0m [90m 13 |[39m      
+   }[0m
+[0m [90m 14 |[39m     
+} [36mcatch[39m (e) 
+{[0m
+[0m[31m[1m>[22m[39m[
+90m 15 |[39m         cons
+ole[33m.[39mlog([32m`Er
+ror reading ${file}: ${e.m
+essage}`[39m)[33m;[39m
+[0m
+[0m [90m    |[39m      
+                          
+               
+[31m[1m^[22m[39m[0m
+[0m [90m 16 |[39m     
+}[0m
+[0m [90m 17 |[39m }[0m
+[0m [90m 18 |[39m[0m
+Next.js build worker 
+exited with code: 1 and 
+signal: null

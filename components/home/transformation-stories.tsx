@@ -13,7 +13,7 @@ const defaultStories = [
     age: 22,
     story:
       "I could not speak a single English sentence. Summer Shapes did not only teach me English. It taught me to believe that I deserve success. Today I am a graduate supporting my family.",
-    image: "/website/IMG_6787.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_6787.JPG",
     alt: "Lakshmi, a Summer Shapes graduate",
     program: "Summer Shapes",
   },
@@ -23,7 +23,7 @@ const defaultStories = [
     age: 35,
     story:
       "After dropping out after class 10, I thought daily wage labour would be my future. YESJ's driving programme changed that. I now earn a steady income and I am building my family's first pucca house.",
-    image: "/website/IMG_5986.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
     alt: "Ravi Kumar, a professional driver trained through YESJ",
     program: "Driving and mechanic training",
   },
@@ -33,7 +33,7 @@ const defaultStories = [
     age: 22,
     story:
       "Graduation felt impossible until SSP said yes. I now work in media, and the biggest change was not only financial support. YESJ believed in me when no one else did.",
-    image: "/website/IMG_7254.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_7254.JPG",
     alt: "Sweatha, a Scholar Support Programme beneficiary",
     program: "Scholar Support Programme",
   },

@@ -13,7 +13,7 @@ export default function VideoSection() {
           <div className="overflow-hidden rounded-md border border-border bg-gray-950 text-white">
             <div className="relative aspect-video">
               <Image
-                src="/assets/slider-01.jpg"
+                src="https://storage.googleapis.com/yesj/assets/slider-01.jpg"
                 alt="Preview still from the YESJ documentary"
                 fill
                 className="object-cover opacity-70"

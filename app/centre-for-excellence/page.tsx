@@ -13,94 +13,94 @@ const facilities = [
     capacity: "90-105 participants",
     features: "AV equipment, projector, AC, whiteboard",
     use: "Seminars, workshops, PEP sessions",
-    image: "/website/IMG_8159.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
   },
   {
     name: "Seminar Hall 2",
     capacity: "90-105 participants",
     features: "AV equipment, projector, AC, whiteboard",
     use: "Seminars, workshops, PEP sessions",
-    image: "/website/IMG_8174.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_8174.JPG",
   },
   {
     name: "Computer Lab",
     capacity: "25 computers",
     features: "High-speed internet, printers, UPS",
     use: "ICT training and EOTT support",
-    image: "/website/english.jpg",
+    image: "https://storage.googleapis.com/yesj/website/english.jpg",
   },
   {
     name: "Residential Dormitories",
     capacity: "6 dormitories, 10 residents each",
     features: "Beds, storage, bathrooms",
     use: "Residential youth programs",
-    image: "/website/IMG_9052.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_9052.JPG",
   },
   {
     name: "Dining Hall",
     capacity: "60 persons",
     features: "Dining tables and service support",
     use: "Residential batches and event meals",
-    image: "/website/IMG_8897.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_8897.JPG",
   },
   {
     name: "Counseling Room",
     capacity: "1-on-1 or small groups",
     features: "Private and comfortable",
     use: "Scholar mentoring and individual guidance",
-    image: "/website/IMG_5999.JPG",
+    image: "https://storage.googleapis.com/yesj/website/IMG_5999.JPG",
   },
   {
     name: "Chapel / Prayer Space",
     capacity: "30 persons",
     features: "Quiet reflection space",
     use: "O GOD sessions, prayer, meditation",
-    image: "/website/20241114_153846.jpg",
+    image: "https://storage.googleapis.com/yesj/website/20241114_153846.jpg",
   },
   {
     name: "Outdoor Courtyard & Rooms",
     capacity: "800+ courtyard | 28 AC rooms",
     features: "WiFi-enabled rooms, open event space",
     use: "Youth festivals, gatherings, and campus stays",
-    image: "/website/20241114_153848.jpg",
+    image: "https://storage.googleapis.com/yesj/website/20241114_153848.jpg",
   },
 ]
 
 const tourTabs = {
   Overview: [
-    "/website/IMG_8159.JPG",
-    "/website/IMG_8174.JPG",
-    "/website/IMG_9052.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8174.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_9052.JPG",
   ],
   "Training Hall": [
-    "/website/IMG_8159.JPG",
-    "/website/vlcsnap-2024-11-14-15h29m40s042.png",
-    "/website/vlcsnap-2024-11-14-15h29m37s327.png",
+    "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
+    "https://storage.googleapis.com/yesj/website/vlcsnap-2024-11-14-15h29m40s042.png",
+    "https://storage.googleapis.com/yesj/website/vlcsnap-2024-11-14-15h29m37s327.png",
   ],
   "Computer Lab": [
-    "/website/english.jpg",
-    "/website/vlcsnap-2024-11-14-15h28m49s716.png",
-    "/website/vlcsnap-2024-11-14-15h33m03s528.png",
+    "https://storage.googleapis.com/yesj/website/english.jpg",
+    "https://storage.googleapis.com/yesj/website/vlcsnap-2024-11-14-15h28m49s716.png",
+    "https://storage.googleapis.com/yesj/website/vlcsnap-2024-11-14-15h33m03s528.png",
   ],
   Dormitory: [
-    "/website/IMG_9052.JPG",
-    "/website/IMG_9144.JPG",
-    "/website/IMG_8989.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_9052.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_9144.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8989.JPG",
   ],
   Dining: [
-    "/website/IMG_8897.JPG",
-    "/website/IMG_5899.JPG",
-    "/website/IMG_5986.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8897.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_5899.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_5986.JPG",
   ],
   Chapel: [
-    "/website/20241114_153846.jpg",
-    "/website/20241114_153848.jpg",
-    "/website/IMG_5999.JPG",
+    "https://storage.googleapis.com/yesj/website/20241114_153846.jpg",
+    "https://storage.googleapis.com/yesj/website/20241114_153848.jpg",
+    "https://storage.googleapis.com/yesj/website/IMG_5999.JPG",
   ],
   Campus: [
-    "/website/IMG_8159.JPG",
-    "/website/IMG_8174.JPG",
-    "/website/IMG_6800.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8159.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_8174.JPG",
+    "https://storage.googleapis.com/yesj/website/IMG_6800.JPG",
   ],
 } as const
 
@@ -160,7 +160,7 @@ export default function CentreForExcellencePage() {
             <div className="relative overflow-hidden rounded-3xl border border-border bg-white">
               <div className="relative aspect-[16/11]">
                 <Image
-                  src="/website/IMG_8159.JPG"
+                  src="https://storage.googleapis.com/yesj/website/IMG_8159.JPG"
                   alt="YES-J Centre for Excellence"
                   fill
                   className="object-cover"

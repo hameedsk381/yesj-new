@@ -21,8 +21,7 @@ export async function POST(req: NextRequest) {
     // Upsert logic for siteSettings
     await db.insert(siteSettings)
       .values({ key, value })
-      .onConflictDoUpdate({
-        target: siteSettings.key,
+      .onDuplicateKeyUpdate({
         set: { value, updatedAt: new Date() }
       });
 

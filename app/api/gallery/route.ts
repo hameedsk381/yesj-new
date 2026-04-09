@@ -51,14 +51,14 @@ export async function POST(req: NextRequest) {
     
     const publicUrl = await uploadFile(image, fileName);
 
-    const newItem = await db.insert(galleries).values({
+    const result = await db.insert(galleries).values({
       title,
       category,
       description,
       imagePath: publicUrl,
-    }).returning();
+    });
 
-    return NextResponse.json(newItem[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating gallery item:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

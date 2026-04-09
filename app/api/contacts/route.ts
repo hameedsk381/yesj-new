@@ -39,15 +39,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const newContact = await db.insert(contacts).values({
+    const result = await db.insert(contacts).values({
       name,
       email,
       subject,
       message,
       status: "unread",
-    }).returning();
+    });
 
-    return NextResponse.json(newContact[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating contact:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

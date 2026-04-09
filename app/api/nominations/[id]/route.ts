@@ -18,23 +18,19 @@ export async function PATCH(
     const body = await req.json();
     const { status } = body;
 
-    const updated = await db
+    await db
       .update(nominations)
       .set({ status })
-      .where(eq(nominations.id, id))
-      .returning();
+      .where(eq(nominations.id, id));
 
-    if (updated.length === 0) {
-      return NextResponse.json({ error: "Nomination not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating nomination:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
+// DELETE /api/nominations/[id] - Admin only
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -46,16 +42,12 @@ export async function DELETE(
     }
 
     const id = parseInt(params.id);
-    const deleted = await db
+
+    await db
       .delete(nominations)
-      .where(eq(nominations.id, id))
-      .returning();
+      .where(eq(nominations.id, id));
 
-    if (deleted.length === 0) {
-      return NextResponse.json({ error: "Nomination not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(deleted[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting nomination:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

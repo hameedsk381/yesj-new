@@ -1,0 +1,15 @@
+﻿Starting migration to GCS...
+
+--- Migrating Events ---
+
+--- Migrating Gallery ---
+
+--- Migrating Team Members ---
+
+--- Migrating Stories ---
+
+--- Migrating Echoes ---
+
+--- Migrating Site Settings ---
+
+Migration complete!

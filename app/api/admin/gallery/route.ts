@@ -42,14 +42,14 @@ export async function POST(req: NextRequest) {
     const fileName = `gallery/${crypto.randomUUID()}-${image.name}`;
     const imagePath = await uploadFile(image, fileName);
 
-    const newItem = await db.insert(galleries).values({
+    const result = await db.insert(galleries).values({
       title,
       description,
       imagePath,
       category,
-    }).returning();
+    });
 
-    return NextResponse.json(newItem[0]);
+    return NextResponse.json({ id: result[0].insertId, title, imagePath });
   } catch (error) {
     console.error("Gallery POST error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

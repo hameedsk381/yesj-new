@@ -62,7 +62,7 @@ export default function PasskeyPrompt({ email, onComplete, onSkip }: PasskeyProm
             console.log("Passkey registered successfully!");
             setSuccess(true);
             setTimeout(() => onComplete(true), 1500);
-        } catch (e) {
+        } catch (e: any) {
             console.error("Passkey registration error:", e);
             setError(e instanceof Error ? e.message : "Passkey registration failed");
         } finally {

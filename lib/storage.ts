@@ -32,11 +32,16 @@ export async function uploadFile(file: File | Buffer, destination: string, conte
   const gcsFile = bucket.file(destination)
 
   let buffer: Buffer
-  if (file instanceof File) {
+  if (Buffer.isBuffer(file)) {
+    buffer = file
+  } else if (typeof File !== 'undefined' && file instanceof File) {
     buffer = Buffer.from(await file.arrayBuffer())
     if (!contentType) contentType = file.type
+  } else if (file instanceof ArrayBuffer) {
+    buffer = Buffer.from(file)
   } else {
-    buffer = file
+    // Fallback if it's something else that can be buffered
+    buffer = Buffer.from(file as any)
   }
 
   await gcsFile.save(buffer, {

@@ -1,0 +1,100 @@
+﻿+     & 
+"$basedir/node$exe"  "$bas
+edir/node_modules/npm/bin/
+npm-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: ((  
+  node:1140) Exp...nge    
+ at any time:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+(Use `node 
+--trace-warnings ...` to 
+show where the warning 
+was created)
+
+[1m[33mwarn[39m[22m - 
+The class 
+`duration-[1.5s]` is 
+ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with `duration-&lsqb;1.5s&
+rsqb;` to silence this 
+warning.
+
+[1m[33mwarn[39m[22m - 
+The class `duration-[2s]` 
+is ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with 
+`duration-&lsqb;2s&rsqb;` 
+to silence this warning.
+ Γ£ô Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./app/api/admin/settings/r
+oute.ts:24:8
+Type error: Property 
+'onConflictDoUpdate' does 
+not exist on type 'MySqlIn
+sertBase<MySqlTableWithCol
+umns<{ name: 
+"site_settings"; schema: 
+undefined; columns: { id: 
+MySqlColumn<{ name: "id"; 
+tableName: 
+"site_settings"; 
+dataType: "number"; 
+columnType: 
+"MySqlSerial"; data: 
+number; driverParam: 
+number; notNull: true; 
+... 7 more ...; 
+generated: undefined; }, 
+{}, {}>; key: 
+MySqlColumn<.....'.
+
+[0m [90m 22 |[39m     
+[36mawait[39m db[33m.[
+39minsert(siteSettings)[0
+m
+[0m [90m 23 |[39m      
+ [33m.[39mvalues({ 
+key[33m,[39m value 
+})[0m
+[0m[31m[1m>[22m[39m[
+90m 24 |[39m       [33m.
+[39monConflictDoUpdate({
+[0m
+[0m [90m    |[39m      
+  [31m[1m^[22m[39m[0m
+[0m [90m 25 |[39m      
+   target[33m:[39m siteS
+ettings[33m.[39mkey[33m
+,[39m[0m
+[0m [90m 26 |[39m      
+   
+[36mset[39m[33m:[39m 
+{ value[33m,[39m 
+updatedAt[33m:[39m 
+[36mnew[39m 
+[33mDate[39m() }[0m
+[0m [90m 27 |[39m      
+ })[33m;[39m[0m
+Next.js build worker 
+exited with code: 1 and 
+signal: null

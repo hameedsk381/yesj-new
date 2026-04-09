@@ -18,17 +18,12 @@ export async function PATCH(
     const body = await req.json();
     const { status } = body;
 
-    const updated = await db
+    await db
       .update(registrations)
       .set({ status })
-      .where(eq(registrations.id, id))
-      .returning();
+      .where(eq(registrations.id, id));
 
-    if (updated.length === 0) {
-      return NextResponse.json({ error: "Registration not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating registration:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -46,16 +41,11 @@ export async function DELETE(
     }
 
     const id = parseInt(params.id);
-    const deleted = await db
+    await db
       .delete(registrations)
-      .where(eq(registrations.id, id))
-      .returning();
+      .where(eq(registrations.id, id));
 
-    if (deleted.length === 0) {
-      return NextResponse.json({ error: "Registration not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(deleted[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting registration:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

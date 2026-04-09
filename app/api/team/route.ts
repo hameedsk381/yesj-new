@@ -49,16 +49,16 @@ export async function POST(req: NextRequest) {
     
     const publicUrl = await uploadFile(image, fileName);
 
-    const newMember = await db.insert(teamMembers).values({
+    const result = await db.insert(teamMembers).values({
       name,
       role,
       bio,
       twitterUrl,
       linkedinUrl,
       imagePath: publicUrl,
-    }).returning();
+    });
 
-    return NextResponse.json(newMember[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating team member:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

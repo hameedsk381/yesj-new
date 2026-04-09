@@ -7,35 +7,35 @@ import { Button } from "@/components/ui/button"
 const partners = [
   {
     name: "Coromandel International",
-    logo: "/assets/COLLABORATORS/Coramandel International.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/Coramandel International.png",
   },
   {
     name: "Deichman Foundation",
-    logo: "/assets/COLLABORATORS/Deichman Foundation.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/Deichman Foundation.png",
   },
   {
     name: "Friendly Hands London",
-    logo: "/assets/COLLABORATORS/Friendly Hands, London.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/Friendly Hands, London.png",
   },
   {
     name: "KIMS Hospitals Hyderabad",
-    logo: "/assets/COLLABORATORS/KIMS Hospitals, Hyderabad.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/KIMS Hospitals, Hyderabad.png",
   },
   {
     name: "LINSI Foundation",
-    logo: "/assets/COLLABORATORS/LINSI Foundation.jpg",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/LINSI Foundation.jpg",
   },
   {
     name: "MOM Foundation USA",
-    logo: "/assets/COLLABORATORS/MOM foundatiom, USA.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/MOM foundatiom, USA.png",
   },
   {
     name: "NorthSouth Foundation",
-    logo: "/assets/COLLABORATORS/NorthSouth LOGO.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/NorthSouth LOGO.png",
   },
   {
     name: "Samaritan Purse Germany",
-    logo: "/assets/COLLABORATORS/Samaritan Purse, Germany.png",
+    logo: "https://storage.googleapis.com/yesj/assets/COLLABORATORS/Samaritan Purse, Germany.png",
   },
 ]
 

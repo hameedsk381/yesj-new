@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     
     const publicUrl = await uploadFile(image, fileName);
 
-    const newEvent = await db.insert(events).values({
+    await db.insert(events).values({
       title,
       description,
       date: new Date(dateStr),
@@ -62,9 +62,9 @@ export async function POST(req: NextRequest) {
       fee,
       deadline: deadlineStr ? new Date(deadlineStr) : null,
       imagePath: publicUrl,
-    }).returning();
+    });
 
-    return NextResponse.json(newEvent[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating event:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

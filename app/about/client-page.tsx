@@ -92,7 +92,7 @@ export default function AboutPage() {
         {/* ── Hero ── */}
         <section className="relative overflow-hidden border-b border-border bg-black text-white pt-12 lg:pt-16">
           <Image
-            src="/website/IMG_5899.JPG"
+            src="https://storage.googleapis.com/yesj/website/IMG_5899.JPG"
             alt="Young people at a YES-J gathering"
             fill
             priority
@@ -145,7 +145,7 @@ export default function AboutPage() {
             >
               <div className="relative aspect-[4/5]">
                 <Image
-                  src="/website/IMG_5986.JPG"
+                  src="https://storage.googleapis.com/yesj/website/IMG_5986.JPG"
                   alt="YES-J participants during a field programme"
                   fill
                   className="object-cover"

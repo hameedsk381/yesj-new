@@ -1,0 +1,100 @@
+﻿:16 char:5
++     & 
+"$basedir/node$exe"  "$bas
+edir/node_modules/npm/bin/
+npm-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: ((  
+  node:38540) Ex...nge    
+ at any time:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+(Use `node 
+--trace-warnings ...` to 
+show where the warning 
+was created)
+
+[1m[33mwarn[39m[22m - 
+The class 
+`duration-[1.5s]` is 
+ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with `duration-&lsqb;1.5s&
+rsqb;` to silence this 
+warning.
+
+[1m[33mwarn[39m[22m - 
+The class `duration-[2s]` 
+is ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - 
+If this is content and 
+not a class, replace it 
+with 
+`duration-&lsqb;2s&rsqb;` 
+to silence this warning.
+ Γ£ô Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./app/api/events/route.ts:
+65:8
+Type error: Property 
+'returning' does not 
+exist on type 'MySqlInsert
+Base<MySqlTableWithColumns
+<{ name: "events"; 
+schema: undefined; 
+columns: { id: 
+MySqlColumn<{ name: "id"; 
+tableName: "events"; 
+dataType: "number"; 
+columnType: 
+"MySqlSerial"; data: 
+number; driverParam: 
+number; notNull: true; 
+hasDefault: true; ... 6 
+more ...; generated: 
+undefined; }, {}, {}>; 
+... 9 more ...;...'. Did 
+you mean '$returningId'?
+
+[0m [90m 63 |[39m      
+ deadline[33m:[39m 
+deadlineStr [33m?[39m 
+[36mnew[39m [33mDate[3
+9m(deadlineStr) 
+[33m:[39m [36mnull[39m
+[33m,[39m[0m
+[0m [90m 64 |[39m      
+ imagePath[33m:[39m 
+publicUrl[33m,[39m[0m
+[0m[31m[1m>[22m[39m[
+90m 65 |[39m     })[33m.
+[39mreturning()[33m;[39
+m[0m
+[0m [90m    |[39m      
+  [31m[1m^[22m[39m[0m
+[0m [90m 66 |[39m[0m
+[0m [90m 67 |[39m     
+[36mreturn[39m [33mNext
+Response[39m[33m.[39mjs
+on({ success[33m:[39m 
+[36mtrue[39m 
+})[33m;[39m[0m
+[0m [90m 68 |[39m   } 
+[36mcatch[39m (error) 
+{[0m
+Next.js build worker 
+exited with code: 1 and 
+signal: null

@@ -48,16 +48,16 @@ export async function POST(req: NextRequest) {
     
     const publicUrl = await uploadFile(nocFile, fileName);
 
-    const newNomination = await db.insert(nominations).values({
+    const result = await db.insert(nominations).values({
       name,
       unitName,
       contestingFor,
       educationQualification,
       nocFilePath: publicUrl,
       status: "pending",
-    }).returning();
+    });
 
-    return NextResponse.json(newNomination[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating nomination:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

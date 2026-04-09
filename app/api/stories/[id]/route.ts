@@ -15,16 +15,11 @@ export async function DELETE(
     }
 
     const id = parseInt(params.id);
-    const deleted = await db
+    await db
       .delete(stories)
-      .where(eq(stories.id, id))
-      .returning();
+      .where(eq(stories.id, id));
 
-    if (deleted.length === 0) {
-      return NextResponse.json({ error: "Story not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(deleted[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting story:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

@@ -19,17 +19,12 @@ export async function PATCH(
     const body = await req.json();
     const { status } = body;
 
-    const updatedContact = await db
+    await db
       .update(contacts)
       .set({ status })
-      .where(eq(contacts.id, id))
-      .returning();
+      .where(eq(contacts.id, id));
 
-    if (updatedContact.length === 0) {
-      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updatedContact[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating contact:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -49,16 +44,11 @@ export async function DELETE(
 
     const id = parseInt(params.id);
 
-    const deletedContact = await db
+    await db
       .delete(contacts)
-      .where(eq(contacts.id, id))
-      .returning();
+      .where(eq(contacts.id, id));
 
-    if (deletedContact.length === 0) {
-      return NextResponse.json({ error: "Contact not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(deletedContact[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting contact:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

@@ -50,14 +50,14 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await hashPassword(password);
 
-    const newRegistration = await db.insert(registrations).values({
+    const result = await db.insert(registrations).values({
       ...rest,
       emailId,
       hashedPassword,
       status: "pending",
-    }).returning();
+    });
 
-    return NextResponse.json(newRegistration[0]);
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error creating registration:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
