@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Volume2, VolumeX } from "lucide-react"
 
 export default function HeroSection() {
@@ -14,6 +14,31 @@ export default function HeroSection() {
     }
   }
 
+  useEffect(() => {
+    if (videoRef.current) {
+      // Browsers often block autoplay with sound. 
+      // We start muted to ensure autoplay works, then try to unmute.
+      const attemptUnmute = async () => {
+        if (!videoRef.current) return
+
+        try {
+          // If the user has "autoplay enabled" in browser settings, 
+          // this might work without interaction.
+          videoRef.current.muted = false
+          await videoRef.current.play()
+          setIsMuted(false)
+        } catch (error) {
+          // If it fails, we revert to muted autoplay
+          videoRef.current.muted = true
+          await videoRef.current.play()
+          setIsMuted(true)
+        }
+      }
+
+      attemptUnmute()
+    }
+  }, [])
+
   return (
     <section
       aria-label="Hero Video"
@@ -24,7 +49,7 @@ export default function HeroSection() {
           ref={videoRef}
           autoPlay
           loop
-          muted
+          muted={isMuted}
           playsInline
           className="absolute inset-0 w-full h-full object-cover object-bottom"
         >
