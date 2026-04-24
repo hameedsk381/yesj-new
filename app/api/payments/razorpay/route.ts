@@ -3,13 +3,13 @@ import Razorpay from "razorpay"
 import { db } from "@/lib/db"
 import { summerCourseRegistrations } from "@/lib/db/schema"
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "",
-})
-
 export async function POST(req: Request) {
   try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID || "dummy", // Fallback to dummy so it doesn't crash if env is somehow missing momentarily
+      key_secret: process.env.RAZORPAY_KEY_SECRET || "dummy",
+    })
+
     const { amount, currency, receipt, registrationData } = await req.json()
 
     if (!amount || !currency || !registrationData) {

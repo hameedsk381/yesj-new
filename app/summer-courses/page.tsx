@@ -96,13 +96,23 @@ export default function SummerCoursesPage() {
   const watchedCourseId = watch("course")
   const selectedCourse = courses.find(c => c.id === watchedCourseId)
   
-  const calculateAmount = () => {
+  const getBaseAmount = () => {
     if (!selectedCourse) return 0
     return paymentMode === "full" ? selectedCourse.price : selectedCourse.price / 2
   }
 
+  const getTransactionFee = (base: number) => {
+    return Number((base * 0.0236).toFixed(2))
+  }
+
+  const getTotalAmount = () => {
+    const base = getBaseAmount()
+    const fee = getTransactionFee(base)
+    return Math.round(base + fee)
+  }
+
   const handlePayment = async (data: RegistrationFormData) => {
-    const amount = calculateAmount()
+    const amount = getTotalAmount()
     
     try {
       const response = await fetch("/api/payments/razorpay", {
@@ -461,6 +471,23 @@ export default function SummerCoursesPage() {
                             </div>
                           </Label>
                         </RadioGroup>
+                        
+                        <div className="mt-4 pt-4 border-t border-border/50 space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">Course Fee</span>
+                            <span className="font-medium">₹{getBaseAmount()}</span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground flex items-center gap-1">
+                              Platform Fee <span className="text-[10px]">(2.36%)</span>
+                            </span>
+                            <span className="font-medium">₹{getTransactionFee(getBaseAmount())}</span>
+                          </div>
+                          <div className="flex justify-between text-base font-bold pt-2 border-t border-border/50">
+                            <span>Total Payable</span>
+                            <span className="text-primary">₹{getTotalAmount()}</span>
+                          </div>
+                        </div>
                       </div>
                     )}
 
@@ -470,7 +497,7 @@ export default function SummerCoursesPage() {
                         className="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg shadow-xl shadow-primary/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
                         disabled={isSubmitting || !watchedCourseId}
                       >
-                        {isSubmitting ? "Processing..." : `Complete Registration ${selectedCourse ? `• ₹${calculateAmount()}` : ""}`}
+                        {isSubmitting ? "Processing..." : `Complete Registration ${selectedCourse ? `• ₹${getTotalAmount()}` : ""}`}
                       </Button>
                       <p className="text-center text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] mt-4">
                         Secure SSL Payment Powered by Razorpay
