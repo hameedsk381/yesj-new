@@ -46,6 +46,7 @@ const defaultProgramLinks: DropdownItem[] = [
   { href: "/programs/ogod", label: "O GOD" },
   { href: "/programs/magis", label: "MAGIS / Yuvotsavaalu" },
   { href: "/programs/eott", label: "Each One Teach Ten" },
+  { href: "/summer-courses", label: "Summer Courses 2026" },
 ]
 
 
@@ -168,7 +169,7 @@ export default function Header() {
       isTransparent ? "bg-transparent border-transparent" : "bg-background border-b border-border shadow-sm"
     )}>
       {/* Notification bar hidden per request */}
-      {/* <div 
+      <div 
         className={cn(
           "grid transition-[grid-template-rows] duration-300 ease-in-out w-full bg-primary text-white",
           isScrolled ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
@@ -177,7 +178,7 @@ export default function Header() {
         <div className="overflow-hidden">
           <NotificationBar />
         </div>
-      </div> */}
+      </div>
       <header
         className={cn(
           "w-full transition-all duration-300 ease-in-out",

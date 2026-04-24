@@ -149,3 +149,23 @@ export const programs = mysqlTable("programs", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
 });
+
+export const summerCourseRegistrations = mysqlTable("summer_course_registrations", {
+  id: serial("id").primaryKey(),
+  studentName: varchar("student_name", { length: 255 }).notNull(),
+  parentName: varchar("parent_name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }).notNull(),
+  age: int("age").notNull(),
+  courseId: varchar("course_id", { length: 100 }).notNull(),
+  courseTitle: varchar("course_title", { length: 255 }).notNull(),
+  batch: varchar("batch", { length: 50 }).notNull(),
+  paymentMode: varchar("payment_mode", { length: 20 }).notNull(), // 'full' or 'advance'
+  amount: int("amount").notNull(),
+  razorpayOrderId: varchar("razorpay_order_id", { length: 255 }).unique(),
+  razorpayPaymentId: varchar("razorpay_payment_id", { length: 255 }),
+  paymentStatus: varchar("payment_status", { length: 50 }).default("pending"), // 'pending', 'paid', 'failed'
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+});
+
