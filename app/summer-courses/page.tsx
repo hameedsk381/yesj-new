@@ -21,8 +21,11 @@ import { cn } from "@/lib/utils"
 const registrationSchema = z.object({
   studentName: z.string().min(2, "Name must be at least 2 characters"),
   parentName: z.string().min(2, "Parent name must be at least 2 characters"),
-  age: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 8 && Number(val) <= 20, "Age must be between 8 and 20"),
-  phone: z.string().min(10, "Valid phone number required"),
+  age: z.string()
+    .min(1, "Age is required")
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 8 && Number(val) <= 20, "Age must be between 8 and 20"),
+  phone: z.string()
+    .regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit mobile number"),
   email: z.string().email("Invalid email address"),
   course: z.string().min(1, "Please select a course"),
   batch: z.string().min(1, "Please select a batch"),
@@ -166,6 +169,10 @@ export default function SummerCoursesPage() {
         theme: {
           color: "#C05C00",
         },
+      }
+
+      if (!(window as any).Razorpay) {
+        throw new Error("Razorpay SDK failed to load. Please check your internet connection and try again.")
       }
 
       const rzp = new (window as any).Razorpay(options)
@@ -368,12 +375,22 @@ export default function SummerCoursesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="studentName" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Student Full Name</Label>
-                        <Input id="studentName" {...register("studentName")} placeholder="John Doe" className="bg-background" />
+                        <Input 
+                          id="studentName" 
+                          {...register("studentName")} 
+                          placeholder="John Doe" 
+                          className={cn("bg-background", errors.studentName && "border-red-500 focus-visible:ring-red-500")} 
+                        />
                         {errors.studentName && <p className="text-xs text-red-500">{errors.studentName.message}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="parentName" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Parent Name</Label>
-                        <Input id="parentName" {...register("parentName")} placeholder="Jane Doe" className="bg-background" />
+                        <Input 
+                          id="parentName" 
+                          {...register("parentName")} 
+                          placeholder="Jane Doe" 
+                          className={cn("bg-background", errors.parentName && "border-red-500 focus-visible:ring-red-500")} 
+                        />
                         {errors.parentName && <p className="text-xs text-red-500">{errors.parentName.message}</p>}
                       </div>
                     </div>
@@ -381,19 +398,35 @@ export default function SummerCoursesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="age" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Age (8-20)</Label>
-                        <Input id="age" {...register("age")} placeholder="12" className="bg-background" />
+                        <Input 
+                          id="age" 
+                          {...register("age")} 
+                          placeholder="12" 
+                          className={cn("bg-background", errors.age && "border-red-500 focus-visible:ring-red-500")} 
+                        />
                         {errors.age && <p className="text-xs text-red-500">{errors.age.message}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Phone Number</Label>
-                        <Input id="phone" {...register("phone")} placeholder="9876543210" className="bg-background" />
+                        <Input 
+                          id="phone" 
+                          {...register("phone")} 
+                          placeholder="9876543210" 
+                          className={cn("bg-background", errors.phone && "border-red-500 focus-visible:ring-red-500")} 
+                        />
                         {errors.phone && <p className="text-xs text-red-500">{errors.phone.message}</p>}
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Email Address</Label>
-                      <Input id="email" type="email" {...register("email")} placeholder="hello@example.com" className="bg-background" />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        {...register("email")} 
+                        placeholder="hello@example.com" 
+                        className={cn("bg-background", errors.email && "border-red-500 focus-visible:ring-red-500")} 
+                      />
                       {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
                     </div>
 
@@ -403,7 +436,7 @@ export default function SummerCoursesPage() {
                         <Select onValueChange={(v) => {
                           setValue("course", v);
                         }} value={watchedCourseId || undefined}>
-                          <SelectTrigger className="bg-background">
+                          <SelectTrigger className={cn("bg-background", errors.course && "border-red-500 ring-red-500")}>
                             <SelectValue placeholder="Choose course" />
                           </SelectTrigger>
                           <SelectContent>
@@ -417,7 +450,7 @@ export default function SummerCoursesPage() {
                       <div className="space-y-2">
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Batch</Label>
                         <Select onValueChange={(v) => setValue("batch", v)}>
-                          <SelectTrigger className="bg-background">
+                          <SelectTrigger className={cn("bg-background", errors.batch && "border-red-500 ring-red-500")}>
                             <SelectValue placeholder="Choose batch" />
                           </SelectTrigger>
                           <SelectContent>

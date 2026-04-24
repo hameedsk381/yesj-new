@@ -201,6 +201,12 @@ export default function Footer() {
             <Link href="/terms" className="transition-colors hover:text-white">
               Terms
             </Link>
+            <Link href="/refund-policy" className="transition-colors hover:text-white">
+              Refunds
+            </Link>
+            <Link href="/shipping-policy" className="transition-colors hover:text-white">
+              Delivery
+            </Link>
             <Link href="/sitemap.xml" className="transition-colors hover:text-white">
               Sitemap
             </Link>
