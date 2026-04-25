@@ -193,3 +193,6 @@ migrate.sh
 web-design-guidelines.md
 /brain/
 .qoder/
+.env
+.env.production
+.env.local
