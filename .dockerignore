@@ -4,6 +4,8 @@ node_modules
 *.pem
 .env*.local
 .env
+.env.production
+.env.example
 Dockerfile
 docker-compose.yml
 .git

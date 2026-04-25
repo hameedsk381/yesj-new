@@ -4,10 +4,8 @@ import * as schema from "./db/schema";
 
 const dbUrl = process.env.DATABASE_URL;
 
-if (!dbUrl) {
-  throw new Error("DATABASE_URL is not defined in environment variables");
-}
-
-const poolConnection = mysql.createPool(dbUrl);
-
-export const db = drizzle(poolConnection, { schema, mode: "default" });
+// During build time (next build), environment variables like DATABASE_URL might be missing.
+// We only initialize the pool if the URL is present to avoid crashing the build.
+export const db = dbUrl 
+  ? drizzle(mysql.createPool(dbUrl), { schema, mode: "default" })
+  : null as any;
