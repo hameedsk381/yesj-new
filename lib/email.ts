@@ -1,3 +1,4 @@
+import nodemailer from 'nodemailer'
 import { logger } from './logger'
 
 interface EmailOptions {
@@ -7,17 +8,27 @@ interface EmailOptions {
   from?: string
 }
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+})
+
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
   try {
-    // TODO: Integrate with email service (Resend, SendGrid, etc.)
-    // Example with Resend:
-    // const resend = new Resend(process.env.RESEND_API_KEY)
-    // await resend.emails.send({
-    //   from: options.from || 'YESJ <noreply@yesj.org>',
-    //   to: options.to,
-    //   subject: options.subject,
-    //   html: options.html,
-    // })
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      logger.warn('Email credentials missing. Skipping email send.')
+      return false
+    }
+
+    await transporter.sendMail({
+      from: options.from || `"YESJ" <${process.env.GMAIL_USER}>`,
+      to: options.to,
+      subject: options.subject,
+      html: options.html,
+    })
 
     logger.info('Email sent', {
       to: options.to,
@@ -36,11 +47,104 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   }
 }
 
+export function getInvoiceEmail(data: {
+  studentName: string
+  courseTitle: string
+  amount: number
+  orderId: string
+  paymentId: string
+  date: string
+  paymentMode: string
+}): string {
+  const isAdvance = data.paymentMode === "advance"
+  const totalLabel = isAdvance ? "Advance Payment" : "Full Payment"
+  
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1a1a1a; margin: 0; padding: 0; background-color: #f4f4f4; }
+          .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+          .header { background: linear-gradient(135deg, #C05C00 0%, #8B4200 100%); color: white; padding: 40px 20px; text-align: center; }
+          .invoice-card { padding: 30px; }
+          .status-badge { display: inline-block; padding: 6px 12px; background: #ecfdf5; color: #059669; border-radius: 99px; font-size: 12px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase; }
+          .details-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+          .details-table td { padding: 12px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+          .details-table td:last-child { text-align: right; font-weight: 600; }
+          .total-row { background: #fafafa; padding: 20px; border-radius: 8px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+          .total-amount { font-size: 24px; font-weight: 800; color: #C05C00; }
+          .footer { background: #1a1a1a; color: #888; padding: 30px; text-align: center; font-size: 12px; }
+          .button { display: inline-block; padding: 14px 28px; background: #C05C00; color: white !important; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 25px 0; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1 style="margin:0; font-size: 28px;">Payment Receipt</h1>
+            <p style="margin:10px 0 0; opacity: 0.8;">Hot Summer Cool Courses 2026</p>
+          </div>
+          
+          <div class="invoice-card">
+            <div class="status-badge">Payment Confirmed</div>
+            <h2 style="margin:0 0 10px;">Hello, ${data.studentName}!</h2>
+            <p style="color: #666; margin-top: 0;">We've successfully received your registration fee for the summer course.</p>
+            
+            <table class="details-table">
+              <tr>
+                <td style="color: #666;">Course</td>
+                <td>${data.courseTitle}</td>
+              </tr>
+              <tr>
+                <td style="color: #666;">Order ID</td>
+                <td>${data.orderId}</td>
+              </tr>
+              <tr>
+                <td style="color: #666;">Payment ID</td>
+                <td>${data.paymentId}</td>
+              </tr>
+              <tr>
+                <td style="color: #666;">Date</td>
+                <td>${data.date}</td>
+              </tr>
+              <tr>
+                <td style="color: #666;">Payment Type</td>
+                <td>${totalLabel}</td>
+              </tr>
+            </table>
+            
+            <div class="total-row">
+              <span style="font-weight: bold; color: #666;">Amount Paid</span>
+              <span class="total-amount">₹${data.amount}</span>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 14px; color: #666;">
+              Please keep this receipt for your records. Our team will reach out to you with the batch orientation details 3 days before the course starts.
+            </p>
+            
+            <div style="text-align: center;">
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://yesj.org'}/summer-courses" class="button">Visit Course Portal</a>
+            </div>
+          </div>
+          
+          <div class="footer">
+            <p style="margin:0 0 10px; color: white;">Youth Empowering Service - Jesuits (YESJ)</p>
+            <p>Andhra Loyola College Campus, Vijayawada, AP - 520 008</p>
+            <p style="margin-top: 20px;">&copy; 2026 YESJ. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `
+}
+
 export function getRegistrationConfirmationEmail(data: {
   name: string
   applicationType: string
   registrationId: string
 }): string {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yesj.org'
   return `
     <!DOCTYPE html>
     <html>
@@ -80,7 +184,7 @@ export function getRegistrationConfirmationEmail(data: {
               <li>Connect with us on social media</li>
             </ul>
 
-            <a href="https://yesj.in/programs" class="button">Explore Programs</a>
+            <a href="${siteUrl}/programs" class="button">Explore Programs</a>
 
             <p>If you have any questions, please don't hesitate to contact us at info@yesj.org</p>
           </div>

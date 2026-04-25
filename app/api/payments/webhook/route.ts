@@ -33,13 +33,42 @@ export async function POST(req: Request) {
       console.log("Payment Captured for Order:", orderId)
       
       // Update registration status in DB
-      await db.update(summerCourseRegistrations)
+      const result = await db.update(summerCourseRegistrations)
         .set({ 
           paymentStatus: "paid",
           razorpayPaymentId: payment.id,
           updatedAt: new Date()
         })
         .where(eq(summerCourseRegistrations.razorpayOrderId, orderId))
+
+      // Fetch registration details to send email
+      const registration = await db.query.summerCourseRegistrations.findFirst({
+        where: eq(summerCourseRegistrations.razorpayOrderId, orderId)
+      })
+
+      if (registration) {
+        try {
+          const { sendEmail, getInvoiceEmail } = await import("@/lib/email")
+          const emailHtml = getInvoiceEmail({
+            studentName: registration.studentName,
+            courseTitle: registration.courseTitle,
+            amount: registration.amount,
+            orderId: registration.razorpayOrderId || "N/A",
+            paymentId: registration.razorpayPaymentId || "N/A",
+            date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+            paymentMode: registration.paymentMode
+          })
+
+          await sendEmail({
+            to: registration.email,
+            subject: `Payment Receipt: ${registration.courseTitle} - YESJ`,
+            html: emailHtml
+          })
+          console.log("Invoice email sent to:", registration.email)
+        } catch (emailError) {
+          console.error("Failed to send invoice email:", emailError)
+        }
+      }
     }
 
     return NextResponse.json({ status: "ok" })

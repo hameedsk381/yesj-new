@@ -135,8 +135,12 @@ export default function SummerCoursesPage() {
       const order = await response.json()
       if (!response.ok) throw new Error(order.error || "Failed to create order")
 
+      // Fetch the public key from the server at runtime (to avoid build-time env issues)
+      const configRes = await fetch("/api/payments/razorpay/config")
+      const { keyId } = await configRes.json()
+
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_XXXXXXXXXXXXXX",
+        key: keyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_XXXXXXXXXXXXXX",
         amount: order.amount,
         currency: order.currency,
         name: "YESJ - Summer Courses",
