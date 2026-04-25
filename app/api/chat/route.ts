@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 import { homepageData, aboutPageData } from "@/lib/data/site-content";
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
-
 export async function POST(req: NextRequest) {
   try {
+    const groq = new Groq({
+      apiKey: process.env.GROQ_API_KEY || "dummy", // Use dummy for build-time safety
+    });
+
     const { message } = await req.json();
 
     if (!message) {

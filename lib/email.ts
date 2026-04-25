@@ -8,13 +8,20 @@ interface EmailOptions {
   from?: string
 }
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-})
+let transporterInstance: any = null
+
+function getEmailTransporter() {
+  if (!transporterInstance) {
+    transporterInstance = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
+  }
+  return transporterInstance
+}
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
   try {
@@ -23,6 +30,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
       return false
     }
 
+    const transporter = getEmailTransporter()
     await transporter.sendMail({
       from: options.from || `"YESJ" <${process.env.GMAIL_USER}>`,
       to: options.to,

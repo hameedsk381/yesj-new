@@ -7,7 +7,9 @@ let gcsInstance: Storage | null = null
 
 function getGCSClient() {
   if (!process.env.GCS_PROJECT_ID) {
-    throw new Error("GCS_PROJECT_ID is required in .env file")
+    // Only warn during build, don't crash
+    console.warn("GCS_PROJECT_ID is missing. Storage functionality will be disabled.")
+    return null
   }
 
   if (!gcsInstance) {
@@ -28,6 +30,8 @@ function getGCSClient() {
  */
 export async function uploadFile(file: File | Buffer, destination: string, contentType?: string): Promise<string> {
   const storage = getGCSClient()
+  if (!storage) throw new Error("GCS storage client not initialized")
+  
   const bucket = storage.bucket(BUCKET_NAME)
   const gcsFile = bucket.file(destination)
 
@@ -59,6 +63,8 @@ export async function uploadFile(file: File | Buffer, destination: string, conte
  */
 export async function getFile(path: string): Promise<{ buffer: Buffer; metadata: any }> {
   const storage = getGCSClient()
+  if (!storage) throw new Error("GCS storage client not initialized")
+
   const bucket = storage.bucket(BUCKET_NAME)
   const file = bucket.file(path)
 
