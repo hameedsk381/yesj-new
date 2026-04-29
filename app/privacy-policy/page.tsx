@@ -3,8 +3,8 @@ import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
 
 export const metadata = {
-  title: "Privacy Policy - APTSAICUF",
-  description: "Privacy Policy for Andhra-Telangana All India Catholic University Federation",
+  title: "Privacy Policy - YESJ",
+  description: "Privacy Policy for Youth Empowering Service Jesuits",
 }
 
 export default function PrivacyPolicyPage() {
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h2 className="text-2xl font-light text-primary mb-4">1. Information We Collect</h2>
                 <p className="mb-4">
-                  When you register for APTSAICUF membership or events, we collect personal information including:
+                  When you register for YESJ membership or events, we collect personal information including:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Full name, age, and gender</li>

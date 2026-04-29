@@ -3,8 +3,8 @@ import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
 
 export const metadata = {
-  title: "Shipping and Delivery Policy - APTSAICUF",
-  description: "Information regarding the delivery of services and programs by APTSAICUF",
+  title: "Shipping and Delivery Policy - YESJ",
+  description: "Information regarding the delivery of services and programs by YESJ",
 }
 
 export default function ShippingPolicyPage() {
@@ -23,7 +23,7 @@ export default function ShippingPolicyPage() {
               <div>
                 <h2 className="text-2xl font-light text-primary mb-4">1. Delivery of Services</h2>
                 <p className="mb-4">
-                  APTSAICUF primarily provides educational services, training programs, and social service events. As these are service-based offerings, there is no physical shipping of products.
+                  YESJ primarily provides educational services, training programs, and social service events. As these are service-based offerings, there is no physical shipping of products.
                 </p>
               </div>
 

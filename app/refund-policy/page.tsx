@@ -3,8 +3,8 @@ import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
 
 export const metadata = {
-  title: "Refund and Cancellation Policy - APTSAICUF",
-  description: "Refund and cancellation policy for APTSAICUF programs and events",
+  title: "Refund and Cancellation Policy - YESJ",
+  description: "Refund and cancellation policy for YESJ programs and events",
 }
 
 export default function RefundPolicyPage() {
@@ -23,7 +23,7 @@ export default function RefundPolicyPage() {
               <div>
                 <h2 className="text-2xl font-light text-primary mb-4">1. General Policy</h2>
                 <p className="mb-4">
-                  APTSAICUF strives to provide high-quality educational programs and events. Due to the nature of our organizational planning, our general policy on refunds and cancellations is outlined below.
+                  YESJ strives to provide high-quality educational programs and events. Due to the nature of our organizational planning, our general policy on refunds and cancellations is outlined below.
                 </p>
               </div>
 
@@ -40,7 +40,7 @@ export default function RefundPolicyPage() {
                   Refunds may be considered in the following exceptional circumstances:
                 </p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>If APTSAICUF cancels the program or event entirely.</li>
+                  <li>If YESJ cancels the program or event entirely.</li>
                   <li>In cases of proven medical emergencies or extreme personal hardship (subject to review).</li>
                   <li>If a duplicate payment was made accidentally.</li>
                 </ul>
@@ -56,7 +56,7 @@ export default function RefundPolicyPage() {
               <div>
                 <h2 className="text-2xl font-light text-primary mb-4">5. Modifications</h2>
                 <p className="mb-4">
-                  APTSAICUF reserves the right to modify or reschedule programs. If a program is rescheduled and the participant cannot attend the new dates, a credit for a future program may be offered at the organization's discretion.
+                  YESJ reserves the right to modify or reschedule programs. If a program is rescheduled and the participant cannot attend the new dates, a credit for a future program may be offered at the organization's discretion.
                 </p>
               </div>
 

@@ -18,23 +18,23 @@ export default function GalleryPreview() {
   const galleryImages = [
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Whatsp%20Image%202025-05-18%20at%204.58.11%20PM-tgCf7upklaBi6FE6Tryb4wOsB3jtlF.jpeg",
-      alt: "APTSAICUF Members with Indian Flag",
+      alt: "YESJ members with Indian flag",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%20205-05-18%20at%204.58.12%20PM-S6UFLR9WfDNY2GYgbyHyoFZPf0nLb1.jpeg",
-      alt: "APTSAICUF Women's Chapter Activity",
+      alt: "YESJ community activity",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%202025-05-18%20at%204.58.14%20PM-YG2rNq7sDeF58VRiPd4Y2L5djd3zuk.jpeg",
-      alt: "APTSAICUF Conference Participants",
+      alt: "YESJ conference participants",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%202025-05-18%20at%204.58.34%20PM-HLAVJBLZoAml0R415IZITUC9Hqytuo.jpeg",
-      alt: "APTSAICUF Cultural Exhibition",
+      alt: "YESJ cultural exhibition",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-1%20at%204.58.35%20PM-Jr1kSptdYDYsgj17H7qYHTI1yVDvUB.jpeg",
-      alt: "AICUF Campus Installation",
+      alt: "YESJ campus event",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-18%20at%204.58-o2eNrP3v7W6Se9JYGuWfNdpch3HQbg.jpeg",
@@ -42,11 +42,11 @@ export default function GalleryPreview() {
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-05-19-eN65t7FeFIU0KHZvHfMQcBg0iakwXI.jpeg",
-      alt: "AICUF Women's Chapter",
+      alt: "YESJ youth chapter gathering",
     },
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-05-18%20at%204.58.08%20PM-igdHve2uOiZdR0qGHkZVQ5QU2irlwr.jpeg",
-      alt: "Joseph's College AICUF Chapter",
+      alt: "YESJ student chapter gathering",
     },
   ]
 
