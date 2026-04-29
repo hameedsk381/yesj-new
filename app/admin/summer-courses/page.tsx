@@ -184,7 +184,25 @@ export default function SummerCoursesAdminPage() {
                         <div className="space-y-0.5">
                           <p className="font-bold text-gray-700">{reg.courseTitle}</p>
                           <Badge variant="outline" className="text-[10px] uppercase font-black tracking-tighter">
-                            {reg.batch === 'batch1' ? '9 AM - 10:30 AM' : '4:30 PM - 6 PM'}
+                            {(() => {
+                              if (reg.batch === 'batch1') {
+                                if (reg.courseId === 'english') return '09:00 AM - 10:00 AM'
+                                if (reg.courseId === 'ai') return '09:00 AM - 10:00 AM'
+                                if (reg.courseId === 'basic-comp') return '10:00 AM - 11:00 AM'
+                                if (reg.courseId === 'graphics') return '11:00 AM - 12:00 PM'
+                                if (reg.courseId === 'chess') return '09:00 AM - 10:00 AM'
+                                return 'Batch 1'
+                              }
+                              if (reg.batch === 'batch2') {
+                                if (reg.courseId === 'english') return '04:00 PM - 05:00 PM'
+                                if (reg.courseId === 'ai') return '03:00 PM - 04:00 PM'
+                                if (reg.courseId === 'basic-comp') return '03:00 PM - 04:00 PM'
+                                if (reg.courseId === 'graphics') return '05:00 PM - 06:00 PM'
+                                if (reg.courseId === 'chess') return '04:00 PM - 05:00 PM'
+                                return 'Batch 2'
+                              }
+                              return reg.batch
+                            })()}
                           </Badge>
                         </div>
                       </td>

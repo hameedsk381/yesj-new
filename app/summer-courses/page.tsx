@@ -41,15 +41,23 @@ const courses = [
     price: 1500,
     icon: <BookOpen className="w-6 h-6 text-primary" />,
     description: "Master spoken English and build confidence for a brighter future.",
-    color: "blue"
+    color: "blue",
+    batches: {
+      batch1: "09:00 AM - 10:00 AM",
+      batch2: "04:00 PM - 05:00 PM"
+    }
   },
   {
     id: "ai",
     title: "AI for Kids",
-    price: 2000,
+    price: 1800,
     icon: <Bot className="w-6 h-6 text-secondary" />,
     description: "Explore the world of Artificial Intelligence and future-ready technology.",
-    color: "purple"
+    color: "purple",
+    batches: {
+      batch1: "09:00 AM - 10:00 AM",
+      batch2: "03:00 PM - 04:00 PM"
+    }
   },
   {
     id: "basic-comp",
@@ -57,23 +65,35 @@ const courses = [
     price: 1500,
     icon: <Monitor className="w-6 h-6 text-tertiary" />,
     description: "Essential computer skills for the modern digital age.",
-    color: "green"
+    color: "green",
+    batches: {
+      batch1: "10:00 AM - 11:00 AM",
+      batch2: "03:00 PM - 04:00 PM"
+    }
   },
   {
     id: "graphics",
     title: "Graphic Designing",
-    price: 2500,
+    price: 2000,
     icon: <Palette className="w-6 h-6 text-orange-500" />,
     description: "Unleash creativity with professional graphic design tools and techniques.",
-    color: "orange"
+    color: "orange",
+    batches: {
+      batch1: "11:00 AM - 12:00 PM",
+      batch2: "05:00 PM - 06:00 PM"
+    }
   },
   {
     id: "chess",
     title: "Chess Coaching",
-    price: 2000,
+    price: 1500,
     icon: <Trophy className="w-6 h-6 text-amber-500" />,
     description: "Sharpen critical thinking and strategy through professional chess coaching.",
-    color: "amber"
+    color: "amber",
+    batches: {
+      batch1: "09:00 AM - 10:00 AM",
+      batch2: "04:00 PM - 05:00 PM"
+    }
   }
 ]
 
@@ -199,7 +219,7 @@ export default function SummerCoursesPage() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-background pt-32 pb-20 lg:pt-40 lg:pb-32 border-b border-border/70">
+        <section className="relative overflow-hidden bg-background pt-40 pb-20 lg:pt-48 lg:pb-32 border-b border-border/70">
           <div className="container mx-auto px-6 relative z-10">
             <div className="flex flex-col lg:flex-row items-center gap-16">
               <div className="lg:w-1/2 space-y-8 text-center lg:text-left">
@@ -228,8 +248,9 @@ export default function SummerCoursesPage() {
                   transition={{ delay: 0.2 }}
                   className="text-lg text-muted-foreground leading-relaxed max-w-xl"
                 >
-                  Transform your summer into a journey of learning and growth. 
-                  Choose from our specially curated courses designed for students aged 8-20.
+                  Transform your summer into a journey of learning and growth. <br />
+                  <span className="text-primary font-bold">05 MAY - 05 JUNE, 2026</span><br />
+                  Offline Classes at Andhra Loyola Campus, Vijayawada.
                 </motion.p>
                 
                 <motion.div 
@@ -339,8 +360,9 @@ export default function SummerCoursesPage() {
                 
                 <div className="space-y-6 pt-12 relative z-10">
                   {[
-                    { icon: <Clock className="w-5 h-5" />, title: "Timings", text: "9 AM - 10:30 AM / 4:30 PM - 6 PM" },
-                    { icon: <Users className="w-5 h-5" />, title: "Capacity", text: "40 Seats per Course" }
+                    { icon: <Clock className="w-5 h-5" />, title: "Timings", text: "Varies by Course" },
+                    { icon: <Users className="w-5 h-5" />, title: "Capacity", text: "40 Seats per Course" },
+                    { icon: <CheckCircle2 className="w-5 h-5" />, title: "Queries", text: "7207548639" }
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-md bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/10">
@@ -453,13 +475,17 @@ export default function SummerCoursesPage() {
                       </div>
                       <div className="space-y-2">
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Batch</Label>
-                        <Select onValueChange={(v) => setValue("batch", v)}>
+                        <Select onValueChange={(v) => setValue("batch", v)} disabled={!watchedCourseId}>
                           <SelectTrigger className={cn("bg-background", errors.batch && "border-red-500 ring-red-500")}>
-                            <SelectValue placeholder="Choose batch" />
+                            <SelectValue placeholder={watchedCourseId ? "Choose batch" : "Select course first"} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="batch1">9 AM - 10:30 AM</SelectItem>
-                            <SelectItem value="batch2">4:30 PM - 6 PM</SelectItem>
+                            {selectedCourse && (
+                              <>
+                                <SelectItem value="batch1">{selectedCourse.batches.batch1}</SelectItem>
+                                <SelectItem value="batch2">{selectedCourse.batches.batch2}</SelectItem>
+                              </>
+                            )}
                           </SelectContent>
                         </Select>
                         {errors.batch && <p className="text-xs text-red-500">{errors.batch.message}</p>}
