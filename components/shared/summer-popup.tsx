@@ -83,7 +83,7 @@ export default function SummerPopup() {
                     </span>
                   </h2>
                   <p className="text-gray-500 font-light text-sm md:text-lg lg:text-xl max-w-lg mx-auto">
-                    Master high-demand skills this season at the <span className="font-bold text-gray-900">YESJ Centre for Excellence.</span>
+                    Master high-demand skills from <span className="font-bold text-gray-900">05 MAY - 05 JUNE</span> at the <span className="font-bold text-gray-900">YESJ Centre for Excellence.</span>
                   </p>
                 </div>
 
