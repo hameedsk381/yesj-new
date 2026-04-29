@@ -131,6 +131,34 @@ export function getInvoiceEmail(data: {
               Please keep this receipt for your records. Our team will reach out to you with the batch orientation details 3 days before the course starts.
             </p>
             
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee;">
+              <p style="text-align: center; font-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-20">Our Partners & Collaborators</p>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/Coramandel%20International.png" alt="Coromandel" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/Deichman%20Foundation.png" alt="Deichman" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/Friendly%20Hands,%20London.png" alt="Friendly Hands" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/KIMS%20Hospitals,%20Hyderabad.png" alt="KIMS" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/LINSI%20Foundation.jpg" alt="LINSI" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                  <td style="width: 33.33%; padding: 10px; text-align: center;">
+                    <img src="https://storage.googleapis.com/yesj/assets/COLLABORATORS/NorthSouth%20LOGO.png" alt="NorthSouth" style="max-height: 40px; max-width: 100%; filter: grayscale(100%);">
+                  </td>
+                </tr>
+              </table>
+            </div>
+
             <div style="text-align: center;">
               <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://yesj.org'}/summer-courses" class="button">Visit Course Portal</a>
             </div>
