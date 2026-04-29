@@ -257,9 +257,9 @@ export default function SummerCoursesPage() {
                 transition={{ delay: 0.4 }}
                 className="lg:w-1/2 relative"
               >
-                <div className="relative aspect-[16/10] rounded-md overflow-hidden border border-border shadow-2xl bg-card">
+                <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0 lg:ml-auto rounded-md overflow-hidden border border-border shadow-2xl bg-card">
                   <Image 
-                    src="https://storage.googleapis.com/yesj/assets/summer-courses-promo.png" 
+                    src="https://storage.googleapis.com/yesj/assets/summer-courses-2026.jpeg" 
                     alt="Hot Summer Cool Courses" 
                     fill 
                     className="object-contain"
@@ -339,7 +339,7 @@ export default function SummerCoursesPage() {
                 
                 <div className="space-y-6 pt-12 relative z-10">
                   {[
-                    { icon: <Clock className="w-5 h-5" />, title: "Timings", text: "9 AM - 10 AM / 4 PM - 5 PM" },
+                    { icon: <Clock className="w-5 h-5" />, title: "Timings", text: "9 AM - 10:30 AM / 4:30 PM - 6 PM" },
                     { icon: <Users className="w-5 h-5" />, title: "Capacity", text: "40 Seats per Course" }
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-4">
@@ -458,8 +458,8 @@ export default function SummerCoursesPage() {
                             <SelectValue placeholder="Choose batch" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="batch1">9 AM - 10 AM</SelectItem>
-                            <SelectItem value="batch2">4 PM - 5 PM</SelectItem>
+                            <SelectItem value="batch1">9 AM - 10:30 AM</SelectItem>
+                            <SelectItem value="batch2">4:30 PM - 6 PM</SelectItem>
                           </SelectContent>
                         </Select>
                         {errors.batch && <p className="text-xs text-red-500">{errors.batch.message}</p>}

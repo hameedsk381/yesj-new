@@ -1,6 +1,8 @@
 import { Storage } from "@google-cloud/storage"
 
-const BUCKET_NAME = process.env.GCS_BUCKET_NAME || "yesj-uploads"
+function getBucketName() {
+  return process.env.GCS_BUCKET_NAME || "yesj-uploads"
+}
 
 // Singleton pattern for GCS client
 let gcsInstance: Storage | null = null
@@ -32,7 +34,8 @@ export async function uploadFile(file: File | Buffer, destination: string, conte
   const storage = getGCSClient()
   if (!storage) throw new Error("GCS storage client not initialized")
   
-  const bucket = storage.bucket(BUCKET_NAME)
+  const bucketName = getBucketName()
+  const bucket = storage.bucket(bucketName)
   const gcsFile = bucket.file(destination)
 
   let buffer: Buffer
@@ -55,7 +58,7 @@ export async function uploadFile(file: File | Buffer, destination: string, conte
     resumable: false,
   })
 
-  return `https://storage.googleapis.com/${BUCKET_NAME}/${destination}`
+  return `https://storage.googleapis.com/${bucketName}/${destination}`
 }
 
 /**
@@ -65,7 +68,8 @@ export async function getFile(path: string): Promise<{ buffer: Buffer; metadata:
   const storage = getGCSClient()
   if (!storage) throw new Error("GCS storage client not initialized")
 
-  const bucket = storage.bucket(BUCKET_NAME)
+  const bucketName = getBucketName()
+  const bucket = storage.bucket(bucketName)
   const file = bucket.file(path)
 
   const [buffer] = await file.download()
@@ -74,4 +78,4 @@ export async function getFile(path: string): Promise<{ buffer: Buffer; metadata:
   return { buffer, metadata }
 }
 
-export { BUCKET_NAME }
+export { getBucketName }

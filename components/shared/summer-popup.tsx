@@ -123,7 +123,7 @@ export default function SummerPopup() {
                   <div className="flex gap-8 md:gap-10">
                     <div className="space-y-0.5 md:space-y-1">
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-400">Batches</p>
-                      <p className="text-xs md:text-sm font-bold text-gray-900">9AM & 4PM</p>
+                      <p className="text-xs md:text-sm font-bold text-gray-900">9 AM & 4:30 PM</p>
                     </div>
                     <div className="space-y-0.5 md:space-y-1">
                       <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-400">Duration</p>

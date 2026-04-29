@@ -184,7 +184,7 @@ export default function SummerCoursesAdminPage() {
                         <div className="space-y-0.5">
                           <p className="font-bold text-gray-700">{reg.courseTitle}</p>
                           <Badge variant="outline" className="text-[10px] uppercase font-black tracking-tighter">
-                            {reg.batch === 'batch1' ? '9 AM - 10 AM' : '4 PM - 5 PM'}
+                            {reg.batch === 'batch1' ? '9 AM - 10:30 AM' : '4:30 PM - 6 PM'}
                           </Badge>
                         </div>
                       </td>
