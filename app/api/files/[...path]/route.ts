@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server"
-import { getFile, BUCKET_NAME } from "@/lib/storage"
+import { getFile, getBucketName } from "@/lib/storage"
 
 export async function GET(
   request: NextRequest,
@@ -28,7 +28,7 @@ export async function GET(
     console.log("[File Download] Transitioning to GCS fetch:", {
       originalPath: filePath,
       extractedKey: fileKey,
-      bucket: BUCKET_NAME,
+      bucket: getBucketName(),
     })
 
     // Get the file from GCS

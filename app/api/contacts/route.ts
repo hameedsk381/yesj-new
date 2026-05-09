@@ -1,9 +1,12 @@
 export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { db } from "@/lib/db";
 import { contacts } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc } from "drizzle-orm";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { RATE_LIMIT } from "@/lib/constants";
 
 // GET /api/contacts - Admin only
 export async function GET(req: NextRequest) {
@@ -14,8 +17,8 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    const limit = parseInt(searchParams.get("limit") || "100");
-    const offset = parseInt(searchParams.get("offset") || "0");
+    const limit = Math.min(parseInt(searchParams.get("limit") || "100"), 500);
+    const offset = Math.max(parseInt(searchParams.get("offset") || "0"), 0);
 
     const allContacts = await db.query.contacts.findMany({
       limit,
@@ -30,17 +33,36 @@ export async function GET(req: NextRequest) {
   }
 }
 
+const contactSchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().toLowerCase().email().max(254),
+  subject: z.string().trim().max(200).optional().default(""),
+  message: z.string().trim().min(1).max(5000),
+});
+
+function getClientId(req: NextRequest) {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "unknown"
+  );
+}
+
 // POST /api/contacts - Public
 export async function POST(req: NextRequest) {
+  const limit = checkRateLimit(`contact:${getClientId(req)}`, RATE_LIMIT.CONTACT);
+  if (!limit.success) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   try {
-    const body = await req.json();
-    const { name, email, subject, message } = body;
-
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    const parsed = contactSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid input" }, { status: 400 });
     }
+    const { name, email, subject, message } = parsed.data;
 
-    const result = await db.insert(contacts).values({
+    await db.insert(contacts).values({
       name,
       email,
       subject,

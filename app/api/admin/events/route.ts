@@ -5,9 +5,10 @@ import { events } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function GET(req: NextRequest) {
-  const session = await getSession();
+  const session = await getSession(req);
   if (!session || session.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -24,7 +25,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getSession();
+  const session = await getSession(req);
   if (!session || session.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -37,12 +38,15 @@ export async function POST(req: NextRequest) {
     const location = formData.get("location") as string;
     const fee = formData.get("fee") as string;
     const type = formData.get("type") as string;
-    const image = formData.get("image") as File;
+    const image = formData.get("image") as File | null;
 
     let imagePath = null;
     if (image && image.size > 0) {
-      const fileName = `events/${crypto.randomUUID()}-${image.name}`;
-      imagePath = await uploadFile(image, fileName);
+      const validated = validateAndBuildKey(image, "events", "image");
+      if (!validated.ok) {
+        return NextResponse.json({ error: validated.error }, { status: 400 });
+      }
+      imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
     }
 
     const result = await db.insert(events).values({

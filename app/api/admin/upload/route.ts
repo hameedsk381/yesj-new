@@ -2,9 +2,10 @@ export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function POST(req: NextRequest) {
-  const session = await getSession();
+  const session = await getSession(req);
   if (!session || session.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -12,14 +13,14 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File;
-    const folder = formData.get("folder") as string || "website";
+    const folder = (formData.get("folder") as string) || "website";
 
-    if (!file || file.size === 0) {
-      return NextResponse.json({ error: "File is required" }, { status: 400 });
+    const validated = validateAndBuildKey(file, folder, "image-or-document");
+    if (!validated.ok) {
+      return NextResponse.json({ error: validated.error }, { status: 400 });
     }
 
-    const fileName = `${folder}/${crypto.randomUUID()}-${file.name}`;
-    const url = await uploadFile(file, fileName);
+    const url = await uploadFile(file, validated.storageKey, validated.contentType);
 
     return NextResponse.json({ url });
   } catch (error) {
@@ -27,4 +28,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
-
