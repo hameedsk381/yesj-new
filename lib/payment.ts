@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import { logger } from './logger'
 
 interface PaymentOptions {
@@ -69,22 +70,33 @@ export async function verifyPayment(
   signature: string
 ): Promise<boolean> {
   try {
-    // TODO: Verify with Razorpay
-    // const crypto = require('crypto')
-    // const generated_signature = crypto
-    //   .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
-    //   .update(`${orderId}|${paymentId}`)
-    //   .digest('hex')
+    const secret = process.env.RAZORPAY_KEY_SECRET
+    if (!secret) {
+      logger.error('RAZORPAY_KEY_SECRET is not configured', { orderId, paymentId })
+      return false
+    }
 
-    // const isValid = generated_signature === signature
+    if (!orderId || !paymentId || !signature) {
+      return false
+    }
 
-    logger.info('Payment verification', {
-      orderId,
-      paymentId,
-    })
+    const expected = crypto
+      .createHmac('sha256', secret)
+      .update(`${orderId}|${paymentId}`)
+      .digest('hex')
 
-    // Mock verification for development
-    return true
+    const expectedBuf = Buffer.from(expected, 'hex')
+    const providedBuf = Buffer.from(signature, 'hex')
+
+    if (expectedBuf.length !== providedBuf.length) {
+      logger.warn('Payment signature length mismatch', { orderId, paymentId })
+      return false
+    }
+
+    const isValid = crypto.timingSafeEqual(expectedBuf, providedBuf)
+
+    logger.info('Payment verification', { orderId, paymentId, isValid })
+    return isValid
   } catch (error) {
     logger.error('Payment verification failed', {
       orderId,

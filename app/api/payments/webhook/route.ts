@@ -20,7 +20,13 @@ export async function POST(req: Request) {
       .update(body)
       .digest("hex")
 
-    if (expectedSignature !== signature) {
+    const expectedBuf = Buffer.from(expectedSignature, "hex")
+    const providedBuf = Buffer.from(signature, "hex")
+
+    if (
+      expectedBuf.length !== providedBuf.length ||
+      !crypto.timingSafeEqual(expectedBuf, providedBuf)
+    ) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
     }
 
@@ -75,6 +81,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ status: "ok" })
   } catch (error: any) {
     console.error("Webhook error:", error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
   }
 }
