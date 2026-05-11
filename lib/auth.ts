@@ -11,10 +11,10 @@ const ALGORITHM = "HS256";
 let cachedSecret: Uint8Array | null = null;
 function getSecret(): Uint8Array {
   if (cachedSecret) return cachedSecret;
-  const raw = process.env.JWT_getSecret();
+  const raw = process.env.JWT_SECRET;
   if (!raw || raw.length < 32) {
     throw new Error(
-      "JWT_getSecret() environment variable must be set to a strong value (>=32 chars)."
+      "JWT_SECRET environment variable must be set to a strong value (>=32 chars)."
     );
   }
   cachedSecret = new TextEncoder().encode(raw);
