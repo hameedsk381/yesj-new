@@ -3,14 +3,23 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const RAW_SECRET = process.env.JWT_SECRET;
-if (!RAW_SECRET || RAW_SECRET.length < 32) {
-  throw new Error(
-    "JWT_SECRET environment variable must be set to a strong value (>=32 chars)."
-  );
-}
-const SECRET = new TextEncoder().encode(RAW_SECRET);
 const ALGORITHM = "HS256";
+
+// Lazily resolve the JWT secret so that build-time module evaluation (Next.js
+// "collect page data" phase) doesn't crash when the env var isn't present.
+// The check still runs the first time a token is signed or verified at runtime.
+let cachedSecret: Uint8Array | null = null;
+function getSecret(): Uint8Array {
+  if (cachedSecret) return cachedSecret;
+  const raw = process.env.JWT_getSecret();
+  if (!raw || raw.length < 32) {
+    throw new Error(
+      "JWT_getSecret() environment variable must be set to a strong value (>=32 chars)."
+    );
+  }
+  cachedSecret = new TextEncoder().encode(raw);
+  return cachedSecret;
+}
 
 export async function hashPassword(password: string) {
   return await bcrypt.hash(password, 10);
@@ -39,12 +48,12 @@ export async function createAccessToken(payload: AccessTokenPayload) {
     .setProtectedHeader({ alg: ALGORITHM })
     .setIssuedAt()
     .setExpirationTime("24h") // must match cookie maxAge in login routes
-    .sign(SECRET);
+    .sign(getSecret());
 }
 
 export async function verifyAccessToken(token: string) {
   try {
-    const { payload } = await jwtVerify(token, SECRET, {
+    const { payload } = await jwtVerify(token, getSecret(), {
       algorithms: [ALGORITHM],
     });
     return payload;
