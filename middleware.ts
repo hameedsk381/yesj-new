@@ -2,11 +2,18 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { jwtVerify } from "jose"
 
-const RAW_JWT_SECRET = process.env.JWT_SECRET
-if (!RAW_JWT_SECRET || RAW_JWT_SECRET.length < 32) {
-    throw new Error("JWT_SECRET environment variable must be set to a strong value (>=32 chars).")
+// Lazy secret resolution so Next.js build-time module evaluation doesn't crash
+// when JWT_SECRET is absent. Runtime requests still enforce the check.
+let cachedJwtSecret: Uint8Array | null = null
+function getJwtSecret(): Uint8Array {
+    if (cachedJwtSecret) return cachedJwtSecret
+    const raw = process.env.JWT_SECRET
+    if (!raw || raw.length < 32) {
+        throw new Error("JWT_SECRET environment variable must be set to a strong value (>=32 chars).")
+    }
+    cachedJwtSecret = new TextEncoder().encode(raw)
+    return cachedJwtSecret
 }
-const JWT_SECRET = new TextEncoder().encode(RAW_JWT_SECRET)
 
 const STATE_CHANGING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"])
 
@@ -55,7 +62,7 @@ export async function middleware(request: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
         try {
-            const { payload } = await jwtVerify(token, JWT_SECRET)
+            const { payload } = await jwtVerify(token, getJwtSecret())
             if (payload.role !== "admin") {
                 return NextResponse.json({ error: "Forbidden" }, { status: 403 })
             }
@@ -73,7 +80,7 @@ export async function middleware(request: NextRequest) {
         if (path === "/admin/login") {
             if (token) {
                 try {
-                    const { payload } = await jwtVerify(token, JWT_SECRET)
+                    const { payload } = await jwtVerify(token, getJwtSecret())
                     if (payload.role === "admin") {
                         return NextResponse.redirect(new URL("/admin/dashboard", request.url))
                     }
@@ -89,7 +96,7 @@ export async function middleware(request: NextRequest) {
         }
 
         try {
-            const { payload } = await jwtVerify(token, JWT_SECRET)
+            const { payload } = await jwtVerify(token, getJwtSecret())
             if (payload.role !== "admin") {
                 return NextResponse.redirect(new URL("/admin/login", request.url))
             }
@@ -110,7 +117,7 @@ export async function middleware(request: NextRequest) {
         }
 
         try {
-            await jwtVerify(token, JWT_SECRET)
+            await jwtVerify(token, getJwtSecret())
             return NextResponse.next()
         } catch (error) {
             return NextResponse.redirect(new URL("/member/login", request.url))
