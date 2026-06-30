@@ -46,7 +46,6 @@ const defaultProgramLinks: DropdownItem[] = [
   { href: "/programs/ogod", label: "O GOD" },
   { href: "/programs/magis", label: "MAGIS / Yuvotsavaalu" },
   { href: "/programs/eott", label: "Each One Teach Ten" },
-  { href: "/summer-courses", label: "Summer Courses 2026" },
 ]
 
 

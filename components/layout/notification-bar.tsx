@@ -7,12 +7,6 @@ import Link from "next/link"
 
 const notifications = [
   {
-    id: 0,
-    text: "Hot Summer Cool Courses are here! English, AI, Graphics & more.",
-    ctaLabel: "Register Now",
-    href: "/summer-courses",
-  },
-  {
     id: 1,
     text: "Applications Open: English Proficiency Course (EPC) - Summer 2026",
     ctaLabel: "Apply Now",

@@ -159,9 +159,7 @@ export function getInvoiceEmail(data: {
               </table>
             </div>
 
-            <div style="text-align: center;">
-              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://yesj.org'}/summer-courses" class="button">Visit Course Portal</a>
-            </div>
+
           </div>
           
           <div class="footer">

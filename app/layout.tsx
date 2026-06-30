@@ -7,7 +7,6 @@ import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
 import ChatWidget from "@/components/chat/chat-widget"
 import PageTransition from "@/components/layout/page-transition"
-import SummerPopup from "@/components/shared/summer-popup"
 import ScrollToTop from "@/components/layout/scroll-to-top"
 
 import { GeistSans } from 'geist/font/sans'
@@ -129,7 +128,6 @@ export default function RootLayout({
             <PageTransition>
               {children}
             </PageTransition>
-            <SummerPopup />
             <ScrollToTop />
 
             <ChatWidget />

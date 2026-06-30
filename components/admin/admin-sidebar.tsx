@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { 
+import {
   LayoutDashboard, 
   Users, 
   FileText, 
@@ -15,14 +15,12 @@ import {
   UserPlus,
   Briefcase,
   Layers,
-  Home,
-  Sun
+  Home
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigationItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { name: "Summer Courses", href: "/admin/summer-courses", icon: Sun },
   { name: "Homepage", href: "/admin/homepage", icon: Home },
   { name: "Programmes", href: "/admin/programs", icon: Briefcase },
   { name: "Registrations", href: "/admin/registrations", icon: Users },
