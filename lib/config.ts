@@ -6,7 +6,7 @@ export const siteConfig = {
   social: {
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM || "https://instagram.com/yesj.official",
     facebook: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK || "https://facebook.com/yesj.official",
-    twitter: process.env.NEXT_PUBLIC_SOCIAL_TWITTER || "https://twitter.com/yesj.official",
+    twitter: process.env.NEXT_PUBLIC_SOCIAL_TWITTER || "https://x.com/yesj.official",
     youtube: process.env.NEXT_PUBLIC_SOCIAL_YOUTUBE || "https://youtube.com/yesj.official",
     linkedin: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN || "https://linkedin.com/company/yesj.official",
   },

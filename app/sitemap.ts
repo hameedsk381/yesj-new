@@ -21,6 +21,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/gallery',
     '/events',
     '/echoes',
+    '/privacy-policy',
+    '/terms',
+    '/refund-policy',
+    '/shipping-policy',
   ].map((route) => ({
     url: `${siteConfig.url}${route}`,
     lastModified: new Date(),

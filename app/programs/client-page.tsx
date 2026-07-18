@@ -10,6 +10,7 @@ import { programFilters } from "@/lib/data/programs"
 import { siteConfig } from "@/lib/config"
 import { ProgramIcon } from "@/components/shared/program-icon"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
+import { programsData } from "@/lib/data/programs"
 
 const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp.replace(/\D/g, "")}`
 
@@ -24,13 +25,17 @@ export default function ProgramsClientPage() {
         const res = await fetch("/api/programs")
         if (res.ok) {
           const data = await res.json()
-          setPrograms(data)
+          if (Array.isArray(data) && data.length > 0) {
+            setPrograms(data)
+            setLoading(false)
+            return
+          }
         }
       } catch (err) {
         console.error("Failed to fetch programs", err)
-      } finally {
-        setLoading(false)
       }
+      setPrograms(programsData)
+      setLoading(false)
     }
     fetchPrograms()
   }, [])

@@ -10,8 +10,8 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://yesj.org",
     siteName: "YESJ",
-    title: "YESJ - Empowering Youth for Radical Transformation",
-    description: "Empowering 70,000+ youth across Andhra and Telangana. Join the YESJ movement through Summer Shapes, SSP, and vocational training.",
+    title: "YESJ - Youth Empowering Service Jesuits | Official Website",
+    description: "YESJ (Youth Empowering Service - Jesuits) empowers marginalized youth in Andhra Pradesh and Telangana through skill development, English immersion, and leadership programs. Join 70,000+ transformed lives.",
     images: [
       {
         url: "https://yesj.org/YESJ_Logo_Black-eaf43d27.png",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "YESJ - Youth Empowering Service Jesuits",
-    description: "Transforming young lives in Telugu states through education, skills, and faith formation.",
+    title: "YESJ - Youth Empowering Service Jesuits | Official Website",
+    description: "YESJ (Youth Empowering Service - Jesuits) empowers marginalized youth in Andhra Pradesh and Telangana through skill development, English immersion, and leadership programs. Join 70,000+ transformed lives.",
     images: ["https://yesj.org/YESJ_Logo_Black-eaf43d27.png"],
   },
 }

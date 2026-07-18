@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 import { siteConfig } from "@/lib/config"
+import { AboutPageJsonLd } from "@/lib/about-schema"
 
 const defaultPhilosophyStatements = [
   {
@@ -99,6 +100,7 @@ export default function AboutPage() {
         { name: "Home", url: siteConfig.url },
         { name: "About", url: `${siteConfig.url}/about` },
       ]} />
+      <AboutPageJsonLd />
       
       <main className="flex-1 pt-24">
         {/* Simple Hero */}
