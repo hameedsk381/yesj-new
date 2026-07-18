@@ -1,13 +1,13 @@
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
-import { siteConfig } from "@/lib/config"
+import { sharedMetadata } from "@/lib/seo"
 
-export const metadata = {
+export const metadata = sharedMetadata({
   title: "Refund and Cancellation Policy - YESJ",
   description: "Refund and cancellation policy for YESJ programs and events",
-  alternates: { canonical: `${siteConfig.url}/refund-policy` },
-}
+  path: "/refund-policy",
+})
 
 export default function RefundPolicyPage() {
   return (

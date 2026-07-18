@@ -1,17 +1,12 @@
 import type { Metadata } from "next"
-import { siteConfig } from "@/lib/config"
 import PartnersClientPage from "./client-page"
+import { sharedMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sharedMetadata({
   title: "Partners & Collaborators | YESJ",
   description: "Meet the organizations supporting YESJ's mission. Coromandel International, Deichman Foundation, NorthSouth Foundation, and more partners in youth empowerment.",
-  alternates: { canonical: `${siteConfig.url}/partners` },
-  openGraph: {
-    url: `${siteConfig.url}/partners`,
-    title: "Partners & Collaborators | YESJ",
-    description: "Meet the organizations supporting YESJ's youth empowerment mission.",
-  },
-}
+  path: "/partners",
+})
 
 export default function PartnersPage() {
   return <PartnersClientPage />

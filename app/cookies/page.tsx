@@ -1,13 +1,13 @@
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
-import { siteConfig } from "@/lib/config"
+import { sharedMetadata } from "@/lib/seo"
 
-export const metadata = {
+export const metadata = sharedMetadata({
   title: "Cookie Policy - YESJ",
   description: "How YESJ uses cookies and similar technologies",
-  alternates: { canonical: `${siteConfig.url}/cookies` },
-}
+  path: "/cookies",
+})
 
 export default function CookiesPage() {
   return (

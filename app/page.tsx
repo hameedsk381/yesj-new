@@ -4,6 +4,29 @@ import HomeClientPage from "./client-home"
 export const metadata: Metadata = {
   title: "YESJ - Youth Empowering Service Jesuits | Official Website",
   description: "YESJ (Youth Empowering Service - Jesuits) empowers marginalized youth in Andhra Pradesh and Telangana through skill development, English immersion, and leadership programs. Join 70,000+ transformed lives.",
+  alternates: { canonical: "https://yesj.org" },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://yesj.org",
+    siteName: "YESJ",
+    title: "YESJ - Empowering Youth for Radical Transformation",
+    description: "Empowering 70,000+ youth across Andhra and Telangana. Join the YESJ movement through Summer Shapes, SSP, and vocational training.",
+    images: [
+      {
+        url: "https://yesj.org/YESJ_Logo_Black-eaf43d27.png",
+        width: 1200,
+        height: 630,
+        alt: "YESJ Logo - Youth Empowering Service Jesuits"
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "YESJ - Youth Empowering Service Jesuits",
+    description: "Transforming young lives in Telugu states through education, skills, and faith formation.",
+    images: ["https://yesj.org/YESJ_Logo_Black-eaf43d27.png"],
+  },
 }
 
 export default function HomePage() {

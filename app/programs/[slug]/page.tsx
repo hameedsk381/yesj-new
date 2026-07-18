@@ -18,9 +18,26 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: program.overviewDescription,
     alternates: { canonical: `${siteConfig.url}/programs/${program.slug}` },
     openGraph: {
+      type: "website",
+      locale: "en_IN",
       url: `${siteConfig.url}/programs/${program.slug}`,
+      siteName: "YESJ",
       title: `${program.title} | YESJ Programs`,
       description: program.overviewDescription,
+      images: [
+        {
+          url: `${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`,
+          width: 1200,
+          height: 630,
+          alt: "YESJ Logo - Youth Empowering Service Jesuits",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${program.title} | YESJ Programs`,
+      description: program.overviewDescription,
+      images: [`${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`],
     },
   };
 }

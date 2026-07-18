@@ -1,13 +1,13 @@
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
-import { siteConfig } from "@/lib/config"
+import { sharedMetadata } from "@/lib/seo"
 
-export const metadata = {
+export const metadata = sharedMetadata({
   title: "Terms of Service - YESJ",
   description: "Terms and conditions for using YESJ services",
-  alternates: { canonical: `${siteConfig.url}/terms` },
-}
+  path: "/terms",
+})
 
 export default function TermsPage() {
   return (

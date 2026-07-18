@@ -1,17 +1,12 @@
 import type { Metadata } from "next"
-import { siteConfig } from "@/lib/config"
 import TeamClientPage from "./client-page"
+import { sharedMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sharedMetadata({
   title: "Team - Leadership & Founders | YESJ",
   description: "Meet the team behind YESJ. Learn about Fr. Bala Bollineni SJ, the founding director, and the dedicated staff driving youth empowerment across Andhra Pradesh and Telangana.",
-  alternates: { canonical: `${siteConfig.url}/about/team` },
-  openGraph: {
-    url: `${siteConfig.url}/about/team`,
-    title: "Team - Leadership & Founders | YESJ",
-    description: "Meet the team behind YESJ. Learn about Fr. Bala Bollineni SJ and the dedicated staff driving youth empowerment.",
-  },
-}
+  path: "/about/team",
+})
 
 export default function TeamPage() {
   return <TeamClientPage />

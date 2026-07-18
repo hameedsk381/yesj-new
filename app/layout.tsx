@@ -40,28 +40,6 @@ export const metadata = {
   creator: "YESJ",
   publisher: "YESJ",
   category: "Non-profit Organization",
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    url: siteConfig.url,
-    siteName: "YESJ",
-    title: "YESJ - Empowering Youth for Radical Transformation",
-    description: "Empowering 70,000+ youth across Andhra and Telangana. Join the YESJ movement through Summer Shapes, SSP, and vocational training.",
-    images: [
-      {
-        url: `${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`,
-        width: 1200,
-        height: 630,
-        alt: "YESJ Logo - Youth Empowering Service Jesuits"
-      }
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "YESJ - Youth Empowering Service Jesuits",
-    description: "Transforming young lives in Telugu states through education, skills, and faith formation.",
-    images: [`${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`],
-  },
   robots: {
     index: true,
     follow: true,
@@ -75,9 +53,6 @@ export const metadata = {
   },
   verification: {
     google: siteConfig.verification.google,
-  },
-  alternates: {
-    canonical: siteConfig.url,
   },
 }
 
