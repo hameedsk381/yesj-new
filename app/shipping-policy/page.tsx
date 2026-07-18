@@ -1,10 +1,12 @@
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
+import { siteConfig } from "@/lib/config"
 
 export const metadata = {
   title: "Shipping and Delivery Policy - YESJ",
   description: "Information regarding the delivery of services and programs by YESJ",
+  alternates: { canonical: `${siteConfig.url}/shipping-policy` },
 }
 
 export default function ShippingPolicyPage() {

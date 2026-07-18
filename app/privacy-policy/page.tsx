@@ -1,10 +1,12 @@
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import PageHeader from "@/components/shared/page-header"
+import { siteConfig } from "@/lib/config"
 
 export const metadata = {
   title: "Privacy Policy - YESJ",
   description: "Privacy Policy for Youth Empowering Service Jesuits",
+  alternates: { canonical: `${siteConfig.url}/privacy-policy` },
 }
 
 export default function PrivacyPolicyPage() {
