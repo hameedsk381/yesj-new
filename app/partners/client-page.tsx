@@ -141,7 +141,7 @@ export default function PartnersPage() {
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl">
-                <Image src="/website/IMG_6038.JPG" alt="Partnership work" fill className="object-cover" />
+                <Image src="/website/IMG_6038.JPG" alt="Partnership work" fill priority sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <ShieldCheck className="w-12 h-12 text-secondary mb-4" />
                   <h3 className="text-3xl font-bold">Transparent & Accountable</h3>

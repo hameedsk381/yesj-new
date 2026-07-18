@@ -60,7 +60,7 @@ export default function CoursesClientPage() {
                 <div key={course.id} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
                   <div className="relative h-48 bg-gray-100">
                     {course.imagePath ? (
-                      <Image src={course.imagePath} alt={course.title} fill className="object-cover" unoptimized />
+                      <Image src={course.imagePath} alt={course.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center"><GraduationCap className="h-12 w-12 text-muted-foreground/20" /></div>
                     )}

@@ -10,20 +10,16 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export default function ProgramsPreview() {
-  const [previewPrograms, setPreviewPrograms] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [previewPrograms, setPreviewPrograms] = useState<any[]>(programsData.slice(0, 8))
 
   useEffect(() => {
     fetch("/api/programs")
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setPreviewPrograms(data.slice(0, 8))
+        if (Array.isArray(data) && data.length > 0) setPreviewPrograms(data.slice(0, 8))
       })
-      .catch(err => console.error(err))
-      .finally(() => setIsLoading(false))
+      .catch(() => {})
   }, [])
-
-  if (isLoading) return null
 
   return (
     <section id="programs" aria-labelledby="programs-heading" className="relative overflow-hidden bg-background py-16 sm:py-20 lg:py-28">

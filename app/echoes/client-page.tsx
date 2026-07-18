@@ -184,7 +184,7 @@ export default function EchoesPage() {
                         alt={echo.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        unoptimized={echo.thumbnailPath.includes('storage.googleapis.com')}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <PDFThumbnail url={echo.filePath} />

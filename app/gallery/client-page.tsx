@@ -95,7 +95,7 @@ export default function GalleryPage() {
                         fill
                         alt={image.alt}
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        unoptimized
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
 
                       {/* Glass Overlay */}

@@ -148,7 +148,7 @@ export default function DonatePage() {
                 </div>
               </div>
               <div className="relative h-[700px] w-full rounded-md overflow-hidden shadow-2xl">
-                <Image src="/website/IMG_6034.JPG" alt="Donor impact" fill className="object-cover" />
+                <Image src="/website/IMG_6034.JPG" alt="Donor impact" fill priority sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                 <div className="absolute bottom-12 left-12 right-12 text-white">
                   <ShieldCheck className="w-12 h-12 text-secondary mb-6" />

@@ -69,7 +69,7 @@ export default function TeamPage() {
                                                             alt={founder.name} 
                                                             fill 
                                                             className="object-cover"
-                                                            unoptimized
+                                                            sizes="(max-width: 768px) 100vw, 50vw"
                                                         />
                                                     </div>
                                                 </div>
@@ -103,7 +103,7 @@ export default function TeamPage() {
                                                     alt={member.name} 
                                                     fill 
                                                     className="object-cover"
-                                                    unoptimized
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                 />
                                             </div>
                                             <h3 className="text-xl font-bold text-foreground mb-1 tracking-tight">{member.name}</h3>

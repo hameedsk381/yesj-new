@@ -5,9 +5,11 @@ import { ErrorBoundary } from "@/components/error-boundary"
 import SkipLink from "@/components/skip-link"
 import GoogleAnalytics from "@/components/analytics"
 import { siteConfig } from "@/lib/config"
-import ChatWidget from "@/components/chat/chat-widget"
+import dynamic from "next/dynamic"
 import PageTransition from "@/components/layout/page-transition"
 import ScrollToTop from "@/components/layout/scroll-to-top"
+
+const ChatWidget = dynamic(() => import("@/components/chat/chat-widget"), { ssr: false })
 
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'

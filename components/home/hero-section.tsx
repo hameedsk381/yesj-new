@@ -51,6 +51,7 @@ export default function HeroSection() {
           loop
           muted={isMuted}
           playsInline
+          poster="https://storage.googleapis.com/yesj/website/hero-video-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover object-bottom"
         >
           <source src="https://storage.googleapis.com/yesj/website/hero-video.mp4" type="video/mp4" />

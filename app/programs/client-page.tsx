@@ -95,7 +95,7 @@ export default function ProgramsClientPage() {
                 <article key={program.slug} className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-all">
                   <div className={`h-1 w-full ${program.cardBarClassName || "bg-primary"}`} />
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                    <Image src={program.image || "/placeholder.jpg"} alt={program.title || "Program Image"} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                    <Image src={program.image || "/placeholder.jpg"} alt={program.title || "Program Image"} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                   </div>
                   <div className="p-6">
                     <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-transparent">

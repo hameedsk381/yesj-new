@@ -138,6 +138,7 @@ function CounterItem({ counter, index }: { counter: Counter; index: number }) {
              src="https://storage.googleapis.com/yesj/website/IMG_8159.JPG" 
              alt="Impact Background" 
              fill 
+             sizes="100vw"
              className="object-cover"
            />
            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />

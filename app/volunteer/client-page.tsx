@@ -159,7 +159,7 @@ export default function VolunteerPage() {
                 </div>
               </div>
               <div className="relative h-[600px] w-full rounded-md overflow-hidden shadow-2xl">
-                <Image src="/website/IMG_6045.JPG" alt="Volunteer" width={1920} height={1080} className="object-cover" />
+                <Image src="/website/IMG_6045.JPG" alt="Volunteer" width={1920} height={1080} priority className="object-cover" />
                 <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-black/60 to-transparent text-white">
                   <p className="text-2xl font-medium italic">&quot;YESJ didn't just ask for my help; it asked for my heart. I found my voice here.&quot;</p>
                 </div>

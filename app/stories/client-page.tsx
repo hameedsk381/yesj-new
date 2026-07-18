@@ -92,7 +92,7 @@ export default function StoriesPage() {
                             fill
                             priority
                             className="object-cover"
-                            unoptimized
+                            sizes="(max-width: 768px) 100vw, 50vw"
                          />
                     ) : (
                         <div className="w-full h-full bg-gray-200" />
@@ -149,7 +149,7 @@ export default function StoriesPage() {
                                 alt={article.title}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                unoptimized
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               />
                           ) : (
                               <div className="w-full h-full bg-gray-200" />

@@ -163,6 +163,8 @@ export default function CentreForExcellencePage() {
                   src="https://storage.googleapis.com/yesj/website/IMG_8159.JPG"
                   alt="YES-J Centre for Excellence"
                   fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

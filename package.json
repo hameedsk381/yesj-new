@@ -27,7 +27,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "formidable": "^3.5.4",
-    "framer-motion": "latest",
+    "framer-motion": "^11.15.0",
     "geist": "^1.7.0",
     "groq-sdk": "^1.1.2",
     "jose": "^6.1.2",
