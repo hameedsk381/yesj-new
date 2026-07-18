@@ -20,7 +20,7 @@ type Counter = {
 const counters: Counter[] = [
   {
     id: 1,
-    value: 50000,
+    value: 70000,
     suffix: "+",
     label: "Lives Touched",
     detail: "Through direct accompaniment, training, and community programmes across decades of service.",

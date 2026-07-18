@@ -505,6 +505,45 @@ export const programsData: ProgramData[] = [
       { label: "Host a Center", href: "/contact?program=eott&type=host", tone: "secondary" },
     ],
   },
+  {
+    slug: "y-hub",
+    shortTitle: "Y HUB",
+    title: "Y HUB - Why to WOW",
+    badge: "Entrepreneurship",
+    tagline: "Why Changes to WOW.",
+    subheading: "A community for young entrepreneurs that sharpens ideas, expands creativity, and stands behind their vision.",
+    icon: "lightbulb",
+    logo: "",
+    image: "",
+    cardBarClassName: "bg-accent",
+    overviewDescription: "An entrepreneurship incubation space for youth to turn ideas into impact.",
+    megaMenuDescription: "Entrepreneurship incubation and innovation hub for young founders.",
+    categories: ["Education & Skills", "Employment"],
+    megaMenuGroup: "skill-education",
+    heroActions: [{ label: "Join Y HUB", href: "/contact?program=y-hub", tone: "primary" }],
+    sections: [
+      {
+        title: "What Y HUB Offers",
+        paragraphs: [
+          "At YES-J, young entrepreneurs find a community that sharpens their ideas, expands their creativity, challenges their thinking, and stands behind their vision. Y HUB is the answer to every young mind that dares to ask Why—where Why changes to WOW.",
+        ],
+        bullets: [
+          "Mentorship and guidance from experienced entrepreneurs and industry experts.",
+          "Workspace, resources, and networking opportunities to build and test ideas.",
+          "Pitch events, incubation support, and pathways to funding.",
+        ],
+      },
+      {
+        title: "Who It Is For",
+        bullets: [
+          "Young people aged 18-30 with a business idea or entrepreneurial mindset.",
+          "First-time founders, aspiring innovators, and community problem-solvers.",
+          "Anyone ready to move from Why to WOW.",
+        ],
+      },
+    ],
+    bottomActions: [{ label: "Pitch Your Idea", href: "/contact?program=y-hub&type=pitch", tone: "accent" }],
+  },
 ]
 
 export const programGroups = [

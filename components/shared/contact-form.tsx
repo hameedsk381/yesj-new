@@ -34,6 +34,7 @@ const programLabels: Record<string, string> = {
   ogod: "O GOD",
   magis: "MAGIS / Yuvotsavaalu",
   eott: "Each One Teach Ten",
+  "y-hub": "Y HUB",
 }
 
 function formatQueryValue(value: string) {

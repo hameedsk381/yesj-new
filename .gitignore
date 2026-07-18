@@ -196,3 +196,6 @@ web-design-guidelines.md
 .env
 .env.production
 .env.local
+.agents/
+.claude/
+skills-lock.json

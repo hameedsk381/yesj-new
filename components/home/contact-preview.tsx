@@ -62,7 +62,7 @@ export default function ContactPreview() {
                 <Phone className="h-5 w-5 text-primary mt-1" />
                 <div>
                   <p className="font-light">Phone</p>
-                  <p className="text-sm text-muted-foreground font-extralight">+91-886-672-7202</p>
+                  <p className="text-sm text-muted-foreground font-extralight">+91-868-672-7202</p>
                 </div>
               </motion.div>
               <motion.div

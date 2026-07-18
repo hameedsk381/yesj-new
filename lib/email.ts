@@ -164,7 +164,7 @@ export function getInvoiceEmail(data: {
           
           <div class="footer">
             <p style="margin:0 0 10px; color: white;">Youth Empowering Service - Jesuits (YESJ)</p>
-            <p>Andhra Loyola College Campus, Vijayawada, AP - 520 008</p>
+            <p>Andhra Loyola College Campus, Vijayawada, AP - 522 008</p>
             <p style="margin-top: 20px;">&copy; 2026 YESJ. All rights reserved.</p>
           </div>
         </div>

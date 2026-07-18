@@ -7,6 +7,8 @@ import Image from "next/image"
 import { Eye, Scale, Zap, Target, Shield, Users, Compass, ArrowRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
+import { siteConfig } from "@/lib/config"
 
 export default function MissionPage() {
   const objectives = [
@@ -19,6 +21,10 @@ export default function MissionPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: siteConfig.url },
+        { name: "Mission & Vision", url: `${siteConfig.url}/mission` },
+      ]} />
       <main className="flex-1">
         {/* Page Hero - Responsive and Theme Integrated */}
         <section className="pt-32 py-16 lg:pt-36 lg:py-24 bg-gray-50 overflow-hidden relative border-b border-gray-100">
@@ -67,7 +73,7 @@ export default function MissionPage() {
               </motion.div>
               <div className="w-full lg:w-1/2">
                 <div className="relative aspect-video lg:aspect-[4/3] rounded-md overflow-hidden shadow-2xl group">
-                  <Image src="https://storage.googleapis.com/yesj/website/IMG_6787.JPG" alt="Vision" fill className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
+                  <Image src="https://storage.googleapis.com/yesj/website/IMG_6787.JPG" alt="Vision" fill priority className="object-cover group-hover:scale-110 transition-transform duration-[2s]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
               </div>

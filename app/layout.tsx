@@ -46,7 +46,7 @@ export const metadata = {
     url: siteConfig.url,
     siteName: "YESJ",
     title: "YESJ - Empowering Youth for Radical Transformation",
-    description: "Empowering 55,000+ youth across Andhra and Telangana. Join the YESJ movement through Summer Shapes, SSP, and vocational training.",
+    description: "Empowering 70,000+ youth across Andhra and Telangana. Join the YESJ movement through Summer Shapes, SSP, and vocational training.",
     images: [
       {
         url: `${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`,
@@ -86,8 +86,8 @@ const jsonLd = {
   "@type": "NonProfitOrganization",
   "name": "YESJ - Youth Empowering Service Jesuits",
   "alternateName": "Youth Empowering Service - Jesuits",
-  "url": "https://yesj.in",
-  "logo": "https://yesj.in/YESJ_Logo_Black-eaf43d27.png",
+  "url": siteConfig.url,
+  "logo": `${siteConfig.url}/YESJ_Logo_Black-eaf43d27.png`,
   "description": "YESJ is a ministry of the Andhra Jesuit Province dedicated to empowering young people in Telangana and Andhra Pradesh through education and skill training.",
   "address": {
     "@type": "PostalAddress",
@@ -97,7 +97,7 @@ const jsonLd = {
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+91-886-672-7202",
+    "telephone": "+91-868-672-7202",
     "contactType": "customer service",
     "email": "info@yesj.org"
   },

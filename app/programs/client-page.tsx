@@ -6,15 +6,16 @@ import Link from "next/link"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
-import { programFilters, programsData } from "@/lib/data/programs"
+import { programFilters } from "@/lib/data/programs"
 import { siteConfig } from "@/lib/config"
 import { ProgramIcon } from "@/components/shared/program-icon"
+import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 
 const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp.replace(/\D/g, "")}`
 
 export default function ProgramsClientPage() {
   const [activeFilter, setActiveFilter] = useState<(typeof programFilters)[number]>("All Programs")
-  const [programs, setPrograms] = useState<any[]>(programsData)
+  const [programs, setPrograms] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -43,12 +44,16 @@ export default function ProgramsClientPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: siteConfig.url },
+        { name: "Programs", url: `${siteConfig.url}/programs` },
+      ]} />
       <main className="flex-1">
         <section className="border-b border-border bg-background pt-12 lg:pt-16">
           <div className="container px-6 py-16 text-center lg:px-8 lg:py-20 text-foreground">
             <p className="text-sm font-semibold text-primary uppercase tracking-widest font-sans">Programs Overview</p>
             <h1 className="mt-4 font-sans text-4xl font-extrabold sm:text-5xl tracking-[-0.03em] text-balance">
-              12 Programs. One Mission. <span className="text-primary tracking-[-0.03em]">Infinite Possibilities.</span>
+              {programs.length} Programs. One Mission. <span className="text-primary tracking-[-0.03em]">Infinite Possibilities.</span>
             </h1>
             <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-muted-foreground">
               YES-J reaches young people wherever they are: in classrooms, slums, villages,

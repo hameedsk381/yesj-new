@@ -4,6 +4,7 @@ import {
   Globe2,
   HandHeart,
   Heart,
+  Lightbulb,
   School,
   Sparkles,
   Star,
@@ -25,6 +26,7 @@ export const iconMap = {
   "globe-2": Globe2,
   "hand-heart": HandHeart,
   "heart": Heart,
+  "lightbulb": Lightbulb,
   "star": Star,
   "school": School,
 }

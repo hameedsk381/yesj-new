@@ -9,6 +9,8 @@ import Link from "next/link"
 import { Calendar, User, ArrowRight, BookOpen, Share2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import NewsletterForm from "@/components/shared/newsletter-form"
+import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
+import { siteConfig } from "@/lib/config"
 
 export default function StoriesPage() {
   const [stories, setStories] = useState<any[]>([])
@@ -41,6 +43,10 @@ export default function StoriesPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: siteConfig.url },
+        { name: "Stories", url: `${siteConfig.url}/stories` },
+      ]} />
       <main className="flex-1">
         {/* Magazine Hero */}
         <section className="py-16 lg:py-24 bg-gray-50 overflow-hidden relative">
@@ -84,6 +90,7 @@ export default function StoriesPage() {
                             src={featuredStory.imagePath}
                             alt={featuredStory.title}
                             fill
+                            priority
                             className="object-cover"
                             unoptimized
                          />

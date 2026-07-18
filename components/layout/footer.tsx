@@ -24,9 +24,10 @@ const defaultFooterProgramLinks = [
   { label: "Personality Enhancement (PEP)", href: "/programs/pep" },
   { label: "Multi Skilled (MuST)", href: "/programs/must" },
   { label: "JoY Desk", href: "/programs/joy-desk" },
+  { label: "Y HUB", href: "/programs/y-hub" },
 ]
 
-const quickLinks = [
+const defaultQuickLinks = [
   { label: "Our Story", href: "/about" },
   { label: "Programmes", href: "/programs" },
   { label: "Impact & Data", href: "/impact" },
@@ -38,13 +39,15 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [config, setConfig] = useState<any>(siteConfig)
   const [programLinks, setProgramLinks] = useState<any[]>(defaultFooterProgramLinks)
+  const [quickLinks, setQuickLinks] = useState<any[]>(defaultQuickLinks)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [settingsRes, programsRes] = await Promise.all([
+        const [settingsRes, programsRes, navRes] = await Promise.all([
           fetch('/api/settings'),
-          fetch('/api/programs')
+          fetch('/api/programs'),
+          fetch('/api/nav'),
         ])
         
         if (settingsRes.ok) {
@@ -59,6 +62,14 @@ export default function Footer() {
               label: p.shortTitle || p.title,
               href: `/programs/${p.slug}`
             })))
+          }
+        }
+
+        if (navRes.ok) {
+          const nav = await navRes.json()
+          if (nav) {
+            if (nav.footerProgramLinks?.length) setProgramLinks(nav.footerProgramLinks)
+            if (nav.footerQuickLinks?.length) setQuickLinks(nav.footerQuickLinks)
           }
         }
       } catch (err) {
@@ -173,7 +184,7 @@ export default function Footer() {
                   <br />
                   Andhra Loyola College Campus
                   <br />
-                  Vijayawada, AP - 520 008, India
+                  Vijayawada, AP - 522 008, India
                 </p>
               </div>
               <div className="flex items-center gap-3">

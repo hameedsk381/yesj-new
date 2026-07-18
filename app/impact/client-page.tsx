@@ -9,9 +9,11 @@ import Footer from "@/components/layout/footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
+import { siteConfig } from "@/lib/config"
 
 const stats = [
-  { icon: <Users className="h-5 w-5" aria-hidden="true" />, number: "50K+", label: "Youth impacted", color: "bg-primary" },
+  { icon: <Users className="h-5 w-5" aria-hidden="true" />, number: "70K+", label: "Youth impacted", color: "bg-primary" },
   { icon: <MapPin className="h-5 w-5" aria-hidden="true" />, number: "15+", label: "Districts active", color: "bg-primary/85" },
   { icon: <GraduationCap className="h-5 w-5" aria-hidden="true" />, number: "3K+", label: "Leaders trained", color: "bg-secondary" },
   { icon: <Target className="h-5 w-5" aria-hidden="true" />, number: "85%", label: "Placement rate", color: "bg-secondary/85" },
@@ -65,6 +67,10 @@ export default function ImpactPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Header />
+      <BreadcrumbJsonLd items={[
+        { name: "Home", url: siteConfig.url },
+        { name: "Impact", url: `${siteConfig.url}/impact` },
+      ]} />
       <main className="flex-1">
         <section className="relative overflow-hidden bg-slate-950 text-white pt-32 lg:pt-36">
           <Image

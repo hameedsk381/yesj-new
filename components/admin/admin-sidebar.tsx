@@ -15,13 +15,15 @@ import {
   UserPlus,
   Briefcase,
   Layers,
-  Home
+  Home,
+  Info
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigationItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Homepage", href: "/admin/homepage", icon: Home },
+  { name: "About Page", href: "/admin/about", icon: Info },
   { name: "Programmes", href: "/admin/programs", icon: Briefcase },
   { name: "Registrations", href: "/admin/registrations", icon: Users },
   { name: "Nominations", href: "/admin/nominations", icon: FileText },

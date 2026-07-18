@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button"
 import type { ProgramAction, ProgramData } from "@/lib/data/programs"
 import { ProgramIcon } from "@/components/shared/program-icon"
 import { cn } from "@/lib/utils"
+import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
+import { siteConfig } from "@/lib/config"
 
 interface GalleryItem {
   id: number
@@ -38,6 +40,14 @@ function actionProps(action: ProgramAction) {
   }
 }
 
+const Breadcrumb = ({ program }: { program: ProgramData }) => (
+  <BreadcrumbJsonLd items={[
+    { name: "Home", url: siteConfig.url },
+    { name: "Programs", url: `${siteConfig.url}/programs` },
+    { name: program.title, url: `${siteConfig.url}/programs/${program.slug}` },
+  ]} />
+)
+
 export default function ProgramClientPage({ program }: { program: ProgramData }) {
   const [gallery, setGallery] = useState<GalleryItem[]>([])
 
@@ -61,6 +71,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
+      <Breadcrumb program={program} />
       <main className="flex-1" id="main-content" role="main">
         <section className="border-b border-border bg-background pt-12 lg:pt-32">
           <div className="container px-6 py-12 lg:px-8 lg:py-16">
@@ -81,6 +92,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                         src={program.logo}
                         alt=""
                         fill
+                        priority
                         className="object-contain"
                       />
                     </div>
@@ -111,7 +123,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
               <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
                 <div className={`h-1.5 w-full ${program.cardBarClassName}`} />
                 <div className="relative aspect-[16/11]">
-                  <Image src={program.image} alt={program.title} fill className="object-cover" />
+                  <Image src={program.image} alt={program.title} fill priority className="object-cover" />
                 </div>
               </div>
             </div>

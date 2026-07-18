@@ -18,7 +18,7 @@ type DropdownItem = {
   label: string
 }
 
-const aboutLinks: DropdownItem[] = [
+const defaultAboutLinks: DropdownItem[] = [
   { href: "/about#story", label: "Our Story" },
   { href: "/about#philosophy", label: "Our Philosophy" },
   { href: "/about/team", label: "Leadership & Team" },
@@ -26,7 +26,7 @@ const aboutLinks: DropdownItem[] = [
   { href: "/impact#annual-reports", label: "Annual Reports" },
 ]
 
-const getInvolvedLinks: DropdownItem[] = [
+const defaultGetInvolvedLinks: DropdownItem[] = [
   { href: "/volunteer", label: "Volunteer with Us" },
   { href: "/donate", label: "Donate / Support" },
   { href: "/contact", label: "Partner with YES-J" },
@@ -46,6 +46,7 @@ const defaultProgramLinks: DropdownItem[] = [
   { href: "/programs/ogod", label: "O GOD" },
   { href: "/programs/magis", label: "MAGIS / Yuvotsavaalu" },
   { href: "/programs/eott", label: "Each One Teach Ten" },
+  { href: "/programs/y-hub", label: "Y HUB" },
 ]
 
 
@@ -106,6 +107,8 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<"about" | "programs" | "get-involved" | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [aboutLinks, setAboutLinks] = useState<DropdownItem[]>(defaultAboutLinks)
+  const [getInvolvedLinks, setGetInvolvedLinks] = useState<DropdownItem[]>(defaultGetInvolvedLinks)
   const [programLinks, setProgramLinks] = useState<DropdownItem[]>(defaultProgramLinks)
   const [config, setConfig] = useState<any>(null)
 
@@ -123,9 +126,10 @@ export default function Header() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [settingsRes, programsRes] = await Promise.all([
+        const [settingsRes, programsRes, navRes] = await Promise.all([
           fetch('/api/settings'),
-          fetch('/api/programs')
+          fetch('/api/programs'),
+          fetch('/api/nav'),
         ])
         
         if (settingsRes.ok) {
@@ -140,6 +144,15 @@ export default function Header() {
               href: `/programs/${p.slug}`,
               label: p.shortTitle || p.title
             })))
+          }
+        }
+
+        if (navRes.ok) {
+          const nav = await navRes.json()
+          if (nav) {
+            if (nav.headerAboutLinks?.length) setAboutLinks(nav.headerAboutLinks)
+            if (nav.headerGetInvolvedLinks?.length) setGetInvolvedLinks(nav.headerGetInvolvedLinks)
+            if (nav.headerProgramLinks?.length) setProgramLinks(nav.headerProgramLinks)
           }
         }
       } catch (err) {

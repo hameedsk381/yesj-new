@@ -11,7 +11,7 @@ export default function ContactPage() {
   const contactInfo = [
     {
       title: "Main Office",
-      address: "YES-J Centre for Excellence, Andhra Loyola College Campus, Vijayawada, Andhra Pradesh - 520 008, India",
+      address: "YES-J Centre for Excellence, Andhra Loyola College Campus, Vijayawada, Andhra Pradesh - 522 008, India",
       icon: <MapPin className="w-6 h-6 text-primary" />,
       delay: 0.1
     },
@@ -32,6 +32,7 @@ export default function ContactPage() {
   ]
 
   const channels = [
+    { title: "Founder Director", email: "directoryesj@gmail.com", icon: <Heart className="w-4 h-4" /> },
     { title: "Programs", email: "programs@yesj.org", icon: <Globe className="w-4 h-4" /> },
     { title: "Volunteering", email: "volunteer@yesj.org", icon: <Users className="w-4 h-4" /> },
     { title: "Donations", email: "donate@yesj.org", icon: <Heart className="w-4 h-4" /> }

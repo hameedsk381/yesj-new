@@ -39,9 +39,9 @@ export const homepageData = {
   impactTitle: "The scale of the work is measurable. The dignity behind it matters more.",
   impactSubtitle: "YESJ works across education, employability, youth formation, and direct community response. These numbers offer a grounded view of that reach.",
   impactCounters: [
-    { label: "Lives Touched", value: 50000, suffix: "+", description: "Through direct accompaniment, training, and community programmes across decades of service." },
+    { label: "Lives Touched", value: 70000, suffix: "+", description: "Through direct accompaniment, training, and community programmes across decades of service." },
     { label: "Events Conducted", value: 243, suffix: "+", description: "Workshops, camps, festivals, and youth formation spaces." },
-    { label: "Active Programs", value: 12, description: "Education, employability, and spiritual formation." },
+    { label: "Active Programs", value: 13, description: "Education, employability, and spiritual formation." },
     { label: "Years of Service", value: 10, suffix: "+", description: "A decade of work with marginalized youth." },
   ],
   philosophyBadge: "Our core conviction",

@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME || "YESJ - Youth Empowering Service Jesuits",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://yesj.in",
-  description: "Empowering 50,000+ youth across Telugu states to break barriers and build futures. Join YESJ to make a difference in your community.",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://yesj.org",
+  description: "Empowering 70,000+ youth across Telugu states to break barriers and build futures. Join YESJ to make a difference in your community.",
 
   social: {
     instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM || "https://instagram.com/yesj.official",
@@ -13,8 +13,9 @@ export const siteConfig = {
 
   contact: {
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@yesj.org",
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+91-886-672-7202",
-    whatsapp: process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || "+91-886-672-7202",
+    directorEmail: "directoryesj@gmail.com",
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+91-868-672-7202",
+    whatsapp: process.env.NEXT_PUBLIC_CONTACT_WHATSAPP || "+91-868-672-7202",
   },
 
   analytics: {
