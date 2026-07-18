@@ -16,7 +16,9 @@ import {
   Briefcase,
   Layers,
   Home,
-  Info
+  Info,
+  GraduationCap,
+  Shield
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -33,6 +35,8 @@ const navigationItems = [
   { name: "Stories", href: "/admin/stories", icon: FileText },
   { name: "Events", href: "/admin/events", icon: Calendar },
   { name: "Gallery", href: "/admin/gallery", icon: Image },
+  { name: "Courses", href: "/admin/courses", icon: GraduationCap },
+  { name: "Users", href: "/admin/users", icon: Shield },
   { name: "Team", href: "/admin/team", icon: UserPlus },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]

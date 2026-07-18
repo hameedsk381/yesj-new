@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin } from "lucide-react"
+import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin, Edit2, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -14,90 +14,102 @@ interface Event {
     date: string
     location: string
     type: string
+    fee: string
+    deadline: string
     imagePath: string
 }
 
 export default function EventsPage() {
     const [events, setEvents] = useState<Event[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [showAddForm, setShowAddForm] = useState(false)
+    const [showForm, setShowForm] = useState(false)
+    const [editingId, setEditingId] = useState<number | null>(null)
 
-    // Form State
     const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        date: "",
-        location: "",
-        type: "cultural",
-        fee: "",
-        deadline: ""
+        title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: ""
     })
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-    useEffect(() => {
-        fetchEvents()
-    }, [])
+    useEffect(() => { fetchEvents() }, [])
 
     const fetchEvents = async () => {
         try {
             const response = await fetch("/api/events")
             const result = await response.json()
-            if (response.ok) {
-                setEvents(Array.isArray(result) ? result : (result.data || []))
-            }
+            if (response.ok) setEvents(Array.isArray(result) ? result : (result.data || []))
         } catch (error) {
             console.error("Failed to fetch events", error)
-        } finally {
-            setIsLoading(false)
-        }
+        } finally { setIsLoading(false) }
+    }
+
+    const openAddForm = () => {
+        setEditingId(null)
+        setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "" })
+        setImageFile(null)
+        setShowForm(true)
+    }
+
+    const openEditForm = (event: Event) => {
+        setEditingId(event.id)
+        setFormData({
+            title: event.title,
+            description: event.description,
+            date: event.date ? event.date.slice(0, 16) : "",
+            location: event.location,
+            type: event.type || "cultural",
+            fee: event.fee || "",
+            deadline: event.deadline ? event.deadline.slice(0, 16) : "",
+        })
+        setImageFile(null)
+        setShowForm(true)
     }
 
     const handleDelete = async (id: number) => {
         if (!confirm("Delete this event?")) return
         try {
             const res = await fetch(`/api/admin/events/${id}`, { method: "DELETE" })
-            if (res.ok) {
-                fetchEvents()
-            } else {
-                alert("Failed to delete")
-            }
-        } catch (error) {
-            console.error("Delete failed", error)
-        }
+            if (res.ok) fetchEvents()
+            else alert("Failed to delete")
+        } catch (error) { console.error("Delete failed", error) }
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!imageFile) {
-            alert("Please select an image")
-            return
-        }
         setIsSubmitting(true)
-
         try {
-            const data = new FormData()
-            Object.entries(formData).forEach(([key, value]) => {
-                data.append(key, value)
-            })
-            data.append("image", imageFile)
+            const payload: any = { ...formData }
+            let res
+            if (editingId) {
+                if (imageFile) {
+                    const fd = new FormData()
+                    fd.append("file", imageFile)
+                    const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: fd })
+                    const uploadData = await uploadRes.json()
+                    if (uploadRes.ok) payload.imagePath = uploadData.url
+                }
+                res = await fetch(`/api/admin/events/${editingId}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                })
+            } else {
+                if (!imageFile) { alert("Please select an image"); setIsSubmitting(false); return }
+                const data = new FormData()
+                Object.entries(formData).forEach(([key, value]) => data.append(key, value))
+                data.append("image", imageFile)
+                res = await fetch("/api/admin/events", { method: "POST", body: data })
+            }
 
-            const res = await fetch("/api/admin/events", {
-                method: "POST",
-                body: data
-            })
-
-            if (!res.ok) throw new Error("Failed to create event")
-
-            setShowAddForm(false)
+            if (!res.ok) throw new Error("Failed to save")
+            setShowForm(false)
+            setEditingId(null)
             setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "" })
             setImageFile(null)
             fetchEvents()
         } catch (error) {
-            alert("Failed to create event")
-        } finally {
-            setIsSubmitting(false)
-        }
+            alert("Failed to save event")
+        } finally { setIsSubmitting(false) }
     }
 
     return (
@@ -105,21 +117,20 @@ export default function EventsPage() {
             <header className="bg-white border-b sticky top-0 z-10">
                 <div className="container flex items-center justify-between h-16 px-4 md:px-6">
                     <div className="flex items-center gap-4">
-                        <Link href="/admin/dashboard">
-                            <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
-                        </Link>
+                        <Link href="/admin/dashboard"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
                         <h1 className="text-xl font-light text-primary">Events</h1>
                     </div>
-                    <Button onClick={() => setShowAddForm(!showAddForm)} className="bg-primary text-white">
-                        {showAddForm ? "Cancel" : <><Plus className="mr-2 h-4 w-4" /> Add Event</>}
+                    <Button onClick={showForm ? () => setShowForm(false) : openAddForm} className="bg-primary text-white">
+                        {showForm ? <X className="mr-2 h-4 w-4" /> : <Plus className="mr-2 h-4 w-4" />}
+                        {showForm ? "Cancel" : "Add Event"}
                     </Button>
                 </div>
             </header>
 
             <main className="container px-4 md:px-6 py-8">
-                {showAddForm && (
+                {showForm && (
                     <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
-                        <h2 className="text-lg font-bold mb-4">Add New Event</h2>
+                        <h2 className="text-lg font-bold mb-4">{editingId ? "Edit Event" : "Add New Event"}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <input className="border p-2 rounded" placeholder="Title" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
@@ -140,7 +151,7 @@ export default function EventsPage() {
                                 <input type="datetime-local" className="border p-2 rounded" placeholder="Deadline" value={formData.deadline} onChange={e => setFormData({ ...formData, deadline: e.target.value })} />
                             </div>
                             <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
-                            <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : "Create Event"}</Button>
+                            <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : editingId ? "Update Event" : "Create Event"}</Button>
                         </form>
                     </div>
                 )}
@@ -153,19 +164,16 @@ export default function EventsPage() {
                             <div key={event.id} className="bg-white border rounded-md overflow-hidden shadow-sm">
                                 <div className="relative h-48 bg-gray-100">
                                     {event.imagePath && (
-                                        <Image 
-                                            src={event.imagePath} 
-                                            alt={event.title} 
-                                            fill 
-                                            className="object-cover"
-                                            unoptimized // Since it's from GCS and might not have width/height known easily if we don't want to define all
-                                        />
+                                        <Image src={event.imagePath} alt={event.title} fill className="object-cover" unoptimized />
                                     )}
+                                    <div className="absolute top-2 right-2 flex gap-2">
+                                        <button onClick={() => openEditForm(event)} className="bg-white/90 hover:bg-white p-1.5 rounded shadow"><Edit2 className="h-4 w-4 text-gray-700" /></button>
+                                        <button onClick={() => handleDelete(event.id)} className="bg-white/90 hover:bg-red-500 p-1.5 rounded shadow"><Trash2 className="h-4 w-4 text-red-500 hover:text-white" /></button>
+                                    </div>
                                 </div>
                                 <div className="p-4">
                                     <div className="flex justify-between items-start mb-2">
                                         <span className="text-xs font-bold uppercase text-primary tracking-wider">{event.type}</span>
-                                        <button onClick={() => handleDelete(event.id)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="h-4 w-4" /></button>
                                     </div>
                                     <h3 className="font-bold text-lg mb-1">{event.title}</h3>
                                     <p className="text-sm text-gray-500 line-clamp-2 mb-4">{event.description}</p>

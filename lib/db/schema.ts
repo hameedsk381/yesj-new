@@ -150,6 +150,40 @@ export const programs = mysqlTable("programs", {
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
 });
 
+export const courses = mysqlTable("courses", {
+  id: serial("id").primaryKey(),
+  slug: varchar("slug", { length: 100 }).unique().notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  shortDescription: varchar("short_description", { length: 500 }),
+  imagePath: varchar("image_path", { length: 512 }),
+  price: int("price"),
+  startDate: timestamp("start_date"),
+  endDate: timestamp("end_date"),
+  maxStudents: int("max_students"),
+  isActive: boolean("is_active").default(true),
+  registrationOpen: boolean("registration_open").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+});
+
+export const courseRegistrations = mysqlTable("course_registrations", {
+  id: serial("id").primaryKey(),
+  courseId: int("course_id").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }).notNull(),
+  fields: json("fields"),
+  paymentMode: varchar("payment_mode", { length: 20 }),
+  amount: int("amount"),
+  razorpayOrderId: varchar("razorpay_order_id", { length: 255 }).unique(),
+  razorpayPaymentId: varchar("razorpay_payment_id", { length: 255 }),
+  paymentStatus: varchar("payment_status", { length: 50 }).default("pending"),
+  status: varchar("status", { length: 50 }).default("confirmed"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
+});
+
 export const summerCourseRegistrations = mysqlTable("summer_course_registrations", {
   id: serial("id").primaryKey(),
   studentName: varchar("student_name", { length: 255 }).notNull(),
