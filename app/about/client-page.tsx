@@ -267,6 +267,9 @@ export default function AboutPage() {
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <p className="text-sm font-medium text-primary uppercase tracking-widest mb-4">Our Partner</p>
+                <div className="relative h-16 w-56 mx-auto mb-4">
+                  <Image src="/images/tcu-logo.png" alt="Talitha Cumi Unnati" fill className="object-contain" />
+                </div>
                 <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">Talitha Cumi Unnati</h2>
               </div>
               <div className="bg-card border border-border rounded-lg p-8 md:p-12 shadow-sm">
@@ -280,6 +283,23 @@ export default function AboutPage() {
                   <p>
                     Together, YESJ and TCU accompany academically outstanding students from poor backgrounds through college and university — pairing fee support with mentoring, follow-up, and a community that believes in their potential.
                   </p>
+                </div>
+                <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                    <Image src="/talitacumi-1.webp" alt="" fill className="object-cover" />
+                  </div>
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                    <Image src="/talitacumi-2.webp" alt="" fill className="object-cover" />
+                  </div>
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                    <Image src="/talitacumi-3.webp" alt="" fill className="object-cover" />
+                  </div>
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                    <Image src="/talitacumi-4.webp" alt="" fill className="object-cover" />
+                  </div>
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                    <Image src="/talitacumi-5.webp" alt="" fill className="object-cover" />
+                  </div>
                 </div>
                 <div className="mt-8 text-center">
                   <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">

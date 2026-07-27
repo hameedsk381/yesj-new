@@ -136,6 +136,11 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
               {program.sections.map((section) => (
                 <article key={section.title} className="rounded-xl border border-border bg-card p-8 shadow-sm">
                   <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">{section.title}</h2>
+                  {section.image ? (
+                    <div className="mt-6 relative h-16 w-48">
+                      <Image src={section.image} alt="" fill className="object-contain object-left" />
+                    </div>
+                  ) : null}
                   {section.paragraphs?.map((paragraph) => (
                     <p key={paragraph} className="mt-4 text-base leading-8 text-muted-foreground">
                       {paragraph}
@@ -172,6 +177,16 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                             {action.label}
                           </a>
                         </Button>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {section.gallery?.length ? (
+                    <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                      {section.gallery.map((img, i) => (
+                        <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
+                          <Image src={img} alt="" fill className="object-cover" />
+                        </div>
                       ))}
                     </div>
                   ) : null}

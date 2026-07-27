@@ -13,6 +13,8 @@ export type ProgramSection = {
   paragraphs?: string[]
   bullets?: string[]
   cards?: Array<{ title: string; description: string }>
+  image?: string
+  gallery?: string[]
 }
 
 export type ProgramData = {
@@ -256,10 +258,12 @@ export const programsData: ProgramData[] = [
       },
       {
         title: "Our Partner",
+        image: "/images/tcu-logo.png",
         paragraphs: [
           "The Scholar Support Programme is run in active partnership with Talitha Cumi Unnati (TCU), an organisation based in Andhra Pradesh committed to empowering young people — especially girl children — through tertiary education. Through education, mentorship, and family engagement, TCU creates safe spaces where marginalised girls can grow and thrive, working closely with parents and caregivers so that each girl has the guidance, encouragement, and resources she needs to pursue her dreams.",
           "Together, we accompany academically outstanding students from poor backgrounds through college and university — pairing fee support with mentoring, follow-up, and a community that believes in their potential.",
         ],
+        gallery: ["/talitacumi-1.webp", "/talitacumi-2.webp", "/talitacumi-3.webp", "/talitacumi-4.webp", "/talitacumi-5.webp"],
         actions: [{ label: "Visit Talitha Cumi Unnati →", href: "https://www.tcuindia.org/", external: true }],
       },
     ],
