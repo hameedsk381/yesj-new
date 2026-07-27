@@ -254,6 +254,14 @@ export const programsData: ProgramData[] = [
           "Motivation, commitment, and openness to guidance.",
         ],
       },
+      {
+        title: "Our Partner",
+        paragraphs: [
+          "The Scholar Support Programme is run in active partnership with Talitha Cumi Unnati (TCU), an organisation based in Andhra Pradesh committed to empowering young people — especially girl children — through tertiary education. Through education, mentorship, and family engagement, TCU creates safe spaces where marginalised girls can grow and thrive, working closely with parents and caregivers so that each girl has the guidance, encouragement, and resources she needs to pursue her dreams.",
+          "Together, we accompany academically outstanding students from poor backgrounds through college and university — pairing fee support with mentoring, follow-up, and a community that believes in their potential.",
+        ],
+        actions: [{ label: "Visit Talitha Cumi Unnati →", href: "https://www.tcuindia.org/", external: true }],
+      },
     ],
     bottomActions: [{ label: "Support an SSP Scholar", href: "/donate?cause=ssp", tone: "accent" }],
   },

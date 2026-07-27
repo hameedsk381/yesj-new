@@ -261,6 +261,38 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Our Partner */}
+        <section className="py-14 sm:py-24 bg-background border-t border-border">
+          <div className="container px-5 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <p className="text-sm font-medium text-primary uppercase tracking-widest mb-4">Our Partner</p>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-foreground tracking-tight">Talitha Cumi Unnati</h2>
+              </div>
+              <div className="bg-card border border-border rounded-lg p-8 md:p-12 shadow-sm">
+                <div className="prose max-w-none text-muted-foreground space-y-4">
+                  <p>
+                    The Scholar Support Programme (SSP) is run in active partnership with <strong>Talitha Cumi Unnati (TCU)</strong>, an organisation based in Andhra Pradesh committed to empowering young people — especially girl children — through tertiary education.
+                  </p>
+                  <p>
+                    Through education, mentorship, and family engagement, TCU creates safe spaces where marginalised girls can grow and thrive, working closely with parents and caregivers so that each girl has the guidance, encouragement, and resources she needs to pursue her dreams.
+                  </p>
+                  <p>
+                    Together, YESJ and TCU accompany academically outstanding students from poor backgrounds through college and university — pairing fee support with mentoring, follow-up, and a community that believes in their potential.
+                  </p>
+                </div>
+                <div className="mt-8 text-center">
+                  <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
+                    <Link href="https://www.tcuindia.org/" target="_blank" rel="noopener noreferrer">
+                      Visit Talitha Cumi Unnati <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Bottom CTA */}
         <section className="py-14 sm:py-20 bg-primary text-white">
           <div className="container px-5 text-center">

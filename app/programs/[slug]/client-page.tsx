@@ -163,6 +163,18 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                       ))}
                     </div>
                   ) : null}
+
+                  {section.actions?.length ? (
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      {section.actions.map((action) => (
+                        <Button key={action.label} asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
+                          <a href={action.href} target={action.external ? "_blank" : undefined} rel={action.external ? "noopener noreferrer" : undefined}>
+                            {action.label}
+                          </a>
+                        </Button>
+                      ))}
+                    </div>
+                  ) : null}
                 </article>
               ))}
             </div>
