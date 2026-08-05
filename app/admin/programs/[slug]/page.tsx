@@ -33,6 +33,7 @@ export default function EditProgram() {
   const params = useParams()
   const router = useRouter()
   const slug = params.slug as string
+  const isNew = slug === "new"
 
   const [program, setProgram] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -45,6 +46,28 @@ export default function EditProgram() {
   }, [slug])
 
   const fetchProgram = async () => {
+    if (isNew) {
+      setProgram({
+        title: "",
+        shortTitle: "",
+        badge: "",
+        tagline: "",
+        subheading: "",
+        icon: "",
+        imagePath: "",
+        logoPath: "",
+        overviewDescription: "",
+        megaMenuDescription: "",
+        megaMenuGroup: "skill-education",
+        categories: [],
+        heroActions: [],
+        sections: [],
+        bottomActions: [],
+      })
+      setIsLoading(false)
+      return
+    }
+
     try {
       const [dbRes, settingsRes] = await Promise.all([
         fetch(`/api/admin/programs/${slug}`),
@@ -89,13 +112,67 @@ export default function EditProgram() {
     setIsSaving(true)
     setMessage(null)
     try {
-      const { id, createdAt, updatedAt, isActive, order, imagePath, logoPath, slug: _s, ...content } = program
+      const dbFields: any = {
+        title: program.title,
+        shortTitle: program.shortTitle,
+        badge: program.badge,
+        tagline: program.tagline,
+        icon: program.icon,
+        imagePath: program.imagePath || program.image || null,
+        logoPath: program.logoPath || program.logo || null,
+        overviewDescription: program.overviewDescription,
+      }
+
+      let finalSlug = slug
+
+      if (isNew) {
+        if (!program.title) {
+          throw new Error("Title is required")
+        }
+        finalSlug = program.slug ||
+          program.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") ||
+          `program-${Date.now()}`
+        const createRes = await fetch("/api/admin/programs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...dbFields, slug: finalSlug, isActive: true }),
+        })
+        if (!createRes.ok) {
+          const err = await createRes.json().catch(() => null)
+          throw new Error(err?.error || "Failed to create program")
+        }
+      } else {
+        const dbRes = await fetch(`/api/admin/programs/${slug}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dbFields),
+        })
+        if (!dbRes.ok) {
+          throw new Error("Failed to save program details")
+        }
+      }
+
+      const content = {
+        title: program.title,
+        shortTitle: program.shortTitle,
+        badge: program.badge,
+        tagline: program.tagline,
+        subheading: program.subheading,
+        icon: program.icon,
+        overviewDescription: program.overviewDescription,
+        megaMenuDescription: program.megaMenuDescription,
+        megaMenuGroup: program.megaMenuGroup,
+        categories: program.categories,
+        heroActions: program.heroActions,
+        sections: program.sections,
+        bottomActions: program.bottomActions,
+      }
 
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          key: `program_content:${slug}`,
+          key: `program_content:${finalSlug}`,
           value: JSON.stringify(content),
         }),
       })
@@ -103,11 +180,14 @@ export default function EditProgram() {
       if (res.ok) {
         setMessage({ type: "success", text: "Program updated successfully" })
         window.scrollTo({ top: 0, behavior: "smooth" })
+        if (isNew) {
+          router.push(`/admin/programs/${finalSlug}`)
+        }
       } else {
         throw new Error("Failed to save")
       }
-    } catch (error) {
-      setMessage({ type: "error", text: "Failed to save program" })
+    } catch (error: any) {
+      setMessage({ type: "error", text: error?.message || "Failed to save program" })
     } finally {
       setIsSaving(false)
     }
@@ -198,7 +278,7 @@ export default function EditProgram() {
             <Link href="/admin/programs">
               <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
             </Link>
-            <h1 className="text-xl font-light text-primary">Edit: {program?.title || slug}</h1>
+            <h1 className="text-xl font-light text-primary">{isNew ? "New Programme" : `Edit: ${program?.title || slug}`}</h1>
           </div>
           <Button onClick={handleSave} disabled={isSaving} className="bg-primary text-white">
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
@@ -221,7 +301,11 @@ export default function EditProgram() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-gray-500 uppercase">Slug</label>
-                <input className="w-full border rounded p-2 bg-gray-50 text-gray-400" value={slug} readOnly />
+                <input
+                  className="w-full border rounded p-2 bg-gray-50 text-gray-400"
+                  value={program.slug || (isNew ? "auto-generated from title" : slug)}
+                  readOnly
+                />
               </div>
               <div className="space-y-1">
                 <label className="text-xs font-bold text-gray-500 uppercase">Icon (Lucide name)</label>

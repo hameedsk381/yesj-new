@@ -83,7 +83,7 @@ export default function SettingsPage() {
       if (res.ok) {
         const data = await res.json()
         setSettings({
-          siteName: data.name || "",
+          siteName: data.name || data.siteName || "",
           title: data.title || "",
           description: data.description || "",
           email: data.contact?.email || "",
@@ -93,6 +93,9 @@ export default function SettingsPage() {
           instagram: data.social?.instagram || "",
           linkedin: data.social?.linkedin || "",
           youtube: data.social?.youtube || "",
+          aboutHeroImage: data.aboutHeroImage || "",
+          aboutMissionImage: data.aboutMissionImage || "",
+          contactHeroImage: data.contactHeroImage || "",
         })
       }
     } catch (error) { console.error(error) }
@@ -108,14 +111,42 @@ export default function SettingsPage() {
     } catch (error) { console.error(error) }
   }
 
+  const contactFields = ["email", "phone", "whatsapp"]
+  const socialFields = ["facebook", "instagram", "linkedin", "youtube"]
+
+  // Map UI field -> site_settings storage key. Contact/social/site name are
+  // stored as structured blobs so they override config.contact / config.social / config.name.
+  const buildStorage = async (key: string, value: string): Promise<{ key: string; value: string }> => {
+    if (key === "siteName") {
+      return { key: "name", value }
+    }
+
+    if (contactFields.includes(key)) {
+      const res = await fetch("/api/settings")
+      const data = res.ok ? await res.json() : {}
+      const contact = { ...(data.contact || {}), [key]: value }
+      return { key: "contact", value: JSON.stringify(contact) }
+    }
+
+    if (socialFields.includes(key)) {
+      const res = await fetch("/api/settings")
+      const data = res.ok ? await res.json() : {}
+      const social = { ...(data.social || {}), [key]: value }
+      return { key: "social", value: JSON.stringify(social) }
+    }
+
+    return { key, value }
+  }
+
   const handleSave = async (key: string, value: string) => {
     setIsSaving(true)
     setMessage(null)
     try {
+      const { key: storageKey, value: storageValue } = await buildStorage(key, value)
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, value })
+        body: JSON.stringify({ key: storageKey, value: storageValue })
       })
       if (res.ok) {
         setMessage({ type: 'success', text: "Saved successfully" })

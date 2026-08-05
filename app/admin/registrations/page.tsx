@@ -60,8 +60,7 @@ export default function RegistrationsPage() {
         registrationNo: item.registration_no || item.registrationNo,
         religion: item.religion,
         address: item.address,
-        unitName: item.unit_name,
-        registrationId: item.id.toString(), // Approximating registrationId if not in backend yet
+        registrationId: item.registrationId || item.registration_id || `REG-${item.id}`,
         createdAt: new Date(item.created_at || item.createdAt)
       }))
 

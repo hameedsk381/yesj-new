@@ -34,10 +34,19 @@ export default function EditStoryPage() {
 
     const fetchStory = async () => {
         try {
-            const res = await fetch(`/api/stories?id=${id}`)
+            const res = await fetch(`/api/admin/stories/${id}`)
             if (res.ok) {
                 const data = await res.json()
-                setFormData(data)
+                setFormData({
+                    title: data.title || "",
+                    slug: data.slug || "",
+                    excerpt: data.excerpt || "",
+                    content: data.content || "",
+                    author: data.author || "",
+                    category: data.category || "General",
+                    imagePath: data.imagePath || "",
+                    featured: !!data.featured,
+                })
             }
         } catch (error) {
             console.error(error)
@@ -70,7 +79,7 @@ export default function EditStoryPage() {
         formData.append("file", file)
 
         try {
-            const res = await fetch("/api/admin/gallery", { // Reuse gallery upload
+            const res = await fetch("/api/admin/upload", {
                 method: "POST",
                 body: formData
             })

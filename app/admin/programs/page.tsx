@@ -64,9 +64,11 @@ export default function ProgramsAdmin() {
                         </Link>
                         <h1 className="text-xl font-light text-primary">Manage Programmes</h1>
                     </div>
-                    <Button onClick={() => {/* could link to a create page */}} className="bg-primary text-white">
-                        <Plus className="mr-2 h-4 w-4" /> New Programme
-                    </Button>
+                    <Link href="/admin/programs/new">
+                        <Button className="bg-primary text-white">
+                            <Plus className="mr-2 h-4 w-4" /> New Programme
+                        </Button>
+                    </Link>
                 </div>
             </header>
 

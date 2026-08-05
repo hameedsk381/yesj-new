@@ -17,6 +17,7 @@ interface Event {
     fee: string
     deadline: string
     imagePath: string
+    isActive: boolean
 }
 
 export default function EventsPage() {
@@ -35,7 +36,7 @@ export default function EventsPage() {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch("/api/events")
+            const response = await fetch("/api/admin/events")
             const result = await response.json()
             if (response.ok) setEvents(Array.isArray(result) ? result : (result.data || []))
         } catch (error) {
@@ -72,6 +73,18 @@ export default function EventsPage() {
             if (res.ok) fetchEvents()
             else alert("Failed to delete")
         } catch (error) { console.error("Delete failed", error) }
+    }
+
+    const toggleActive = async (event: Event) => {
+        try {
+            const res = await fetch(`/api/admin/events/${event.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ isActive: !event.isActive }),
+            })
+            if (res.ok) fetchEvents()
+            else alert("Failed to update status")
+        } catch (error) { console.error("Toggle failed", error) }
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -167,6 +180,14 @@ export default function EventsPage() {
                                         <Image src={event.imagePath} alt={event.title} fill className="object-cover" unoptimized />
                                     )}
                                     <div className="absolute top-2 right-2 flex gap-2">
+                                        <button onClick={() => toggleActive(event)}
+                                            className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                                                event.isActive !== false ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'
+                                            }`}
+                                            title={event.isActive !== false ? "Active - click to hide" : "Inactive - click to show"}
+                                        >
+                                            {event.isActive !== false ? 'Active' : 'Inactive'}
+                                        </button>
                                         <button onClick={() => openEditForm(event)} className="bg-white/90 hover:bg-white p-1.5 rounded shadow"><Edit2 className="h-4 w-4 text-gray-700" /></button>
                                         <button onClick={() => handleDelete(event.id)} className="bg-white/90 hover:bg-red-500 p-1.5 rounded shadow"><Trash2 className="h-4 w-4 text-red-500 hover:text-white" /></button>
                                     </div>

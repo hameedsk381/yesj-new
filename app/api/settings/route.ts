@@ -16,10 +16,22 @@ export async function GET() {
     }, {} as Record<string, string>);
 
     // Merge with siteConfig fallback
-    const config = {
+    const config: any = {
       ...siteConfig,
       ...settingsMap
     };
+
+    // Nested settings (contact/social) are stored as JSON blobs; parse them back
+    // and merge over the defaults so `config.contact.email` etc. resolve correctly.
+    for (const section of ["contact", "social"] as const) {
+      if (typeof config[section] === "string") {
+        try {
+          config[section] = { ...(siteConfig as any)[section], ...JSON.parse(config[section]) };
+        } catch {
+          delete config[section];
+        }
+      }
+    }
 
     return NextResponse.json(config);
   } catch (error) {

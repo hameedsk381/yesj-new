@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     const location = formData.get("location") as string;
     const fee = formData.get("fee") as string;
     const type = formData.get("type") as string;
+    const deadline = formData.get("deadline") as string;
     const image = formData.get("image") as File | null;
 
     let imagePath = null;
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
       location,
       fee,
       type,
+      deadline: deadline ? new Date(deadline) : null,
       imagePath,
       isActive: true,
     });

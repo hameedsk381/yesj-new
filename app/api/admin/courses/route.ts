@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "A course with this slug already exists" }, { status: 409 })
     }
 
-    const [course] = await db.insert(courses).values({
+    const [inserted] = await db.insert(courses).values({
       slug,
       title,
       description: description || null,
@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
       registrationOpen: registrationOpen !== false,
     })
 
+    const [course] = await db.select().from(courses).where(eq(courses.id, inserted.insertId)).limit(1)
     return NextResponse.json(course, { status: 201 })
   } catch (error) {
     console.error("Courses POST error:", error)
