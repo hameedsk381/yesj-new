@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
     const releaseDate = formData.get("releaseDate") as string;
     const file = formData.get("file") as File;
     const thumbnail = formData.get("thumbnail") as File;
+    const thumbnailPathInput = formData.get("thumbnailPath") as string;
 
     if (!file || file.size === 0) {
       return NextResponse.json({ error: "PDF file is required" }, { status: 400 });
@@ -46,11 +47,13 @@ export async function POST(req: NextRequest) {
     const pdfName = `echoes/${crypto.randomUUID()}-${file.name}`;
     const filePath = await uploadFile(file, pdfName);
 
-    // Upload Thumbnail if exists
+    // Upload Thumbnail if a new file was provided, else reuse a supplied URL/string.
     let thumbnailPath = null;
     if (thumbnail && thumbnail.size > 0) {
       const thumbName = `echoes/thumbs/${crypto.randomUUID()}-${thumbnail.name}`;
       thumbnailPath = await uploadFile(thumbnail, thumbName);
+    } else if (thumbnailPathInput) {
+      thumbnailPath = thumbnailPathInput;
     }
 
     const result = await db.insert(echoes).values({

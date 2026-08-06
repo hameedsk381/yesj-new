@@ -30,18 +30,32 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const formData = await req.formData();
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const category = formData.get("category") as string;
-    const image = formData.get("image") as File;
+    const contentType = req.headers.get("content-type") || "";
+    let title: string, description: string, category: string, imagePath: string;
 
-    if (!image || image.size === 0) {
-      return NextResponse.json({ error: "Image is required" }, { status: 400 });
+    if (contentType.includes("application/json")) {
+      const body = await req.json();
+      title = body.title;
+      description = body.description;
+      category = body.category;
+      imagePath = body.imagePath;
+      if (!imagePath) {
+        return NextResponse.json({ error: "Image is required" }, { status: 400 });
+      }
+    } else {
+      const formData = await req.formData();
+      title = formData.get("title") as string;
+      description = formData.get("description") as string;
+      category = formData.get("category") as string;
+      const image = formData.get("image") as File;
+
+      if (!image || image.size === 0) {
+        return NextResponse.json({ error: "Image is required" }, { status: 400 });
+      }
+
+      const fileName = `gallery/${crypto.randomUUID()}-${image.name}`;
+      imagePath = await uploadFile(image, fileName);
     }
-
-    const fileName = `gallery/${crypto.randomUUID()}-${image.name}`;
-    const imagePath = await uploadFile(image, fileName);
 
     const result = await db.insert(galleries).values({
       title,

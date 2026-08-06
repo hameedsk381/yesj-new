@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Upload, Plus, Trash2 } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Plus, Trash2 } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 type FactRow = { label: string; value: string }
 type Pillar = { title: string; description: string }
@@ -116,19 +116,6 @@ export default function AboutAdmin() {
     } finally { setIsSaving(false) }
   }
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const formData = new FormData()
-    formData.append("file", file)
-    formData.append("folder", "about")
-    try {
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
-      const result = await res.json()
-      if (res.ok && result.url) setData({ ...data, [field]: result.url })
-    } catch { alert("Upload failed") }
-  }
-
   const addItem = (field: "philosophyStatements" | "pillars" | "facts", template: any) =>
     setData({ ...data, [field]: [...data[field], template] })
   const removeItem = (field: "philosophyStatements" | "pillars" | "facts", i: number) => {
@@ -166,14 +153,7 @@ export default function AboutAdmin() {
         <section className="bg-white border rounded-lg p-6 space-y-4 shadow-sm">
           <h2 className="text-sm font-bold uppercase text-gray-400 border-b pb-2">Hero Section</h2>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">Hero Image</label>
-            <div className="aspect-video relative bg-muted rounded overflow-hidden border max-w-md">
-              {data.heroImage ? <Image src={data.heroImage} alt="" fill className="object-cover" /> : <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">No image</div>}
-            </div>
-            <input type="file" id="hero-img" className="hidden" accept="image/*" onChange={e => handleImageUpload(e, "heroImage")} />
-            <label htmlFor="hero-img" className="inline-flex items-center gap-2 px-4 py-2 border border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer">
-              <Upload className="h-3 w-3" /> Upload
-            </label>
+            <ImageField label="Hero Image" value={data.heroImage} prefix="about" onChange={(url) => setData({...data, heroImage: url})} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
@@ -221,14 +201,7 @@ export default function AboutAdmin() {
             <textarea className="w-full border rounded p-2 h-20" value={data.storyQuote} onChange={e => setData({...data, storyQuote: e.target.value})} />
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-gray-500 uppercase">Story Image</label>
-            <div className="aspect-video relative bg-muted rounded overflow-hidden border max-w-sm">
-              {data.storyImage ? <Image src={data.storyImage} alt="" fill className="object-cover" /> : <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">No image</div>}
-            </div>
-            <input type="file" id="story-img" className="hidden" accept="image/*" onChange={e => handleImageUpload(e, "storyImage")} />
-            <label htmlFor="story-img" className="inline-flex items-center gap-2 px-4 py-2 border border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer">
-              <Upload className="h-3 w-3" /> Upload
-            </label>
+            <ImageField label="Story Image" value={data.storyImage} prefix="about" onChange={(url) => setData({...data, storyImage: url})} />
           </div>
         </section>
 

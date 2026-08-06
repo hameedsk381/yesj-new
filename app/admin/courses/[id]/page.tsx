@@ -6,6 +6,7 @@ import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Save } from "lucide-react"
 import Link from "next/link"
+import { ImageField } from "@/components/admin/image-field"
 
 interface CourseForm {
   slug: string
@@ -140,11 +141,16 @@ export default function EditCoursePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Image URL</label>
-            <input className="w-full border p-2 rounded" value={form.imagePath} onChange={e => setForm({...form, imagePath: e.target.value})} placeholder="/images/course.jpg or https://..." />
+            <ImageField
+              label="Course Image"
+              value={form.imagePath}
+              prefix="courses"
+              onChange={(url) => setForm({...form, imagePath: url})}
+              hint="Choose an existing image or upload a new one"
+            />
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Price (₹)</label>
               <input type="number" className="w-full border p-2 rounded" value={form.price} onChange={e => setForm({...form, price: e.target.value})} placeholder="Free if empty" />
@@ -152,10 +158,6 @@ export default function EditCoursePage() {
             <div>
               <label className="block text-sm font-medium mb-1">Max Students</label>
               <input type="number" className="w-full border p-2 rounded" value={form.maxStudents} onChange={e => setForm({...form, maxStudents: e.target.value})} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Image Path</label>
-              <input className="w-full border p-2 rounded" value={form.imagePath} onChange={e => setForm({...form, imagePath: e.target.value})} />
             </div>
           </div>
 

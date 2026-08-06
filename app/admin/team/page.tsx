@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Trash2, Plus, Edit2, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 interface TeamMember {
     id: number
@@ -22,8 +23,7 @@ export default function TeamPage() {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState<number | null>(null)
 
-    const [formData, setFormData] = useState({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "" })
-    const [imageFile, setImageFile] = useState<File | null>(null)
+    const [formData, setFormData] = useState({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "", imagePath: "" })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => { fetchTeam() }, [])
@@ -38,8 +38,7 @@ export default function TeamPage() {
 
     const openAddForm = () => {
         setEditingId(null)
-        setFormData({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "" })
-        setImageFile(null)
+        setFormData({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "", imagePath: "" })
         setShowForm(true)
     }
 
@@ -51,8 +50,8 @@ export default function TeamPage() {
             bio: member.bio || "",
             twitterUrl: member.twitterUrl || "",
             linkedinUrl: member.linkedinUrl || "",
+            imagePath: member.imagePath || "",
         })
-        setImageFile(null)
         setShowForm(true)
     }
 
@@ -67,34 +66,19 @@ export default function TeamPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!editingId && !imageFile) { alert("Please select an image"); return }
+        if (!editingId && !formData.imagePath) { alert("Please select or upload an image"); return }
         setIsSubmitting(true)
         try {
-            if (editingId) {
-                const payload: any = { ...formData }
-                if (imageFile) {
-                    const fd = new FormData()
-                    fd.append("file", imageFile)
-                    const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: fd })
-                    if (uploadRes.ok) { const u = await uploadRes.json(); payload.imagePath = u.url }
-                }
-                const res = await fetch(`/api/admin/team/${editingId}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                })
-                if (!res.ok) throw new Error("Failed to update")
-            } else {
-                const data = new FormData()
-                Object.entries(formData).forEach(([key, value]) => data.append(key, value))
-                data.append("image", imageFile!)
-                const res = await fetch("/api/admin/team", { method: "POST", body: data })
-                if (!res.ok) throw new Error("Failed to add")
-            }
+            const payload: any = { ...formData }
+            const res = await fetch(editingId ? `/api/admin/team/${editingId}` : "/api/admin/team", {
+                method: editingId ? "PATCH" : "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
+            if (!res.ok) throw new Error("Failed to save")
             setShowForm(false)
             setEditingId(null)
-            setFormData({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "" })
-            setImageFile(null)
+            setFormData({ name: "", role: "", bio: "", twitterUrl: "", linkedinUrl: "", imagePath: "" })
             fetchTeam()
         } catch (error) { alert("Failed to save") }
         finally { setIsSubmitting(false) }
@@ -129,7 +113,12 @@ export default function TeamPage() {
                                 <input className="border p-2 rounded" placeholder="Twitter URL" value={formData.twitterUrl} onChange={e => setFormData({ ...formData, twitterUrl: e.target.value })} />
                                 <input className="border p-2 rounded" placeholder="LinkedIn URL" value={formData.linkedinUrl} onChange={e => setFormData({ ...formData, linkedinUrl: e.target.value })} />
                             </div>
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                            <ImageField
+                                label={editingId ? "Photo (leave empty to keep current)" : "Photo"}
+                                value={formData.imagePath}
+                                onChange={(url) => setFormData({ ...formData, imagePath: url })}
+                                prefix="team"
+                            />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : editingId ? "Update Member" : "Add Member"}</Button>
                         </form>
                     </div>

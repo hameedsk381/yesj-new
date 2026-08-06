@@ -78,4 +78,43 @@ export async function getFile(path: string): Promise<{ buffer: Buffer; metadata:
   return { buffer, metadata }
 }
 
+/**
+ * Lists image files in a GCS folder (prefix) with pagination.
+ * Returns public URLs plus name so the admin UI can offer "existing images".
+ */
+export async function listFiles(opts: {
+  prefix?: string
+  pageSize?: number
+  pageToken?: string
+  kind?: "images" | "all"
+}): Promise<{ files: { name: string; url: string }[]; nextPageToken: string | null }> {
+  const storage = getGCSClient()
+  if (!storage) throw new Error("GCS storage client not initialized")
+
+  const bucketName = getBucketName()
+  const bucket = storage.bucket(bucketName)
+  const pageSize = opts.pageSize || 100
+
+  const query: any = {
+    prefix: opts.prefix || "",
+    maxResults: pageSize,
+    autoPaginate: false,
+  }
+  if (opts.pageToken) query.pageToken = opts.pageToken
+
+  const [files, nextQuery] = await bucket.getFiles(query)
+
+  const page = files.filter((f) => {
+    if (opts.kind === "images") {
+      return /\.(jpe?g|png|gif|webp|svg|avif)$/i.test(f.name)
+    }
+    return true
+  })
+
+  return {
+    files: page.map((f) => ({ name: f.name, url: `https://storage.googleapis.com/${bucketName}/${f.name}` })),
+    nextPageToken: nextQuery?.pageToken || null,
+  }
+}
+
 export { getBucketName }

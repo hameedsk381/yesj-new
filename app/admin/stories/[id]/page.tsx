@@ -4,9 +4,9 @@ import { useEffect, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Upload, Image as ImageIcon } from "lucide-react"
+import { ArrowLeft, Save, Loader2 } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 export default function EditStoryPage() {
     const router = useRouter()
@@ -68,27 +68,6 @@ export default function EditStoryPage() {
                 ...prev,
                 slug: value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
             }))
-        }
-    }
-
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (!file) return
-
-        const formData = new FormData()
-        formData.append("file", file)
-
-        try {
-            const res = await fetch("/api/admin/upload", {
-                method: "POST",
-                body: formData
-            })
-            if (res.ok) {
-                const data = await res.json()
-                setFormData(prev => ({ ...prev, imagePath: data.url }))
-            }
-        } catch (error) {
-            console.error("Upload failed", error)
         }
     }
 
@@ -158,20 +137,12 @@ export default function EditStoryPage() {
                         <div className="space-y-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium">Cover Image</label>
-                                <div className="relative aspect-video rounded-md border bg-gray-50 overflow-hidden group">
-                                    {formData.imagePath ? (
-                                        <Image src={formData.imagePath} alt="Preview" fill className="object-cover" unoptimized />
-                                    ) : (
-                                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 gap-2">
-                                            <ImageIcon className="h-8 w-8" />
-                                            <span className="text-xs">No image selected</span>
-                                        </div>
-                                    )}
-                                    <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
-                                        <Upload className="text-white h-6 w-6" />
-                                        <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
-                                    </label>
-                                </div>
+                                <ImageField
+                                    label="Cover Image"
+                                    value={formData.imagePath}
+                                    prefix="stories"
+                                    onChange={(url) => setFormData(prev => ({ ...prev, imagePath: url }))}
+                                />
                                 <input name="imagePath" value={formData.imagePath} onChange={handleChange} className="w-full h-8 px-2 text-xs rounded border bg-gray-50" placeholder="Or paste URL" />
                             </div>
 

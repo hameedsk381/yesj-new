@@ -30,18 +30,31 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const formData = await req.formData();
-    const name = formData.get("name") as string;
-    const role = formData.get("role") as string;
-    const bio = formData.get("bio") as string;
-    const twitterUrl = formData.get("twitterUrl") as string;
-    const linkedinUrl = formData.get("linkedinUrl") as string;
-    const image = formData.get("image") as File;
+    const contentType = req.headers.get("content-type") || "";
+    let name, role, bio, twitterUrl, linkedinUrl;
+    let imagePath: string | null = null;
 
-    let imagePath = null;
-    if (image && image.size > 0) {
-      const fileName = `team/${crypto.randomUUID()}-${image.name}`;
-      imagePath = await uploadFile(image, fileName);
+    if (contentType.includes("application/json")) {
+      const body = await req.json();
+      name = body.name;
+      role = body.role;
+      bio = body.bio || "";
+      twitterUrl = body.twitterUrl || "";
+      linkedinUrl = body.linkedinUrl || "";
+      imagePath = body.imagePath || null;
+    } else {
+      const formData = await req.formData();
+      name = formData.get("name") as string;
+      role = formData.get("role") as string;
+      bio = formData.get("bio") as string;
+      twitterUrl = formData.get("twitterUrl") as string;
+      linkedinUrl = formData.get("linkedinUrl") as string;
+      const image = formData.get("image") as File;
+
+      if (image && image.size > 0) {
+        const fileName = `team/${crypto.randomUUID()}-${image.name}`;
+        imagePath = await uploadFile(image, fileName);
+      }
     }
 
     const result = await db.insert(teamMembers).values({

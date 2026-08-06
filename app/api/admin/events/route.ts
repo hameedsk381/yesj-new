@@ -31,23 +31,39 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const formData = await req.formData();
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const date = formData.get("date") as string;
-    const location = formData.get("location") as string;
-    const fee = formData.get("fee") as string;
-    const type = formData.get("type") as string;
-    const deadline = formData.get("deadline") as string;
-    const image = formData.get("image") as File | null;
+    const contentType = req.headers.get("content-type") || "";
+    let title, description, location, fee, type, deadline;
+    let date: string | null = null;
+    let imagePath: string | null = null;
 
-    let imagePath = null;
-    if (image && image.size > 0) {
-      const validated = validateAndBuildKey(image, "events", "image");
-      if (!validated.ok) {
-        return NextResponse.json({ error: validated.error }, { status: 400 });
+    if (contentType.includes("application/json")) {
+      const body = await req.json();
+      title = body.title;
+      description = body.description;
+      date = body.date || null;
+      location = body.location;
+      fee = body.fee || "";
+      type = body.type;
+      deadline = body.deadline || null;
+      imagePath = body.imagePath || null;
+    } else {
+      const formData = await req.formData();
+      title = formData.get("title") as string;
+      description = formData.get("description") as string;
+      date = formData.get("date") as string;
+      location = formData.get("location") as string;
+      fee = formData.get("fee") as string;
+      type = formData.get("type") as string;
+      deadline = formData.get("deadline") as string;
+      const image = formData.get("image") as File | null;
+
+      if (image && image.size > 0) {
+        const validated = validateAndBuildKey(image, "events", "image");
+        if (!validated.ok) {
+          return NextResponse.json({ error: validated.error }, { status: 400 });
+        }
+        imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
       }
-      imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
     }
 
     const result = await db.insert(events).values({

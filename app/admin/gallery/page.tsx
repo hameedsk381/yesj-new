@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Trash2, Plus, LayoutGrid, Tag, Edit2 } from "lucide-react"
+import { ImageField } from "@/components/admin/image-field"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -29,8 +30,7 @@ export default function GalleryPage() {
     const [editingId, setEditingId] = useState<number | null>(null)
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
 
-    const [formData, setFormData] = useState({ title: "", description: "", category: "general" })
-    const [imageFile, setImageFile] = useState<File | null>(null)
+    const [formData, setFormData] = useState({ title: "", description: "", category: "general", imagePath: "" })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => { fetchGallery(); fetchPrograms() }, [])
@@ -52,15 +52,13 @@ export default function GalleryPage() {
 
     const openAddForm = () => {
         setEditingId(null)
-        setFormData({ title: "", description: "", category: "general" })
-        setImageFile(null)
+        setFormData({ title: "", description: "", category: "general", imagePath: "" })
         setShowForm(true)
     }
 
     const openEditForm = (item: GalleryItem) => {
         setEditingId(item.id)
-        setFormData({ title: item.title, description: item.description || "", category: item.category })
-        setImageFile(null)
+        setFormData({ title: item.title, description: item.description || "", category: item.category, imagePath: item.imagePath || "" })
         setShowForm(true)
     }
 
@@ -75,34 +73,18 @@ export default function GalleryPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!editingId && !imageFile) { alert("Please select an image"); return }
+        if (!editingId && !formData.imagePath) { alert("Please select or upload an image"); return }
         setIsSubmitting(true)
         try {
-            if (editingId) {
-                const payload: any = { ...formData }
-                if (imageFile) {
-                    const fd = new FormData()
-                    fd.append("file", imageFile)
-                    const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: fd })
-                    if (uploadRes.ok) { const u = await uploadRes.json(); payload.imagePath = u.url }
-                }
-                const res = await fetch(`/api/admin/gallery/${editingId}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                })
-                if (!res.ok) throw new Error("Failed to update")
-            } else {
-                const data = new FormData()
-                Object.entries(formData).forEach(([key, value]) => data.append(key, value))
-                data.append("image", imageFile!)
-                const res = await fetch("/api/admin/gallery", { method: "POST", body: data })
-                if (!res.ok) throw new Error("Failed to add")
-            }
+            const res = await fetch(editingId ? `/api/admin/gallery/${editingId}` : "/api/admin/gallery", {
+                method: editingId ? "PATCH" : "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
+            if (!res.ok) throw new Error("Failed to save")
             setShowForm(false)
             setEditingId(null)
-            setFormData({ title: "", description: "", category: "general" })
-            setImageFile(null)
+            setFormData({ title: "", description: "", category: "general", imagePath: "" })
             fetchGallery()
         } catch (error) { alert("Failed to save") }
         finally { setIsSubmitting(false) }
@@ -156,10 +138,12 @@ export default function GalleryPage() {
                                 <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Caption / Description</label>
                                 <textarea className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Brief description of the image content..." rows={2} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} />
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Image {editingId ? "(leave empty to keep current)" : ""}</label>
-                                <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-black file:bg-primary file:text-white hover:file:bg-primary/90" />
-                            </div>
+                            <ImageField
+                                label={editingId ? "Image (leave empty to keep current)" : "Image"}
+                                value={formData.imagePath}
+                                onChange={(url) => setFormData({ ...formData, imagePath: url })}
+                                prefix="gallery"
+                            />
                             <Button type="submit" disabled={isSubmitting} className="w-full h-12 bg-primary text-white text-md font-bold shadow-xl active:scale-[0.98] transition-all">
                                 {isSubmitting ? "Saving..." : editingId ? "UPDATE ASSET" : "DEPLOY TO GALLERY"}
                             </Button>

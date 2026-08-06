@@ -3,15 +3,14 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Plus, Trash2, Image as ImageIcon, Upload } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Plus, Trash2 } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 export default function HomepageManager() {
     const [data, setData] = useState<any>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isSaving, setIsSaving] = useState(false)
-    const [isUploading, setIsUploading] = useState<string | null>(null) // index or field
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
     useEffect(() => {
@@ -59,44 +58,6 @@ export default function HomepageManager() {
         } finally {
             setIsSaving(false)
         }
-    }
-
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, path: string) => {
-        const file = e.target.files?.[0]
-        if (!file) return
-
-        setIsUploading(path)
-        const formData = new FormData()
-        formData.append("file", file)
-        formData.append("folder", "homepage")
-
-        try {
-            const res = await fetch("/api/admin/upload", {
-                method: "POST",
-                body: formData
-            })
-            const result = await res.json()
-            if (res.ok && result.url) {
-                // Update specific path in data object
-                updateDataByPath(path, result.url)
-            }
-        } catch (error) {
-            console.error(error)
-            alert("Upload failed")
-        } finally {
-            setIsUploading(null)
-        }
-    }
-
-    const updateDataByPath = (path: string, value: any) => {
-        const newData = { ...data }
-        const parts = path.split('.')
-        let current = newData
-        for (let i = 0; i < parts.length - 1; i++) {
-            current = current[parts[i]]
-        }
-        current[parts[parts.length - 1]] = value
-        setData(newData)
     }
 
     const addHeroSlide = () => {
@@ -177,37 +138,16 @@ export default function HomepageManager() {
                                 </button>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6">
-                                    <div className="space-y-3">
-                                        <div className="aspect-video relative bg-muted rounded overflow-hidden border">
-                                            {slide.image ? (
-                                                <Image src={slide.image} alt="Hero image" fill className="object-cover" />
-                                            ) : (
-                                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                                                    <ImageIcon className="h-10 w-10 opacity-20" />
-                                                </div>
-                                            )}
-                                            {isUploading === `hero.${index}.image` && (
-                                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                                    <Loader2 className="h-6 w-6 animate-spin text-white" />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="relative">
-                                            <input 
-                                                type="file" 
-                                                id={`hero-upload-${index}`}
-                                                className="hidden" 
-                                                accept="image/*"
-                                                onChange={(e) => handleFileUpload(e, `hero.${index}.image`)}
-                                            />
-                                            <label 
-                                                htmlFor={`hero-upload-${index}`}
-                                                className="flex items-center justify-center gap-2 w-full p-2 border-2 border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer"
-                                            >
-                                                <Upload className="h-3 w-3" /> {slide.image ? "Change Image" : "Upload Image"}
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <ImageField
+                                        label="Slide Image"
+                                        value={slide.image}
+                                        prefix="homepage"
+                                        onChange={(url) => {
+                                            const newHero = [...data.hero]
+                                            newHero[index].image = url
+                                            setData({ ...data, hero: newHero })
+                                        }}
+                                    />
 
                                     <div className="space-y-4">
                                         <div className="space-y-1">

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Plus, Trash2, FileText, Loader2, ArrowLeft, ExternalLink, Edit2 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 export default function EchoesManager() {
     const [echoesList, setEchoesList] = useState<any[]>([])
@@ -14,6 +15,7 @@ export default function EchoesManager() {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState<number | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [thumbnailPath, setThumbnailPath] = useState("")
 
     useEffect(() => { fetchEchoes() }, [])
 
@@ -27,11 +29,13 @@ export default function EchoesManager() {
 
     const openAddForm = () => {
         setEditingId(null)
+        setThumbnailPath("")
         setShowForm(true)
     }
 
     const openEditForm = (echo: any) => {
         setEditingId(echo.id)
+        setThumbnailPath(echo.thumbnailPath || "")
         setShowForm(true)
         setTimeout(() => {
             const form = document.getElementById("echoes-form") as HTMLFormElement
@@ -80,6 +84,8 @@ export default function EchoesManager() {
                     const fd = new FormData(); fd.append("file", thumbnail)
                     const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: fd })
                     if (uploadRes.ok) { const u = await uploadRes.json(); payload.thumbnailPath = u.url }
+                } else if (thumbnailPath) {
+                    payload.thumbnailPath = thumbnailPath
                 }
 
                 const res = await fetch(`/api/admin/echoes/${editingId}`, {
@@ -89,6 +95,7 @@ export default function EchoesManager() {
                 })
                 if (!res.ok) throw new Error("Failed to update")
             } else {
+                if (thumbnailPath) formData.append("thumbnailPath", thumbnailPath)
                 const res = await fetch("/api/admin/echoes", { method: "POST", body: formData })
                 if (!res.ok) { const err = await res.json(); alert(err.error || "Failed to add issue"); setIsSubmitting(false); return }
             }
@@ -195,8 +202,12 @@ export default function EchoesManager() {
                                     <input name="file" type="file" accept="application/pdf" className="w-full text-xs" />
                                 </div>
                                 <div className="space-y-1">
-                                    <label className="text-xs font-bold uppercase text-gray-500">Thumbnail {editingId ? "(leave empty to keep)" : ""}</label>
-                                    <input name="thumbnail" type="file" accept="image/*" className="w-full text-xs" />
+                                    <ImageField
+                                        label={`Thumbnail ${editingId ? "(optional)" : ""}`}
+                                        value={thumbnailPath}
+                                        prefix="echoes"
+                                        onChange={setThumbnailPath}
+                                    />
                                 </div>
                             </div>
                             <div className="pt-4 flex gap-3">

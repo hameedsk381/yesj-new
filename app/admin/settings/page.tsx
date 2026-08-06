@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Upload, Plus, Trash2 } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Plus, Trash2 } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 type NavItem = { label: string; href: string }
 type NavData = {
@@ -181,21 +181,6 @@ export default function SettingsPage() {
     }
   }
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, key: string, folder: string) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setIsSaving(true)
-    const formData = new FormData()
-    formData.append("file", file)
-    formData.append("folder", folder)
-    try {
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
-      const result = await res.json()
-      if (res.ok && result.url) await handleSave(key, result.url)
-    } catch (error) { console.error(error); alert("Upload failed")
-    } finally { setIsSaving(false) }
-  }
-
   const addNavItem = (field: keyof NavData) => setNav({ ...nav, [field]: [...nav[field], { label: "", href: "" }] })
   const removeNavItem = (field: keyof NavData, i: number) => {
     const items = [...nav[field]]; items.splice(i, 1); setNav({ ...nav, [field]: items })
@@ -279,22 +264,15 @@ export default function SettingsPage() {
                         <textarea className="w-full border rounded p-2 min-h-[100px]" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />
                       ) : field.type === "image" ? (
                         <div className="space-y-3">
-                          <div className="aspect-video relative bg-muted rounded overflow-hidden border">
-                            {settings[field.key] ? (
-                              <Image src={settings[field.key]} alt="Preview" fill className="object-cover" />
-                            ) : (
-                              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground italic text-xs">No image set</div>
-                            )}
-                          </div>
-                          <div className="flex gap-2">
-                            <input type="file" id={`upload-${field.key}`} className="hidden" accept="image/*" onChange={(e) => handleImageUpload(e, field.key, field.folder || "website")} />
-                            <label htmlFor={`upload-${field.key}`} className="flex items-center justify-center gap-2 p-2 px-4 border border-primary/20 rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer flex-1">
-                              <Upload className="h-3 w-3" /> {settings[field.key] ? "Replace Image" : "Upload Image"}
-                            </label>
-                            {settings[field.key] && (
-                              <Button variant="outline" size="sm" onClick={() => handleSave(field.key, "")} className="text-red-500 border-red-100 hover:bg-red-50">Remove</Button>
-                            )}
-                          </div>
+                          <ImageField
+                            label={field.label}
+                            value={settings[field.key] || ""}
+                            prefix={field.folder || "website"}
+                            onChange={(url) => {
+                              setSettings({ ...settings, [field.key]: url })
+                              handleSave(field.key, url)
+                            }}
+                          />
                         </div>
                       ) : (
                         <input type={field.type} className="w-full border rounded p-2" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />

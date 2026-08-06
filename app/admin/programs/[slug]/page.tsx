@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Upload, Image as ImageIcon, Plus, Trash2, GripVertical } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Plus, Trash2, GripVertical } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 import { useParams, useRouter } from "next/navigation"
 import { programFilters } from "@/lib/data/programs"
 
@@ -38,7 +38,6 @@ export default function EditProgram() {
   const [program, setProgram] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
-  const [isUploading, setIsUploading] = useState<string | null>(null)
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null)
 
   useEffect(() => {
@@ -193,29 +192,6 @@ export default function EditProgram() {
     }
   }
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    setIsUploading(field)
-    const formData = new FormData()
-    formData.append("file", file)
-    formData.append("folder", "programs")
-
-    try {
-      const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
-      const result = await res.json()
-      if (res.ok && result.url) {
-        setProgram({ ...program, [field]: result.url })
-      }
-    } catch (error) {
-      console.error(error)
-      alert("Upload failed")
-    } finally {
-      setIsUploading(null)
-    }
-  }
-
   const update = (field: string, value: any) => setProgram({ ...program, [field]: value })
 
   const addSection = () => update("sections", [...(program.sections || []), emptySection()])
@@ -347,44 +323,18 @@ export default function EditProgram() {
           <section className="bg-white border rounded-lg p-6 space-y-5 shadow-sm">
             <h2 className="text-sm font-bold uppercase text-gray-400 border-b pb-2">Media</h2>
             <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">Hero Image</label>
-                <div className="aspect-video relative bg-muted rounded overflow-hidden border">
-                  {program.imagePath ? (
-                    <Image src={program.imagePath} alt="" fill className="object-cover" />
-                  ) : program.image ? (
-                    <Image src={program.image} alt="" fill className="object-cover" />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-muted-foreground"><ImageIcon className="h-8 w-8 opacity-20" /></div>
-                  )}
-                  {isUploading === "imagePath" && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-white" /></div>
-                  )}
-                </div>
-                <input type="file" id="hero-up" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, "imagePath")} />
-                <label htmlFor="hero-up" className="flex items-center justify-center gap-2 w-full p-2 border-2 border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer">
-                  <Upload className="h-3 w-3" /> Upload Hero Image
-                </label>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-500 uppercase">Logo</label>
-                <div className="h-20 relative bg-muted rounded overflow-hidden border p-4 flex items-center justify-center">
-                  {program.logoPath ? (
-                    <Image src={program.logoPath} alt="" width={60} height={60} className="object-contain" />
-                  ) : program.logo ? (
-                    <Image src={program.logo} alt="" width={60} height={60} className="object-contain" />
-                  ) : (
-                    <span className="text-xs text-gray-400">No logo</span>
-                  )}
-                  {isUploading === "logoPath" && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin text-white" /></div>
-                  )}
-                </div>
-                <input type="file" id="logo-up" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, "logoPath")} />
-                <label htmlFor="logo-up" className="flex items-center justify-center gap-2 w-full p-2 border-2 border-dashed rounded text-xs font-bold text-primary hover:bg-primary/5 cursor-pointer">
-                  <Upload className="h-3 w-3" /> Upload Logo
-                </label>
-              </div>
+              <ImageField
+                label="Hero Image"
+                value={program.imagePath || program.image || ""}
+                prefix="programs"
+                onChange={(url) => update("imagePath", url)}
+              />
+              <ImageField
+                label="Logo"
+                value={program.logoPath || program.logo || ""}
+                prefix="programs"
+                onChange={(url) => update("logoPath", url)}
+              />
             </div>
           </section>
         </div>

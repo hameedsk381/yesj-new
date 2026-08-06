@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin, Edit2, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { ImageField } from "@/components/admin/image-field"
 
 interface Event {
     id: number
@@ -27,9 +28,8 @@ export default function EventsPage() {
     const [editingId, setEditingId] = useState<number | null>(null)
 
     const [formData, setFormData] = useState({
-        title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: ""
+        title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "", imagePath: ""
     })
-    const [imageFile, setImageFile] = useState<File | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     useEffect(() => { fetchEvents() }, [])
@@ -46,8 +46,7 @@ export default function EventsPage() {
 
     const openAddForm = () => {
         setEditingId(null)
-        setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "" })
-        setImageFile(null)
+        setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "", imagePath: "" })
         setShowForm(true)
     }
 
@@ -61,8 +60,8 @@ export default function EventsPage() {
             type: event.type || "cultural",
             fee: event.fee || "",
             deadline: event.deadline ? event.deadline.slice(0, 16) : "",
+            imagePath: event.imagePath || "",
         })
-        setImageFile(null)
         setShowForm(true)
     }
 
@@ -89,36 +88,20 @@ export default function EventsPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (!editingId && !formData.imagePath) { alert("Please select or upload an image"); setIsSubmitting(false); return }
         setIsSubmitting(true)
         try {
             const payload: any = { ...formData }
-            let res
-            if (editingId) {
-                if (imageFile) {
-                    const fd = new FormData()
-                    fd.append("file", imageFile)
-                    const uploadRes = await fetch("/api/admin/upload", { method: "POST", body: fd })
-                    const uploadData = await uploadRes.json()
-                    if (uploadRes.ok) payload.imagePath = uploadData.url
-                }
-                res = await fetch(`/api/admin/events/${editingId}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload),
-                })
-            } else {
-                if (!imageFile) { alert("Please select an image"); setIsSubmitting(false); return }
-                const data = new FormData()
-                Object.entries(formData).forEach(([key, value]) => data.append(key, value))
-                data.append("image", imageFile)
-                res = await fetch("/api/admin/events", { method: "POST", body: data })
-            }
+            const res = await fetch(editingId ? `/api/admin/events/${editingId}` : "/api/admin/events", {
+                method: editingId ? "PATCH" : "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
 
             if (!res.ok) throw new Error("Failed to save")
             setShowForm(false)
             setEditingId(null)
-            setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "" })
-            setImageFile(null)
+            setFormData({ title: "", description: "", date: "", location: "", type: "cultural", fee: "", deadline: "", imagePath: "" })
             fetchEvents()
         } catch (error) {
             alert("Failed to save event")
@@ -163,7 +146,12 @@ export default function EventsPage() {
                                 <input className="border p-2 rounded" placeholder="Fee (Optional)" value={formData.fee} onChange={e => setFormData({ ...formData, fee: e.target.value })} />
                                 <input type="datetime-local" className="border p-2 rounded" placeholder="Deadline" value={formData.deadline} onChange={e => setFormData({ ...formData, deadline: e.target.value })} />
                             </div>
-                            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                            <ImageField
+                                label={editingId ? "Image (leave empty to keep current)" : "Image"}
+                                value={formData.imagePath}
+                                onChange={(url) => setFormData({ ...formData, imagePath: url })}
+                                prefix="events"
+                            />
                             <Button type="submit" disabled={isSubmitting} className="w-full bg-primary text-white">{isSubmitting ? "Saving..." : editingId ? "Update Event" : "Create Event"}</Button>
                         </form>
                     </div>
