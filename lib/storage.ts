@@ -1,16 +1,19 @@
 import { Storage } from "@google-cloud/storage"
 
 function getBucketName() {
-  return process.env.GCS_BUCKET_NAME || "yesj-uploads"
+  return process.env.GCS_BUCKET_NAME || "yesj"
 }
 
 // Singleton pattern for GCS client
 let gcsInstance: Storage | null = null
 
 function getGCSClient() {
-  if (!process.env.GCS_PROJECT_ID) {
+  if (!process.env.GCS_PROJECT_ID || !process.env.GCS_CLIENT_EMAIL || !process.env.GCS_PRIVATE_KEY) {
     // Only warn during build, don't crash
-    console.warn("GCS_PROJECT_ID is missing. Storage functionality will be disabled.")
+    console.warn(
+      "GCS_PROJECT_ID / GCS_CLIENT_EMAIL / GCS_PRIVATE_KEY are not fully configured. " +
+      "Storage functionality will be disabled."
+    )
     return null
   }
 
@@ -19,7 +22,7 @@ function getGCSClient() {
       projectId: process.env.GCS_PROJECT_ID,
       credentials: {
         client_email: process.env.GCS_CLIENT_EMAIL,
-        private_key: process.env.GCS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, "\n"),
       },
     })
   }
@@ -76,6 +79,46 @@ export async function getFile(path: string): Promise<{ buffer: Buffer; metadata:
   const [metadata] = await file.getMetadata()
 
   return { buffer, metadata }
+}
+
+/**
+ * Extracts the object key from a public URL like
+ * `https://storage.googleapis.com/yesj/website/foo.jpg` -> `website/foo.jpg`.
+ * Returns the input unchanged when it is already a bare key (no host), and
+ * returns null for URLs that point to a different bucket/host so callers can
+ * safely skip deletion of external files.
+ */
+export function fileKeyFromUrl(value: string | null | undefined): string | null {
+  if (!value) return null
+
+  // Bare object key (already stripped).
+  if (!/^https?:\/\//i.test(value)) return value
+
+  try {
+    const url = new URL(value)
+    if (url.host !== "storage.googleapis.com") return null
+
+    // Path is /<bucket>/<key...>
+    const segments = url.pathname.split("/").filter(Boolean)
+    if (segments.length < 2 || segments[0] !== getBucketName()) return null
+    return segments.slice(1).join("/")
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Deletes an object from GCS. Accepts either a full public URL or a bare key.
+ * No-ops when GCS isn't configured or the URL doesn't point at our bucket.
+ */
+export async function deleteFile(value: string | null | undefined): Promise<void> {
+  const key = fileKeyFromUrl(value)
+  if (!key) return
+
+  const storage = getGCSClient()
+  if (!storage) return
+
+  await storage.bucket(getBucketName()).file(key).delete()
 }
 
 /**

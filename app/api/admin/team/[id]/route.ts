@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { teamMembers } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
+import { deleteFile } from "@/lib/storage";
 
 export async function PATCH(
   req: NextRequest,
@@ -40,7 +41,18 @@ export async function DELETE(
 
   try {
     const id = parseInt(params.id);
+
+    const [existing] = await db.select().from(teamMembers).where(eq(teamMembers.id, id)).limit(1);
     await db.delete(teamMembers).where(eq(teamMembers.id, id));
+
+    if (existing?.imagePath) {
+      try {
+        await deleteFile(existing.imagePath);
+      } catch (fileErr) {
+        console.error("Team image delete error:", fileErr);
+      }
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Team member DELETE error:", error);

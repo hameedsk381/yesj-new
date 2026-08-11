@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { stories } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
+import { deleteFile } from "@/lib/storage";
 
 export async function GET(
   req: NextRequest,
@@ -66,7 +67,18 @@ export async function DELETE(
 
   try {
     const id = parseInt(params.id);
+
+    const [existing] = await db.select().from(stories).where(eq(stories.id, id)).limit(1);
     await db.delete(stories).where(eq(stories.id, id));
+
+    if (existing?.imagePath) {
+      try {
+        await deleteFile(existing.imagePath);
+      } catch (fileErr) {
+        console.error("Story image delete error:", fileErr);
+      }
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Story DELETE error:", error);

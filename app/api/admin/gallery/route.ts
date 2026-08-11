@@ -5,6 +5,7 @@ import { galleries } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
@@ -53,8 +54,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Image is required" }, { status: 400 });
       }
 
-      const fileName = `gallery/${crypto.randomUUID()}-${image.name}`;
-      imagePath = await uploadFile(image, fileName);
+      const validated = validateAndBuildKey(image, "gallery", "image");
+      if (!validated.ok) {
+        return NextResponse.json({ error: validated.error }, { status: 400 });
+      }
+      imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
     }
 
     const result = await db.insert(galleries).values({

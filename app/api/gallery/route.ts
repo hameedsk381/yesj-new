@@ -5,6 +5,7 @@ import { galleries } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function GET(req: NextRequest) {
   try {
@@ -46,11 +47,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Upload to GCS
-    const fileExtension = image.name.split(".").pop();
-    const fileName = `gallery/${crypto.randomUUID()}.${fileExtension}`;
-    
-    const publicUrl = await uploadFile(image, fileName);
+    // Validate and upload to GCS with a server-controlled key
+    const validated = validateAndBuildKey(image, "gallery", "image");
+    if (!validated.ok) {
+      return NextResponse.json({ error: validated.error }, { status: 400 });
+    }
+
+    const publicUrl = await uploadFile(image, validated.storageKey, validated.contentType);
 
     const result = await db.insert(galleries).values({
       title,

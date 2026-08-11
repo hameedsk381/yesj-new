@@ -5,6 +5,7 @@ import { echoes } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
@@ -43,15 +44,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "PDF file is required" }, { status: 400 });
     }
 
-    // Upload PDF
-    const pdfName = `echoes/${crypto.randomUUID()}-${file.name}`;
-    const filePath = await uploadFile(file, pdfName);
+    // Validate and upload PDF with a server-controlled key
+    const pdfValidated = validateAndBuildKey(file, "echoes", "document");
+    if (!pdfValidated.ok) {
+      return NextResponse.json({ error: pdfValidated.error }, { status: 400 });
+    }
+    const filePath = await uploadFile(file, pdfValidated.storageKey, pdfValidated.contentType);
 
     // Upload Thumbnail if a new file was provided, else reuse a supplied URL/string.
     let thumbnailPath = null;
     if (thumbnail && thumbnail.size > 0) {
-      const thumbName = `echoes/thumbs/${crypto.randomUUID()}-${thumbnail.name}`;
-      thumbnailPath = await uploadFile(thumbnail, thumbName);
+      const thumbValidated = validateAndBuildKey(thumbnail, "echoes/thumbs", "image");
+      if (!thumbValidated.ok) {
+        return NextResponse.json({ error: thumbValidated.error }, { status: 400 });
+      }
+      thumbnailPath = await uploadFile(thumbnail, thumbValidated.storageKey, thumbValidated.contentType);
     } else if (thumbnailPathInput) {
       thumbnailPath = thumbnailPathInput;
     }

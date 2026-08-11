@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server"
-import { getFile, getBucketName } from "@/lib/storage"
+import { getFile, getBucketName, fileKeyFromUrl } from "@/lib/storage"
 
 export async function GET(
   request: NextRequest,
@@ -16,13 +16,13 @@ export async function GET(
       )
     }
 
-    // Extract just the file key if a full URL was passed
-    let fileKey = filePath
-    if (filePath.startsWith("http")) {
-      const urlMatch = filePath.match(/\/[^/]+\/(.+)$/)
-      if (urlMatch) {
-        fileKey = urlMatch[1]
-      }
+    // Extract just the file key if a full URL was passed, otherwise use as-is.
+    const fileKey = fileKeyFromUrl(filePath)
+    if (!fileKey) {
+      return NextResponse.json(
+        { error: "Invalid file path" },
+        { status: 400 }
+      )
     }
 
     console.log("[File Download] Transitioning to GCS fetch:", {
@@ -43,6 +43,7 @@ export async function GET(
     const contentType = metadata.contentType || "application/octet-stream"
     headers.set("Content-Type", contentType)
     headers.set("Content-Length", buffer.length.toString())
+    headers.set("Cache-Control", "public, max-age=31536000, immutable")
     
     if (download === "true") {
       headers.set("Content-Disposition", `attachment; filename="${filename}"`)

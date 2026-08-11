@@ -5,6 +5,7 @@ import { stories } from "@/lib/db/schema";
 import { getSession } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 function slugify(text: string) {
   return text
@@ -68,11 +69,13 @@ export async function POST(req: NextRequest) {
     }
 
     let imagePath = null;
-    // Upload to GCS
-    const fileExtension = image.name.split(".").pop();
-    const fileName = `stories/${crypto.randomUUID()}.${fileExtension}`;
-    
-    imagePath = await uploadFile(image, fileName);
+    if (image && image.size > 0) {
+      const validated = validateAndBuildKey(image, "stories", "image");
+      if (!validated.ok) {
+        return NextResponse.json({ error: validated.error }, { status: 400 });
+      }
+      imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
+    }
 
     const result = await db.insert(stories).values({
       title,

@@ -5,6 +5,7 @@ import { teamMembers } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { uploadFile } from "@/lib/storage";
+import { validateAndBuildKey } from "@/lib/upload-validation";
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
@@ -52,8 +53,11 @@ export async function POST(req: NextRequest) {
       const image = formData.get("image") as File;
 
       if (image && image.size > 0) {
-        const fileName = `team/${crypto.randomUUID()}-${image.name}`;
-        imagePath = await uploadFile(image, fileName);
+        const validated = validateAndBuildKey(image, "team", "image");
+        if (!validated.ok) {
+          return NextResponse.json({ error: validated.error }, { status: 400 });
+        }
+        imagePath = await uploadFile(image, validated.storageKey, validated.contentType);
       }
     }
 

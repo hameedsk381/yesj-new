@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await hashPassword(password)
 
-    const [user] = await db.insert(users).values({
+    const [inserted] = await db.insert(users).values({
       fullName,
       email: email.toLowerCase(),
       hashedPassword,
@@ -45,13 +45,19 @@ export async function POST(req: NextRequest) {
       isSuperuser: isSuperuser === true,
     })
 
-    return NextResponse.json({
-      id: user.id,
-      fullName,
-      email: email.toLowerCase(),
-      isActive: true,
-      isSuperuser: isSuperuser === true,
-    }, { status: 201 })
+    const [user] = await db.select({
+      id: users.id,
+      fullName: users.fullName,
+      email: users.email,
+      isActive: users.isActive,
+      isSuperuser: users.isSuperuser,
+    }).from(users).where(eq(users.id, inserted.insertId)).limit(1)
+
+    if (!user) {
+      return NextResponse.json({ error: "Failed to create user" }, { status: 500 })
+    }
+
+    return NextResponse.json(user, { status: 201 })
   } catch (error) {
     console.error("Users POST error:", error)
     return NextResponse.json({ error: "Failed to create user" }, { status: 500 })

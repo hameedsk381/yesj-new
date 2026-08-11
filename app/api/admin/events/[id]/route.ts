@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
+import { deleteFile } from "@/lib/storage";
 
 export async function PATCH(
   req: NextRequest,
@@ -44,7 +45,18 @@ export async function DELETE(
 
   try {
     const id = parseInt(params.id);
+
+    const [existing] = await db.select().from(events).where(eq(events.id, id)).limit(1);
     await db.delete(events).where(eq(events.id, id));
+
+    if (existing?.imagePath) {
+      try {
+        await deleteFile(existing.imagePath);
+      } catch (fileErr) {
+        console.error("Event image delete error:", fileErr);
+      }
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Event DELETE error:", error);

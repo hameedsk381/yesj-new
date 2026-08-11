@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { echoes } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
+import { deleteFile } from "@/lib/storage";
 
 export async function PATCH(
   req: NextRequest,
@@ -41,7 +42,18 @@ export async function DELETE(
   }
 
   try {
+    const [existing] = await db.select().from(echoes).where(eq(echoes.id, id)).limit(1);
     await db.delete(echoes).where(eq(echoes.id, id));
+
+    if (existing) {
+      try {
+        await deleteFile(existing.filePath);
+        await deleteFile(existing.thumbnailPath);
+      } catch (fileErr) {
+        console.error("Echoes file delete error:", fileErr);
+      }
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Echoes DELETE error:", error);
