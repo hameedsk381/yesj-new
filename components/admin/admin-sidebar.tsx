@@ -18,7 +18,8 @@ import {
   Home,
   Info,
   GraduationCap,
-  Shield
+  Shield,
+  X
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -41,7 +42,11 @@ const navigationItems = [
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ]
 
-export default function AdminSidebar() {
+interface AdminSidebarProps {
+  onNavigate?: () => void
+}
+
+export default function AdminSidebar({ onNavigate }: AdminSidebarProps) {
   const pathname = usePathname()
 
   const handleLogout = async () => {
@@ -50,11 +55,18 @@ export default function AdminSidebar() {
   }
 
   return (
-    <div className="flex flex-col h-full border-r bg-white">
-      <div className="p-6 border-b">
+    <div className="flex h-full flex-col">
+      <div className="flex items-center justify-between p-6 border-b">
         <h2 className="text-xl font-light text-primary">YESJ Admin</h2>
+        <button
+          onClick={onNavigate}
+          aria-label="Close navigation menu"
+          className="rounded p-1.5 text-gray-600 hover:bg-gray-100 lg:hidden"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
-      <nav className="flex-1 px-4 py-6">
+      <nav className="flex-1 overflow-y-auto px-4 py-6">
         <ul className="space-y-2">
           {navigationItems.map((item) => {
             const Icon = item.icon
@@ -63,6 +75,7 @@ export default function AdminSidebar() {
               <li key={item.name}>
                 <Link
                   href={item.href}
+                  onClick={onNavigate}
                   className={`flex items-center gap-3 rounded px-3 py-2 text-sm font-light transition-colors ${
                     isActive
                       ? "bg-primary text-white"

@@ -120,20 +120,13 @@ export default function AdminDashboard() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <h1 className="text-xl font-light text-primary">Admin Dashboard</h1>
+      <main className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
+        <div className="mb-8">
+          <h1 className="text-2xl font-light text-primary mb-1">Dashboard</h1>
+          <p className="text-muted-foreground font-extralight">
+            Welcome back! Here's what's happening with YESJ.
+          </p>
         </div>
-      </header>
-
-      <main className="flex-1 overflow-y-auto py-6">
-        <div className="container px-4 md:px-6">
-          <div className="mb-8">
-            <h2 className="text-2xl font-light text-primary mb-2">Dashboard Overview</h2>
-            <p className="text-muted-foreground font-extralight">
-              Welcome back! Here's what's happening with YESJ.
-            </p>
-          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {statsData.map((stat, index) => {
@@ -287,7 +280,6 @@ export default function AdminDashboard() {
               </Link>
             </div>
           </div>
-        </div>
       </main>
     </AdminLayout>
   )

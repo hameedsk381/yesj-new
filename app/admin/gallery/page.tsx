@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Plus, LayoutGrid, Tag, Edit2 } from "lucide-react"
+import { Trash2, Plus, LayoutGrid, Tag, Edit2 } from "lucide-react"
 import { ImageField } from "@/components/admin/image-field"
-import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -100,19 +99,13 @@ export default function GalleryPage() {
 
     return (
         <AdminLayout>
-            <header className="bg-white border-b sticky top-0 z-10">
-                <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-                    <div className="flex items-center gap-4">
-                        <Link href="/admin/dashboard"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-                        <h1 className="text-xl font-bold tracking-tight text-primary">Gallery Management</h1>
-                    </div>
+            <main className="px-4 md:px-6 py-8">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <h1 className="text-xl font-bold tracking-tight text-primary">Gallery Management</h1>
                     <Button onClick={showForm ? () => setShowForm(false) : openAddForm} className="bg-primary text-white">
                         {showForm ? <><Plus className="mr-2 h-4 w-4" /> Cancel</> : <><Plus className="mr-2 h-4 w-4" /> Add Image</>}
                     </Button>
                 </div>
-            </header>
-
-            <main className="container px-4 md:px-6 py-8">
                 {showForm && (
                     <div className="mb-10 p-6 bg-white rounded-xl border-2 border-primary/10 shadow-lg max-w-2xl bg-gradient-to-br from-white to-primary/5">
                         <h2 className="text-xl font-black text-primary mb-6 flex items-center gap-2">

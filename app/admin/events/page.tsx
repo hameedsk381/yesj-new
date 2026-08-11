@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Plus, Calendar as CalendarIcon, MapPin, Edit2, X } from "lucide-react"
-import Link from "next/link"
+import { Trash2, Plus, Calendar as CalendarIcon, MapPin, Edit2, X } from "lucide-react"
 import Image from "next/image"
 import { ImageField } from "@/components/admin/image-field"
 
@@ -110,20 +109,14 @@ export default function EventsPage() {
 
     return (
         <AdminLayout>
-            <header className="bg-white border-b sticky top-0 z-10">
-                <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-                    <div className="flex items-center gap-4">
-                        <Link href="/admin/dashboard"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-                        <h1 className="text-xl font-light text-primary">Events</h1>
-                    </div>
+            <main className="px-4 md:px-6 py-8">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <h1 className="text-xl font-light text-primary">Events</h1>
                     <Button onClick={showForm ? () => setShowForm(false) : openAddForm} className="bg-primary text-white">
                         {showForm ? <X className="mr-2 h-4 w-4" /> : <Plus className="mr-2 h-4 w-4" />}
                         {showForm ? "Cancel" : "Add Event"}
                     </Button>
                 </div>
-            </header>
-
-            <main className="container px-4 md:px-6 py-8">
                 {showForm && (
                     <div className="mb-8 p-6 bg-white rounded-md border shadow-sm max-w-2xl">
                         <h2 className="text-lg font-bold mb-4">{editingId ? "Edit Event" : "Add New Event"}</h2>

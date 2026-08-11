@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Plus, Trash2, GripVertical } from "lucide-react"
-import Link from "next/link"
+import { Save, Loader2, Plus, Trash2, GripVertical } from "lucide-react"
 import { ImageField } from "@/components/admin/image-field"
 import { useParams, useRouter } from "next/navigation"
 import { programFilters } from "@/lib/data/programs"
@@ -248,22 +247,14 @@ export default function EditProgram() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-50">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/programs">
-              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
-            </Link>
-            <h1 className="text-xl font-light text-primary">{isNew ? "New Programme" : `Edit: ${program?.title || slug}`}</h1>
-          </div>
+      <main className="px-4 md:px-6 py-8 max-w-6xl space-y-8 pb-24">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="text-xl font-light text-primary">{isNew ? "New Programme" : `Edit: ${program?.title || slug}`}</h1>
           <Button onClick={handleSave} disabled={isSaving} className="bg-primary text-white">
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
             Save Changes
           </Button>
         </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8 max-w-6xl space-y-8 pb-24">
         {message && (
           <div className={`p-4 rounded-md border ${message.type === "success" ? "bg-green-50 border-green-200 text-green-800" : "bg-red-50 border-red-200 text-red-800"}`}>
             {message.text}

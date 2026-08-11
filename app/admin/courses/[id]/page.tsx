@@ -4,8 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save } from "lucide-react"
-import Link from "next/link"
+import { Save } from "lucide-react"
 import { ImageField } from "@/components/admin/image-field"
 
 interface CourseForm {
@@ -104,19 +103,13 @@ export default function EditCoursePage() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/courses"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-            <h1 className="text-xl font-light text-primary">{isNew ? "New Course" : "Edit Course"}</h1>
-          </div>
+      <main className="px-4 md:px-6 py-8 max-w-3xl">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-xl font-light text-primary">{isNew ? "New Course" : "Edit Course"}</h1>
           <Button onClick={handleSave} disabled={saving} className="bg-primary text-white">
             <Save className="mr-2 h-4 w-4" /> {saving ? "Saving..." : "Save"}
           </Button>
         </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8 max-w-3xl">
         {error && <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-6">{error}</div>}
         <div className="bg-white border rounded-md p-6 space-y-6">
           <div className="grid grid-cols-2 gap-4">

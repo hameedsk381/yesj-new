@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Save, Loader2, Plus, Trash2 } from "lucide-react"
-import Link from "next/link"
+import { Save, Loader2, Plus, Trash2 } from "lucide-react"
 import { ImageField } from "@/components/admin/image-field"
 
 type NavItem = { label: string; href: string }
@@ -215,18 +214,8 @@ export default function SettingsPage() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/dashboard">
-              <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
-            </Link>
-            <h1 className="text-xl font-light text-primary">Site Settings</h1>
-          </div>
-        </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8 max-w-5xl">
+      <main className="px-4 md:px-6 py-8 max-w-5xl">
+        <h1 className="text-xl font-light text-primary mb-6">Site Settings</h1>
         {isLoading ? (
           <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
         ) : (

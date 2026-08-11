@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Plus, Trash2, Shield, ShieldOff } from "lucide-react"
-import Link from "next/link"
+import { Plus, Trash2, Shield, ShieldOff } from "lucide-react"
 
 interface User {
   id: number
@@ -83,19 +82,13 @@ export default function AdminUsersPage() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/dashboard"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-            <h1 className="text-xl font-light text-primary">Users</h1>
-          </div>
+      <main className="px-4 md:px-6 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-xl font-light text-primary">Users</h1>
           <Button onClick={() => setShowForm(!showForm)} className="bg-primary text-white">
             <Plus className="mr-2 h-4 w-4" /> {showForm ? "Cancel" : "Add User"}
           </Button>
         </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8">
         {showForm && (
           <div className="mb-8 p-6 bg-white border rounded-md shadow-sm max-w-lg">
             <h2 className="text-lg font-bold mb-4">New User</h2>

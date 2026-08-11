@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Trash2, Download } from "lucide-react"
-import Link from "next/link"
+import { Trash2, Download } from "lucide-react"
 
 interface Registration {
   id: number
@@ -64,17 +63,11 @@ export default function CourseRegistrationsPage() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/courses"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-            <h1 className="text-xl font-light text-primary">Course Registrations</h1>
-          </div>
+      <main className="px-4 md:px-6 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-xl font-light text-primary">Course Registrations</h1>
           <Button variant="outline" onClick={exportCSV}><Download className="mr-2 h-4 w-4" /> CSV</Button>
         </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8">
         {isLoading ? (
           <p>Loading...</p>
         ) : registrations.length === 0 ? (

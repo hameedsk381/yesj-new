@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Plus, Trash2, Edit, ExternalLink } from "lucide-react"
+import { Plus, Trash2, Edit, ExternalLink } from "lucide-react"
 import Link from "next/link"
 
 interface Course {
@@ -58,12 +58,9 @@ export default function AdminCoursesPage() {
 
   return (
     <AdminLayout>
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/admin/dashboard"><Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button></Link>
-            <h1 className="text-xl font-light text-primary">Courses</h1>
-          </div>
+      <main className="px-4 md:px-6 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-xl font-light text-primary">Courses</h1>
           <div className="flex gap-2">
             <Link href="/admin/courses/registrations">
               <Button variant="outline">View Registrations</Button>
@@ -73,9 +70,6 @@ export default function AdminCoursesPage() {
             </Button>
           </div>
         </div>
-      </header>
-
-      <main className="container px-4 md:px-6 py-8">
         {isLoading ? (
           <p>Loading courses...</p>
         ) : courses.length === 0 ? (
