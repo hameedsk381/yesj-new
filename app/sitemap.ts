@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let courseRoutes: MetadataRoute.Sitemap = []
   try {
     const activeCourses = await db.select({ slug: courses.slug }).from(courses).where(eq(courses.isActive, true))
-    courseRoutes = activeCourses.map((course) => ({
+    courseRoutes = activeCourses.map((course: { slug: string }) => ({
       url: `${siteConfig.url}/courses/${course.slug}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,

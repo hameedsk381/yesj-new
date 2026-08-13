@@ -10,10 +10,13 @@ export async function GET() {
     const settings = await db.select().from(siteSettings);
     
     // Convert to a more usable object
-    const settingsMap = settings.reduce((acc, curr) => {
-      acc[curr.key] = curr.value;
-      return acc;
-    }, {} as Record<string, string>);
+    const settingsMap = settings.reduce(
+      (acc: Record<string, string>, curr: { key: string; value: string }) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 
     // Merge with siteConfig fallback
     const config: any = {

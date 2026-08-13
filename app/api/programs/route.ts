@@ -8,10 +8,13 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const allSettings = await db.select().from(siteSettings);
-    const settingsMap = allSettings.reduce((acc, curr) => {
-      acc[curr.key] = curr.value;
-      return acc;
-    }, {} as Record<string, string>);
+    const settingsMap = allSettings.reduce(
+      (acc: Record<string, string>, curr: { key: string; value: string }) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      },
+      {} as Record<string, string>
+    );
 
     const merged = programsData.map(staticProgram => {
       const stored = settingsMap[`program_content:${staticProgram.slug}`];

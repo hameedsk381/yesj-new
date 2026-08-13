@@ -35,14 +35,14 @@ export async function GET(req: NextRequest) {
       teamCount,
       storiesCount
     ] = await Promise.all([
-      db.select({ count: sql<number>`count(*)` }).from(registrations).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(nominations).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(contacts).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(newsletters).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(events).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(galleries).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(teamMembers).then(r => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(stories).then(r => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(registrations).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(nominations).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(contacts).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(newsletters).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(events).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(galleries).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(teamMembers).then((r: Array<{ count: number }>) => Number(r[0].count)),
+      db.select({ count: sql<number>`count(*)` }).from(stories).then((r: Array<{ count: number }>) => Number(r[0].count)),
     ]);
 
     return NextResponse.json({

@@ -15,6 +15,7 @@ export type ProgramSection = {
   cards?: Array<{ title: string; description: string }>
   image?: string
   gallery?: string[]
+  actions?: Array<{ label: string; href: string; external?: boolean }>
 }
 
 export type ProgramData = {
