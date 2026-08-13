@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/config"
 import dynamic from "next/dynamic"
 import PageTransition from "@/components/layout/page-transition"
 import ScrollToTop from "@/components/layout/scroll-to-top"
+import RegisterPopup from "@/components/shared/register-popup"
 
 const ChatWidget = dynamic(() => import("@/components/chat/chat-widget"), { ssr: false })
 
@@ -106,7 +107,7 @@ export default function RootLayout({
               {children}
             </PageTransition>
             <ScrollToTop />
-
+            <RegisterPopup />
             <ChatWidget />
           </ErrorBoundary>
         </ThemeProvider>
