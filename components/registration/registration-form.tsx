@@ -11,7 +11,6 @@ import StepTwo from "./step-two"
 import StepThree from "./step-three"
 import StepFour from "./step-four"
 import SuccessMessage from "./success-message"
-import PasskeyPrompt from "./passkey-prompt"
 import { useFormPersistence, getSavedFormData } from "@/hooks/use-form-persistence"
 import { FORM_CONSTANTS } from "@/lib/constants"
 
@@ -90,9 +89,6 @@ export default function RegistrationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [showRestorePrompt, setShowRestorePrompt] = useState(false)
-  const [showPasskeyPrompt, setShowPasskeyPrompt] = useState(false)
-  const [registeredEmail, setRegisteredEmail] = useState<string>("")
-  const [passkeyRegistered, setPasskeyRegistered] = useState(false)
 
   const methods = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -192,33 +188,33 @@ export default function RegistrationForm() {
     setSubmitError(null)
 
     try {
-      // Transform data to snake_case for backend
+      // Payload uses camelCase keys matching the Drizzle schema (registrations table)
       const payload = {
-        application_type: data.applicationType,
+        applicationType: data.applicationType,
         name: data.name,
         gender: data.gender,
-        registration_no: data.registrationNo,
+        registrationNo: data.registrationNo,
         course: data.course,
         age: parseInt(data.age),
-        instagram_id: data.instagramId,
-        mobile_no: data.mobileNo,
-        whatsapp_no: data.whatsappNo,
-        email_id: data.emailId,
+        instagramId: data.instagramId,
+        mobileNo: data.mobileNo,
+        whatsappNo: data.whatsappNo,
+        emailId: data.emailId,
         religion: data.religion,
         address: data.address,
         skills: data.skills,
-        other_skills: data.otherSkills,
-        event_experience: data.eventExperience,
-        just_society_definition: data.justSocietyDefinition,
-        communication_example: data.communicationExample,
-        aicuf_vision: data.aicufVision,
-        leadership_position: data.leadershipPosition,
+        otherSkills: data.otherSkills,
+        eventExperience: data.eventExperience,
+        justSocietyDefinition: data.justSocietyDefinition,
+        communicationExample: data.communicationExample,
+        aicufVision: data.aicufVision,
+        leadershipPosition: data.leadershipPosition,
         declaration: data.declaration,
-        additional_message: data.additionalMessage,
+        additionalMessage: data.additionalMessage,
         password: data.password
       }
 
-      const response = await fetch("http://localhost:8000/api/v1/registrations/", {
+      const response = await fetch("/api/registrations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -229,15 +225,15 @@ export default function RegistrationForm() {
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.detail || "Failed to submit registration")
+        throw new Error(result.error || result.detail || "Failed to submit registration")
       }
 
       console.log("Registration successful:", result)
       clearSavedData()
 
-      // Store email and show passkey prompt instead of success message
-      setRegisteredEmail(data.emailId)
-      setShowPasskeyPrompt(true)
+      // Passkey registration is a demo-only stub (hardcoded mock users) and does not
+      // persist credentials, so skip the prompt and show the success screen directly.
+      setIsSubmitted(true)
     } catch (error) {
       console.error("Registration error:", error)
       setSubmitError(error instanceof Error ? error.message : "Failed to submit registration. Please try again.")
@@ -252,26 +248,9 @@ export default function RegistrationForm() {
     exit: { opacity: 0, x: -50 },
   }
 
-  // Show passkey prompt after successful registration
-  if (showPasskeyPrompt) {
-    return (
-      <PasskeyPrompt
-        email={registeredEmail}
-        onComplete={(success) => {
-          setPasskeyRegistered(success);
-          setIsSubmitted(true);
-        }}
-        onSkip={() => {
-          setPasskeyRegistered(false);
-          setIsSubmitted(true);
-        }}
-      />
-    );
-  }
-
   // Show final success message
   if (isSubmitted) {
-    return <SuccessMessage passkeyRegistered={passkeyRegistered} />
+    return <SuccessMessage />
   }
 
   return (

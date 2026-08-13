@@ -1,15 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CheckCircle, Fingerprint } from "lucide-react"
+import { CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-interface SuccessMessageProps {
-  passkeyRegistered?: boolean;
-}
-
-export default function SuccessMessage({ passkeyRegistered = false }: SuccessMessageProps) {
+export default function SuccessMessage() {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -24,24 +20,9 @@ export default function SuccessMessage({ passkeyRegistered = false }: SuccessMes
       <p className="text-muted-foreground max-w-md mx-auto mb-4">
         Thank you for applying to YESJ. Your application has been received and is being processed.
       </p>
-      {passkeyRegistered ? (
-        <div className="flex items-center justify-center gap-2 text-sm text-tertiary bg-tertiary/10 border border-tertiary/20 rounded px-4 py-2 max-w-md mx-auto mb-8">
-          <Fingerprint className="h-4 w-4" />
-          <span>Biometric login enabled! You can now login with your fingerprint or face.</span>
-        </div>
-      ) : (
-        <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8">
-          You can add biometric login later from your dashboard for faster access.
-        </p>
-      )}
       <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <Link href="/member/login">
-          <Button className="rounded-md bg-primary hover:bg-primary/90 text-white">
-            Login Now
-          </Button>
-        </Link>
         <Link href="/">
-          <Button variant="outline" className="rounded-md border-primary hover:bg-primary/5 text-primary">
+          <Button className="rounded-md bg-primary hover:bg-primary/90 text-white">
             Return to Home
           </Button>
         </Link>

@@ -27,6 +27,7 @@ const defaultAboutLinks: DropdownItem[] = [
 ]
 
 const defaultGetInvolvedLinks: DropdownItem[] = [
+  { href: "/register", label: "Membership / Registration" },
   { href: "/volunteer", label: "Volunteer with Us" },
   { href: "/donate", label: "Donate / Support" },
   { href: "/contact", label: "Partner with YES-J" },
