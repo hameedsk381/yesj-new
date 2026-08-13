@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import AdminLayout from "@/components/admin/admin-layout"
 import { Button } from "@/components/ui/button"
-import { Download, Trash2 } from "lucide-react"
+import { Download, Trash2, Check, X } from "lucide-react"
 
 interface Registration {
   id: number
@@ -21,7 +21,14 @@ interface Registration {
   address: string
   unitName?: string
   registrationId: string
+  status: string
   createdAt: Date
+}
+
+const statusStyles: Record<string, string> = {
+  pending: "bg-yellow-100 text-yellow-700",
+  approved: "bg-green-100 text-green-700",
+  rejected: "bg-red-100 text-red-700",
 }
 
 export default function RegistrationsPage() {
@@ -60,6 +67,7 @@ export default function RegistrationsPage() {
         religion: item.religion,
         address: item.address,
         registrationId: item.registrationId || item.registration_id || `REG-${item.id}`,
+        status: item.status || "pending",
         createdAt: new Date(item.created_at || item.createdAt)
       }))
 
@@ -89,6 +97,26 @@ export default function RegistrationsPage() {
     }
   }
 
+  const handleStatus = async (id: number, status: string) => {
+    try {
+      const response = await fetch(`/api/admin/registrations/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to update status")
+      }
+
+      fetchRegistrations()
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Failed to update status")
+    }
+  }
+
   const exportToCSV = () => {
     const headers = [
       "Registration ID",
@@ -103,6 +131,7 @@ export default function RegistrationsPage() {
       "Reg No",
       "Religion",
       "Address",
+      "Status",
       "Date",
     ]
 
@@ -119,6 +148,7 @@ export default function RegistrationsPage() {
       reg.registrationNo,
       reg.religion,
       reg.address,
+      reg.status,
       new Date(reg.createdAt).toLocaleDateString(),
     ])
 
@@ -184,6 +214,9 @@ export default function RegistrationsPage() {
                     Date
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Status
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
                 </tr>
@@ -191,7 +224,7 @@ export default function RegistrationsPage() {
               <tbody className="divide-y">
                 {registrations.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-8 text-center text-muted-foreground">
+                    <td colSpan={8} className="px-4 py-8 text-center text-muted-foreground">
                       No registrations found
                     </td>
                   </tr>
@@ -207,15 +240,48 @@ export default function RegistrationsPage() {
                         {new Date(reg.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3 text-sm">
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDelete(reg.id)}
-                          className="h-7 px-2 rounded-md"
-                          title="Delete"
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${
+                            statusStyles[reg.status] || statusStyles.pending
+                          }`}
                         >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
+                          {reg.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm">
+                        <div className="flex items-center gap-1">
+                          {reg.status !== "approved" && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleStatus(reg.id, "approved")}
+                              className="h-7 px-2 rounded-md text-green-600 hover:bg-green-50"
+                              title="Approve"
+                            >
+                              <Check className="h-3 w-3" />
+                            </Button>
+                          )}
+                          {reg.status !== "rejected" && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => handleStatus(reg.id, "rejected")}
+                              className="h-7 px-2 rounded-md text-red-500 hover:bg-red-50"
+                              title="Reject"
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          )}
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDelete(reg.id)}
+                            className="h-7 px-2 rounded-md"
+                            title="Delete"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))

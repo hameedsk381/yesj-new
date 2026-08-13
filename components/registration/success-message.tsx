@@ -21,8 +21,13 @@ export default function SuccessMessage() {
         Thank you for applying to YESJ. Your application has been received and is being processed.
       </p>
       <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <Link href="/">
+        <Link href="/member/login">
           <Button className="rounded-md bg-primary hover:bg-primary/90 text-white">
+            Login Now
+          </Button>
+        </Link>
+        <Link href="/">
+          <Button variant="outline" className="rounded-md border-primary hover:bg-primary/5 text-primary">
             Return to Home
           </Button>
         </Link>

@@ -108,7 +108,17 @@ export async function middleware(request: NextRequest) {
 
     // Protect member routes
     if (path.startsWith("/member")) {
-        if (path === "/member/login" || path.startsWith("/member/passkey")) {
+        if (path === "/member/login") {
+            if (token) {
+                try {
+                    const { payload } = await jwtVerify(token, getJwtSecret())
+                    if (payload.role === "member") {
+                        return NextResponse.redirect(new URL("/member/dashboard", request.url))
+                    }
+                } catch (error) {
+                    // Invalid token, allow access to login page
+                }
+            }
             return NextResponse.next()
         }
 
@@ -117,7 +127,10 @@ export async function middleware(request: NextRequest) {
         }
 
         try {
-            await jwtVerify(token, getJwtSecret())
+            const { payload } = await jwtVerify(token, getJwtSecret())
+            if (payload.role !== "member") {
+                return NextResponse.redirect(new URL("/member/login", request.url))
+            }
             return NextResponse.next()
         } catch (error) {
             return NextResponse.redirect(new URL("/member/login", request.url))
