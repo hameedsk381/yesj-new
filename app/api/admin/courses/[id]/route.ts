@@ -1,32 +1,39 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest } from "next/server"
 import { db } from "@/lib/db"
 import { courses } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
+import { requireAdmin, adminJsonResponse } from "@/lib/admin-api-helpers"
 
 export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
+
   try {
     const id = Number(params.id)
     if (isNaN(id)) {
-      return NextResponse.json({ error: "Invalid ID" }, { status: 400 })
+      return adminJsonResponse({ error: "Invalid ID" }, { status: 400 })
     }
     const [course] = await db.select().from(courses).where(eq(courses.id, id)).limit(1)
     if (!course) {
-      return NextResponse.json({ error: "Course not found" }, { status: 404 })
+      return adminJsonResponse({ error: "Course not found" }, { status: 404 })
     }
-    return NextResponse.json(course)
+    return adminJsonResponse(course)
   } catch (error) {
     console.error("Course GET error:", error)
-    return NextResponse.json({ error: "Failed to fetch course" }, { status: 500 })
+    return adminJsonResponse({ error: "Failed to fetch course" }, { status: 500 })
   }
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
+
   try {
     const id = Number(params.id)
     if (isNaN(id)) {
-      return NextResponse.json({ error: "Invalid ID" }, { status: 400 })
+      return adminJsonResponse({ error: "Invalid ID" }, { status: 400 })
     }
 
     const body = await req.json()
@@ -49,28 +56,31 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     if (updateData.slug) {
       const existing = await db.select().from(courses).where(eq(courses.slug, updateData.slug)).limit(1)
       if (existing.length > 0 && existing[0].id !== id) {
-        return NextResponse.json({ error: "A course with this slug already exists" }, { status: 409 })
+        return adminJsonResponse({ error: "A course with this slug already exists" }, { status: 409 })
       }
     }
 
     const [updated] = await db.update(courses).set(updateData).where(eq(courses.id, id))
-    return NextResponse.json(updated)
+    return adminJsonResponse(updated)
   } catch (error) {
     console.error("Course PATCH error:", error)
-    return NextResponse.json({ error: "Failed to update course" }, { status: 500 })
+    return adminJsonResponse({ error: "Failed to update course" }, { status: 500 })
   }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
+
   try {
     const id = Number(params.id)
     if (isNaN(id)) {
-      return NextResponse.json({ error: "Invalid ID" }, { status: 400 })
+      return adminJsonResponse({ error: "Invalid ID" }, { status: 400 })
     }
     await db.delete(courses).where(eq(courses.id, id))
-    return NextResponse.json({ success: true })
+    return adminJsonResponse({ success: true })
   } catch (error) {
     console.error("Course DELETE error:", error)
-    return NextResponse.json({ error: "Failed to delete course" }, { status: 500 })
+    return adminJsonResponse({ error: "Failed to delete course" }, { status: 500 })
   }
 }

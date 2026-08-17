@@ -15,6 +15,33 @@ type NavData = {
   footerQuickLinks: NavItem[]
 }
 
+const FIELDS = [
+  { key: "siteName", label: "Site Name", type: "text" },
+  { key: "title", label: "Site Title", type: "text" },
+  { key: "description", label: "SEO Description", type: "textarea" },
+  { key: "aboutHeroImage", label: "About Page Hero Image", type: "image", folder: "website" },
+  { key: "aboutMissionImage", label: "About Page Mission Image", type: "image", folder: "website" },
+  { key: "contactHeroImage", label: "Contact Page Hero Image", type: "image", folder: "website" },
+  { key: "email", label: "Contact Email", type: "email" },
+  { key: "phone", label: "Contact Phone", type: "text" },
+  { key: "whatsapp", label: "WhatsApp Number", type: "text" },
+  { key: "facebook", label: "Facebook Link", type: "text" },
+  { key: "instagram", label: "Instagram Link", type: "text" },
+  { key: "linkedin", label: "LinkedIn Link", type: "text" },
+  { key: "youtube", label: "YouTube Link", type: "text" },
+]
+
+const NAV_SECTIONS: { key: keyof NavData; label: string }[] = [
+  { key: "headerAboutLinks", label: "Header — About Links" },
+  { key: "headerGetInvolvedLinks", label: "Header — Get Involved Links" },
+  { key: "headerProgramLinks", label: "Header — Program Links" },
+  { key: "footerProgramLinks", label: "Footer — Program Links" },
+  { key: "footerQuickLinks", label: "Footer — Quick Links" },
+]
+
+const CONTACT_FIELDS = ["email", "phone", "whatsapp"]
+const SOCIAL_FIELDS = ["facebook", "instagram", "linkedin", "youtube"]
+
 function defaultNav(): NavData {
   return {
     headerAboutLinks: [
@@ -110,24 +137,19 @@ export default function SettingsPage() {
     } catch (error) { console.error(error) }
   }
 
-  const contactFields = ["email", "phone", "whatsapp"]
-  const socialFields = ["facebook", "instagram", "linkedin", "youtube"]
-
-  // Map UI field -> site_settings storage key. Contact/social/site name are
-  // stored as structured blobs so they override config.contact / config.social / config.name.
   const buildStorage = async (key: string, value: string): Promise<{ key: string; value: string }> => {
     if (key === "siteName") {
       return { key: "name", value }
     }
 
-    if (contactFields.includes(key)) {
+    if (CONTACT_FIELDS.includes(key)) {
       const res = await fetch("/api/settings")
       const data = res.ok ? await res.json() : {}
       const contact = { ...(data.contact || {}), [key]: value }
       return { key: "contact", value: JSON.stringify(contact) }
     }
 
-    if (socialFields.includes(key)) {
+    if (SOCIAL_FIELDS.includes(key)) {
       const res = await fetch("/api/settings")
       const data = res.ok ? await res.json() : {}
       const social = { ...(data.social || {}), [key]: value }
@@ -152,7 +174,7 @@ export default function SettingsPage() {
       } else {
         throw new Error("Failed to save")
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: "Failed to save" })
     } finally {
       setIsSaving(false)
@@ -173,7 +195,7 @@ export default function SettingsPage() {
       } else {
         throw new Error("Failed to save")
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: "Failed to save navigation" })
     } finally {
       setIsSaving(false)
@@ -188,40 +210,16 @@ export default function SettingsPage() {
     const items = [...nav[field]]; items[i] = { ...items[i], [key]: value }; setNav({ ...nav, [field]: items })
   }
 
-  const fields = [
-    { key: "siteName", label: "Site Name", type: "text" },
-    { key: "title", label: "Site Title", type: "text" },
-    { key: "description", label: "SEO Description", type: "textarea" },
-    { key: "aboutHeroImage", label: "About Page Hero Image", type: "image", folder: "website" },
-    { key: "aboutMissionImage", label: "About Page Mission Image", type: "image", folder: "website" },
-    { key: "contactHeroImage", label: "Contact Page Hero Image", type: "image", folder: "website" },
-    { key: "email", label: "Contact Email", type: "email" },
-    { key: "phone", label: "Contact Phone", type: "text" },
-    { key: "whatsapp", label: "WhatsApp Number", type: "text" },
-    { key: "facebook", label: "Facebook Link", type: "text" },
-    { key: "instagram", label: "Instagram Link", type: "text" },
-    { key: "linkedin", label: "LinkedIn Link", type: "text" },
-    { key: "youtube", label: "YouTube Link", type: "text" },
-  ]
-
-  const navSections: { key: keyof NavData; label: string }[] = [
-    { key: "headerAboutLinks", label: "Header — About Links" },
-    { key: "headerGetInvolvedLinks", label: "Header — Get Involved Links" },
-    { key: "headerProgramLinks", label: "Header — Program Links" },
-    { key: "footerProgramLinks", label: "Footer — Program Links" },
-    { key: "footerQuickLinks", label: "Footer — Quick Links" },
-  ]
-
   return (
     <AdminLayout>
       <main className="px-4 md:px-6 py-8 max-w-5xl">
-        <h1 className="text-xl font-light text-primary mb-6">Site Settings</h1>
+        <h1 className="text-2xl font-light text-primary mb-6">Site Settings</h1>
         {isLoading ? (
           <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
         ) : (
           <div className="space-y-8">
             {message && (
-              <div className={`p-4 rounded-md border ${message.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+              <div className={`p-4 rounded-md border text-sm ${message.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
                 {message.text}
               </div>
             )}
@@ -245,12 +243,12 @@ export default function SettingsPage() {
             {/* Site Info Tab */}
             {activeTab === "site" && (
               <div className="bg-white border rounded-md divide-y shadow-sm">
-                {fields.map((field) => (
+                {FIELDS.map((field) => (
                   <div key={field.key} className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
                     <label className="text-sm font-medium text-gray-700 pt-2">{field.label}</label>
                     <div className="md:col-span-2 space-y-3">
                       {field.type === "textarea" ? (
-                        <textarea className="w-full border rounded p-2 min-h-[100px]" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />
+                        <textarea className="w-full border rounded p-2 min-h-[100px] text-sm outline-none focus:border-primary" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />
                       ) : field.type === "image" ? (
                         <div className="space-y-3">
                           <ImageField
@@ -264,7 +262,7 @@ export default function SettingsPage() {
                           />
                         </div>
                       ) : (
-                        <input type={field.type} className="w-full border rounded p-2" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />
+                        <input type={field.type} className="w-full border rounded p-2 text-sm outline-none focus:border-primary" value={settings[field.key] || ""} onChange={(e) => setSettings({ ...settings, [field.key]: e.target.value })} />
                       )}
                       {field.type !== "image" && (
                         <Button size="sm" onClick={() => handleSave(field.key, settings[field.key])} disabled={isSaving} className="bg-primary text-white">
@@ -288,7 +286,7 @@ export default function SettingsPage() {
                   </Button>
                 </div>
 
-                {navSections.map(section => (
+                {NAV_SECTIONS.map(section => (
                   <div key={section.key} className="bg-white border rounded-lg p-6 shadow-sm space-y-3">
                     <div className="flex items-center justify-between border-b pb-2">
                       <h3 className="text-sm font-bold uppercase text-gray-500">{section.label}</h3>
@@ -302,7 +300,7 @@ export default function SettingsPage() {
                           onChange={e => updateNavItem(section.key, i, "label", e.target.value)} />
                         <input className="flex-1 border rounded p-2 text-sm font-mono" placeholder="/path" value={item.href}
                           onChange={e => updateNavItem(section.key, i, "href", e.target.value)} />
-                        <button onClick={() => removeNavItem(section.key, i)} className="text-red-400 hover:text-red-600 p-1">
+                        <button onClick={() => removeNavItem(section.key, i)} className="text-red-400 hover:text-red-600 p-1" title="Remove">
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>

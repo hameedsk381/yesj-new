@@ -1,29 +1,48 @@
-export const dynamic = "force-dynamic";
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { echoes } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
-import { getSession } from "@/lib/auth";
-import { deleteFile } from "@/lib/storage";
+import { NextRequest } from "next/server"
+import { db } from "@/lib/db"
+import { echoes } from "@/lib/db/schema"
+import { eq } from "drizzle-orm"
+import { requireAdmin, adminJsonResponse } from "@/lib/admin-api-helpers"
+import { deleteFile } from "@/lib/storage"
+
+export const dynamic = "force-dynamic"
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getSession();
-  if (!session || session.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
 
   try {
-    const id = parseInt(params.id);
-    const body = await req.json();
-    if (body.releaseDate) body.releaseDate = new Date(body.releaseDate);
-    await db.update(echoes).set(body).where(eq(echoes.id, id));
-    return NextResponse.json({ success: true });
+    const id = parseInt(params.id, 10)
+    if (isNaN(id)) {
+      return adminJsonResponse({ error: "Invalid ID" }, { status: 400 })
+    }
+
+    const body = await req.json()
+    const updateData: Record<string, any> = {}
+
+    const allowedFields = ["title", "edition", "description", "releaseDate", "filePath", "thumbnailPath"]
+    for (const field of allowedFields) {
+      if (body[field] !== undefined) {
+        if (field === "releaseDate") {
+          updateData[field] = body[field] ? new Date(body[field]) : new Date()
+        } else {
+          updateData[field] = body[field]
+        }
+      }
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return adminJsonResponse({ error: "No valid fields to update" }, { status: 400 })
+    }
+
+    await db.update(echoes).set(updateData).where(eq(echoes.id, id))
+    return adminJsonResponse({ success: true })
   } catch (error) {
-    console.error("Echoes PATCH error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Echoes PATCH error:", error)
+    return adminJsonResponse({ error: "Internal server error" }, { status: 500 })
   }
 }
 
@@ -31,32 +50,36 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getSession();
-  if (!session || session.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const id = parseInt(params.id);
-  if (isNaN(id)) {
-    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
-  }
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
 
   try {
-    const [existing] = await db.select().from(echoes).where(eq(echoes.id, id)).limit(1);
-    await db.delete(echoes).where(eq(echoes.id, id));
+    const id = parseInt(params.id, 10)
+    if (isNaN(id)) {
+      return adminJsonResponse({ error: "Invalid ID" }, { status: 400 })
+    }
 
-    if (existing) {
+    const [existing] = await db.select().from(echoes).where(eq(echoes.id, id)).limit(1)
+    await db.delete(echoes).where(eq(echoes.id, id))
+
+    if (existing?.filePath) {
       try {
-        await deleteFile(existing.filePath);
-        await deleteFile(existing.thumbnailPath);
+        await deleteFile(existing.filePath)
       } catch (fileErr) {
-        console.error("Echoes file delete error:", fileErr);
+        console.error("Echoes file delete error:", fileErr)
+      }
+    }
+    if (existing?.thumbnailPath) {
+      try {
+        await deleteFile(existing.thumbnailPath)
+      } catch (fileErr) {
+        console.error("Echoes thumbnail delete error:", fileErr)
       }
     }
 
-    return NextResponse.json({ success: true });
+    return adminJsonResponse({ success: true })
   } catch (error) {
-    console.error("Echoes DELETE error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Echoes DELETE error:", error)
+    return adminJsonResponse({ error: "Internal server error" }, { status: 500 })
   }
 }

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { NextRequest } from "next/server"
+import { db } from "@/lib/db"
 import { 
   registrations, 
   nominations, 
@@ -9,22 +9,17 @@ import {
   galleries, 
   teamMembers, 
   stories 
-} from "@/lib/db/schema";
-import { getSession } from "@/lib/auth";
-import { sql } from "drizzle-orm";
+} from "@/lib/db/schema"
+import { sql } from "drizzle-orm"
+import { requireAdmin, adminJsonResponse } from "@/lib/admin-api-helpers"
 
-// This endpoint relies on cookies/session (via `getSession(req)`), so it must be dynamic.
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
-// GET /api/admin/dashboard - Admin only
 export async function GET(req: NextRequest) {
-  try {
-    const session = await getSession(req);
-    if (!session || session.role !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const { errorResponse } = await requireAdmin(req)
+  if (errorResponse) return errorResponse
 
-    // Run counts in parallel
+  try {
     const [
       registrationsCount,
       nominationsCount,
@@ -35,17 +30,17 @@ export async function GET(req: NextRequest) {
       teamCount,
       storiesCount
     ] = await Promise.all([
-      db.select({ count: sql<number>`count(*)` }).from(registrations).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(nominations).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(contacts).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(newsletters).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(events).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(galleries).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(teamMembers).then((r: Array<{ count: number }>) => Number(r[0].count)),
-      db.select({ count: sql<number>`count(*)` }).from(stories).then((r: Array<{ count: number }>) => Number(r[0].count)),
-    ]);
+      db.select({ count: sql<number>`count(*)` }).from(registrations).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(nominations).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(contacts).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(newsletters).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(events).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(galleries).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(teamMembers).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+      db.select({ count: sql<number>`count(*)` }).from(stories).then((r: Array<{ count: number }>) => Number(r[0]?.count || 0)),
+    ])
 
-    return NextResponse.json({
+    return adminJsonResponse({
       data: {
         registrations: registrationsCount,
         nominations: nominationsCount,
@@ -56,10 +51,10 @@ export async function GET(req: NextRequest) {
         team: teamCount,
         stories: storiesCount,
       },
-      count: registrationsCount, // legacy/compat
-    });
+      count: registrationsCount,
+    })
   } catch (error) {
-    console.error("Error fetching dashboard stats:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Error fetching dashboard stats:", error)
+    return adminJsonResponse({ error: "Internal server error" }, { status: 500 })
   }
 }

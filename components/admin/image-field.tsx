@@ -2,9 +2,14 @@
 
 import { useRef, useState } from "react"
 import Image from "next/image"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Upload, FolderOpen, Loader2, ImageIcon } from "lucide-react"
-import { ImagePicker } from "./image-picker"
+
+const ImagePicker = dynamic(
+  () => import("./image-picker").then((m) => m.ImagePicker),
+  { ssr: false }
+)
 
 interface ImageFieldProps {
   value?: string

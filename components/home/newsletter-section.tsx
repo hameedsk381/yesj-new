@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import { Button } from "@/components/ui/button"
+import { subscribeNewsletterAction } from "@/app/actions/newsletter"
 
 const newsletterPoints = [
   "Monthly stories of transformation",
@@ -20,21 +21,12 @@ export default function NewsletterSection() {
     setMessage(null)
 
     try {
-      const response = await fetch("/api/newsletters", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.details || result.detail || result.error || "Failed to subscribe")
+      const result = await subscribeNewsletterAction({ email })
+      if (!result.success) {
+        throw new Error(result.message)
       }
 
-      setMessage({ type: "success", text: "Thanks for subscribing." })
+      setMessage({ type: "success", text: result.message })
       setEmail("")
     } catch (error) {
       setMessage({

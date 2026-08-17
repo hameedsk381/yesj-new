@@ -1,11 +1,37 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle, MySql2Database } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as schema from "./db/schema";
 
 const dbUrl = process.env.DATABASE_URL;
 
-// During build time (next build), environment variables like DATABASE_URL might be missing.
-// We only initialize the pool if the URL is present to avoid crashing the build.
-export const db = dbUrl 
-  ? drizzle(mysql.createPool(dbUrl), { schema, mode: "default" })
-  : null as any;
+// Global singleton pattern to prevent connection pool leaks across Next.js HMR in development
+const globalForDb = globalThis as unknown as {
+  mysqlPool?: mysql.Pool;
+  drizzleDb?: MySql2Database<typeof schema>;
+};
+
+function createPool() {
+  if (!dbUrl) return null;
+
+  return mysql.createPool({
+    uri: dbUrl,
+    waitForConnections: true,
+    connectionLimit: process.env.NODE_ENV === "production" ? 10 : 3,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 10000,
+  });
+}
+
+const pool = globalForDb.mysqlPool ?? createPool();
+if (process.env.NODE_ENV !== "production" && pool) {
+  globalForDb.mysqlPool = pool;
+}
+
+export const db: MySql2Database<typeof schema> =
+  globalForDb.drizzleDb ??
+  (pool ? drizzle(pool, { schema, mode: "default" }) : (null as any));
+
+if (process.env.NODE_ENV !== "production" && db) {
+  globalForDb.drizzleDb = db;
+}

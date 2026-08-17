@@ -20,18 +20,27 @@ const FOLDERS = ["", "website", "programs", "events", "gallery", "team", "storie
 export function ImagePicker({ onSelect, onClose, currentValue, prefix, allowUpload = true, title }: ImagePickerProps) {
   const [folder, setFolder] = useState(prefix || "")
   const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState("")
   const [images, setImages] = useState<{ name: string; url: string }[]>([])
   const [nextToken, setNextToken] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // 300ms debounce for search query input
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 300)
+    return () => clearTimeout(handler)
+  }, [query])
+
   const load = useCallback(async (pageToken?: string, replace = false) => {
     setLoading(true)
     try {
       const params = new URLSearchParams()
       if (folder) params.set("prefix", folder)
-      if (query) params.set("q", query)
+      if (debouncedQuery) params.set("q", debouncedQuery)
       if (pageToken) params.set("pageToken", pageToken)
 
       const res = await fetch(`/api/admin/images?${params.toString()}`)
@@ -45,13 +54,13 @@ export function ImagePicker({ onSelect, onClose, currentValue, prefix, allowUplo
     } finally {
       setLoading(false)
     }
-  }, [folder, query])
+  }, [folder, debouncedQuery])
 
   useEffect(() => {
     setImages([])
     setNextToken(null)
     load(undefined, true)
-  }, [folder, query, load])
+  }, [folder, debouncedQuery, load])
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

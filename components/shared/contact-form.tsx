@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Send, CheckCircle2 } from "lucide-react"
+import { submitContactAction } from "@/app/actions/contact"
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -115,17 +116,10 @@ export default function ContactForm() {
     setSubmitError("")
     setSubmitSuccess(false)
     try {
-      const response = await fetch("/api/contacts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
+      const result = await submitContactAction(data)
 
-      if (!response.ok) {
-        const payload = await response.json().catch(() => null)
-        throw new Error(payload?.details || payload?.error || "Failed to send message")
+      if (!result.success) {
+        throw new Error(result.message || "Failed to send message")
       }
 
       setSubmitSuccess(true)
