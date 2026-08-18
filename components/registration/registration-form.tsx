@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import StepOne from "./step-one"
 import StepTwo from "./step-two"
-import StepThree from "./step-three"
 import StepFour from "./step-four"
 import SuccessMessage from "./success-message"
 import { useFormPersistence, getSavedFormData } from "@/hooks/use-form-persistence"
@@ -16,7 +15,7 @@ import { FORM_CONSTANTS } from "@/lib/constants"
 
 // Define the form schema
 const formSchema = z.object({
-  applicationType: z.enum(["membership", "leadership"], {
+  applicationType: z.enum(["membership"], {
     message: "Please select an application type",
   }),
 
@@ -62,14 +61,6 @@ const formSchema = z.object({
   // Experience
   eventExperience: z.string().optional(),
 
-  // Leadership questions (conditional)
-  justSocietyDefinition: z.string().optional(),
-  communicationExample: z.string().optional(),
-  aicufVision: z.string().optional(),
-
-  // Leadership position (conditional)
-  leadershipPosition: z.string().optional(),
-
   declaration: z.boolean().refine((val) => val === true, {
     message: "You must agree to the declaration to proceed with your application",
   }),
@@ -101,10 +92,9 @@ export default function RegistrationForm() {
   })
 
   const { handleSubmit, watch, trigger, reset } = methods
-  const applicationType = watch("applicationType")
   const formData = watch()
 
-  const totalSteps = applicationType === "leadership" ? 4 : 3
+  const totalSteps = 3
 
   useEffect(() => {
     const savedData = getSavedFormData<FormValues>(FORM_CONSTANTS.STORAGE_KEYS.REGISTRATION_DRAFT)
@@ -157,14 +147,7 @@ export default function RegistrationForm() {
         fieldsToValidate = [] // Skills are optional
         break
       case 3:
-        if (applicationType === "leadership") {
-          fieldsToValidate = ["justSocietyDefinition", "communicationExample", "aicufVision"]
-        } else {
-          fieldsToValidate = ["declaration"]
-        }
-        break
-      case 4:
-        fieldsToValidate = ["leadershipPosition", "declaration"]
+        fieldsToValidate = ["declaration"]
         break
     }
 
@@ -205,10 +188,6 @@ export default function RegistrationForm() {
         skills: data.skills,
         otherSkills: data.otherSkills,
         eventExperience: data.eventExperience,
-        justSocietyDefinition: data.justSocietyDefinition,
-        communicationExample: data.communicationExample,
-        aicufVision: data.aicufVision,
-        leadershipPosition: data.leadershipPosition,
         declaration: data.declaration,
         additionalMessage: data.additionalMessage,
         password: data.password
@@ -282,7 +261,7 @@ export default function RegistrationForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-light text-primary">
-            Application for {applicationType === "membership" ? "Membership" : "Leadership"}
+            Application for Membership
           </h2>
           <div className="flex items-center gap-2">
             {Array.from({ length: totalSteps }).map((_, index) => (
@@ -305,8 +284,7 @@ export default function RegistrationForm() {
           >
             {currentStep === 1 && <StepOne />}
             {currentStep === 2 && <StepTwo />}
-            {currentStep === 3 && (applicationType === "leadership" ? <StepThree /> : <StepFour />)}
-            {currentStep === 4 && <StepFour />}
+            {currentStep === 3 && <StepFour />}
           </motion.div>
         </AnimatePresence>
 

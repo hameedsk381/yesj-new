@@ -48,10 +48,6 @@ export function validateAndSanitizeRegistrationData(data: any) {
     skills: data.skills ? data.skills.map((s: string) => sanitizeInput(s)) : [],
     otherSkills: data.otherSkills ? sanitizeInput(data.otherSkills) : undefined,
     eventExperience: data.eventExperience ? sanitizeInput(data.eventExperience) : undefined,
-    justSocietyDefinition: data.justSocietyDefinition ? sanitizeInput(data.justSocietyDefinition) : undefined,
-    communicationExample: data.communicationExample ? sanitizeInput(data.communicationExample) : undefined,
-    yesjVision: data.yesjVision ? sanitizeInput(data.yesjVision) : undefined,
-    leadershipPosition: data.leadershipPosition ? sanitizeInput(data.leadershipPosition) : undefined,
     declaration: Boolean(data.declaration),
     additionalMessage: data.additionalMessage ? sanitizeInput(data.additionalMessage) : undefined,
   }

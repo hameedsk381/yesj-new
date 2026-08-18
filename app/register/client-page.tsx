@@ -19,11 +19,10 @@ export default function RegisterClientPage() {
               className="max-w-3xl"
             >
               <h1 className="text-4xl font-light text-primary mb-4 lg:text-5xl">
-                Membership & Leadership Registration
+                Membership Registration
               </h1>
               <p className="text-muted-foreground font-extralight text-lg">
-                Join the YES-J movement. Apply for membership or contest a leadership position by filling
-                in the form below.
+                Join the YES-J movement. Apply for membership by filling in the form below.
               </p>
             </motion.div>
           </div>

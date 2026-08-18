@@ -17,35 +17,6 @@ export default function StepOne() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-gray-200 pb-4">
-        <h3 className="text-lg font-light text-primary mb-4">Application Type</h3>
-        <FormField
-          control={control}
-          name="applicationType"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col sm:flex-row gap-4"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="membership" id="membership" />
-                    <Label htmlFor="membership">Membership</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="leadership" id="leadership" />
-                    <Label htmlFor="leadership" className="text-sm sm:text-base">Leadership (Only II Year Students)</Label>
-                  </div>
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </div>
-
       <div className="border-b border-gray-200 pb-6">
         <h3 className="text-lg font-light text-primary mb-4">Personal Details</h3>
         <div className="space-y-6">
