@@ -9,7 +9,7 @@ import { ArrowLeft, Camera, Maximize2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { ProgramAction, ProgramData } from "@/lib/data/programs"
 import { ProgramIcon } from "@/components/shared/program-icon"
-import { cn } from "@/lib/utils"
+import { cn, isRemoteImage } from "@/lib/utils"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 import { siteConfig } from "@/lib/config"
 
@@ -93,6 +93,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                         alt=""
                         fill
                         priority
+                        unoptimized={isRemoteImage(program.logo)}
                         className="object-contain"
                       />
                     </div>
@@ -123,7 +124,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
               <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-sm">
                 <div className={`h-1.5 w-full ${program.cardBarClassName}`} />
                 <div className="relative aspect-[16/11]">
-                  <Image src={program.image} alt={program.title} fill priority className="object-cover" />
+                  <Image src={program.image} alt={program.title} fill priority unoptimized={isRemoteImage(program.image)} className="object-cover" />
                 </div>
               </div>
             </div>
@@ -138,7 +139,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                   <h2 className="font-sans text-2xl font-bold tracking-tight text-foreground">{section.title}</h2>
                   {section.image ? (
                     <div className="mt-6 relative h-16 w-48">
-                      <Image src={section.image} alt="" fill className="object-contain object-left" />
+                      <Image src={section.image} alt="" fill unoptimized={isRemoteImage(section.image)} className="object-contain object-left" />
                     </div>
                   ) : null}
                   {section.paragraphs?.map((paragraph) => (
