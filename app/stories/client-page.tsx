@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import NewsletterForm from "@/components/shared/newsletter-form"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 import { siteConfig } from "@/lib/config"
+import { isRemoteImage } from "@/lib/utils"
 
 export default function StoriesPage() {
   const [stories, setStories] = useState<any[]>([])
@@ -91,6 +92,7 @@ export default function StoriesPage() {
                             alt={featuredStory.title}
                             fill
                             priority
+                            unoptimized={isRemoteImage(featuredStory.imagePath)}
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 50vw"
                          />
@@ -148,6 +150,7 @@ export default function StoriesPage() {
                                 src={article.imagePath}
                                 alt={article.title}
                                 fill
+                                unoptimized={isRemoteImage(article.imagePath)}
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               />

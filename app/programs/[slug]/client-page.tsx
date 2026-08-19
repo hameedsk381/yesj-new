@@ -186,7 +186,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                     <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                       {section.gallery.map((img, i) => (
                         <div key={i} className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted">
-                          <Image src={img} alt="" fill className="object-cover" />
+                          <Image src={img} alt="" fill unoptimized={isRemoteImage(img)} className="object-cover" />
                         </div>
                       ))}
                     </div>
@@ -216,6 +216,7 @@ export default function ProgramClientPage({ program }: { program: ProgramData })
                         src={item.imagePath} 
                         alt={item.title} 
                         fill 
+                        unoptimized={isRemoteImage(item.imagePath)}
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">

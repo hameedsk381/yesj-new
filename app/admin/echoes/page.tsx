@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Plus, Trash2, FileText, Loader2, ExternalLink, Edit2, X, Search } from "lucide-react"
 import Image from "next/image"
 import { ImageField } from "@/components/admin/image-field"
+import { isRemoteImage } from "@/lib/utils"
 
 interface Echo {
   id: number
@@ -210,7 +211,7 @@ export default function EchoesManager() {
                 <div key={echo.id} className="bg-white border rounded-md overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
                   <div className="aspect-[3/4] relative bg-gray-100 border-b">
                     {echo.thumbnailPath ? (
-                      <Image src={echo.thumbnailPath} alt={echo.title} fill className="object-cover" />
+                      <Image src={echo.thumbnailPath} alt={echo.title} fill className="object-cover" unoptimized={isRemoteImage(echo.thumbnailPath)} />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-gray-400">
                         <FileText className="h-12 w-12 opacity-20" />

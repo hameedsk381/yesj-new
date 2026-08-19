@@ -8,6 +8,7 @@ import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { PlayCircle, Flame, FileText, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { isRemoteImage } from "@/lib/utils"
 
 export default function MediaClientPage() {
   const [echoesList, setEchoesList] = useState<any[]>([])
@@ -137,7 +138,7 @@ export default function MediaClientPage() {
                                 <div key={echo.id} className="group cursor-pointer">
                                     <div className="relative aspect-[3/4] rounded-md overflow-hidden bg-gray-100 shadow-md border border-border/50 mb-4 font-light">
                                         {echo.thumbnailPath ? (
-                                            <Image src={echo.thumbnailPath} alt={echo.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                                            <Image src={echo.thumbnailPath} alt={echo.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={isRemoteImage(echo.thumbnailPath)} className="object-cover transition-transform duration-500 group-hover:scale-105" />
                                         ) : (
                                             <div className="flex items-center justify-center h-full text-primary/10 bg-primary/5">
                                                 <FileText size={80} strokeWidth={1} />

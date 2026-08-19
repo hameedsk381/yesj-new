@@ -7,6 +7,7 @@ import { Download, Eye, FileText, Search, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
+import { isRemoteImage } from "@/lib/utils"
 
 type Echo = {
   id: number
@@ -183,6 +184,7 @@ export default function EchoesPage() {
                         src={echo.thumbnailPath}
                         alt={echo.title}
                         fill
+                        unoptimized={isRemoteImage(echo.thumbnailPath)}
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />

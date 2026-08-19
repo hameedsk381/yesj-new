@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Trash2, Plus, Calendar as CalendarIcon, MapPin, Edit2, X, Loader2, Search } from "lucide-react"
 import Image from "next/image"
 import { ImageField } from "@/components/admin/image-field"
+import { isRemoteImage } from "@/lib/utils"
 
 interface Event {
   id: number
@@ -265,7 +266,7 @@ export default function EventsPage() {
                 <div key={event.id} className="bg-white border rounded-md overflow-hidden shadow-sm">
                   <div className="relative h-48 bg-gray-100">
                     {event.imagePath ? (
-                      <Image src={event.imagePath} alt={event.title} fill className="object-cover" />
+                      <Image src={event.imagePath} alt={event.title} fill className="object-cover" unoptimized={isRemoteImage(event.imagePath)} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
                         No image

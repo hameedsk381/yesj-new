@@ -8,6 +8,7 @@ import Footer from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
 import { Calendar, Users, IndianRupee, GraduationCap, ArrowLeft, CheckCircle, Loader2 } from "lucide-react"
 import Link from "next/link"
+import { isRemoteImage } from "@/lib/utils"
 import { siteConfig } from "@/lib/config"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 
@@ -96,7 +97,7 @@ export default function CourseDetailClient({ slug }: { slug: string }) {
             <div className="lg:col-span-2">
               <div className="relative h-64 md:h-80 rounded-lg overflow-hidden bg-gray-100 mb-6">
                 {course.imagePath ? (
-                  <Image src={course.imagePath} alt={course.title} fill sizes="(max-width: 768px) 100vw, 66vw" className="object-cover" />
+                  <Image src={course.imagePath} alt={course.title} fill sizes="(max-width: 768px) 100vw, 66vw" unoptimized={isRemoteImage(course.imagePath)} className="object-cover" />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center"><GraduationCap className="h-20 w-20 text-muted-foreground/20" /></div>
                 )}

@@ -8,6 +8,7 @@ import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { isRemoteImage } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { BreadcrumbJsonLd } from "@/lib/breadcrumb-schema"
 import { siteConfig } from "@/lib/config"
@@ -159,7 +160,7 @@ export default function ImpactPage() {
                 >
                   <div className="relative overflow-hidden border border-border bg-white">
                     <div className="relative aspect-[4/3] lg:aspect-[5/4]">
-                      <Image src={story.image} alt={story.name} fill className="object-cover" />
+                      <Image src={story.image} alt={story.name} fill unoptimized={isRemoteImage(story.image)} className="object-cover" />
                     </div>
                   </div>
 

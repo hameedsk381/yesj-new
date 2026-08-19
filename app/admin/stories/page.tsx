@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Plus, Pencil, Trash2, Loader2, Image as ImageIcon, Search } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { isRemoteImage } from "@/lib/utils"
 
 interface Story {
   id: number
@@ -117,7 +118,7 @@ export default function AdminStoriesPage() {
                   <div key={story.id} className="bg-white border rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                     <div className="relative h-48 bg-gray-100">
                       {story.imagePath ? (
-                        <Image src={story.imagePath} alt={story.title} fill className="object-cover" />
+                        <Image src={story.imagePath} alt={story.title} fill className="object-cover" unoptimized={isRemoteImage(story.imagePath)} />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-300">
                           <ImageIcon className="h-10 w-10" />

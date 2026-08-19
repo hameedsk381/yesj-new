@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, MapPin, List, CalendarDays, ArrowRight, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { isRemoteImage } from "@/lib/utils"
 import EventFilters, { EventFilters as EventFiltersType } from "@/components/event-filters"
 import CalendarView from "@/components/calendar-view"
 
@@ -140,7 +141,7 @@ export default function EventsPage() {
                     <div key={index} className="group relative bg-gray-50 rounded-md overflow-hidden flex flex-col md:flex-row h-[350px] border border-gray-100 hover:shadow-2xl transition-all">
                       <div className="md:w-2/5 relative h-full">
                         {event.imagePath ? (
-                           <Image src={event.imagePath} alt={event.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                           <Image src={event.imagePath} alt={event.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" unoptimized={isRemoteImage(event.imagePath)} className="object-cover group-hover:scale-110 transition-transform duration-700" />
                         ) : (
                            <div className="w-full h-full bg-gray-200" />
                         )}

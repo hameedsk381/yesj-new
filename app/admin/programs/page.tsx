@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Edit2, Loader2, Image as ImageIcon, Plus, Trash2, Power, PowerOff } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { isRemoteImage } from "@/lib/utils"
 
 export default function ProgramsAdmin() {
   const [programs, setPrograms] = useState<any[]>([])
@@ -88,7 +89,7 @@ export default function ProgramsAdmin() {
               <div key={program.id || program.slug} className="bg-white border rounded-lg overflow-hidden shadow-sm flex flex-col">
                 <div className="aspect-video relative bg-muted">
                   {program.imagePath ? (
-                    <Image src={program.imagePath} alt={program.title} fill className="object-cover" />
+                    <Image src={program.imagePath} alt={program.title} fill className="object-cover" unoptimized={isRemoteImage(program.imagePath)} />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                       <ImageIcon className="h-10 w-10 opacity-20" />
@@ -118,7 +119,7 @@ export default function ProgramsAdmin() {
                     <div className="flex items-center gap-2">
                       {program.logoPath && (
                         <div className="h-6 w-6 relative opacity-60">
-                          <Image src={program.logoPath} alt="logo" fill className="object-contain" />
+                          <Image src={program.logoPath} alt="logo" fill className="object-contain" unoptimized={isRemoteImage(program.logoPath)} />
                         </div>
                       )}
                       <span className="text-xs text-muted-foreground">/{program.slug}</span>

@@ -6,6 +6,7 @@ import Footer from "@/components/layout/footer"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Linkedin, Mail, Users, Shield, Target } from "lucide-react"
+import { isRemoteImage } from "@/lib/utils"
 
 export default function TeamPage() {
     const [members, setMembers] = useState<any[]>([])
@@ -68,6 +69,7 @@ export default function TeamPage() {
                                                             src={founder.imagePath} 
                                                             alt={founder.name} 
                                                             fill 
+                                                            unoptimized={isRemoteImage(founder.imagePath)}
                                                             className="object-cover"
                                                             sizes="(max-width: 768px) 100vw, 50vw"
                                                         />
@@ -102,6 +104,7 @@ export default function TeamPage() {
                                                     src={member.imagePath} 
                                                     alt={member.name} 
                                                     fill 
+                                                    unoptimized={isRemoteImage(member.imagePath)}
                                                     className="object-cover"
                                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                 />

@@ -8,6 +8,7 @@ import Image from "next/image"
 import Lightbox from "@/components/lightbox"
 import { Maximize2, Camera, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { isRemoteImage } from "@/lib/utils"
 
 export default function GalleryPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -94,6 +95,7 @@ export default function GalleryPage() {
                         src={image.src}
                         fill
                         alt={image.alt}
+                        unoptimized={isRemoteImage(image.src)}
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />

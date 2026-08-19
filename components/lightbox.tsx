@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { isRemoteImage } from "@/lib/utils"
 
 interface LightboxProps {
   images: Array<{ src: string; alt: string; description?: string }>
@@ -106,6 +107,7 @@ export default function Lightbox({ images, initialIndex, isOpen, onClose }: Ligh
                 alt={currentImage.alt}
                 width={1200}
                 height={800}
+                unoptimized={isRemoteImage(currentImage.src)}
                 className="max-h-[80vh] w-auto object-contain"
                 priority
               />

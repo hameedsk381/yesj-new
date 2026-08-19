@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Trash2, Plus, Edit2, X, Loader2, Search } from "lucide-react"
 import Image from "next/image"
 import { ImageField } from "@/components/admin/image-field"
+import { isRemoteImage } from "@/lib/utils"
 
 interface TeamMember {
   id: number
@@ -228,7 +229,7 @@ export default function TeamPage() {
                   </div>
                   <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 mb-4 relative mt-2 border-2 border-primary/10">
                     {member.imagePath ? (
-                      <Image src={member.imagePath} alt={member.name} fill className="object-cover" />
+                      <Image src={member.imagePath} alt={member.name} fill className="object-cover" unoptimized={isRemoteImage(member.imagePath)} />
                     ) : (
                       <div className="w-full h-full bg-gray-200" />
                     )}

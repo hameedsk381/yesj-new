@@ -6,6 +6,7 @@ import Footer from "@/components/layout/footer"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { isRemoteImage } from "@/lib/utils"
 
 const facilities = [
   {
@@ -179,7 +180,7 @@ export default function CentreForExcellencePage() {
               {facilities.map((facility) => (
                 <article key={facility.name} className="overflow-hidden rounded-3xl border border-border bg-background">
                   <div className="relative aspect-[4/3]">
-                    <Image src={facility.image} alt={facility.name} fill className="object-cover" />
+                    <Image src={facility.image} alt={facility.name} fill unoptimized={isRemoteImage(facility.image)} className="object-cover" />
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-semibold text-foreground">{facility.name}</h3>
@@ -293,7 +294,7 @@ export default function CentreForExcellencePage() {
               {tourTabs[activeTab].map((image) => (
                 <div key={image} className="relative overflow-hidden rounded-3xl border border-border bg-background">
                   <div className="relative aspect-[4/3]">
-                    <Image src={image} alt={`${activeTab} at YES-J Centre for Excellence`} fill className="object-cover" />
+                    <Image src={image} alt={`${activeTab} at YES-J Centre for Excellence`} fill unoptimized={isRemoteImage(image)} className="object-cover" />
                   </div>
                 </div>
               ))}
