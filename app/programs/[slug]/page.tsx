@@ -1,12 +1,15 @@
 import { Metadata } from 'next';
 import ProgramClientPage from './client-page';
-import { getProgramBySlug } from '@/lib/data/programs';
+import { getMergedPrograms } from '@/lib/programs-server';
 import { notFound } from 'next/navigation';
 import { siteConfig } from '@/lib/config';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const program = getProgramBySlug(params.slug);
-  
+  const programs = await getMergedPrograms();
+  const program = programs.find((p) => p.slug === params.slug);
+
   if (!program) {
     return {
       title: 'Program Not Found | YESJ',
@@ -43,7 +46,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ProgramPage({ params }: { params: { slug: string } }) {
-  const program = getProgramBySlug(params.slug);
+  const programs = await getMergedPrograms();
+  const program = programs.find((p) => p.slug === params.slug);
 
   if (!program) {
     notFound();
